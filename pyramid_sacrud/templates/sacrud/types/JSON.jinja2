@@ -1,0 +1,7 @@
+{% extends "sacrud/types/SacrudBase.jinja2" %}
+
+{% block sacrud_column %}
+  <textarea class="sacrud_json {{ css_styles }}"
+            id="sacrud_json_{{ col.name }}"
+            name="{{ col.name }}">{{ value }}</textarea>
+{% endblock %}

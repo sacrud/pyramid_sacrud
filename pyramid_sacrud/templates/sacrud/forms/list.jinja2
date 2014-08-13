@@ -1,0 +1,123 @@
+<div class="sacrud-grid">
+    <div class="sacrud-grid__title">
+        {{ sa_crud['table'].__tablename__ }} administration
+    </div>
+    <div class="sacrud-grid__action" id="sa_grid_action">
+    </div>
+    <div class="sacrud-grid__toolbar">
+        <div class="toolbar clear-fix">
+            <div class="toolbar-button">
+                {% include "sacrud/forms/actions/add.jinja2" %}
+                <div class="action_button toolbar-button__item toolbar-button__item_state_disable">
+                    <div class="toolbar-button__item-name">Delete</div>
+                </div>
+            </div>
+            {% if sa_crud['table'].sacrud_search_col %}
+                <div class="toolbar-search">
+                    <div class="toolbar-search__inner">
+                        <form class="search" action="">
+                            <div class="search__input no-js">
+                                <ins class="search__input-box">
+                                    <input id="site_search" name="search" class="search__input-box-text" value="{{ get_params.search }}" placeholder="search" autocomplete="off">
+                                    <span class="search__input-icon">&nbsp;</span>
+                                </ins>
+                                {% for param, param_value in get_params.items() %}
+                                    {% if param != 'search' %}
+                                        <input type="hidden" name="{{ param }}" value="{{ param_value }}"/>
+                                    {% endif %}
+                                {% endfor %}
+                                <button class="search__input-button" type="submit">искать</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="sacrud-grid-content">
+        <div class="sacrud-grid-content__left">
+            <div class="sacrud-grid-content__left-inner">
+                <form id="sacrud-form" method="post" action="">
+                    <table class="sacrud-grid-content-grid" id="sa_index">
+                        {% if sa_crud %}
+                            <thead class="sacrud-grid-content-grid__header">
+                                <tr class="sacrud-grid-content-grid__header-row">
+                                    <th class="sacrud-grid-content-grid__header-item">
+                                        <input id="selected_all_item" type="checkbox" />
+                                    </th>
+                                    {% for col in visible_columns %}
+                                        <th class="sacrud-grid-content-grid__header-item">
+                                            <a href="?{{ col.head_url }}" class="sacrud-grid-content-grid__header-item-link">
+                                                {{ col.info.verbose_name or col.name or col.sacrud_name or None }}
+                                            </a>
+                                        </th>
+                                    {% endfor %}
+                                    <th class="sacrud-grid-content-grid__header-item"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="sacrud-grid-content-grid__body">
+                                {% for row in sa_crud['row'] %}
+                                    <tr id="{{ sa_crud['table'].__tablename__ }}_{{ pk_to_list(row) }}"
+                                        class="sacrud-grid-content-grid__body-row">
+                                        <td class="sacrud-grid-content-grid__body-item">
+                                            <input type="checkbox" name="selected_item" value="{{ pk_to_list(row, True) }}" />
+                                        </td>
+                                        {% for col in visible_columns %}
+                                            <td class="sacrud-grid-content-grid__body-item">
+                                                <div class="selectable_disabled" style="padding: 0 0.3em">
+                                                    {% if col.__class__.__name__ == 'Column' %}
+                                                        {% set col_value=row.__getattribute__(col.instance_name) %}
+                                                    {% endif %}
+                                                    {% if col.info['sacrud_list_template'] %}
+                                                        {% include col.info['sacrud_list_template'] %}
+                                                    {% else %}
+                                                        {{ col_value|string|truncate(200) }}
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                        {% endfor %}
+                                        <td class="sacrud-grid-content-grid__body-item">
+                                            {% include 'sacrud/forms/actions.jinja2' with context %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        {% else %}
+                            <tr>
+                                <td>There are no open objects</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                    <input class="selected-action" type="hidden" value="0" name="selected_action" />
+                </form>
+                {% if 'row' in sa_crud %}
+                    <div class="sacrud-grid-content__paginator">
+                        {% set paginator = sa_crud['row'] %}
+                        {% if paginator.items > 1 and paginator.page_count > 1 %}
+                            <div class="paginator">
+                                {% include "sacrud/paginator.jinja2" %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="sacrud-grid-content__right">
+            <div class="sacrud-grid-content-filter">
+                <div class="sacrud-grid-content-filter__group">
+                    <a href="#" class="sacrud-grid-content-filter__group-title">Group title</a>
+                    <a href="#" class="sacrud-grid-content-filter__group-item sacrud-grid-content-filter__group-item_state_active">Group title item 1</a>
+                    <a href="#" class="sacrud-grid-content-filter__group-item">Group title item 2</a>
+                    <a href="#" class="sacrud-grid-content-filter__group-item">Group title item 3</a>
+                </div>
+
+                <div class="sacrud-grid-content-filter__group">
+                    <a href="#" class="sacrud-grid-content-filter__group-title">Group title 2</a>
+                    <a href="#" class="sacrud-grid-content-filter__group-item">Group title item 1</a>
+                    <a href="#" class="sacrud-grid-content-filter__group-item">Group title item 2</a>
+                    <a href="#" class="sacrud-grid-content-filter__group-item">Group title item 3</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

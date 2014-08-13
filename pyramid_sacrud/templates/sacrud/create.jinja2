@@ -1,0 +1,37 @@
+{% extends "sacrud/redefineme.jinja2" %}
+
+{% block sa_popup_content %}
+    <div class="popup-inner__content-link">
+        <a href="#" class="popup-inner__content-link-text">close</a>
+    </div>
+    {% if sa_crud['obj'] %}
+        <div class="popup-inner__content-delete">
+            <div class="popup-inner__content-title">Are you sure you want to delete an object?</div>
+            <div>ЗДЕСЬ СПИСОК ЭЛЕМЕНТОВ ЕСЛИ ИХ НЕТ НЕ ПИШЕШЬ НИЧЕГО</div>
+            <div class="popup-button">
+                <div class="popup-button__item" data-status="delete">
+                    <a href="{{ request.route_url('sa_delete', table=sa_crud['table'].__tablename__, pk=pk_to_list(sa_crud['obj'])) }}"
+                       class="popup-button__item-link">Confirm</a>
+                </div>
+                <div class="popup-button__item" data-status="cancel">
+                    <span class="popup-button__item-name">Cancel</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="popup-inner__content-elfinder"></div>
+{% endblock sa_popup_content %}
+
+{% block sa_body %}
+    {% include 'sacrud/forms/create.jinja2' %}
+{% endblock %}
+
+{% block sa_head_extra_css %}
+    <link href="{{ request.static_url('pyramid_sacrud:static/css/chosen/chosen.min.css') }}" rel="stylesheet">
+{% endblock sa_head_extra_css %}
+
+{% block extrascript %}
+    <script type="text/javascript">
+      requirejs(["app/create"]);
+    </script>
+{% endblock %}

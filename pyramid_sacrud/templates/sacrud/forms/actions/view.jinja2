@@ -1,0 +1,6 @@
+<form
+	class="sacrud-grid-content__button"
+	action="{{ request.route_url('sa_read', table=sa_crud['table'].__tablename__,id=row[sa_crud['pk']]) }}"
+	method="POST">
+	<button class="k-button" value="view">View</button>
+</form>

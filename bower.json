@@ -1,0 +1,33 @@
+{
+  "name": "sacrud",
+  "version": "0.1.2",
+  "homepage": "https://github.com/ITCase/sacrud",
+  "authors": [
+    "Dmitry <root@uralbash.ru>"
+  ],
+  "description": "sacrud - CRUD interface for SQLAlchemy with Pyramid connector",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "SQALchemy",
+    "Pyramid",
+    "CRUD"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "chosen": "~1.1.0",
+    "jquery": "~2.1.1",
+    "requirejs": "~2.1.14",
+    "jquery-ui": "~1.10.4",
+    "speakingurl": "~0.9.1",
+    "jqueryui-timepicker-addon": "~1.4.5"
+  }
+}

@@ -1,0 +1,13 @@
+{% for hcol in col.horizontal_columns %}
+  {% set value=getattr(row, hcol.name) %}
+  {% if value==True %}
+    <span style="color: green">☑</span>
+  {% elif value==False or value==None %}
+    <span style="color: red">☐</span>
+  {% else %}
+    {{ value }}
+  {% endif %}
+  {{ hcol.info.verbose_name or hcol.name }}
+  <br/>
+{% endfor %}
+

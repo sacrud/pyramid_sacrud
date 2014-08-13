@@ -1,0 +1,43 @@
+{% extends "sacrud/redefineme.jinja2" %}
+
+{% block sa_popup_content %}
+    <div class="popup-inner__content-link">
+        <a href="#" class="popup-inner__content-link-text">close</a>
+    </div>
+    <div class="popup-inner__content-title">Are you sure you want to delete an object?</div>
+    <div>ЗДЕСЬ СПИСОК ЭЛЕМЕНТОВ ЕСЛИ ИХ НЕТ НЕ ПИШЕШЬ НИЧЕГО</div>
+    <div class="popup-button">
+        <div class="popup-button__item" data-status="delete">
+            <span class="popup-button__item-name">Confirm</span>
+        </div>
+        <div class="popup-button__item" data-status="cancel">
+            <span class="popup-button__item-name">Cancel</span>
+        </div>
+    </div>
+{% endblock sa_popup_content %}
+
+{% block sa_body %}
+    {% set table=sa_crud['table'] %}
+    {% if hasattr(table, 'sacrud_list_col') %}
+        {% set visible_columns=table.sacrud_list_col %}
+    {% else %}
+        {% set visible_columns=sa_crud['col'] %}
+    {% endif %}
+
+    {% if hasattr(table, '__mapper_args__') %}
+        {% set isdnd=table.__mapper_args__.order_by %}
+    {% endif %}
+    <div class="page">
+      {% if table.sacrud_list_template %}
+        {% include table.sacrud_list_template with context %}
+      {% else %}
+        {% include '/sacrud/forms/list.jinja2' with context %}
+      {% endif %}
+    </div>
+{% endblock %}
+
+{% block extrascript %}
+    <script type="text/javascript">
+        requirejs(["app/list"]);
+    </script>
+{% endblock %}

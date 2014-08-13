@@ -1,0 +1,115 @@
+{% set obj=sa_crud['obj'] %}
+{% set obj_cls=sa_crud['table'] %}
+{% set visible_columns=sa_crud['col'] %}
+{% set fk_template = "sacrud/types/ForeignKey.jinja2" %}
+
+<form method="POST" accept-charset="utf-8" enctype="multipart/form-data"
+    {% if sa_crud %}
+        {% if not obj %}
+            action="{{ request.route_url('sa_create', table=obj_cls.__tablename__) }}"
+        {% else %}
+            action="{{ request.route_url('sa_update', table=obj_cls.__tablename__,
+                       pk=pk_to_list(obj)) }}"
+        {% endif %}
+    {% endif %}>
+
+    {% if sa_crud %}
+        <div class="sacrud-grid">
+            <div class="sacrud-grid__title">Add a new {{ sa_crud['table'].__tablename__ }}</div>
+            <div class="sacrud-grid__toolbar">
+                <div class="toolbar clear-fix">
+                    <div class="toolbar-button">
+                        <div class="toolbar-button__item">
+                             <button type="submit" name="form.submitted" class="toolbar-button__item-button">Save</button>
+                        </div>
+                        {% if obj %}
+                            <div class="action_button toolbar-button__item toolbar-button__item_type_red">
+                                <div class="toolbar-button__item-name">Delete</div>
+                            </div>
+                        {% endif %}
+                        <div class="toolbar-button__item">
+                            <a href="{{ request.route_url('sa_list', table=obj_cls.__tablename__) }}" class="toolbar-button__item-link">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sacrud-grid-content">
+                <div class="sacrud-grid-content__left">
+                    <div class="sacrud-grid-content__left-inner">
+                        {% for group, columns in visible_columns %}
+                            <table class="sacrud-grid-content-grid" id="sa_index">
+                                <tbody class="sacrud-grid-content-grid__body">
+                                    <tr class="sacrud-grid-content-grid__body-row sacrud-grid-content-grid__body-row_type_group">
+                                        <td class="sacrud-grid-content-grid__body-item" colspan="2">
+                                            <div class="sacrud-grid-content-grid__body-row_type_group-title">
+                                                {{ group }}
+                                            </div>
+                                            <div class="sacrud-grid-content-grid__body-row_type_group-toogle">&nbsp;</div>
+                                        </td>
+                                    </tr>
+                                    {% for col in columns %}
+                                        {% set css_class=[] %}
+                                        {# TODO: move to include "set_css_style.jinja2" #}
+                                        {% if hasattr(obj_cls, 'sacrud_css_class') %}
+                                            {% for key, value in obj_cls.sacrud_css_class.items() %}
+                                                {% if col in value %}
+                                                    {{ css_class.append(key) }}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% set css_styles=' '.join(css_class) %}
+                                        {% endif %}
+
+                                        <tr class="sacrud-grid-content-grid__body-row">
+                                            <td class="sacrud-grid-content-grid__body-item">
+                                                <div  class="sacrud-grid-content-grid__body-item-name">
+                                                    {% if col.info['sacrud_position']=='inline' %}
+                                                        {{ col.info['verbose_name'] or col.sacrud_name }}
+                                                    {% else %}
+                                                        {{ col.info['verbose_name'] or col.name }}
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                            <td class="sacrud-grid-content-grid__body-item">
+                                                {% if col.info['sacrud_template'] %}
+                                                    {% include col.info['sacrud_template'] %}
+                                                {% elif col.foreign_keys %}
+                                                    {% include fk_template %}
+                                                {% else %}
+                                                    {% include get_field_template(col.type.__class__.__name__) %}
+                                                {% endif %}
+                                                {% if col.info['description'] %}
+                                                    <div class="sacrud-grid-content-grid__body-item-desc">
+                                                        {{ col.info['description']|safe }}
+                                                    </div>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="sacrud-grid__toolbar">
+                <div class="toolbar clear-fix">
+                    <div class="toolbar-button">
+                        <div class="toolbar-button__item">
+                             <button type="submit" name="form.submitted" class="toolbar-button__item-button">Save</button>
+                        </div>
+                        {% if obj %}
+                            <div class="toolbar-button__item toolbar-button__item_type_red">
+                                <a href="{{ request.route_url('sa_delete', table=obj_cls.__tablename__,
+                                            pk=pk_to_list(obj)) }}"
+                                   class="toolbar-button__item-link">Delete</a>
+                            </div>
+                        {% endif %}
+                        <div class="toolbar-button__item">
+                            <a href="{{ request.route_url('sa_list', table=obj_cls.__tablename__) }}" class="toolbar-button__item-link">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</form>

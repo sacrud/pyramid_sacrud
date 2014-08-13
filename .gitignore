@@ -1,0 +1,36 @@
+*~
+*.swo
+*.swp
+.settings
+.project
+.pydevproject
+.coverage
+TODO
+cover
+TODO
+TODO.txt
+nohup.out
+.cache
+.webassets*
+
+# JavaScript
+node_modules
+
+# Python
+cover
+.coverage
+build
+dist
+*.egg-info
+example
+htmlcov
+.ropeproject
+*.pyc
+
+# Bower
+bower_components
+
+# Docs
+_build
+_themes
+_pyramid_sacrud_example

@@ -1,0 +1,48 @@
+{% set qty_page = 5 %}
+
+<div class="paginator">
+    <div class="paginator-inner clear-fix">
+        <ins class="paginator__title">Pages:</ins>
+        {% for item in paginator.items %}
+          <ins class="paginator__item">
+
+            {% if (paginator.page*2 - qty_page%2)<=qty_page %}
+              {% if loop.index <=qty_page %}
+                <a class="paginator__link
+                    {% if str(loop.index) == str(paginator.page) %}
+                      paginator__link_state_current
+                    {% endif %}"
+                    href="?page={{ loop.index }}">
+                  {{ loop.index }}
+                </a>
+                {% if loop.index == qty_page %}
+                  <a class="paginator__link
+                      {% if str(loop.index) == str(paginator.page) %}
+                        paginator__link_state_current
+                      {% endif %}"
+                      href="?page={{ loop.index + 1 }}">...</a>
+                {% endif %}
+              {% endif %}
+            {% else %}
+              {% if loop.index == paginator.page-(qty_page/2)|int %}
+                <a class="paginator__link" href="?page={{ loop.index - 1 }}">....</a>
+              {% endif %}
+              {% if loop.index < (paginator.page + qty_page/2) and
+                    loop.index > (paginator.page - qty_page/2) %}
+
+                <a class="paginator__link
+                    {% if str(loop.index) == str(paginator.page) %}
+                      paginator__link_state_current
+                    {% endif %}"
+                    href="?page={{ loop.index }}">
+                  {{ loop.index }}
+                </a>
+              {% endif %}
+              {% if loop.index == paginator.page+(qty_page/2)|int %}
+                <a class="paginator__link" href="?page={{ loop.index + 1 }}">....</a>
+              {% endif %}
+            {% endif %}
+          </ins>
+        {% endfor %}
+    </div>
+</div>

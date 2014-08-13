@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+        SACRUD
+        {% block title %}{% endblock %}
+    </title>
+
+    <link href="{{ request.static_url('pyramid_sacrud:static/favicon.ico') }}" rel="shortcut icon" type="image/x-icon">
+
+    {% block sa_head_meta %}
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% endblock %}
+
+    {% block sa_head_css %}
+        {% assets "sa_css" %}
+            <link rel="stylesheet" href="{{ ASSET_URL }}"/>
+        {% endassets %}
+    {% endblock %}
+
+    {% block sa_head_extra_css %}
+    {% endblock %}
+
+    {% block sa_head_js %}
+        <script data-main="{{ request.static_url('pyramid_sacrud:static/js/main') }}"
+                src="{{ request.static_url('pyramid_sacrud:static/js/lib/require.js') }}"></script>
+    {% endblock %}
+
+    {% block userspace %}
+    {% endblock %}
+
+</head>
+
+<body>
+    {% block sa_popup %}
+        <div class="popup popup_type_message popup_type_message-delete">
+            <div class="popup-background">&nbsp;</div>
+            <div class="popup-inner">
+                <div class="popup-inner__ie">
+                    <div class="popup-inner__content">
+                        {% block sa_popup_content %}
+                        {% endblock sa_popup_content %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block sa_menu %}
+        <div class="header">
+            <div class="header__inner clear-fix">
+                <div class="logo">
+                    <div class="logo__text">
+                        <a href="/admin/" class="logo__text-link">SACRUD</a>
+                    </div>
+                </div>
+                <div class="header__inner-menu">&nbsp;</div>
+                <div class="header__user">
+                    {% block sa_auth %}
+                    {% endblock sa_auth %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <div class="wrapper">
+        <div class="wrapper__inner">
+            {% block breadcrumbs %}
+                {% if breadcrumbs %}
+                    <div class="nav">
+                        {% for crumb in breadcrumbs %}
+                            {% if not loop.last %}
+                                <a href="{% if crumb.visible %} {{ request.route_path(crumb.view, **crumb.param) }} {% endif %}"
+                                   class="nav__link">{{ crumb.name }}</a>
+                                <ins class="nav__separator">&nbsp;</ins>
+                            {% else %}
+                                <span class="nav__item_state_current">{{ crumb.name }}</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endblock breadcrumbs %}
+
+            {% block flash_message %}
+                {% if request.session %}
+                    {% if request.session.peek_flash() %}
+                        <div id="flash">
+                            {% set flash = request.session.pop_flash() %}
+                            {% for message in flash %}
+                              <div class="message message_type_{{ message[1] }}" id="flash">
+                                  <div class="message__text">{{ message[0] }}</div>
+                              </div>
+                              <!--div class="message message_type_error" id="flash">
+                                  <div class="message__text">Can not created new object of test_customizing</div>
+                              </div>
+                              <div class="message message_type_warning" id="flash">
+                                  <div class="message__text">You created new object of test_customizing click link to see more</div>
+                              </div-->
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endblock %}
+
+            {% block sa_body %}{% endblock %}
+
+            <div class="footer">
+                {% block sa_footer %}
+                    <center>&copy; Copyright 2013, ITCase. <a href="https://github.com/ITCase/sacrud">SACRUD</a></center>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    {% block extrascript %}
+    {% endblock %}
+</body>
+</html>
