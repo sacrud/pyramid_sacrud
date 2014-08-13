@@ -8,8 +8,8 @@
         name="{{ col.name }}"
         value="{{ value }}"
         />
-  <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/jquery/jquery.min.js') }}"></script>
-  <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/speakingurl.min.js') }}"></script>
+  <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery.min.js') }}"></script>
+  <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/speakingurl.min.js') }}"></script>
   <script>
     var target = $("#{{ col.type.input_id }}");
     var slug = $("#string_{{ col.name }}");
