@@ -20,6 +20,7 @@ install:
   - pip install pyramid pyramid_beaker
   - pip install -r requirements.txt
   - pip install pyramid_jinja2==1.10
+  - pip install git+https://github.com/ITCase/sqlalchemy_mptt.git
 
 script:
   - nosetests --with-coverage --cover-package pyramid_sacrud --cover-erase --with-doctest
