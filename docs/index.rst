@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-SACRUD
-======
+pyramid_sacrud
+==============
 
 Overview
 --------
@@ -14,11 +14,10 @@ Overview
     :align: right
     :width: 500px
 
-sacrud - CRUD interface for SQLAlchemy with Pyramid gateway.
+pyramid_sacrud - Pyramid CRUD interface based on `sacrud <https://github.com/ITCase/sacrud>`_ and SQLAlchemy.
 
-SACRUD will solve your problem of CRUD interface for SQLAlchemy,
-by providing extension for Pyramid (yet) or use it in pure form.
-Unlike classical CRUD interface, sacrud allows override and flexibly customize interface.
+`pyramid_sacrud` will solve your problem of CRUD interface for Pyramid.
+Unlike classical CRUD interface, `pyramid_sacrud <https://github.com/ITCase/pyramid_sacrud>`_ allows override and flexibly customize interface.
 (that is closer to `django.contrib.admin`)
 
 Look how easy it is to use with Pyramid:
@@ -30,15 +29,15 @@ Look how easy it is to use with Pyramid:
 
     from .models import (Model1, Model2, Model3,)
     # add sacrud and project models
-    config.include('sacrud.pyramid_ext')
+    config.include('pyramid_sacrud')
     settings = config.registry.settings
-    settings['sacrud.models'] = {'Group1': {
-                                    'tables': [Model1, Model2],
-                                    'position': 1,},
-                                 'Group2': {
-                                    'tables': [Model3],
-                                    'position': 4,}
-                                }
+    settings['pyramid_sacrud.models'] = {'Group1': {
+                                            'tables': [Model1, Model2],
+                                            'position': 1,},
+                                         'Group2': {
+                                            'tables': [Model3],
+                                            'position': 4,}
+                                         }
 
 go to http://localhost:6543/sacrud/
 
@@ -50,7 +49,6 @@ Usage
 
    install
    configuration
-   plain_usage
    api
 
 .. include:: contribute.rst

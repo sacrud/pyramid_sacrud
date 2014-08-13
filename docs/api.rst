@@ -3,31 +3,57 @@ API
 
 .. toctree::
 
-    sacrud.common
-    sacrud.pyramid_ext
-    sacrud.tests
+    pyramid_sacrud.views
+    pyramid_sacrud.tests
 
-sacrud.action module
---------------------
 
-.. automodule:: sacrud.action
-    :members:
-    :exclude-members: desc, or_
-    :undoc-members:
-    :show-inheritance:
+pyramid_sacrud.version module
+-----------------------------
 
-sacrud.exttype module
----------------------
-
-.. automodule:: sacrud.exttype
+.. automodule:: pyramid_sacrud.version
     :members:
     :undoc-members:
     :show-inheritance:
 
-sacrud.version module
+
+pyramid_sacrud.common module
+----------------------------
+
+.. automodule:: pyramid_sacrud.common
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pyramid_sacrud.breadcrumbs module
+---------------------------------
+
+.. automodule:: pyramid_sacrud.breadcrumbs
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pyramid_sacrud module
 ---------------------
 
-.. automodule:: sacrud.version
+.. automodule:: pyramid_sacrud.__init__
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyramid_sacrud.views.CRUD module
+--------------------------------
+
+.. automodule:: pyramid_sacrud.views.CRUD
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pyramid_sacrud.views.base module
+--------------------------------
+
+.. automodule:: pyramid_sacrud.views.base
     :members:
     :undoc-members:
     :show-inheritance:

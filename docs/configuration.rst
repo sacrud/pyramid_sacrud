@@ -4,7 +4,7 @@ Application Configuration for Pyramid
 Initialize
 ----------
 
-:mod:`sacrud` work with Jinja2 template renderer
+:mod:`pyramid_sacrud` work with Jinja2 template renderer
 
 .. note::
     work only with pyramid_jinja2<=1.10 version yet
@@ -16,15 +16,15 @@ Initialize
     config.include('pyramid_jinja2')
 
     from .models import (Model1, Model2, Model3,)
-    # add sacrud and project models
-    config.include('sacrud.pyramid_ext')
-    settings['sacrud.models'] = {'Group1': {
-                                    'tables': [Model1, Model2],
-                                    'position': 1,},
-                                 'Group2': {
-                                    'tables': [Model3],
-                                    'position': 4,}
-                                }
+    # add pyramid_sacrud and project models
+    config.include('pyramid_sacrud')
+    settings['pyramid_sacrud.models'] = {'Group1': {
+                                             'tables': [Model1, Model2],
+                                             'position': 1,},
+                                         'Group2': {
+                                             'tables': [Model3],
+                                             'position': 4,}
+                                        }
 
 check it there http://localhost:6543/sacrud/
 
@@ -33,7 +33,7 @@ Set another prefix
 
 .. code-block:: python
 
-    config.include('sacrud.pyramid_ext', route_prefix='admin')
+    config.include('pyramid_sacrud', route_prefix='admin')
 
 now it there http://localhost:6543/admin/
 

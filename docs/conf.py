@@ -85,7 +85,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'sacrud'
+project = u'pyramid_sacrud'
 copyright = u'2014, uralbash'
 
 # The version info for the project you're documenting, acts as replacement for
