@@ -15,6 +15,7 @@ import json
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
 from sqlalchemy import inspect
+from webhelpers.paginate import Page
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs
 from pyramid_sacrud.common import get_settings_param, sacrud_env
@@ -88,32 +89,6 @@ class CRUD(object):
     def sa_list(self):
         table = self.table
         request = self.request
-        order_by = request.params.get('order_by', False)
-        search = request.params.get('search')
-        get_params = {'order_by': order_by, 'search': search}
-
-        # Make url for table headrow links to order_by
-        for col in getattr(table, 'sacrud_list_col', table.__table__.columns):
-            order_param_list = []
-            column_name = col['column'].name if isinstance(col, dict) else col.name
-            if order_by:
-                if column_name not in order_by.replace('-', '').split('.'):
-                    order_param_list.append(column_name)
-
-                for value in order_by.split('.'):
-                    none, pfx, col_name = value.rpartition('-')
-                    if column_name == col_name:
-                        new_pfx = {'': '-', '-': ''}[pfx]
-                        order_param_list.insert(0, '%s%s' % (new_pfx, col_name))
-                    else:
-                        order_param_list.append('%s%s' % (pfx, col_name))
-            else:
-                order_param_list.append(column_name)
-
-            full_params = ['%s=%s' % (param, value) for param, value in get_params.items()
-                           if param != 'order_by' and value]
-            full_params.append('order_by=%s' % '.'.join(order_param_list))
-            update_difference_object(col, 'head_url', '&'.join(full_params))
 
         # Some actions with objects in grid
         selected_action = request.POST.get('selected_action')
@@ -125,14 +100,14 @@ class CRUD(object):
                 action.CRUD(request.dbsession, table, pk=pk).delete()
 
         items_per_page = getattr(table, 'items_per_page', 10)
-        resp = action.CRUD(request.dbsession, table)\
-            .rows_list(paginator=get_paginator(request, items_per_page),
-                       order_by=order_by, search=search)
+
+        resp = action.CRUD(request.dbsession, table).rows_list()
+        paginator = get_paginator(request, items_per_page)
+        resp['row'] = Page(resp['row'], **paginator)
 
         return {'sa_crud': resp,
                 'pk_to_list': pk_to_list,
-                'breadcrumbs': breadcrumbs(self.tname, 'sa_list'),
-                'get_params': get_params}
+                'breadcrumbs': breadcrumbs(self.tname, 'sa_list')}
 
     @sacrud_env
     @view_config(route_name='sa_update', renderer='/sacrud/create.jinja2')

@@ -18,14 +18,10 @@
                         <form class="search" action="">
                             <div class="search__input no-js">
                                 <ins class="search__input-box">
-                                    <input id="site_search" name="search" class="search__input-box-text" value="{{ get_params.search }}" placeholder="search" autocomplete="off">
+                                    <input id="site_search" name="search" class="search__input-box-text" value="" placeholder="search" autocomplete="off">
                                     <span class="search__input-icon">&nbsp;</span>
                                 </ins>
-                                {% for param, param_value in get_params.items() %}
-                                    {% if param != 'search' %}
-                                        <input type="hidden" name="{{ param }}" value="{{ param_value }}"/>
-                                    {% endif %}
-                                {% endfor %}
+                                <input type="hidden" name="{{ param }}" value="{{ param_value }}"/>
                                 <button class="search__input-button" type="submit">искать</button>
                             </div>
                         </form>
@@ -47,7 +43,7 @@
                                     </th>
                                     {% for col in visible_columns %}
                                         <th class="sacrud-grid-content-grid__header-item">
-                                            <a href="?{{ col.head_url }}" class="sacrud-grid-content-grid__header-item-link">
+                                            <a href="" class="sacrud-grid-content-grid__header-item-link">
                                                 {{ col.info.verbose_name or col.name or col.sacrud_name or None }}
                                             </a>
                                         </th>
