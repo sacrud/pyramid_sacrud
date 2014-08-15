@@ -54,7 +54,7 @@ def add_css_webasset(config):
     css_bundle = Bundle('css/*.css', 'css/**/*.css',
                         filters='cssmin')
     if settings.get('sacrud.debug', False):
-        css_bundle = Bundle(css_bundle,
+        css_bundle = Bundle(css_bundle,  # pragma: no cover
                             Bundle('styl/*.styl', 'styl/**/*.styl',
                                    filters=['stylus', 'cssmin'],
                                    output=css_file,
@@ -64,21 +64,21 @@ def add_css_webasset(config):
 
 
 def add_js_webasset(config):
-    from shutil import copyfile
-    settings = config.registry.settings
-    js_folder = os.path.join(settings["webassets.base_dir"], 'js')
+    from shutil import copyfile                                     # pragma: no cover
+    settings = config.registry.settings                             # pragma: no cover
+    js_folder = os.path.join(settings["webassets.base_dir"], 'js')  # pragma: no cover
 
-    bower = ["jquery/dist/jquery.min.js",
+    bower = ["jquery/dist/jquery.min.js",                           # pragma: no cover
              "chosen/public/chosen.jquery.min.js",
              "jquery-ui/ui/minified/jquery-ui.min.js",
              "speakingurl/speakingurl.min.js",
              "jqueryui-timepicker-addon/src/jquery-ui-timepicker-addon.js",
              "requirejs/require.js",
              ]
-    for f in bower:
-        src = os.path.join(js_folder, 'bower_components', f)
-        dst = os.path.join(js_folder, 'lib', f.split('/')[-1])
-        copyfile(src, dst)
+    for f in bower:                                                 # pragma: no cover
+        src = os.path.join(js_folder, 'bower_components', f)        # pragma: no cover
+        dst = os.path.join(js_folder, 'lib', f.split('/')[-1])      # pragma: no cover
+        copyfile(src, dst)                                          # pragma: no cover
 
 
 def includeme(config):
@@ -105,6 +105,6 @@ def includeme(config):
     config.include(webassets_init)
     config.include(add_css_webasset)
     if settings.get('sacrud.debug', False):
-        config.include(add_js_webasset)
+        config.include(add_js_webasset)  # pragma: no cover
 
     config.scan()

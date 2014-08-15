@@ -3,12 +3,9 @@
 action.py tests
 """
 
-import glob
 import os
-import unittest
 
-import transaction
-from sqlalchemy import create_engine, orm, Table
+from sqlalchemy import orm, Table
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.schema import Column, ForeignKey
@@ -33,45 +30,6 @@ TEST_DATABASE_CONNECTION_STRING = 'sqlite:///%s' % DB_FILE
 
 class MockCGIFieldStorage(object):
     pass
-
-
-class BaseSacrudTest(unittest.TestCase):
-    def user_add(self):
-        user = User(u'Vasya', u'Pupkin', u"123")
-        self.session.add(user)
-        transaction.commit()
-        user = self.session.query(User).get(1)
-        return user
-
-    # def profile_add(self, user):
-    #     profile = Profile(user=user)
-    #     self.session.add(profile)
-    #     transaction.commit()
-    #     profile = self.session.query(Profile).first()
-    #     return profile
-
-    def setUp(self):
-
-        engine = create_engine('sqlite:///:memory:')
-        DBSession.remove()
-        DBSession.configure(bind=engine)
-
-        session = DBSession
-        self.session = session
-
-        # To create tables, you typically do:
-        User.metadata.create_all(engine)
-        Profile.metadata.create_all(engine)
-
-    def tearDown(self):
-        DBSession.remove()
-
-        def clear_files():
-            files = glob.glob("%s/*.html" % PHOTO_PATH)
-            files += glob.glob("%s/*.txt" % PHOTO_PATH)
-            for filename in files:
-                os.remove(os.path.join(PHOTO_PATH, filename))
-        clear_files()
 
 
 association_table = Table('association', Base.metadata,
@@ -121,10 +79,3 @@ class Profile(Base):
     married = Column(Boolean)
     salary = Column(Float)
     photo = Column(FileStore(path="/assets/photo", abspath=PHOTO_PATH))
-
-    def __init__(self, user, phone="", cv="", married=False, salary=20.0):
-        self.user = user
-        self.phone = phone
-        self.cv = cv
-        self.married = married
-        self.salary = salary
