@@ -51,7 +51,8 @@ setup(
     author='Svintsov Dmitry',
     author_email='root@uralbash.ru',
 
-    packages=['pyramid_sacrud'],
+    packages=['pyramid_sacrud', 'pyramid_sacrud.common',
+              'pyramid_sacrud.views'],
     data_files=files,
     include_package_data=True,
     zip_safe=False,
