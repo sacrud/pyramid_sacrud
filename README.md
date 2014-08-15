@@ -6,4 +6,7 @@
 pyramid_sacrud
 ==============
 
-Admin CRUD interface for Pyramid, based on sacrud.
+Admin CRUD interface for Pyramid, based on sacrud. (Coming Soon...)
+
+
+Docs: [http://pyramid-sacrud.readthedocs.org/en/latest/](http://pyramid-sacrud.readthedocs.org/en/latest/)
