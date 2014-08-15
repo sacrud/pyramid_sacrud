@@ -16,7 +16,7 @@ import sqlalchemy.orm as orm
 from webassets import Bundle
 from zope.sqlalchemy import ZopeTransactionExtension
 
-from pyramid_sacrud.common import _silent_none, pkg_prefix
+from .common import _silent_none, pkg_prefix
 
 
 def add_routes(config):
