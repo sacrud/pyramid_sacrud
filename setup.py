@@ -71,6 +71,7 @@ setup(
     description='Pyramid SQLAlchemy CRUD.',
     long_description=open('README.md').read(),
     install_requires=[
+        "sacrud",
         "pyramid",
         "sqlalchemy",
         "transaction",
@@ -82,7 +83,7 @@ setup(
         'jsmin',
     ],
     classifiers=[
-        'Development Status :: Production',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
