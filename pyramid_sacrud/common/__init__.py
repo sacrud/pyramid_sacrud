@@ -15,7 +15,11 @@ import os
 import sqlalchemy
 from pyramid.path import AssetResolver
 
-from sacrud.common import import_from_string
+
+def import_from_string(path):
+    parts = path.split(':')
+    temp = __import__(parts[0], globals(), locals(), [parts[1], ], 0)
+    return getattr(temp, parts[1], None)
 
 
 def pkg_prefix(config):

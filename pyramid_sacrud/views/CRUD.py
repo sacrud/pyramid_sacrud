@@ -19,9 +19,9 @@ from webhelpers.paginate import Page
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs
 from pyramid_sacrud.common import get_settings_param, sacrud_env
+from pyramid_sacrud.common.paginator import get_paginator
 from sacrud import action
-from sacrud.common.paginator import get_paginator
-from sacrud.common.sa_helpers import pk_to_list
+from sacrud.common import pk_to_list
 
 
 def get_table(tname, request):
@@ -83,7 +83,6 @@ class CRUD(object):
         if hasattr(self.request, 'session'):
             self.request.session.flash([message, status])
 
-    # XXX: C901
     @sacrud_env
     @view_config(route_name='sa_list', renderer='/sacrud/list.jinja2')
     def sa_list(self):

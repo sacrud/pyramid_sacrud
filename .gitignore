@@ -34,3 +34,7 @@ bower_components
 _build
 _themes
 _pyramid_sacrud_example
+
+# Tox
+.tox
+__pycache__
