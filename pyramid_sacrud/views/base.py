@@ -16,11 +16,8 @@ from pyramid.view import view_config
 from ..common import get_settings_param
 
 
-def sorted_dashboard_widget(tables, dashboard_columns=3, session=None,
-                            model=None):
+def sorted_dashboard_widget(tables, dashboard_columns=3):
     def get_position(name):
-        if model and session:
-            return session.query(model).filter_by(widget=(name or None)).one().position
         return tables[name]['position']
 
     def set_position(name, value):
@@ -41,12 +38,9 @@ def sorted_dashboard_widget(tables, dashboard_columns=3, session=None,
 
 @view_config(route_name='sa_home', renderer='/sacrud/home.jinja2')
 def sa_home(request):
-    session = request.dbsession
     tables = get_settings_param(request, 'pyramid_sacrud.models')
     dashboard_columns = request.registry.settings\
         .get('sacrud_dashboard_columns', 3)
-    dashboard_model = request.registry.settings.get('sacrud_dashboard_position_model', None)
     return {'dashboard_columns': dashboard_columns,
-            'tables': sorted_dashboard_widget(tables, dashboard_columns,
-                                              session, dashboard_model)
+            'tables': sorted_dashboard_widget(tables, dashboard_columns)
             }
