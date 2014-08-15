@@ -15,13 +15,17 @@ import unittest
 
 from pyramid import testing
 
-from .test_models import (_initTestingDB,
-                          user_add)
+from pyramid.httpexceptions import HTTPNotFound
 from pyramid_sacrud.breadcrumbs import breadcrumbs, get_crumb
 from pyramid_sacrud.common import (get_field_template, get_obj_from_settings,
                                    set_jinja2_silent_none)
-from pyramid_sacrud.views.CRUD import get_relationship, get_table
-from pyramid_sacrud.tests import DB_FILE, Profile, TEST_DATABASE_CONNECTION_STRING, User
+from pyramid_sacrud.tests import (DB_FILE, Profile,
+                                  TEST_DATABASE_CONNECTION_STRING, User)
+from pyramid_sacrud.views.CRUD import (CRUD, get_relationship, get_table,
+                                       pk_list_to_dict,
+                                       update_difference_object)
+
+from .test_models import _initTestingDB, user_add
 
 
 class BaseTest(unittest.TestCase):
@@ -106,7 +110,31 @@ class CommonTest(BaseTest):
         self.assertEqual(obj, User)
 
 
-class ViewsTest(BaseTest):
+class CommonCrudTest(BaseTest):
+
+    # TODO: may be this need move to common
+
+    def test_update_difference_object(self):
+        class Foo: pass
+        obj = Foo()
+        update_difference_object(obj, "foo", "bar")
+        self.assertEqual(obj.foo, "bar")
+
+        obj = {}
+        update_difference_object(obj, "foo", "bar")
+        self.assertEqual(obj["foo"], "bar")
+
+    def test_pk_list_to_dict(self):
+        foo = [1, 2, 3, "a", "b", {"foo": "bar"}]
+        resp = pk_list_to_dict(foo)
+        self.assertEqual(resp, {1: 2, 3: 'a', 'b': {'foo': 'bar'}})
+
+        foo = [1, 2, 3, "a", "b"]
+        resp = pk_list_to_dict(foo)
+        self.assertEqual(resp, None)
+
+
+class BaseViewsTest(BaseTest):
 
     def _include_sacrud(self):
         request = testing.DummyRequest()
@@ -122,6 +150,18 @@ class ViewsTest(BaseTest):
                                              'Auth models': {'tables': [User, Profile]}
                                              }
         return request
+
+
+class ViewPageTest(BaseViewsTest):
+
+    def test_bad_init(self):
+        request = self._include_sacrud()
+        request.matchdict["pk"] = ("foo", "bar", "baz")
+        request.matchdict["table"] = "user"
+        with self.assertRaises(HTTPNotFound) as cm:
+            CRUD(request)
+        the_exception = str(cm.exception)
+        self.assertEqual(the_exception, 'The resource could not be found.')
 
     def test_get_table(self):
         request = self._include_sacrud()

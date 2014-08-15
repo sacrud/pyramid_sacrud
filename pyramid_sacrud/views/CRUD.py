@@ -68,7 +68,9 @@ class CRUD(object):
         self.tname = request.matchdict['table']
         self.table = get_table(self.tname, self.request)
         self.relationships = get_relationship(self.tname, self.request)
-        self.params = request.params.dict_of_lists()
+        self.params = request.params
+        if hasattr(self.params, 'dict_of_lists'):
+            self.params = self.params.dict_of_lists()
 
         if not self.table:
             raise HTTPNotFound
