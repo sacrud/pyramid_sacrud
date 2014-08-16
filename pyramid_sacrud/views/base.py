@@ -14,7 +14,7 @@ from pyramid.view import view_config
 from ..common import get_settings_param
 
 
-def sorted_dashboard_widget(tables, dashboard_columns=3):
+def sorted_dashboard_widget(tables):
     class DashboardWidget(object):
         def __init__(self, name, **kwargs):
             self.name = name
@@ -37,5 +37,5 @@ def sa_home(request):
     dashboard_columns = request.registry.settings\
         .get('sacrud_dashboard_columns', 3)
     return {'dashboard_columns': dashboard_columns,
-            'widgets': sorted_dashboard_widget(tables, dashboard_columns)
+            'widgets': sorted_dashboard_widget(tables)
             }

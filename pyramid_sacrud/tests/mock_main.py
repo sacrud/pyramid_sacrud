@@ -30,12 +30,12 @@ def main(global_config, **settings):
         '': {
             'tables': [User],
             'column': 0,
-            'position': 0,
+            'position': 1,
         },
         'Auth models': {
             'tables': [User, Profile],
             'column': 0,
-            'position': 0,
+            'position': 4,
         },
     }
     config.scan()
