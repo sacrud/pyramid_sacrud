@@ -35,6 +35,7 @@ class BaseTest(unittest.TestCase):
         settings = {'sqlalchemy.url': TEST_DATABASE_CONNECTION_STRING}
         app = main({}, **settings)
         DBSession = _initTestingDB()
+        self.DBSession = DBSession
         user_add(DBSession)
         user_add(DBSession)
         # user = user_add(DBSession)
@@ -154,10 +155,19 @@ class BaseViewsTest(BaseTest):
 
 class ViewPageTest(BaseViewsTest):
 
-    def test_bad_init(self):
+    def test_bad_pk_init(self):
         request = self._include_sacrud()
-        request.matchdict["pk"] = ("foo", "bar", "baz")
+        request.matchdict["pk"] = ("foo", "bar", "baz")  # bad pk's
         request.matchdict["table"] = "user"
+        with self.assertRaises(HTTPNotFound) as cm:
+            CRUD(request)
+        the_exception = str(cm.exception)
+        self.assertEqual(the_exception, 'The resource could not be found.')
+
+    def test_bad_table_init(self):
+        request = self._include_sacrud()
+        request.matchdict["pk"] = ("foo", "bar")
+        request.matchdict["table"] = "user666"
         with self.assertRaises(HTTPNotFound) as cm:
             CRUD(request)
         the_exception = str(cm.exception)
@@ -190,15 +200,40 @@ class ViewPageTest(BaseViewsTest):
         res = self.testapp.get('/admin/profile', status=200)
         self.failUnless("profile_[&#39;id&#39;, 1]" not in res.body)
 
-    def test_sa_update(self):
+    def test_sa_list_delete_actions(self):
+        items_list = [u'["id", 1]', u'["id", 2]']
+        self.testapp.post('/admin/user',
+                          {'selected_action': 'delete',
+                           'selected_item': items_list},
+                          status=200)
+        count = self.DBSession.query(User).filter(User.id.in_([1, 2])).count()
+        self.assertEqual(count, 0)
+
+    def test_sa_update_get(self):
         res = self.testapp.get('/admin/user/update/id/1/', status=200)
         self.failUnless('Add a new user' in res.body)
+
+    def test_sa_update_post(self):
+        self.testapp.post('/admin/user/update/id/1/',
+                          {'form.submitted': '1',
+                           'name': 'foo bar'},
+                          status=302)
+        user = self.DBSession.query(User).get(1)
+        self.assertEqual(user.name, 'foo bar')
 
     def test_sa_create(self):
         res = self.testapp.get('/admin/user/create', status=200)
         self.failUnless('create' in res.body)
         # XXX: not good
         self.failUnless('Add a new user' in res.body)
+
+    def test_sa_create_post(self):
+        self.testapp.post('/admin/user/create',
+                          {'form.submitted': '1',
+                           'name': 'foo bar baz'},
+                          status=302)
+        user = self.DBSession.query(User).order_by(User.id.desc()).first()
+        self.assertEqual(user.name, 'foo bar baz')
 
     def test_sa_delete(self):
         self.testapp.get('/admin/user/delete/id/1/', status=302)
