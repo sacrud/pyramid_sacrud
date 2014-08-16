@@ -29,10 +29,10 @@ def get_table(tname, request):
     """
     # convert values of models dict to flat list
     setting_params = get_settings_param(request, 'pyramid_sacrud.models').values()
-    tables_lists = map(lambda x: x['tables'], setting_params)
+    tables_lists = [x['tables'] for x in setting_params]
     tables = itertools.chain(*tables_lists)
-    tables = filter(lambda table: (table.__tablename__).
-                    lower() == tname.lower(), tables)
+    tables = [table for table in tables if (table.__tablename__).
+              lower() == tname.lower()]
     if not tables:
         return None
     return tables[0]

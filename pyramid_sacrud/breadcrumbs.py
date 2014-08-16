@@ -19,7 +19,7 @@ def get_crumb(name, visible, view, params):
             category_id=1, group_id=1
         """
         crumb = ""
-        for k, v in name.iteritems():
+        for k, v in name.items():
             crumb = crumb + " " + k + "=" + v + ","
         crumb = crumb[:-1]
 

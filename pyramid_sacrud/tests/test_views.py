@@ -190,15 +190,15 @@ class ViewPageTest(BaseViewsTest):
 
     def test_sa_home(self):
         res = self.testapp.get('/admin/', status=200)
-        self.failUnless('Auth models' in res.body)
-        self.failUnless('user' in res.body)
-        self.failUnless('profile' in res.body)
+        self.failUnless('Auth models' in str(res.body))
+        self.failUnless('user' in str(res.body))
+        self.failUnless('profile' in str(res.body))
 
     def test_sa_list(self):
         res = self.testapp.get('/admin/user', status=200)
-        self.failUnless("user_[&#39;id&#39;, 2]" in res.body)
+        self.failUnless("user_[&#39;id&#39;, 2]" in str(res.body))
         res = self.testapp.get('/admin/profile', status=200)
-        self.failUnless("profile_[&#39;id&#39;, 1]" not in res.body)
+        self.failUnless("profile_[&#39;id&#39;, 1]" not in str(res.body))
 
     def test_sa_list_delete_actions(self):
         items_list = [u'["id", 1]', u'["id", 2]']
@@ -211,7 +211,7 @@ class ViewPageTest(BaseViewsTest):
 
     def test_sa_update_get(self):
         res = self.testapp.get('/admin/user/update/id/1/', status=200)
-        self.failUnless('Add a new user' in res.body)
+        self.failUnless('Add a new user' in str(res.body))
 
     def test_sa_update_post(self):
         self.testapp.post('/admin/user/update/id/1/',
@@ -223,9 +223,9 @@ class ViewPageTest(BaseViewsTest):
 
     def test_sa_create(self):
         res = self.testapp.get('/admin/user/create', status=200)
-        self.failUnless('create' in res.body)
+        self.failUnless('create' in str(res.body))
         # XXX: not good
-        self.failUnless('Add a new user' in res.body)
+        self.failUnless('Add a new user' in str(res.body))
 
     def test_sa_create_post(self):
         self.testapp.post('/admin/user/create',

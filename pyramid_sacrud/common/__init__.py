@@ -96,7 +96,7 @@ def get_obj_from_settings(request, name):
     if not isinstance(request, dict):
         settings = request.registry.settings
     position_model = settings.get(name)
-    if isinstance(position_model, basestring):
+    if isinstance(position_model, str):
         return import_from_string(position_model)
     return position_model
 

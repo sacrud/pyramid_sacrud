@@ -9,31 +9,26 @@
 """
 Views for Pyramid frontend
 """
-from collections import OrderedDict
-
 from pyramid.view import view_config
 
 from ..common import get_settings_param
 
 
 def sorted_dashboard_widget(tables, dashboard_columns=3):
-    def get_position(name):
-        return tables[name]['position']
-
-    def set_position(name, value):
-        value['position'] = get_position(name)
-        return value
-
-    def getKey(item):
-        position = item[1]['position']
-        key = position % dashboard_columns
-        if not key:
-            key = dashboard_columns
-        return (key, position)
-
-    dashboard_widget = {k: set_position(k, v) for k, v in tables.iteritems()}
-    return OrderedDict(sorted(dashboard_widget.iteritems(),
-                              cmp=lambda t1, t2: cmp(getKey(t1), getKey(t2))))
+    class DashboardWidget(object):
+        def __init__(self, name, **kwargs):
+            self.name = name
+            self.tables = kwargs['tables']
+            self.position = kwargs['position']
+    widgets = []
+    for k, v in tables.items():
+        widgets.append(DashboardWidget(name=k, **v))
+        widgets = sorted(widgets, key=lambda x: x.position)
+    for i, widget in enumerate(widgets[:-1]):
+        delta = widgets[i+1].position - widget.position
+        for x in range(delta-1):
+            widgets.insert(i+1, DashboardWidget('', tables=[], position=i+x+2))
+    return widgets
 
 
 @view_config(route_name='sa_home', renderer='/sacrud/home.jinja2')
@@ -42,5 +37,5 @@ def sa_home(request):
     dashboard_columns = request.registry.settings\
         .get('sacrud_dashboard_columns', 3)
     return {'dashboard_columns': dashboard_columns,
-            'tables': sorted_dashboard_widget(tables, dashboard_columns)
+            'widgets': sorted_dashboard_widget(tables, dashboard_columns)
             }

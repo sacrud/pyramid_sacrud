@@ -15,14 +15,20 @@ notifications:
 python:
   - "2.7"
 
+env:
+  - TOXENV=py27
+  - TOXENV=py33
+  - TOXENV=py34
+
 install:
   - pip install nose coverage coveralls
-  - pip install pyramid pyramid_beaker
+  - pip install pyramid pyramid_beaker tox
   - pip install -r requirements.txt
   - pip install pyramid_jinja2==1.10
   - pip install git+https://github.com/ITCase/sacrud.git@develop
 
 script:
+  - tox
   - nosetests --with-coverage --cover-package pyramid_sacrud --cover-erase --with-doctest
 
 after_success:
