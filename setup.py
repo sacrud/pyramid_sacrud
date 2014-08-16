@@ -35,14 +35,13 @@ def find_data_files(srcdir, *wildcards, **kw):
     file_list = []
     recursive = kw.get('recursive', True)
     if recursive:
-        os.path.walk(srcdir, walk_helper, (file_list, wildcards))
+        os.walk(srcdir, walk_helper, (file_list, wildcards))
     else:
         walk_helper((file_list, wildcards),
                     srcdir,
                     [os.path.basename(f) for f in glob.glob(opj(srcdir, '*'))])
     return file_list
 files = find_data_files('pyramid_sacrud/', '*.*')
-print 'files', files
 
 setup(
     name='pyramid_sacrud',
@@ -70,7 +69,7 @@ setup(
                            'tests/*.py', ],
     },
     description='Pyramid SQLAlchemy CRUD.',
-    long_description=open('README.md').read(),
+    long_description="",
     install_requires=[
         "sacrud",
         "pyramid",
@@ -78,7 +77,8 @@ setup(
         "transaction",
         'zope.sqlalchemy',
         'pyramid_webassets',
-        'webhelpers',
+        'pyramid_beaker',
+        'paginate',
         'webtest',
         'cssmin',
         'jsmin',

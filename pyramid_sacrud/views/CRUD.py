@@ -15,7 +15,7 @@ import json
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
 from sqlalchemy import inspect
-from webhelpers.paginate import Page
+from paginate import Page
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs
 from pyramid_sacrud.common import get_settings_param, sacrud_env
@@ -51,7 +51,6 @@ def update_difference_object(obj, key, value):
         obj.update({key: value})
     else:
         setattr(obj, key, value)
-    # return obj
 
 
 def pk_list_to_dict(pk_list):
@@ -100,13 +99,15 @@ class CRUD(object):
                 pk = pk_list_to_dict(pk_list)
                 action.CRUD(request.dbsession, table, pk=pk).delete()
 
+        # paginator
         items_per_page = getattr(table, 'items_per_page', 10)
 
         resp = action.CRUD(request.dbsession, table).rows_list()
-        paginator = get_paginator(request, items_per_page)
-        resp['row'] = Page(resp['row'], **paginator)
+        paginator_attr = get_paginator(request, items_per_page)
+        paginator = Page(resp['row'].all(), **paginator_attr)
 
         return {'sa_crud': resp,
+                'paginator': paginator,
                 'pk_to_list': pk_to_list,
                 'breadcrumbs': breadcrumbs(self.tname, 'sa_list')}
 

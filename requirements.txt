@@ -1,9 +1,11 @@
 sacrud>=0.1.4
 SQLAlchemy>=0.8.0b1
+pyramid_jinja2==1.10
 pyramid
 zope.sqlalchemy
+pyramid_beaker
 transaction
-webhelpers
+paginate
 webtest
 pyramid_webassets
 cssmin

@@ -9,7 +9,6 @@
 """
 Webhelpers paginator
 """
-from webhelpers.paginate import PageURL_WebOb
 
 
 def get_current_page(request):
@@ -17,7 +16,7 @@ def get_current_page(request):
 
 
 def get_paginator(request, items_per_page=10):
-    page_url = PageURL_WebOb(request)
-    paginator = {"url": page_url, "items_per_page": items_per_page,
-                 "page": get_current_page(request)}
+    paginator = {"items_per_page": items_per_page,
+                 "page": get_current_page(request),
+                 "url_maker": lambda p: request.path_url + "?page=%s" % p}
     return paginator
