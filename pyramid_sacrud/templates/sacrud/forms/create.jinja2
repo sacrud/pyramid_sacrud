@@ -3,6 +3,7 @@
 {% set visible_columns=sa_crud['col'] %}
 {% set fk_template = "sacrud/types/ForeignKey.jinja2" %}
 
+{{ form|safe }}
 <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"
     {% if sa_crud %}
         {% if not obj %}
@@ -12,6 +13,8 @@
                        pk=pk_to_list(obj)) }}"
         {% endif %}
     {% endif %}>
+    {{ form|safe }}
+
 
     {% if sa_crud %}
         <div class="sacrud-grid">

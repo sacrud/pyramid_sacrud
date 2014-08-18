@@ -131,7 +131,17 @@ class CRUD(object):
         if self.pk:
             bc = breadcrumbs(self.tname, 'sa_update', id=self.pk)
 
-        return {'sa_crud': resp.add(),
+        import colander
+        from deform import Form
+
+        class Person(colander.MappingSchema):
+            name = colander.SchemaNode(colander.String())
+
+        schema = Person()
+        myform = Form(schema, buttons=('submit',))
+
+        return {'form': myform.render(),
+                'sa_crud': resp.add(),
                 'pk_to_list': pk_to_list,
                 'relationships': self.relationships,
                 'breadcrumbs': bc}
