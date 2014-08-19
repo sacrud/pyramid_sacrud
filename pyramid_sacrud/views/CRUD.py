@@ -12,10 +12,10 @@ Views for Pyramid frontend
 import itertools
 import json
 
+from paginate import Page
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
 from sqlalchemy import inspect
-from paginate import Page
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs
 from pyramid_sacrud.common import get_settings_param, sacrud_env
@@ -131,17 +131,11 @@ class CRUD(object):
         if self.pk:
             bc = breadcrumbs(self.tname, 'sa_update', id=self.pk)
 
-        import colander
-        from deform import Form
-
-        class Person(colander.MappingSchema):
-            name = colander.SchemaNode(colander.String())
-
-        schema = Person()
-        myform = Form(schema, buttons=('submit',))
-
-        return {'form': myform.render(),
-                'sa_crud': resp.add(),
+        from ..formbuilder import form_generator
+        sa_crud = resp.add()
+        form = form_generator(**sa_crud)
+        return {'form': form.render(),
+                'sa_crud': sa_crud,
                 'pk_to_list': pk_to_list,
                 'relationships': self.relationships,
                 'breadcrumbs': bc}

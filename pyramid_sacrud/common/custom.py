@@ -49,11 +49,11 @@ def widget_horizontal(*args, **kwargs):
     {'info': {'sacrud_list_template': 'sacrud/custom/HorizontalFieldsList.jinja2', 'sacrud_position': 'inline', 'sacrud_template': 'sacrud/custom/HorizontalFieldsDetail.jinja2'}, 'sacrud_name': '', 'name': '', 'horizontal_columns': ()}
 
     """
-    return {'info': {'sacrud_position': 'inline',
+    return {'horizontal_columns': args,
+            'info': {'sacrud_position': 'inline',
                      'sacrud_template': 'sacrud/custom/WidgetHorizontalDetail.jinja2',
                      'sacrud_list_template': 'sacrud/custom/WidgetHorizontalList.jinja2',
                      },
-            'horizontal_columns': args,
             }
 
 

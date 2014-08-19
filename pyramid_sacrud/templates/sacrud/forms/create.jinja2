@@ -3,7 +3,7 @@
 {% set visible_columns=sa_crud['col'] %}
 {% set fk_template = "sacrud/types/ForeignKey.jinja2" %}
 
-{{ form|safe }}
+{# generate form action in view #}
 <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"
     {% if sa_crud %}
         {% if not obj %}
