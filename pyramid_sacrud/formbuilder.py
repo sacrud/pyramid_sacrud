@@ -87,13 +87,14 @@ class HTMLText(object):
 
 
 class GroupShema(colander.Schema):
-    def __init__(self, group, columns, table, **kwargs):
+    def __init__(self, group, columns, table, obj, **kwargs):
         kwargs['title'] = group
         colander.SchemaNode.__init__(self, colander.Mapping('ignore'), **kwargs)
+        self.obj = obj
         self.table = table
         self.add_colums(columns)
 
-    def get_column_name(self, col):
+    def get_column_title(self, col):
         if 'verbose_name' in col.info:
             name = col.info['verbose_name']
         else:
@@ -125,18 +126,32 @@ class GroupShema(colander.Schema):
             return col.type.__class__
         return None
 
+    def get_col_value(self, col, obj):
+        value = None
+        if obj and hasattr(col, 'instance_name'):
+            value = obj.__getattribute__(col.instance_name)
+        elif obj and hasattr(col, 'name'):
+            value = obj.__getattribute__(col.name)
+        if value is None:
+            value = colander.null
+        return value
+
     def add_colums(self, columns):
         for col in columns:
             if isinstance(col, dict):
                 col = Dict2Obj(col)
-            name = self.get_column_name(col)
+            title = self.get_column_title(col)
+            value = self.get_col_value(col, self.obj)
             description = self.get_column_description(col)
+            css_class = self.get_column_css_styles(self.table, col)
+
             sa_type = self.get_column_type(col)
             column_type = _get_column_type_by_sa_type(sa_type)
             widget_type = _get_widget_type_by_sa_type(sa_type)
-            css_class = self.get_column_css_styles(self.table, col)
             node = colander.SchemaNode(column_type(),
-                                       name=name,
+                                       title=title,
+                                       name=col.name,
+                                       default=value,
                                        description=description,
                                        widget=widget_type(css_class=css_class)
                                        )
@@ -147,13 +162,13 @@ class SacrudShemaNode(colander.SchemaNode):
     def __init__(self, **kwargs):
         colander.SchemaNode.__init__(self, colander.Mapping('ignore'), **kwargs)
         self.obj = kwargs['obj']
-        self.obj_cls = kwargs['table']
+        self.table = kwargs['table']
         self.visible_columns = kwargs['col']
         self.build()
 
     def build(self):
         for group, columns in self.visible_columns:
-            self.add(GroupShema(group, columns, self.obj_cls))
+            self.add(GroupShema(group, columns, self.table, self.obj))
 
 
 def form_generator(**kwargs):
