@@ -155,15 +155,19 @@ class GroupShema(colander.Schema):
                                    )
         return node
 
+    # TODO: rewrite it
     def get_foreign_key_node(self, **kwargs):
+        from sacrud.common import pk_to_list
         fk_schema = colander.Schema()
         kwargs['sa_type'] = sqlalchemy.ForeignKey
         for rel in self.relationships:
             if kwargs['col'] in rel.remote_side or kwargs['col'] in rel.local_columns:
                 choices = self.dbsession.query(rel.mapper).all()
-                choices = [(None, None)] + [(ch.id, ch.__repr__()) for ch in choices]
+                choices = [(None, None)] + [(getattr(ch, pk_to_list(ch)[0]),
+                                             ch.__repr__()) for ch in choices]
                 node = self.get_node(values=choices, **kwargs)
                 fk_schema.add(node)
+                break
         return fk_schema
 
     def add_colums(self, columns):
