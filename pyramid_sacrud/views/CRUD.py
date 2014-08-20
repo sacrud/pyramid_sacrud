@@ -131,9 +131,10 @@ class CRUD(object):
         if self.pk:
             bc = breadcrumbs(self.tname, 'sa_update', id=self.pk)
 
-        from ..formbuilder import form_generator
+        from ..form import form_generator
         sa_crud = resp.add()
-        form = form_generator(**sa_crud)
+        form = form_generator(relationships=self.relationships,
+                              dbsession=self.request.dbsession, **sa_crud)
         return {'form': form.render(),
                 'sa_crud': sa_crud,
                 'pk_to_list': pk_to_list,

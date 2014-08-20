@@ -7,6 +7,7 @@
 # Distributed under terms of the MIT license.
 import colander
 import deform
+import sqlalchemy
 from deform import Form
 from sqlalchemy import types as sa_types
 
@@ -26,6 +27,7 @@ _TYPES = {
     sa_types.Time: colander.Time,
     sa_types.Unicode: colander.String,
     sa_types.UnicodeText: colander.String,
+    sqlalchemy.ForeignKey: colander.String,
 }
 
 # Map sqlalchemy types to deform widgets.
@@ -44,6 +46,7 @@ _WIDGETS = {
     sa_types.Time: deform.widget.TextInputWidget,
     sa_types.Unicode: deform.widget.TextInputWidget,
     sa_types.UnicodeText: deform.widget.TextAreaWidget,
+    sqlalchemy.ForeignKey: deform.widget.SelectWidget,
 }
 
 
@@ -87,11 +90,14 @@ class HTMLText(object):
 
 
 class GroupShema(colander.Schema):
-    def __init__(self, group, columns, table, obj, **kwargs):
+    def __init__(self, relationships, group, columns, table, obj, dbsession,
+                 **kwargs):
         kwargs['title'] = group
         colander.SchemaNode.__init__(self, colander.Mapping('ignore'), **kwargs)
         self.obj = obj
         self.table = table
+        self.relationships = relationships
+        self.dbsession = dbsession
         self.add_colums(columns)
 
     def get_column_title(self, col):
@@ -126,7 +132,7 @@ class GroupShema(colander.Schema):
             return col.type.__class__
         return None
 
-    def get_col_value(self, col, obj):
+    def get_col_default_value(self, col, obj):
         value = None
         if obj and hasattr(col, 'instance_name'):
             value = obj.__getattribute__(col.instance_name)
@@ -136,43 +142,73 @@ class GroupShema(colander.Schema):
             value = colander.null
         return value
 
+    def get_node(self, values=None, **kwargs):
+        column_type = _get_column_type_by_sa_type(kwargs['sa_type'])
+        widget_type = _get_widget_type_by_sa_type(kwargs['sa_type'])
+        node = colander.SchemaNode(column_type(),
+                                   title=kwargs['title'],
+                                   name=kwargs['col'].name,
+                                   default=kwargs['default'],
+                                   description=kwargs['description'],
+                                   widget=widget_type(values=values,
+                                                      css_class=kwargs['css_class'])
+                                   )
+        return node
+
+    def get_foreign_key_node(self, **kwargs):
+        fk_schema = colander.Schema()
+        kwargs['sa_type'] = sqlalchemy.ForeignKey
+        for rel in self.relationships:
+            if kwargs['col'] in rel.remote_side or kwargs['col'] in rel.local_columns:
+                choices = self.dbsession.query(rel.mapper).all()
+                choices = [(None, None)] + [(ch.id, ch.__repr__()) for ch in choices]
+                node = self.get_node(values=choices, **kwargs)
+                fk_schema.add(node)
+        return fk_schema
+
     def add_colums(self, columns):
         for col in columns:
+            node = None
             if isinstance(col, dict):
                 col = Dict2Obj(col)
             title = self.get_column_title(col)
-            value = self.get_col_value(col, self.obj)
+            default = self.get_col_default_value(col, self.obj)
             description = self.get_column_description(col)
             css_class = self.get_column_css_styles(self.table, col)
-
             sa_type = self.get_column_type(col)
-            column_type = _get_column_type_by_sa_type(sa_type)
-            widget_type = _get_widget_type_by_sa_type(sa_type)
-            node = colander.SchemaNode(column_type(),
-                                       title=title,
-                                       name=col.name,
-                                       default=value,
-                                       description=description,
-                                       widget=widget_type(css_class=css_class)
-                                       )
+            params = {'col': col,
+                      'sa_types': sa_type,
+                      'title': title,
+                      'description': description,
+                      'default': default,
+                      'css_class': css_class,
+                      'sa_type': sa_type}
+            if hasattr(col, 'foreign_keys'):
+                if col.foreign_keys:
+                    node = self.get_foreign_key_node(**params)
+            if not node:
+                node = self.get_node(**params)
             self.add(node)
 
 
 class SacrudShemaNode(colander.SchemaNode):
-    def __init__(self, **kwargs):
+    def __init__(self, relationships, dbsession, **kwargs):
         colander.SchemaNode.__init__(self, colander.Mapping('ignore'), **kwargs)
         self.obj = kwargs['obj']
         self.table = kwargs['table']
         self.visible_columns = kwargs['col']
+        self.relationships = relationships
+        self.dbsession = dbsession
         self.build()
 
     def build(self):
         for group, columns in self.visible_columns:
-            self.add(GroupShema(group, columns, self.table, self.obj))
+            self.add(GroupShema(self.relationships, group, columns,
+                                self.table, self.obj, self.dbsession))
 
 
-def form_generator(**kwargs):
-    schema = SacrudShemaNode(**kwargs)
+def form_generator(relationships, dbsession, **kwargs):
+    schema = SacrudShemaNode(relationships, dbsession, **kwargs)
     submit = deform.Button(name='form.submitted', title="save",
                            css_class='toolbar-button__item')
     return Form(schema, buttons=(submit,))

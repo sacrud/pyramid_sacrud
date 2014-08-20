@@ -44,11 +44,6 @@
                 {% include fk_template %}
             {% else %}
                 {% include get_field_template(col.type.__class__.__name__) %}
-            {% endif %}
-            {% if col.info['description'] %}
-                <div class="sacrud-grid-content-grid__body-item-desc">
-                    {{ col.info['description']|safe }}
-                </div>
             {% endif %#}
 
             <div class="sacrud-grid__toolbar">
