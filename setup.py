@@ -74,6 +74,8 @@ setup(
         "sacrud",
         "pyramid",
         "sqlalchemy",
+        "colander",
+        "deform",
         "transaction",
         'zope.sqlalchemy',
         'pyramid_webassets',

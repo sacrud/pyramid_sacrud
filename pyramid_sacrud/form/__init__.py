@@ -149,7 +149,7 @@ class GroupShema(colander.Schema):
         widget_type = _get_widget_type_by_sa_type(kwargs['sa_type'])
         if kwargs['sa_type'] == sa_types.Enum and not values:
             values = [(x, x) for x in kwargs['col'].type.enums]
-        if kwargs['sa_type'] == sacrud.exttype.GUID:
+        if kwargs['sa_type'] == sacrud.exttype.GUID and not mask:
             mask = 'hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh'
         node = colander.SchemaNode(column_type(),
                                    title=kwargs['title'],
@@ -171,8 +171,8 @@ class GroupShema(colander.Schema):
         for rel in self.relationships:
             if kwargs['col'] in rel.remote_side or kwargs['col'] in rel.local_columns:
                 choices = self.dbsession.query(rel.mapper).all()
-                choices = [(None, None)] + [(getattr(ch, pk_to_list(ch)[0]),
-                                             ch.__repr__()) for ch in choices]
+                choices = [('', '')] + [(getattr(ch, pk_to_list(ch)[0]),
+                                         ch.__repr__()) for ch in choices]
                 node = self.get_node(values=choices, **kwargs)
                 fk_schema.add(node)
                 break
