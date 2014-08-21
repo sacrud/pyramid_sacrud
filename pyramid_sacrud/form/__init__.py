@@ -11,6 +11,8 @@ import sqlalchemy
 from deform import Form
 from sqlalchemy import types as sa_types
 
+import sacrud
+
 # Map sqlalchemy types to colander types.
 _TYPES = {
     sa_types.BigInteger: colander.Integer,
@@ -142,15 +144,21 @@ class GroupShema(colander.Schema):
             value = colander.null
         return value
 
-    def get_node(self, values=None, **kwargs):
+    def get_node(self, values=None, mask=None, **kwargs):
         column_type = _get_column_type_by_sa_type(kwargs['sa_type'])
         widget_type = _get_widget_type_by_sa_type(kwargs['sa_type'])
+        if kwargs['sa_type'] == sa_types.Enum and not values:
+            values = [(x, x) for x in kwargs['col'].type.enums]
+        if kwargs['sa_type'] == sacrud.exttype.GUID:
+            mask = 'hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh'
         node = colander.SchemaNode(column_type(),
                                    title=kwargs['title'],
                                    name=kwargs['col'].name,
                                    default=kwargs['default'],
                                    description=kwargs['description'],
                                    widget=widget_type(values=values,
+                                                      mask=mask,
+                                                      mask_placeholder='_',
                                                       css_class=kwargs['css_class'])
                                    )
         return node

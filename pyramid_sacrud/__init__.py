@@ -102,6 +102,9 @@ def includeme(config):
     config.add_static_view('sa_static', 'pyramid_sacrud:static')
 
     # Assets
+    config.add_static_view('sa_deform_static',
+                           'deform:static')
+
     config.include(webassets_init)
     config.include(add_css_webasset)
     if settings.get('sacrud.debug', False):
