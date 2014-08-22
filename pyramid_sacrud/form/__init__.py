@@ -10,7 +10,7 @@ import deform
 import sqlalchemy
 from deform import Form
 from sqlalchemy import types as sa_types
-from sqlalchemy.dialects.postgresql import ARRAY, BYTEA, HSTORE, JSON
+from sqlalchemy.dialects.postgresql import JSON  # , HSTORE
 
 import sacrud
 
