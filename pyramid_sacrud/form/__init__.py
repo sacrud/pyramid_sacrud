@@ -152,19 +152,11 @@ class GroupShema(colander.Schema):
             value = colander.null
         elif col_type == sacrud.exttype.ChoiceType:
             value = value[0]
-        elif col_type == sacrud.exttype.FileStore:
-            value = colander.null
         return value
 
     def get_widget(self, widget_type, values, mask, css_class):
         if widget_type == deform.widget.FileUploadWidget:
-            value = {'filename': 'foo',
-                     'fp': None,
-                     'mimetype': 'image/jpeg',
-                     'preview_url': None,
-                     'size': -1,
-                     'uid': 'MTLAGP97JC'}
-            return widget_type(value)
+            return widget_type(None)
         return widget_type(values=values,
                            mask=mask,
                            mask_placeholder='_',
@@ -181,6 +173,9 @@ class GroupShema(colander.Schema):
             values = [(v, k) for k, v in kwargs['col'].type.choices.items()]
 
         widget = self.get_widget(widget_type, values, mask, kwargs['css_class'])
+        if widget_type == deform.widget.FileUploadWidget:
+            kwargs['description'] = kwargs['default']
+            kwargs['default'] = colander.null
         node = colander.SchemaNode(column_type(),
                                    title=kwargs['title'],
                                    name=kwargs['col'].name,
