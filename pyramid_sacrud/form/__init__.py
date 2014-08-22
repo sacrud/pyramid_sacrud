@@ -10,6 +10,7 @@ import deform
 import sqlalchemy
 from deform import Form
 from sqlalchemy import types as sa_types
+from sqlalchemy.dialects.postgresql import ARRAY, BYTEA, HSTORE, JSON
 
 import sacrud
 
@@ -29,7 +30,10 @@ _TYPES = {
     sa_types.Time: colander.Time,
     sa_types.Unicode: colander.String,
     sa_types.UnicodeText: colander.String,
+    JSON: colander.String,
     sqlalchemy.ForeignKey: colander.String,
+    sacrud.exttype.ChoiceType: colander.String,
+    sacrud.exttype.FileStore: deform.FileData,
 }
 
 # Map sqlalchemy types to deform widgets.
@@ -48,7 +52,10 @@ _WIDGETS = {
     sa_types.Time: deform.widget.TextInputWidget,
     sa_types.Unicode: deform.widget.TextInputWidget,
     sa_types.UnicodeText: deform.widget.TextAreaWidget,
+    JSON: deform.widget.TextAreaWidget,
     sqlalchemy.ForeignKey: deform.widget.SelectWidget,
+    sacrud.exttype.ChoiceType: deform.widget.SelectWidget,
+    sacrud.exttype.FileStore: deform.widget.FileUploadWidget,
 }
 
 
@@ -136,13 +143,32 @@ class GroupShema(colander.Schema):
 
     def get_col_default_value(self, col, obj):
         value = None
+        col_type = self.get_column_type(col)
         if obj and hasattr(col, 'instance_name'):
             value = obj.__getattribute__(col.instance_name)
         elif obj and hasattr(col, 'name'):
             value = obj.__getattribute__(col.name)
         if value is None:
             value = colander.null
+        elif col_type == sacrud.exttype.ChoiceType:
+            value = value[0]
+        elif col_type == sacrud.exttype.FileStore:
+            value = colander.null
         return value
+
+    def get_widget(self, widget_type, values, mask, css_class):
+        if widget_type == deform.widget.FileUploadWidget:
+            value = {'filename': 'foo',
+                     'fp': None,
+                     'mimetype': 'image/jpeg',
+                     'preview_url': None,
+                     'size': -1,
+                     'uid': 'MTLAGP97JC'}
+            return widget_type(value)
+        return widget_type(values=values,
+                           mask=mask,
+                           mask_placeholder='_',
+                           css_class=css_class)
 
     def get_node(self, values=None, mask=None, **kwargs):
         column_type = _get_column_type_by_sa_type(kwargs['sa_type'])
@@ -151,15 +177,16 @@ class GroupShema(colander.Schema):
             values = [(x, x) for x in kwargs['col'].type.enums]
         if kwargs['sa_type'] == sacrud.exttype.GUID and not mask:
             mask = 'hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh'
+        if kwargs['sa_type'] == sacrud.exttype.ChoiceType and not values:
+            values = [(v, k) for k, v in kwargs['col'].type.choices.items()]
+
+        widget = self.get_widget(widget_type, values, mask, kwargs['css_class'])
         node = colander.SchemaNode(column_type(),
                                    title=kwargs['title'],
                                    name=kwargs['col'].name,
                                    default=kwargs['default'],
                                    description=kwargs['description'],
-                                   widget=widget_type(values=values,
-                                                      mask=mask,
-                                                      mask_placeholder='_',
-                                                      css_class=kwargs['css_class'])
+                                   widget=widget
                                    )
         return node
 
