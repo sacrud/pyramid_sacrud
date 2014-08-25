@@ -10,7 +10,8 @@ import deform
 import sqlalchemy
 from deform import Form
 from sqlalchemy import types as sa_types
-from sqlalchemy.dialects.postgresql import JSON  # , HSTORE
+from sqlalchemy.dialects.postgresql import JSON, HSTORE
+from .widgets import ElfinderWidget, HstoreWidget, SlugWidget
 
 import sacrud
 
@@ -31,9 +32,11 @@ _TYPES = {
     sa_types.Unicode: colander.String,
     sa_types.UnicodeText: colander.String,
     JSON: colander.String,
+    HSTORE: colander.String,
     sqlalchemy.ForeignKey: colander.String,
     sacrud.exttype.ChoiceType: colander.String,
     sacrud.exttype.FileStore: deform.FileData,
+    sacrud.exttype.SlugType: colander.String,
 }
 
 # Map sqlalchemy types to deform widgets.
@@ -53,9 +56,12 @@ _WIDGETS = {
     sa_types.Unicode: deform.widget.TextInputWidget,
     sa_types.UnicodeText: deform.widget.TextAreaWidget,
     JSON: deform.widget.TextAreaWidget,
+    HSTORE: HstoreWidget,
     sqlalchemy.ForeignKey: deform.widget.SelectWidget,
     sacrud.exttype.ChoiceType: deform.widget.SelectWidget,
     sacrud.exttype.FileStore: deform.widget.FileUploadWidget,
+    sacrud.exttype.ElfinderString: ElfinderWidget,
+    sacrud.exttype.SlugType: SlugWidget,
 }
 
 
@@ -107,6 +113,8 @@ class GroupShema(colander.Schema):
         self.table = table
         self.relationships = relationships
         self.dbsession = dbsession
+        self.js_list = []
+
         self.add_colums(columns)
 
     def get_column_title(self, col):
@@ -154,11 +162,13 @@ class GroupShema(colander.Schema):
             value = value[0]
         return value
 
-    def get_widget(self, widget_type, values, mask, css_class):
+    def get_widget(self, widget_type, values, mask, css_class,
+                   col):
         if widget_type == deform.widget.FileUploadWidget:
             return widget_type(None)
         return widget_type(values=values,
                            mask=mask,
+                           col=col,
                            mask_placeholder='_',
                            css_class=css_class)
 
@@ -171,8 +181,13 @@ class GroupShema(colander.Schema):
             mask = 'hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh'
         if kwargs['sa_type'] == sacrud.exttype.ChoiceType and not values:
             values = [(v, k) for k, v in kwargs['col'].type.choices.items()]
-
-        widget = self.get_widget(widget_type, values, mask, kwargs['css_class'])
+        if kwargs['sa_type'] == sacrud.exttype.ElfinderString:
+            self.js_list.append('elfinder.js')
+        if kwargs['sa_type'] == sacrud.exttype.SlugType:
+            self.js_list.append('speakingurl.min.js')
+        widget = self.get_widget(widget_type, values, mask,
+                                 kwargs['css_class'],
+                                 kwargs['col'])
         if widget_type == deform.widget.FileUploadWidget:
             kwargs['description'] = kwargs['default']
             kwargs['default'] = colander.null
@@ -181,7 +196,7 @@ class GroupShema(colander.Schema):
                                    name=kwargs['col'].name,
                                    default=kwargs['default'],
                                    description=kwargs['description'],
-                                   widget=widget
+                                   widget=widget,
                                    )
         return node
 
@@ -216,7 +231,8 @@ class GroupShema(colander.Schema):
                       'description': description,
                       'default': default,
                       'css_class': css_class,
-                      'sa_type': sa_type}
+                      'sa_type': sa_type,
+                      }
             if hasattr(col, 'foreign_keys'):
                 if col.foreign_keys:
                     node = self.get_foreign_key_node(**params)
@@ -233,16 +249,23 @@ class SacrudShemaNode(colander.SchemaNode):
         self.visible_columns = kwargs['col']
         self.relationships = relationships
         self.dbsession = dbsession
+        self.js_list = []
+
         self.build()
 
     def build(self):
         for group, columns in self.visible_columns:
-            self.add(GroupShema(self.relationships, group, columns,
-                                self.table, self.obj, self.dbsession))
+            gs = GroupShema(self.relationships, group, columns,
+                            self.table, self.obj, self.dbsession)
+            self.add(gs)
+            for lib in gs.js_list:
+                self.js_list.append(lib)
 
 
 def form_generator(relationships, dbsession, **kwargs):
     schema = SacrudShemaNode(relationships, dbsession, **kwargs)
     submit = deform.Button(name='form.submitted', title="save",
                            css_class='toolbar-button__item')
-    return Form(schema, buttons=(submit,))
+    return {'form': Form(schema, buttons=(submit,)),
+            'js_list': schema.js_list,
+            }

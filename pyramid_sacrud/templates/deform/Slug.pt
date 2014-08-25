@@ -1,0 +1,32 @@
+<span tal:define="name name|field.name;
+                  css_class css_class|field.widget.css_class;
+                  oid oid|field.oid;
+                  mask mask|field.widget.mask;
+                  mask_placeholder mask_placeholder|field.widget.mask_placeholder;
+                  style style|field.widget.style;
+                  col col|field.widget.col;
+"
+      tal:omit-tag="">
+    <input type="text" name="${name}" value="${cstruct}"
+           tal:attributes="class string: form-control ${css_class or ''};
+                           style style"
+           id="${oid}"/>
+    <script type="text/javascript">
+        var target = $("input[name='${col.type.input_id}']");
+        var slug = $("input[name='${name}']");
+        target.change(function(){
+            if ("${col.type.reflection}"=="True" || !slug.val()) {
+                slug.val(getSlug(this.value));
+            }
+        }).change();
+    </script>
+    <script tal:condition="mask" type="text/javascript">
+        deform.addCallback(
+            '${oid}',
+            function (oid) {
+                $("#" + oid).mask("${mask}",
+                    {placeholder:"${mask_placeholder}"});
+            });
+    </script>
+
+</span>

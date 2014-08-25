@@ -1,8 +1,0 @@
-{% if obj and hasattr(col, 'instance_name') %}
-	{% set value=obj.__getattribute__(col.instance_name) %}
-{% elif obj and hasattr(col, 'name') %}
-	{% set value=obj.__getattribute__(col.name) %}
-{% endif %}
-
-{% block sacrud_column %}
-{% endblock %}

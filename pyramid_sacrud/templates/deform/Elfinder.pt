@@ -1,0 +1,51 @@
+<span tal:define="name name|field.name;
+                  css_class css_class|field.widget.css_class;
+                  oid oid|field.oid;
+                  mask mask|field.widget.mask;
+                  mask_placeholder mask_placeholder|field.widget.mask_placeholder;
+                  style style|field.widget.style;"
+      tal:omit-tag="">
+
+    <input type="text" name="${name}" value="${cstruct}"
+           tal:attributes="class string: form-control ${css_class or ''};
+                           style style"
+           id="${oid}"/>
+
+    <script type="text/javascript">
+        $(function() {
+            var page_html = '<div id="elfinder_${name}"></div>';
+            $('.popup-inner__content-elfinder').append(page_html);
+
+            $('#${name}').elfinder({
+                url : "{{ request.route_url('connector') }}",
+                // transport : new elFinderSupportVer1(),
+                lang : 'ru',
+                // dialog : { width : 900, modal : true },
+                height: 490,
+                commandsOptions : { getfile : {oncomplete : ''}, },
+                commands : [
+                    'open', 'reload', 'home', 'up', 'back', 'forward', 'getfile',
+                    'quicklook', 'rm', 'rename', 'mkdir', 'upload', 'copy', 'cut',
+                    'paste', 'extract', 'archive', 'info', 'view', 'help',
+                    'resize', 'sort'
+                    //'download', 'duplicate', 'mkfile', 'edit', 'search',
+                ],
+                getFileCallback: function(file) { // editor callback
+                    // actually file.url - doesnt work for me, but file does. (elfinder 2.0-rc1)
+                    var id = 'sacrud_unicode_${name}';
+                    document.getElementById(id).value = file.url;
+                    $('.popup').hide();
+                    $('.popup-inner__content-delete').show();
+                    $('.popup-inner__content-elfinder').hide();
+                },
+            });
+        });
+
+        $(document).on('click', '#browse_link', function(event) {
+            $('.popup-inner__content-delete').hide();
+            $('.popup-inner__content-elfinder').show();
+            $('.popup').show();
+            event.preventDefault();
+        });
+    </script>
+</span>

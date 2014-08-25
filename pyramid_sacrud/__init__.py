@@ -74,6 +74,8 @@ def add_js_webasset(config):
              "speakingurl/speakingurl.min.js",
              "jqueryui-timepicker-addon/src/jquery-ui-timepicker-addon.js",
              "requirejs/require.js",
+             "elfinder/src/elfinder/js/elfinder.js",
+             "jquery-maskedinput/dist/jquery.maskedinput.min.js",
              ]
     for f in bower:                                                 # pragma: no cover
         src = os.path.join(js_folder, 'bower_components', f)        # pragma: no cover

@@ -28,6 +28,8 @@
     "requirejs": "~2.1.14",
     "jquery-ui": "~1.10.4",
     "speakingurl": "~0.9.1",
-    "jqueryui-timepicker-addon": "~1.4.5"
+    "jqueryui-timepicker-addon": "~1.4.5",
+    "elfinder": "~1.0.1",
+    "jquery-maskedinput": "~1.3.1"
   }
 }

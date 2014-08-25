@@ -133,11 +133,12 @@ class CRUD(object):
 
         from ..form import form_generator
         sa_crud = resp.add()
-        form = form_generator(relationships=self.relationships,
-                              dbsession=self.request.dbsession, **sa_crud)
-        return {'form': form.render(),
+        form_data = form_generator(relationships=self.relationships,
+                                   dbsession=self.request.dbsession, **sa_crud)
+        return {'form': form_data['form'].render(),
                 'sa_crud': sa_crud,
                 'pk_to_list': pk_to_list,
+                'js_list': form_data['js_list'],
                 'relationships': self.relationships,
                 'breadcrumbs': bc}
 

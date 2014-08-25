@@ -1,3 +1,3 @@
-define(['jquery', 'speakingurl'], function ($) {
+define(['jquery'], function ($) {
 
 });
