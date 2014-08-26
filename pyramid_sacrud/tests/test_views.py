@@ -14,11 +14,10 @@ import os
 import unittest
 
 from pyramid import testing
-
 from pyramid.httpexceptions import HTTPNotFound
+
 from pyramid_sacrud.breadcrumbs import breadcrumbs, get_crumb
-from pyramid_sacrud.common import (get_field_template, get_obj_from_settings,
-                                   set_jinja2_silent_none)
+from pyramid_sacrud.common import get_obj_from_settings, set_jinja2_silent_none
 from pyramid_sacrud.tests import (DB_FILE, Profile,
                                   TEST_DATABASE_CONNECTION_STRING, User)
 from pyramid_sacrud.views.CRUD import (CRUD, get_relationship, get_table,
@@ -91,13 +90,6 @@ class BreadCrumbsTest(BaseTest):
 
 
 class CommonTest(BaseTest):
-
-    def test_get_field_template(self):
-        self.assertEqual('sacrud/types/String.jinja2',
-                         get_field_template('foo'))
-        enum = get_field_template('Enum')
-        self.assertIn('sacrud/types/Enum.jinja2', enum)
-        self.assertTrue(os.path.exists(enum))
 
     def test_get_obj_from_settings(self):
         request = testing.DummyRequest()

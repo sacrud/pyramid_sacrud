@@ -9,11 +9,7 @@
 """
 Any helpers for Pyramid
 """
-
-import os
-
 import sqlalchemy
-from pyramid.path import AssetResolver
 
 
 def import_from_string(path):
@@ -101,19 +97,10 @@ def get_obj_from_settings(request, name):
     return position_model
 
 
-def get_field_template(field):
-    ar = AssetResolver()
-    path = ar.resolve('pyramid_sacrud:templates/sacrud/types/%s.jinja2' % field).abspath()
-    if os.path.exists(path):
-        return path
-    return 'sacrud/types/String.jinja2'
-
-
 def sacrud_env(fun):
     jinja2_globals = {'str': str, 'getattr': getattr, 'isinstance': isinstance,
                       'hasattr': hasattr,
-                      'sqlalchemy': sqlalchemy,
-                      'get_field_template': get_field_template}
+                      'sqlalchemy': sqlalchemy}
 
     def wrapped(*args, **kwargs):
         response = fun(*args, **kwargs)

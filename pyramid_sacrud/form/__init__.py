@@ -12,10 +12,9 @@ from deform import Form
 from sqlalchemy import types as sa_types
 from sqlalchemy.dialects.postgresql import HSTORE, JSON
 
-import sacrud
-
-from .widgets import (ElfinderWidget, HiddenCheckboxWidget, HstoreWidget,
-                      SlugWidget)
+from pyramid_sacrud.form.widgets import (ElfinderWidget, HiddenCheckboxWidget,
+                                         HstoreWidget, SlugWidget)
+from sacrud.exttype import ChoiceType, ElfinderString, FileStore, GUID, SlugType
 
 # Map sqlalchemy types to colander types.
 _TYPES = {
@@ -36,9 +35,9 @@ _TYPES = {
     JSON: colander.String,
     HSTORE: colander.String,
     sqlalchemy.ForeignKey: colander.String,
-    sacrud.exttype.ChoiceType: colander.String,
-    sacrud.exttype.FileStore: deform.FileData,
-    sacrud.exttype.SlugType: colander.String,
+    ChoiceType: colander.String,
+    FileStore: deform.FileData,
+    SlugType: colander.String,
 }
 
 # Map sqlalchemy types to deform widgets.
@@ -60,10 +59,10 @@ _WIDGETS = {
     JSON: deform.widget.TextAreaWidget,
     HSTORE: HstoreWidget,
     sqlalchemy.ForeignKey: deform.widget.SelectWidget,
-    sacrud.exttype.ChoiceType: deform.widget.SelectWidget,
-    sacrud.exttype.FileStore: deform.widget.FileUploadWidget,
-    sacrud.exttype.ElfinderString: ElfinderWidget,
-    sacrud.exttype.SlugType: SlugWidget,
+    ChoiceType: deform.widget.SelectWidget,
+    FileStore: deform.widget.FileUploadWidget,
+    ElfinderString: ElfinderWidget,
+    SlugType: SlugWidget,
 }
 
 
@@ -163,7 +162,7 @@ class GroupShema(colander.Schema):
                 value = colander.null
         if value is None:
             value = colander.null
-        elif col_type == sacrud.exttype.ChoiceType:
+        elif col_type == ChoiceType:
             value = value[0]
         if col_type == sa_types.Boolean:
             value = bool(value)
@@ -184,13 +183,13 @@ class GroupShema(colander.Schema):
         widget_type = _get_widget_type_by_sa_type(kwargs['sa_type'])
         if kwargs['sa_type'] == sa_types.Enum and not values:
             values = [(x, x) for x in kwargs['col'].type.enums]
-        if kwargs['sa_type'] == sacrud.exttype.GUID and not mask:
+        if kwargs['sa_type'] == GUID and not mask:
             mask = 'hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh'
-        if kwargs['sa_type'] == sacrud.exttype.ChoiceType and not values:
+        if kwargs['sa_type'] == ChoiceType and not values:
             values = [(v, k) for k, v in kwargs['col'].type.choices.items()]
-        if kwargs['sa_type'] == sacrud.exttype.ElfinderString:
+        if kwargs['sa_type'] == ElfinderString:
             self.js_list.append('elfinder.js')
-        if kwargs['sa_type'] == sacrud.exttype.SlugType:
+        if kwargs['sa_type'] == SlugType:
             self.js_list.append('speakingurl.min.js')
         widget = self.get_widget(widget_type, values, mask,
                                  kwargs['css_class'],
