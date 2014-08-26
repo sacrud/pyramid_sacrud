@@ -2,8 +2,8 @@ sacrud>=0.1.4
 SQLAlchemy>=0.8.0b1
 pyramid_jinja2==1.10
 pyramid
-colander
-deform
+colander>=1.0b1
+deform>=2.0a2
 zope.sqlalchemy
 pyramid_beaker
 transaction
