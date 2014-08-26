@@ -37,27 +37,6 @@ def widget(fun):
 
 
 @widget
-def widget_horizontal(*args, **kwargs):
-    """
-    :Examples:
-
-    >>> widget_horizontal(sacrud_name='foo')
-    {'info': {'sacrud_list_template': 'sacrud/custom/HorizontalFieldsList.jinja2', 'sacrud_position': 'inline', 'sacrud_template': 'sacrud/custom/HorizontalFieldsDetail.jinja2'}, 'sacrud_name': 'foo', 'name': '', 'horizontal_columns': ()}
-    >>> widget_horizontal('a', 'b', sacrud_name='foo')
-    {'info': {'sacrud_list_template': 'sacrud/custom/HorizontalFieldsList.jinja2', 'sacrud_position': 'inline', 'sacrud_template': 'sacrud/custom/HorizontalFieldsDetail.jinja2'}, 'sacrud_name': 'foo', 'name': '', 'horizontal_columns': ('a', 'b')}
-    >>> widget_horizontal()
-    {'info': {'sacrud_list_template': 'sacrud/custom/HorizontalFieldsList.jinja2', 'sacrud_position': 'inline', 'sacrud_template': 'sacrud/custom/HorizontalFieldsDetail.jinja2'}, 'sacrud_name': '', 'name': '', 'horizontal_columns': ()}
-
-    """
-    return {'horizontal_columns': args,
-            'info': {'sacrud_position': 'inline',
-                     'sacrud_template': 'sacrud/custom/WidgetHorizontalDetail.jinja2',
-                     'sacrud_list_template': 'sacrud/custom/WidgetHorizontalList.jinja2',
-                     },
-            }
-
-
-@widget
 def widget_link(*args, **kwargs):
     return {'info': {'sacrud_position': 'inline',
                      'sacrud_list_template': 'sacrud/custom/WidgetLinkList.jinja2',

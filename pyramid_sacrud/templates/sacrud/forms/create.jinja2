@@ -38,13 +38,7 @@
 
             {{ form|safe }}
 
-            {#% if col.info['sacrud_template'] %}
-                {% include col.info['sacrud_template'] %}
-            {% elif col.foreign_keys %}
-                {% include fk_template %}
-            {% else %}
-                {% include get_field_template(col.type.__class__.__name__) %}
-            {% endif %#}
+            {#% include col.info['sacrud_template'] %#}
 
             <div class="sacrud-grid__toolbar">
                 <div class="toolbar clear-fix">

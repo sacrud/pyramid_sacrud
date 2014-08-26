@@ -10,10 +10,12 @@ import deform
 import sqlalchemy
 from deform import Form
 from sqlalchemy import types as sa_types
-from sqlalchemy.dialects.postgresql import JSON, HSTORE
-from .widgets import ElfinderWidget, HstoreWidget, SlugWidget
+from sqlalchemy.dialects.postgresql import HSTORE, JSON
 
 import sacrud
+
+from .widgets import (ElfinderWidget, HiddenCheckboxWidget, HstoreWidget,
+                      SlugWidget)
 
 # Map sqlalchemy types to colander types.
 _TYPES = {
@@ -42,7 +44,7 @@ _TYPES = {
 # Map sqlalchemy types to deform widgets.
 _WIDGETS = {
     sa_types.BigInteger: deform.widget.TextInputWidget,
-    sa_types.Boolean: deform.widget.CheckboxWidget,
+    sa_types.Boolean: HiddenCheckboxWidget,
     sa_types.Date: deform.widget.DateInputWidget,
     sa_types.DateTime: deform.widget.DateTimeInputWidget,
     sa_types.Enum: deform.widget.SelectWidget,
@@ -153,13 +155,18 @@ class GroupShema(colander.Schema):
         value = None
         col_type = self.get_column_type(col)
         if obj and hasattr(col, 'instance_name'):
-            value = obj.__getattribute__(col.instance_name)
+            value = getattr(obj, col.instance_name)
         elif obj and hasattr(col, 'name'):
-            value = obj.__getattribute__(col.name)
+            try:
+                value = getattr(obj, col.name, colander.null)
+            except UnicodeEncodeError:
+                value = colander.null
         if value is None:
             value = colander.null
         elif col_type == sacrud.exttype.ChoiceType:
             value = value[0]
+        if col_type == sa_types.Boolean:
+            value = bool(value)
         return value
 
     def get_widget(self, widget_type, values, mask, css_class,
@@ -220,6 +227,13 @@ class GroupShema(colander.Schema):
             node = None
             if isinstance(col, dict):
                 col = Dict2Obj(col)
+            if isinstance(col, (list, tuple)):
+                group = col[0]
+                c = col[1]
+                node = GroupShema(self.relationships, group, c,
+                                  self.table, self.obj, self.dbsession)
+                self.add(node)
+                continue
             title = self.get_column_title(col)
             default = self.get_col_default_value(col, self.obj)
             description = self.get_column_description(col)
@@ -233,6 +247,7 @@ class GroupShema(colander.Schema):
                       'css_class': css_class,
                       'sa_type': sa_type,
                       }
+
             if hasattr(col, 'foreign_keys'):
                 if col.foreign_keys:
                     node = self.get_foreign_key_node(**params)

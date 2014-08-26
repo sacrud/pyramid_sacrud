@@ -11,32 +11,11 @@ Test for sacrud.common.custom
 """
 import unittest
 
-from pyramid_sacrud.common.custom import (get_name, widget_horizontal,
-                                          widget_link, widget_m2m)
+from pyramid_sacrud.common.custom import get_name, widget_link, widget_m2m
 from pyramid_sacrud.tests import User
 
 
 class CustomTest(unittest.TestCase):
-
-    def test_horizontal_field(self):
-        widget = widget_horizontal(sacrud_name='foo')
-        self.assertEqual(widget,
-                         {'info': {'sacrud_list_template': 'sacrud/custom/WidgetHorizontalList.jinja2',
-                                   'sacrud_position': 'inline',
-                                   'sacrud_template': 'sacrud/custom/WidgetHorizontalDetail.jinja2'},
-                          'sacrud_name': 'foo', 'name': 'foo', 'horizontal_columns': ()})
-        widget = widget_horizontal('a', 'b', sacrud_name='foo')
-        self.assertEqual(widget,
-                         {'info': {'sacrud_list_template': 'sacrud/custom/WidgetHorizontalList.jinja2',
-                                   'sacrud_position': 'inline',
-                                   'sacrud_template': 'sacrud/custom/WidgetHorizontalDetail.jinja2'},
-                          'sacrud_name': 'foo', 'name': 'foo', 'horizontal_columns': ('a', 'b')})
-        widget = widget_horizontal()
-        self.assertEqual(widget,
-                         {'info': {'sacrud_list_template': 'sacrud/custom/WidgetHorizontalList.jinja2',
-                                   'sacrud_position': 'inline',
-                                   'sacrud_template': 'sacrud/custom/WidgetHorizontalDetail.jinja2'},
-                          'sacrud_name': '', 'name': '', 'horizontal_columns': ()})
 
     def test_get_name(self):
         self.assertEqual('sex', get_name(User.sex))
