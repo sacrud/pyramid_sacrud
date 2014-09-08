@@ -261,8 +261,6 @@ class SacrudShemaNode(colander.SchemaNode):
 
 def form_generator(relationships, dbsession, **kwargs):
     schema = SacrudShemaNode(relationships, dbsession, **kwargs)
-    submit = deform.Button(name='form.submitted', title="save",
-                           css_class='toolbar-button__item')
-    return {'form': Form(schema, buttons=(submit,)),
+    return {'form': Form(schema, ),
             'js_list': schema.js_list,
             }

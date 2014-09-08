@@ -76,6 +76,10 @@ def add_js_webasset(config):
              "requirejs/require.js",
              "elfinder/src/elfinder/js/elfinder.js",
              "jquery-maskedinput/dist/jquery.maskedinput.min.js",
+             "modernizr/modernizr.js",
+             "pickadate/lib/compressed/picker.js",
+             "pickadate/lib/compressed/picker.date.js",
+             "pickadate/lib/compressed/picker.time.js",
              ]
     for f in bower:                                                 # pragma: no cover
         src = os.path.join(js_folder, 'bower_components', f)        # pragma: no cover

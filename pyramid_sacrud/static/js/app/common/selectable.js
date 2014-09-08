@@ -20,13 +20,13 @@ define(['jquery'], function ($) {
           filter: 'tr', // :not(td)
           cancel: 'a, input, .selectable_disabled',
           start: function (event, ui) {
-            current_rows = $(this).data('uiSelectable').selectees.filter('.ui-selected');
+            current_rows = $(this).data('ui-selectable').selectees.filter('.ui-selected');
           },
           // unselecting: function (event, ui) {},
           selecting: function (event, ui) {
-              var selecting_count = $(this).data('uiSelectable').selectees.filter('.ui-selecting').length;
+              var selecting_count = $(this).data('ui-selectable').selectees.filter('.ui-selecting').length;
               if (!(rows_state_unselecting)) {
-                  rows_state_unselecting = $(this).data('uiSelectable').selectees.filter('.ui-unselecting');
+                  rows_state_unselecting = $(this).data('ui-selectable').selectees.filter('.ui-unselecting');
               }
               if (selecting_count == 1) {
                   rows_state_unselecting.removeClass('ui-unselecting');
