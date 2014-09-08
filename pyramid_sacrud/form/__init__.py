@@ -66,21 +66,6 @@ _WIDGETS = {
 }
 
 
-class Dict2Obj(object):
-    """
-    Turns a dictionary into a class
-    """
-    def __init__(self, dictionary):
-        """Constructor"""
-        for key in dictionary:
-            setattr(self, key, dictionary[key])
-
-    def __repr__(self):
-        """"""
-        attrs = str([x for x in self.__dict__])
-        return "<Dict2Obj: %s>" % attrs
-
-
 def _get_column_type_by_sa_type(sa_type):
     """
     Returns the colander type that correspondents to the sqlalchemy type
@@ -224,8 +209,6 @@ class GroupShema(colander.Schema):
     def add_colums(self, columns):
         for col in columns:
             node = None
-            if isinstance(col, dict):
-                col = Dict2Obj(col)
             if isinstance(col, (list, tuple)):
                 group = col[0]
                 c = col[1]

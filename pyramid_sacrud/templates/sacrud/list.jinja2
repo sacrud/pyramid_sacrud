@@ -24,9 +24,6 @@
         {% set visible_columns=sa_crud['col'] %}
     {% endif %}
 
-    {% if hasattr(table, '__mapper_args__') %}
-        {% set isdnd=table.__mapper_args__.order_by %}
-    {% endif %}
     <div class="page">
       {% if table.sacrud_list_template %}
         {% include table.sacrud_list_template with context %}
