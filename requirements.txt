@@ -1,4 +1,5 @@
 sacrud>=0.1.4
+sacrud_deform
 SQLAlchemy>=0.8.0b1
 pyramid_jinja2==1.10
 pyramid

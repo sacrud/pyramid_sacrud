@@ -72,6 +72,7 @@ setup(
     long_description="",
     install_requires=[
         "sacrud",
+        "sacrud_deform",
         "pyramid",
         "sqlalchemy",
         "colander",

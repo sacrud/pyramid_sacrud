@@ -4,6 +4,7 @@ script:
   - pip install -r requirements.txt
   - pip install pyramid_jinja2==1.10
   - pip install git+https://github.com/ITCase/sacrud.git
+  - pip install git+https://github.com/ITCase/sacrud_deform.git@master
   - nosetests --cover-package=pyramid_sacrud --cover-erase --with-coverage --with-doctest
 notify:
   email:

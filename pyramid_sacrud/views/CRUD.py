@@ -22,6 +22,7 @@ from pyramid_sacrud.common import get_settings_param, sacrud_env
 from pyramid_sacrud.common.paginator import get_paginator
 from sacrud import action
 from sacrud.common import pk_to_list
+from sacrud_deform import form_generator
 
 
 def get_table(tname, request):
@@ -131,7 +132,6 @@ class CRUD(object):
         if self.pk:
             bc = breadcrumbs(self.tname, 'sa_update', id=self.pk)
 
-        from ..form import form_generator
         sa_crud = resp.add()
         form_data = form_generator(relationships=self.relationships,
                                    dbsession=self.request.dbsession, **sa_crud)
