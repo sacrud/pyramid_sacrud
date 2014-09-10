@@ -124,7 +124,8 @@ class CRUD(object):
 
         sa_crud = resp.add()
         form_data = form_generator(dbsession=self.request.dbsession,
-                                   **sa_crud)
+                                   obj=sa_crud['obj'], table=sa_crud['table'],
+                                   columns=sa_crud['col'])
         return {'form': form_data['form'].render(),
                 'sa_crud': sa_crud,
                 'pk_to_list': pk_to_list,
