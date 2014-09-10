@@ -1,3 +1,4 @@
+git+git://github.com/ITCase/sacrud.git@develop
 sacrud_deform
 SQLAlchemy>=0.8.0b1
 pyramid_jinja2==1.10
