@@ -71,7 +71,6 @@ setup(
     description='Pyramid SQLAlchemy CRUD.',
     long_description="",
     install_requires=[
-        "sacrud",
         "sacrud_deform",
         "pyramid",
         "sqlalchemy",
