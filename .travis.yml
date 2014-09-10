@@ -24,8 +24,6 @@ install:
   - pip install nose coverage coveralls
   - pip install pyramid pyramid_beaker tox
   - pip install pyramid_jinja2==1.10
-  - pip install git+https://github.com/ITCase/sacrud.git@develop
-  - pip install git+https://github.com/ITCase/sacrud_deform.git@master
   - pip install -r requirements.txt
 
 script:
