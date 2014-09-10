@@ -20,8 +20,7 @@ from pyramid_sacrud.breadcrumbs import breadcrumbs, get_crumb
 from pyramid_sacrud.common import get_obj_from_settings, set_jinja2_silent_none
 from pyramid_sacrud.tests import (DB_FILE, Profile,
                                   TEST_DATABASE_CONNECTION_STRING, User)
-from pyramid_sacrud.views.CRUD import (CRUD, get_relationship, get_table,
-                                       pk_list_to_dict,
+from pyramid_sacrud.views.CRUD import (CRUD, get_table, pk_list_to_dict,
                                        update_difference_object)
 
 from .test_models import _initTestingDB, user_add
@@ -171,14 +170,6 @@ class ViewPageTest(BaseViewsTest):
         self.assertEqual(user, User)
         foo = get_table('foo', request)
         self.assertEqual(foo, None)
-
-    def test_get_relationship(self):
-        request = self._include_sacrud()
-        foo = get_relationship('foo', request)
-        self.assertEqual(foo, None)
-        bar = get_relationship('user', request)
-        self.assertEqual(len(bar), 2)
-        self.assertIn(Profile.__table__.columns.user_id, bar[1].remote_side)
 
     def test_sa_home(self):
         res = self.testapp.get('/admin/', status=200)

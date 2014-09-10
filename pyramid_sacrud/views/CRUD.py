@@ -15,7 +15,6 @@ import json
 from paginate import Page
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
-from sqlalchemy import inspect
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs
 from pyramid_sacrud.common import get_settings_param, sacrud_env
@@ -39,14 +38,6 @@ def get_table(tname, request):
     return tables[0]
 
 
-def get_relationship(tname, request):
-    table = get_table(tname, request)
-    if not table:
-        return None
-    relations = inspect(table).relationships
-    return [rel for rel in relations]
-
-
 def update_difference_object(obj, key, value):
     if isinstance(obj, dict):
         obj.update({key: value})
@@ -67,7 +58,6 @@ class CRUD(object):
         self.request = request
         self.tname = request.matchdict['table']
         self.table = get_table(self.tname, self.request)
-        self.relationships = get_relationship(self.tname, self.request)
         self.params = request.params
         if hasattr(self.params, 'dict_of_lists'):
             self.params = self.params.dict_of_lists()
@@ -133,13 +123,12 @@ class CRUD(object):
             bc = breadcrumbs(self.tname, 'sa_update', id=self.pk)
 
         sa_crud = resp.add()
-        form_data = form_generator(relationships=self.relationships,
-                                   dbsession=self.request.dbsession, **sa_crud)
+        form_data = form_generator(dbsession=self.request.dbsession,
+                                   **sa_crud)
         return {'form': form_data['form'].render(),
                 'sa_crud': sa_crud,
                 'pk_to_list': pk_to_list,
                 'js_list': form_data['js_list'],
-                'relationships': self.relationships,
                 'breadcrumbs': bc}
 
     @view_config(route_name='sa_delete')
