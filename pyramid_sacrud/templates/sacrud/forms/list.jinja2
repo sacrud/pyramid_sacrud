@@ -65,7 +65,7 @@
                                             <td class="sacrud-grid-content-grid__body-item">
                                                 <div class="selectable_disabled" style="padding: 0 0.3em">
                                                     {% if col.__class__.__name__ == 'Column' %}
-                                                        {% set col_value=row.__getattribute__(col.instance_name) %}
+                                                        {% set col_value=row.__getattribute__(get_attrname_by_colname(row, col.name)) %}
                                                     {% endif %}
                                                     {% if col.info['sacrud_list_template'] %}
                                                         {% include col.info['sacrud_list_template'] %}

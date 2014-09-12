@@ -10,6 +10,7 @@
 Any helpers for Pyramid
 """
 import sqlalchemy
+from sacrud.common import get_attrname_by_colname
 
 
 def import_from_string(path):
@@ -99,6 +100,7 @@ def get_obj_from_settings(request, name):
 
 def sacrud_env(fun):
     jinja2_globals = {'str': str, 'getattr': getattr, 'isinstance': isinstance,
+                      'get_attrname_by_colname': get_attrname_by_colname,
                       'hasattr': hasattr,
                       'sqlalchemy': sqlalchemy}
 
