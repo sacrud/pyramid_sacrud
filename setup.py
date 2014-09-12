@@ -81,7 +81,7 @@ setup(
         'zope.sqlalchemy',
         'pyramid_webassets',
         'pyramid_beaker',
-        'paginate',
+        'paginate_sqlalchemy',
         'webtest',
         'cssmin',
         'jsmin',

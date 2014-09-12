@@ -98,6 +98,7 @@ def includeme(config):
     settings = config.registry.settings
 
     # Jinja2
+    config.include('pyramid_jinja2')
     jinja2_env = config.get_jinja2_environment()
     jinja2_env.finalize = _silent_none
     config.add_jinja2_search_path("pyramid_sacrud:templates")

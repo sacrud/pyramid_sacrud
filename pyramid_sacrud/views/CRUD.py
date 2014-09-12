@@ -12,7 +12,7 @@ Views for Pyramid frontend
 import itertools
 import json
 
-from paginate import Page
+from paginate_sqlalchemy import SqlalchemyOrmPage
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
 
@@ -95,7 +95,7 @@ class CRUD(object):
 
         resp = action.CRUD(request.dbsession, table).rows_list()
         paginator_attr = get_paginator(request, items_per_page)
-        paginator = Page(resp['row'].all(), **paginator_attr)
+        paginator = SqlalchemyOrmPage(resp['row'], **paginator_attr)
 
         return {'sa_crud': resp,
                 'paginator': paginator,

@@ -6,7 +6,7 @@ deform>=2.0a2
 zope.sqlalchemy
 pyramid_beaker
 transaction
-paginate
+paginate_sqlalchemy
 webtest
 pyramid_webassets
 cssmin
