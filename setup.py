@@ -1,7 +1,6 @@
 import os
 import glob
 import fnmatch
-from pyramid_sacrud import version
 from setuptools import setup
 
 
@@ -45,7 +44,7 @@ files = find_data_files('pyramid_sacrud/', '*.*')
 
 setup(
     name='pyramid_sacrud',
-    version=version.__version__,
+    version="0.0.1",
     url='http://github.com/ITCase/pyramid_sacrud/',
     author='Svintsov Dmitry',
     author_email='root@uralbash.ru',
@@ -78,6 +77,7 @@ setup(
         "colander",
         "deform",
         "transaction",
+        "webassets",
         'pyramid_webassets',
         'pyramid_beaker',
         'paginate_sqlalchemy',
