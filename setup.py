@@ -78,7 +78,6 @@ setup(
         "colander",
         "deform",
         "transaction",
-        'zope.sqlalchemy',
         'pyramid_webassets',
         'pyramid_beaker',
         'paginate_sqlalchemy',

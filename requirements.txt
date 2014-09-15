@@ -3,7 +3,6 @@ pyramid_jinja2==1.10
 pyramid
 colander>=1.0b1
 deform>=2.0a2
-zope.sqlalchemy
 pyramid_beaker
 transaction
 paginate_sqlalchemy
