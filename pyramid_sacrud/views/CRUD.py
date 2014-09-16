@@ -13,6 +13,7 @@ import itertools
 import json
 
 from paginate_sqlalchemy import SqlalchemyOrmPage
+from peppercorn import parse
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
 
@@ -49,6 +50,29 @@ def pk_list_to_dict(pk_list):
     if pk_list and len(pk_list) % 2 == 0:
         return dict(zip(pk_list[::2], pk_list[1::2]))
     return None
+
+
+def request_to_sacrud(r):
+    fields = r.POST.items()
+    data = parse(fields)
+
+    _r = {}
+
+    def request_to_flat(request):
+        for key, value in request.items():
+            if type(value) is dict:
+                if 'upload' in value:
+                    upload = value['upload']
+                    if hasattr(upload, 'file'):
+                        if upload.file:
+                            _r[key] = upload
+                else:
+                    request_to_flat(value)
+                continue
+            _r[key] = value
+
+    request_to_flat(data)
+    return _r
 
 
 class CRUD(object):
@@ -109,7 +133,7 @@ class CRUD(object):
         resp = action.CRUD(self.request.dbsession, self.table, self.pk)
 
         if 'form.submitted' in self.request.params:
-            resp.request = self.params
+            resp.request = request_to_sacrud(self.request)
             resp.add()
             if self.pk:
                 self.flash_message("You updated object of %s" % self.tname)
@@ -125,7 +149,7 @@ class CRUD(object):
         sa_crud = resp.add()
         form_data = form_generator(dbsession=self.request.dbsession,
                                    obj=sa_crud['obj'], table=sa_crud['table'],
-                                   columns=sa_crud['col'])
+                                   columns_by_group=sa_crud['col'])
         return {'form': form_data['form'].render(),
                 'sa_crud': sa_crud,
                 'pk_to_list': pk_to_list,
