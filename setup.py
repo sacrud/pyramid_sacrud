@@ -1,5 +1,4 @@
-from setuptools import setup
-
+from setuptools import find_packages, setup
 
 setup(
     name='pyramid_sacrud',
@@ -8,23 +7,12 @@ setup(
     author='Svintsov Dmitry',
     author_email='root@uralbash.ru',
 
-    packages=['pyramid_sacrud', 'pyramid_sacrud.common',
-              'pyramid_sacrud.views'],
+    packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
     test_suite="nose.collector",
     license="MIT",
     package_dir={'pyramid_sacrud': 'pyramid_sacrud'},
-    package_data={
-        'pyramid_sacrud': ['static/style/*.css',
-                           'static/js/*.js',
-                           'static/js/jquery/*.js',
-                           'static/images/*',
-                           'templates/*.jinja2', 'templates/forms/*.jinja2',
-                           'templates/forms/actions/*.jinja2',
-                           'templates/types/*.jinja2',
-                           'tests/*.py', ],
-    },
     description='Pyramid SQLAlchemy CRUD.',
     long_description="",
     install_requires=[
