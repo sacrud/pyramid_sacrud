@@ -1,0 +1,1 @@
+recursive-include pyramid_sacrud *.ico *.png *.css *.gif *.jpg *.pt *.txt *.mak *.mako *.jinja2 *.js *.html *.xml
