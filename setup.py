@@ -71,6 +71,7 @@ setup(
     long_description="",
     install_requires=[
         "sacrud",
+        "peppercorn",
         "sacrud_deform",
         "pyramid",
         "sqlalchemy",
