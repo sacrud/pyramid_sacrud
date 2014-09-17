@@ -45,7 +45,7 @@ and see super crud interface
 Examples
 ========
 
-* Funny gist demonstrates the capabilities of SQLAlchemy and pyramid_sacrud - `<https://gist.github.com/019c0629e1448c9d4e71.git>`_
+* Funny gist demonstrates the capabilities of SQLAlchemy and pyramid_sacrud - `<https://gist.github.com/uralbash/019c0629e1448c9d4e71>`_
 
 
 Support and Development
