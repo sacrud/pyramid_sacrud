@@ -1,23 +1,13 @@
-Support and Development
-=======================
+.. include:: contribute_include.rst
 
-To report bugs, use the `issue tracker <https://github.com/ITCase/pyramid_sacrud/issues>`_
-or `waffle board <https://waffle.io/ITCase/pyramid_sacrud>`_.
-
-We welcome any contribution: suggestions, ideas, commits with new futures, bug fixes, refactoring, docs, tests, translations etc
-
-If you know Flask framework, it would be nice create connector to him like this.
-
-If you have question, contact me sacrud@uralbash.ru
-
-HTML coder
-----------
+Frontend contribute
+-------------------
 
 CSS
 ~~~
 
 .. note::
-    You need install nodejs and stylus preprocessor
+    You need install nodejs and stylus preprocessor only for develop
 
 We use stylus preprocessor for write and concat CSS. If you want edit this, add to ini file setting ``sacrud.debug = True``
 
@@ -26,8 +16,8 @@ We use stylus preprocessor for write and concat CSS. If you want edit this, add 
    :language: py
    :pyobject: add_css_webasset
 
-JavaScript
-~~~~~~~~~~
+JavaScript coder
+~~~~~~~~~~~~~~~~
 
 Use bower and webassets hook:
 
