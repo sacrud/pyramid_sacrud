@@ -15,8 +15,10 @@ Overview
 
 .. include:: docs/owerview_include.rst
 .. include:: docs/install.rst
+.. include:: docs/examples.rst
 .. include:: docs/contribute_include.rst
 .. include:: docs/license.rst
+.. include:: docs/install.rst
 
 
 .. |Build Status| image:: https://travis-ci.org/ITCase/pyramid_sacrud.svg?branch=master
