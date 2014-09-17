@@ -42,6 +42,12 @@ and see super crud interface
 
 .. include:: docs/install.rst
 
+Examples
+========
+
+* Funny gist demonstrates the capabilities of SQLAlchemy and pyramid_sacrud - `<https://gist.github.com/019c0629e1448c9d4e71.git>`_
+
+
 Support and Development
 =======================
 
