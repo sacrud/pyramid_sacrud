@@ -1,4 +1,14 @@
+import os
+
 from setuptools import find_packages, setup
+
+this = os.path.dirname(os.path.realpath(__file__))
+
+
+def readme():
+    with open(os.path.join(this, 'README.rst')) as f:
+        return f.read()
+
 
 setup(
     name='pyramid_sacrud',
@@ -14,7 +24,7 @@ setup(
     license="MIT",
     package_dir={'pyramid_sacrud': 'pyramid_sacrud'},
     description='Pyramid SQLAlchemy CRUD.',
-    long_description="",
+    long_description=readme(),
     install_requires=[
         "sacrud",
         "peppercorn",
