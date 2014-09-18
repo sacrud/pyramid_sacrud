@@ -19,7 +19,7 @@ We use stylus preprocessor for write and concat CSS. If you want edit this, add 
 JavaScript coder
 ~~~~~~~~~~~~~~~~
 
-Use bower and assets hook:
+Use `<http://bower.io>`_ and assets hook:
 
 .. literalinclude:: ../pyramid_sacrud/assets.py
    :linenos:

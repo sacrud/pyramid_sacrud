@@ -72,6 +72,12 @@ extensions = [
     'sphinx.ext.viewcode',
 ]
 
+intersphinx_mapping = {
+        'python': ('http://python.readthedocs.org/en/v2.7.2/', None),
+        'sacrud': ('http://sacrud.readthedocs.org/en/latest/', None),
+        'sphinx': ('http://sphinx.readthedocs.org/en/latest/', None),
+        }
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

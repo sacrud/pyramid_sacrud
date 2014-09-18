@@ -4,20 +4,15 @@ Application Configuration for Pyramid
 Initialize
 ----------
 
-:mod:`pyramid_sacrud` work with Jinja2 template renderer
-
-.. note::
-    work only with pyramid_jinja2<=1.10 version yet
+:mod:`pyramid_sacrud` use Jinja2 template renderer
 
 .. code-block:: python
     :linenos:
 
-    settings = config.registry.settings
-    config.include('pyramid_jinja2')
-
     from .models import (Model1, Model2, Model3,)
     # add pyramid_sacrud and project models
     config.include('pyramid_sacrud')
+    settings = config.registry.settings
     settings['pyramid_sacrud.models'] = {'Group1': {
                                              'tables': [Model1, Model2],
                                              'position': 1,},
@@ -62,7 +57,7 @@ Model verbose name
 
 Instead "user", it will display "My user model"
 
-.. image:: _static/img/verbose_name.png
+.. image:: ../_static/img/verbose_name.png
     :alt: Model verbose name
 
 Column verbose name
@@ -85,7 +80,7 @@ Column verbose name
 
 Instead "name", it will display "name of user"
 
-.. image:: _static/img/column_verbose_name.png
+.. image:: ../_static/img/column_verbose_name.png
     :alt: Column verbose name
 
 Description for column
@@ -109,7 +104,7 @@ Description for column
 
 Adds a description below
 
-.. image:: _static/img/column_description.png
+.. image:: ../_static/img/column_description.png
     :alt: Column description
 
 Add css class for column
@@ -138,7 +133,7 @@ Add css class for column
 
 Adds css class for column
 
-.. image:: _static/img/column_css.png
+.. image:: ../_static/img/column_css.png
     :alt: Column with custom css classes
 
 Configure displayed fields in grid
@@ -167,9 +162,10 @@ Configure displayed fields in grid
 
         sacrud_list_col = [name, name_ru, name_cze]
 
-Shows only name, name_ru and name_cze columns in grid
+Use sacrud_list_col attribute of Model.
+It shows only name, name_ru and name_cze columns in grid.
 
-.. image:: _static/img/sacrud_list_col.png
+.. image:: ../_static/img/sacrud_list_col.png
     :alt: Hide columns in grid
 
 Configure displayed columns for detailed object
@@ -197,35 +193,44 @@ Configure displayed columns for detailed object
                             'name': [name], 'Date': [date]}
 
         sacrud_list_col = [name, name_ru, name_cze]
+
         sacrud_detail_col = [('name space', [name,
-                                             widget_horizontal(name_ru, name_bg,
-                                                               name_fr, name_cze,
-                                                               sacrud_name=u"i18n names")]),
-                             ('description', [description, date,
-                                              widget_horizontal(in_menu, visible,
-                                                                in_banner,
-                                                                sacrud_name=u"Расположение"),
-                                              description2])
-                             ]
+                                            ('i18 names', (name_ru, name_bg,
+                                                            name_fr, name_cze)
+                                            )]
+                            ),
+                            ('description', [description, date,
+                                            (u"Расположение",
+                                            (in_menu, visible, in_banner)
+                                            ),
+                                            description2])
+                            ]
 
-Agregate and composite columns in detail view
 
-.. image:: _static/img/sacrud_detail_col.png
+Use sacrud_detail_col attribute of Model.
+It agregate and composite columns in detail view.
+
+.. image:: ../_static/img/sacrud_detail_col.png
     :alt: Agregate columns
+
+Models attributes as property
+-----------------------------
+
+Use :py:class:`sacrud.common.TableProperty` decorator.
+
+.. literalinclude:: ../_pyramid_sacrud_example/sacrud_example/models/funny_models.py
+   :linenos:
+   :language: py
+   :pyobject: MPTTPages
+   :emphasize-lines: 6-21
+
 
 Composite fields and column as custom function
 ----------------------------------------------
 
 .. code-block:: python
 
-    from sacrud.common.custom import widget_horizontal, widget_link, widget_m2m
-
-Horizontal fields widget
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. note::
-
-    see image above ("i18n names" row)
+    from sacrud.common.custom import widget_link, widget_m2m
 
 Column as link widget
 ~~~~~~~~~~~~~~~~~~~~~
@@ -249,11 +254,19 @@ Column as link widget
 
 Adds link for rows in column "name"
 
-.. image:: _static/img/sacrud_list_col.png
+.. image:: ../_static/img/widget_as_link.png
     :alt: Column as link
 
 M2M relation widget
 ~~~~~~~~~~~~~~~~~~~
+
+.. |ManyToManyField| image:: ../_static/img/ManyToManyField.png
+
+.. note::
+
+    Will be made in the next version.
+    I think it should look like Django ManyToManyField.
+    |ManyToManyField|
 
 Template redefinition
 ---------------------
@@ -271,38 +284,22 @@ Dashboard config
 
 Example from `<https://github.com/ITCase/pyramid_sacrud_example>`_
 
-Configure your project
+Configure your project:
 
-.. literalinclude:: _pyramid_sacrud_example/sacrud_example/__init__.py
+.. literalinclude:: ../_pyramid_sacrud_example/sacrud_example/__init__.py
    :linenos:
    :emphasize-lines: 85-88
    :language: py
 
-External config for :ref:`Pyramid extension<pyramid_ext>`
+Dict of models example for :mod:`pyramid_sacrud`:
 
-.. literalinclude:: _pyramid_sacrud_example/sacrud_example/sacrud_config.py
+.. literalinclude:: ../_pyramid_sacrud_example/sacrud_example/sacrud_config.py
    :linenos:
    :emphasize-lines: 31-
    :language: py
 
-Dashboard model
+Result:
 
-.. note::
-    If you need save dashboard widgets position
-
-.. literalinclude:: _pyramid_sacrud_example/sacrud_example/models/funny_models.py
-   :linenos:
-   :language: py
-   :pyobject: WidgetPosition
-
-And set setting in you ini file
-
-.. code::
-
-    sacrud.dashboard_position_model = sacrud_example.models.funny_models:WidgetPosition
-
-Result
-
-.. image:: _static/img/dashboard.png
+.. image:: ../_static/img/dashboard.png
     :alt: Widgets dashboard
     :width: 900px
