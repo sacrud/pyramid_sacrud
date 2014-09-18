@@ -11,9 +11,7 @@ Overview
 .. include:: ../includes/include_owerview.rst
 And see...
 
-.. image:: https://raw.githubusercontent.com/ITCase/pyramid_sacrud/master/docs/_static/img/index.png
-    :alt: SACRUD main page
-    :width: 500px
+|sacrud_index|
 
 .. include:: install.rst
 .. include:: ../includes/include_contribute.rst
@@ -23,6 +21,8 @@ And see...
    :target: https://travis-ci.org/ITCase/pyramid_sacrud
 .. |Coverage Status| image:: https://coveralls.io/repos/ITCase/pyramid_sacrud/badge.png?branch=master
    :target: https://coveralls.io/r/ITCase/pyramid_sacrud?branch=master
+.. |sacrud_index| image:: https://raw.githubusercontent.com/ITCase/pyramid_sacrud/master/docs/_static/img/index.png
+   :target: https://raw.githubusercontent.com/ITCase/pyramid_sacrud/master/docs/_static/img/index.png
 .. |Stories in Progress| image:: https://badge.waffle.io/ITCase/pyramid_sacrud.png?label=in%20progress&title=In%20Progress
    :target: http://waffle.io/ITCase/pyramid_sacrud
 .. |PyPI| image:: http://img.shields.io/pypi/dm/pyramid_sacrud.svg
