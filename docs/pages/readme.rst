@@ -1,7 +1,7 @@
 |Build Status| |Coverage Status| |Stories in Progress| |PyPI|
 
 pyramid_sacrud
-===============
+==============
 
 Documentation `<http://pyramid-sacrud.readthedocs.org/en/latest/>`_
 
