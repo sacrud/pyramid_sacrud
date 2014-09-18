@@ -42,7 +42,6 @@ if 'sphinx-build' in ' '.join(sys.argv):  # protect against dumb importers
     sys.path.append(os.path.abspath(parent))
     wd = os.getcwd()
     os.chdir(parent)
-    os.system('%s setup.py test -q' % sys.executable)
     os.chdir(wd)
 
     for item in os.listdir(parent):
