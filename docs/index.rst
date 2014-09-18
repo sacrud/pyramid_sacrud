@@ -26,6 +26,7 @@ Usage
    pages/configuration
    pages/api
 
+.. include:: includes/include_contribute.rst
 .. include:: pages/contribute.rst
 .. include:: includes/include_license.rst
 

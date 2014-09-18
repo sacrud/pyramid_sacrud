@@ -1,5 +1,3 @@
-.. include:: includes/include_contribute.rst
-
 Frontend contribute
 -------------------
 
