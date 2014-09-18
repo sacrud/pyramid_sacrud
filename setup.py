@@ -12,7 +12,7 @@ def readme():
 
 setup(
     name='pyramid_sacrud',
-    version="0.0.1",
+    version="0.0.1a",
     url='http://github.com/ITCase/pyramid_sacrud/',
     author='Svintsov Dmitry',
     author_email='root@uralbash.ru',
