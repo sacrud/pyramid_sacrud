@@ -8,12 +8,13 @@ Documentation `<http://pyramid-sacrud.readthedocs.org/en/latest/>`_
 Overview
 --------
 
+.. include:: owerview_include.rst
+And see...
+
 .. image:: https://raw.githubusercontent.com/ITCase/pyramid_sacrud/master/docs/_static/img/index.png
     :alt: SACRUD main page
-    :align: right
     :width: 500px
 
-.. include:: owerview_include.rst
 .. include:: install.rst
 .. include:: contribute_include.rst
 .. include:: license.rst

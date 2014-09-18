@@ -8,11 +8,6 @@ Documentation `<http://pyramid-sacrud.readthedocs.org/en/latest/>`_
 Overview
 --------
 
-.. image:: https://raw.githubusercontent.com/ITCase/pyramid_sacrud/master/docs/_static/img/index.png
-    :alt: SACRUD main page
-    :align: right
-    :width: 500px
-
 pyramid_sacrud - Pyramid CRUD interface based on `sacrud <https://github.com/ITCase/sacrud>`_ and SQLAlchemy.
 
 `pyramid_sacrud` will solve your problem of CRUD interface for Pyramid.
@@ -36,6 +31,12 @@ Look how easy it is to use with Pyramid:
                                          }
 
 go to http://localhost:6543/sacrud/
+
+And see...
+
+.. image:: https://raw.githubusercontent.com/ITCase/pyramid_sacrud/master/docs/_static/img/index.png
+    :alt: SACRUD main page
+    :width: 500px
 
 Installing `pyramid_sacrud`
 ===========================
