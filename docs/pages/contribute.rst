@@ -1,4 +1,4 @@
-.. include:: ../includes/include_contribute.rst
+.. include:: includes/include_contribute.rst
 
 Frontend contribute
 -------------------
