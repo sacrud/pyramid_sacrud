@@ -22,7 +22,6 @@ setup(
     zip_safe=False,
     test_suite="nose.collector",
     license="MIT",
-    package_dir={'pyramid_sacrud': 'pyramid_sacrud'},
     description='Pyramid SQLAlchemy CRUD.',
     long_description=readme(),
     install_requires=[
