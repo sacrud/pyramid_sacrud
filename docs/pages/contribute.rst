@@ -25,3 +25,33 @@ Use bower and assets hook:
    :linenos:
    :language: py
    :pyobject: add_js_assets
+
+Documentation contribute
+------------------------
+
+For generate README.rst run:
+
+.. code::
+
+    make readme
+
+This hook make single \*.rst file replacing ".. include::" directive on plain text.
+It is necessary for github and PyPi main page because he does not know how to include.
+
+.. literalinclude:: make_README.py
+   :linenos:
+   :language: py
+
+If you want generate html and README.rst run:
+
+.. code::
+
+    make readme_html
+
+or
+
+.. code::
+
+    make readme html
+
+
