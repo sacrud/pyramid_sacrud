@@ -2,9 +2,8 @@ import fileinput
 import os
 from shutil import copyfile
 
-there = os.path.dirname(os.path.realpath(__file__))
-
-src = "readme.rst"
+src = "pages/readme.rst"
+src_path = os.path.dirname(os.path.realpath(src))
 dst = "../README.rst"
 copyfile(src, dst)
 
@@ -16,7 +15,7 @@ def read_file(path):
 for line in fileinput.input(dst, inplace=1):
     splitted = line.rstrip().split('.. include:: ')
     if len(splitted) == 2:
-        line = read_file(os.path.join(there, splitted[1]))
+        line = read_file(os.path.join(src_path, splitted[1]))
         print line
     else:
         print line.rstrip()

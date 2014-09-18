@@ -23,7 +23,8 @@ Look how easy it is to use with Pyramid:
     config.include('pyramid_sacrud')
     settings = config.registry.settings
     settings['pyramid_sacrud.models'] = {'Group1': {
-                                            'tables': [Model1, Model2],
+                                            'tables': [Model1,
+                                                       Model2],
                                             'position': 1,},
                                          'Group2': {
                                             'tables': [Model3],
@@ -38,11 +39,11 @@ And see...
     :alt: SACRUD main page
     :width: 500px
 
-Installing `pyramid_sacrud`
-===========================
+Installing
+==========
 
-Install from github
--------------------
+github
+------
 
 .. code::
 
@@ -61,7 +62,7 @@ PyPi
 
     pip install pyramid_sacrud
 
-Source
+source
 ------
 
 .. code::
@@ -85,7 +86,6 @@ License
 =======
 
 The project is licensed under the MIT license.
-
 
 
 

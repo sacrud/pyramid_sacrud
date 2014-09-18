@@ -1,4 +1,4 @@
-.. include:: contribute_include.rst
+.. include:: ../includes/include_contribute.rst
 
 Frontend contribute
 -------------------
@@ -11,17 +11,17 @@ CSS
 
 We use stylus preprocessor for write and concat CSS. If you want edit this, add to ini file setting ``sacrud.debug = True``
 
-.. literalinclude:: ../pyramid_sacrud/__init__.py
+.. literalinclude:: ../pyramid_sacrud/assets.py
    :linenos:
    :language: py
-   :pyobject: add_css_webasset
+   :pyobject: add_css_assets
 
 JavaScript coder
 ~~~~~~~~~~~~~~~~
 
-Use bower and webassets hook:
+Use bower and assets hook:
 
-.. literalinclude:: ../pyramid_sacrud/__init__.py
+.. literalinclude:: ../pyramid_sacrud/assets.py
    :linenos:
    :language: py
-   :pyobject: add_js_webasset
+   :pyobject: add_js_assets

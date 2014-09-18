@@ -33,7 +33,7 @@ def webassets_init(config):
     jinja2_env.assets_environment = assets_env
 
 
-def add_css_webasset(config):
+def add_css_assets(config):
     settings = config.registry.settings
     css_file = os.path.join(settings["webassets.base_dir"], 'css', '_base.css')
     css_bundle = Bundle('css/*.css', 'css/**/*.css',
@@ -48,7 +48,7 @@ def add_css_webasset(config):
     config.add_webasset('sa_css', css_bundle)
 
 
-def add_js_webasset(config):
+def add_js_assets(config):
     from shutil import copyfile                                     # pragma: no cover
     settings = config.registry.settings                             # pragma: no cover
     js_folder = os.path.join(settings["webassets.base_dir"], 'js')  # pragma: no cover
@@ -75,6 +75,6 @@ def add_js_webasset(config):
 def includeme(config):
     settings = config.registry.settings
     config.include(webassets_init)
-    config.include(add_css_webasset)
+    config.include(add_css_assets)
     if settings.get('sacrud.debug', False):
-        config.include(add_js_webasset)  # pragma: no cover
+        config.include(add_js_assets)  # pragma: no cover

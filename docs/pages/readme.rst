@@ -8,7 +8,7 @@ Documentation `<http://pyramid-sacrud.readthedocs.org/en/latest/>`_
 Overview
 --------
 
-.. include:: owerview_include.rst
+.. include:: ../includes/include_owerview.rst
 And see...
 
 .. image:: https://raw.githubusercontent.com/ITCase/pyramid_sacrud/master/docs/_static/img/index.png
@@ -16,9 +16,8 @@ And see...
     :width: 500px
 
 .. include:: install.rst
-.. include:: contribute_include.rst
-.. include:: license.rst
-
+.. include:: ../includes/include_contribute.rst
+.. include:: ../includes/include_license.rst
 
 .. |Build Status| image:: https://travis-ci.org/ITCase/pyramid_sacrud.svg?branch=master
    :target: https://travis-ci.org/ITCase/pyramid_sacrud

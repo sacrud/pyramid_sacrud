@@ -14,7 +14,7 @@ Overview
     :align: right
     :width: 500px
 
-.. include:: owerview_include.rst
+.. include:: includes/include_owerview.rst
 
 Usage
 -----
@@ -22,12 +22,12 @@ Usage
 .. toctree::
    :maxdepth: 3
 
-   install
-   configuration
-   api
+   pages/install
+   pages/configuration
+   pages/api
 
-.. include:: contribute.rst
-.. include:: license.rst
+.. include:: pages/contribute.rst
+.. include:: includes/include_license.rst
 
 Indices and tables
 ==================

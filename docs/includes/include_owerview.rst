@@ -13,7 +13,8 @@ Look how easy it is to use with Pyramid:
     config.include('pyramid_sacrud')
     settings = config.registry.settings
     settings['pyramid_sacrud.models'] = {'Group1': {
-                                            'tables': [Model1, Model2],
+                                            'tables': [Model1,
+                                                       Model2],
                                             'position': 1,},
                                          'Group2': {
                                             'tables': [Model3],

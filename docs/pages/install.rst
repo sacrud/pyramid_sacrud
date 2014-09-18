@@ -1,8 +1,8 @@
-Installing `pyramid_sacrud`
-===========================
+Installing
+==========
 
-Install from github
--------------------
+github
+------
 
 .. code::
 
@@ -21,7 +21,7 @@ PyPi
 
     pip install pyramid_sacrud
 
-Source
+source
 ------
 
 .. code::
