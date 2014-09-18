@@ -16,7 +16,7 @@ import sys
 import os
 
 # Add and use Pylons theme
-if 'sphinx-build' in ' '.join(sys.argv): # protect against dumb importers
+if 'sphinx-build' in ' '.join(sys.argv):  # protect against dumb importers
     from subprocess import call, Popen, PIPE
 
     p = Popen('which git', shell=True, stdout=PIPE)
@@ -25,11 +25,11 @@ if 'sphinx-build' in ' '.join(sys.argv): # protect against dumb importers
     _themes = os.path.join(cwd, '_themes')
 
     call([git, 'clone', 'git://github.com/ITCase/pyramid_sacrud_example.git',
-        '_pyramid_sacrud_example'])
+          '_pyramid_sacrud_example'])
 
     if not os.path.isdir(_themes):
         call([git, 'clone', 'git://github.com/Pylons/pylons_sphinx_theme.git',
-                '_themes'])
+              '_themes'])
     else:
         os.chdir(_themes)
         call([git, 'checkout', 'master'])
