@@ -14,7 +14,7 @@ CSS
 
 We use stylus preprocessor for write and concat CSS. If you want edit this, add to ini file setting ``sacrud.debug = True``
 
-.. literalinclude:: ../pyramid_sacrud/assets.py
+.. literalinclude:: ../../pyramid_sacrud/assets.py
    :linenos:
    :language: py
    :pyobject: add_css_assets
@@ -24,7 +24,7 @@ JavaScript coder
 
 Use `<http://bower.io>`_ and assets hook:
 
-.. literalinclude:: ../pyramid_sacrud/assets.py
+.. literalinclude:: ../../pyramid_sacrud/assets.py
    :linenos:
    :language: py
    :pyobject: add_js_assets
