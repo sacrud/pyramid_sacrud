@@ -27,7 +27,15 @@ Usage
    pages/api
 
 .. include:: includes/include_contribute.rst
-.. include:: pages/contribute.rst
+
+Contribute
+==========
+
+.. toctree::
+   :maxdepth: 3
+
+   pages/contribute
+
 .. include:: includes/include_license.rst
 
 Indices and tables
