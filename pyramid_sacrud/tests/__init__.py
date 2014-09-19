@@ -51,12 +51,14 @@ class User(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    fullname = Column(String)
-    password = Column(String, info={'verbose_name': 'user password'})
+    fullname = Column(String, nullable=True)
+    password = Column(String, info={'verbose_name': 'user password'},
+                      nullable=True)
     sex = Column(Enum('male',
                       'female',
                       'alien',
-                      'unknown', name="sex"))
+                      'unknown', name="sex"),
+                 nullable=True)
 
     groups = relationship("Groups", secondary=association_table)
 
