@@ -12,6 +12,7 @@ Views for Pyramid frontend
 import itertools
 import json
 
+import deform
 from paginate_sqlalchemy import SqlalchemyOrmPage
 from peppercorn import parse
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
@@ -21,7 +22,7 @@ from pyramid_sacrud.breadcrumbs import breadcrumbs
 from pyramid_sacrud.common import get_settings_param, sacrud_env
 from pyramid_sacrud.common.paginator import get_paginator
 from sacrud import action
-from sacrud.common import pk_to_list
+from sacrud.common import columns_by_group, get_obj, pk_to_list
 from sacrud_deform import form_generator
 
 
@@ -130,9 +131,34 @@ class CRUD(object):
     @view_config(route_name='sa_update', renderer='/sacrud/create.jinja2')
     @view_config(route_name='sa_create', renderer='/sacrud/create.jinja2')
     def sa_add(self):
+        bc = breadcrumbs(self.tname, 'sa_create')
+        if self.pk:
+            bc = breadcrumbs(self.tname, 'sa_update', id=self.pk)
+        dbsession = self.request.dbsession
+        obj = get_obj(dbsession, self.table, self.pk)
+        columns = columns_by_group(self.table)
+        form, js_list = form_generator(dbsession=dbsession,
+                                       obj=obj,
+                                       table=self.table,
+                                       columns_by_group=columns)
         resp = action.CRUD(self.request.dbsession, self.table, self.pk)
 
         if 'form.submitted' in self.request.params:
+            controls = self.request.POST.items()
+            try:
+                form.validate(controls)
+            except deform.ValidationFailure as e:
+                # Form is NOT valid
+                sa_crud = {'obj': obj,
+                           'pk': self.pk,
+                           'col': columns,
+                           'table': self.table
+                           }
+                return dict(form=e.render(),
+                            sa_crud=sa_crud,
+                            js_list=js_list,
+                            breadcrumbs=bc,
+                            pk_to_list=pk_to_list)
             resp.request = request_to_sacrud(self.request)
             resp.add()
             if self.pk:
@@ -141,19 +167,11 @@ class CRUD(object):
                 self.flash_message("You created new object of %s" % self.tname)
             return HTTPFound(location=self.request.route_url('sa_list',
                                                              table=self.tname))
-
-        bc = breadcrumbs(self.tname, 'sa_create')
-        if self.pk:
-            bc = breadcrumbs(self.tname, 'sa_update', id=self.pk)
-
         sa_crud = resp.add()
-        form_data = form_generator(dbsession=self.request.dbsession,
-                                   obj=sa_crud['obj'], table=sa_crud['table'],
-                                   columns_by_group=sa_crud['col'])
-        return {'form': form_data['form'].render(),
+        return {'form': form.render(),
                 'sa_crud': sa_crud,
                 'pk_to_list': pk_to_list,
-                'js_list': form_data['js_list'],
+                'js_list': js_list,
                 'breadcrumbs': bc}
 
     @view_config(route_name='sa_delete')
