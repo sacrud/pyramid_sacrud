@@ -48,8 +48,6 @@ def widget_link(*args, **kwargs):
 class Widget(object):
     def __init__(self, column, name=''):
         self.column = column
-        if not name:
-            name = column.name
         self.info = {'verbose_name': name,
                      'name': name}
 
@@ -57,4 +55,3 @@ class Widget(object):
 class WidgetM2M(Widget):
     def __init__(self, column, name=''):
         super(WidgetM2M, self).__init__(column, name='')
-        self.template = 'sacrud/custom/WidgetM2MDetail.jinja2'

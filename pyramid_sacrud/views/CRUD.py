@@ -137,6 +137,7 @@ class CRUD(object):
         dbsession = self.request.dbsession
         obj = get_obj(dbsession, self.table, self.pk)
         columns = columns_by_group(self.table)
+
         form, js_list = form_generator(dbsession=dbsession,
                                        obj=obj,
                                        table=self.table,
