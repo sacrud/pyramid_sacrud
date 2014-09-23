@@ -38,7 +38,7 @@ def add_css_assets(config):
     css_file = os.path.join(settings["webassets.base_dir"], 'css', '_base.css')
     css_bundle = Bundle('css/*.css', 'css/**/*.css',
                         filters='cssmin')
-    if settings.get('sacrud.debug', False):
+    if settings.get('sacrud.debug_css', False):
         css_bundle = Bundle(css_bundle,  # pragma: no cover
                             Bundle('styl/*.styl', 'styl/**/*.styl',
                                    filters=['stylus', 'cssmin'],
@@ -76,5 +76,5 @@ def includeme(config):
     settings = config.registry.settings
     config.include(webassets_init)
     config.include(add_css_assets)
-    if settings.get('sacrud.debug', False):
+    if settings.get('sacrud.debug_js', False):
         config.include(add_js_assets)  # pragma: no cover

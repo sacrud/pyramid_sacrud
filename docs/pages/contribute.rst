@@ -34,7 +34,7 @@ Documentation contribute
 
 For generate README.rst run:
 
-.. code::
+.. code:: bash
 
     make readme
 
@@ -47,13 +47,13 @@ It is necessary for github and PyPi main page because he does not know how to in
 
 If you want generate html and README.rst run:
 
-.. code::
+.. code:: bash
 
     make readme_html
 
 or
 
-.. code::
+.. code:: bash
 
     make readme html
 
