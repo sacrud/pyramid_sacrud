@@ -5,10 +5,9 @@ from setuptools import find_packages, setup
 this = os.path.dirname(os.path.realpath(__file__))
 
 
-def readme():
-    with open(os.path.join(this, 'README.rst')) as f:
+def read(name):
+    with open(os.path.join(this, name)) as f:
         return f.read()
-
 
 setup(
     name='pyramid_sacrud',
@@ -23,24 +22,8 @@ setup(
     test_suite="nose.collector",
     license="MIT",
     description='Pyramid SQLAlchemy CRUD.',
-    long_description=readme(),
-    install_requires=[
-        "sacrud",
-        "peppercorn",
-        "sacrud_deform",
-        "pyramid",
-        "sqlalchemy",
-        "colander",
-        "deform",
-        "transaction",
-        "webassets",
-        'pyramid_webassets',
-        'pyramid_beaker',
-        'paginate_sqlalchemy',
-        'webtest',
-        'cssmin',
-        'jsmin',
-    ],
+    long_description=read("README.rst"),
+    install_requires=read("requirements.txt"),
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Console',
