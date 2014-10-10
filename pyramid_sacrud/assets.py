@@ -52,7 +52,7 @@ def add_css_assets(config):
 
 def add_js_assets(config):                                          # pragma: no cover
     settings = config.registry.settings
-    if settings.get('sacrud.debug_js', False):
+    if not settings.get('sacrud.debug_js', False):
         return
     js_folder = os.path.join(settings["webassets.base_dir"], 'js')
 
