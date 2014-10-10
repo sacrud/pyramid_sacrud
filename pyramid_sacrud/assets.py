@@ -10,6 +10,8 @@
 Assets
 """
 import os
+from shutil import copyfile
+
 from webassets import Bundle
 
 
@@ -48,12 +50,13 @@ def add_css_assets(config):
     config.add_webasset('sa_css', css_bundle)
 
 
-def add_js_assets(config):
-    from shutil import copyfile                                     # pragma: no cover
-    settings = config.registry.settings                             # pragma: no cover
-    js_folder = os.path.join(settings["webassets.base_dir"], 'js')  # pragma: no cover
+def add_js_assets(config):                                          # pragma: no cover
+    settings = config.registry.settings
+    if settings.get('sacrud.debug_js', False):
+        return
+    js_folder = os.path.join(settings["webassets.base_dir"], 'js')
 
-    bower = ["jquery/dist/jquery.min.js",                           # pragma: no cover
+    bower = ["jquery/dist/jquery.min.js",
              "chosen/public/chosen.jquery.min.js",
              "jquery-ui/ui/minified/jquery-ui.min.js",
              "speakingurl/speakingurl.min.js",
@@ -66,15 +69,13 @@ def add_js_assets(config):
              "pickadate/lib/compressed/picker.date.js",
              "pickadate/lib/compressed/picker.time.js",
              ]
-    for f in bower:                                                 # pragma: no cover
-        src = os.path.join(js_folder, 'bower_components', f)        # pragma: no cover
-        dst = os.path.join(js_folder, 'lib', f.split('/')[-1])      # pragma: no cover
-        copyfile(src, dst)                                          # pragma: no cover
+    for f in bower:
+        src = os.path.join(js_folder, 'bower_components', f)
+        dst = os.path.join(js_folder, 'lib', f.split('/')[-1])
+        copyfile(src, dst)
 
 
 def includeme(config):
-    settings = config.registry.settings
     config.include(webassets_init)
     config.include(add_css_assets)
-    if settings.get('sacrud.debug_js', False):
-        config.include(add_js_assets)  # pragma: no cover
+    config.include(add_js_assets)

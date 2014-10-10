@@ -12,7 +12,7 @@ CSS
 .. note::
     You need install nodejs and stylus preprocessor only for develop
 
-We use stylus preprocessor for write and concat CSS. If you want edit this, add to ini file setting ``sacrud.debug = True``
+We use stylus preprocessor for write and concat CSS. If you want edit this, add to ini file setting ``sacrud.debug_css = True``
 
 .. literalinclude:: ../../pyramid_sacrud/assets.py
    :linenos:
@@ -21,6 +21,7 @@ We use stylus preprocessor for write and concat CSS. If you want edit this, add 
 
 JavaScript coder
 ~~~~~~~~~~~~~~~~
+If you want edit this, add to ini file setting ``sacrud.debug_js = True``
 
 Use `<http://bower.io>`_ and assets hook:
 
