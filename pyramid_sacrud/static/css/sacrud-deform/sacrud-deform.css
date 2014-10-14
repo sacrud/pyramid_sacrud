@@ -1,0 +1,74 @@
+.sacrud-deform
+{
+	width: auto;
+}
+	.sacrud-deform fieldset.deformFormFieldset
+	{
+		padding: 0;
+		margin: 0;
+		border: none;
+	}
+		.sacrud-deform ul
+		{
+			list-style: none;
+			padding: 0;
+			margin: 0 0 20px 0;
+		}
+			.sacrud-deform ul li
+			{
+				padding: 0;
+				margin: 0;
+			}
+				.sacrud-deform ul li fieldset.deformMappingFieldset
+				{
+					padding: 0;
+					margin: 0;
+					border: none;
+				}
+				.sacrud-deform ul li fieldset.deformMappingFieldset legend
+				{
+					padding: 5px 10px 4px;
+					background: #4183c4;
+					font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+					color: #fff;
+					position: relative;
+					min-height: 15px;
+					display: block;
+					width: 100%;
+					box-sizing: border-box;
+					-moz-box-sizing: border-box; 
+					-webkit-box-sizing: border-box;
+					border: solid 1px #eaeaea;
+					border-bottom: 0;
+				}
+					.sacrud-deform ul.mapping
+					{
+						padding: 0;
+						margin: 0;
+						list-style: none;
+						border-top: solid 1px #eaeaea;
+					}
+						.sacrud-deform ul.mapping li
+						{
+							padding: 0;
+							margin: 0;
+							
+						}
+							.sacrud-deform ul.mapping li ul
+							{
+								list-style: none;
+								margin: 0;
+								padding: 0;
+							}
+								.sacrud-deform ul.mapping li ul li.field
+								{
+									padding: 0;
+									border: solid 1px #eaeaea;
+									border-top: none;
+								}
+									.sacrud-deform ul.mapping li ul li.field .desc
+									{
+										width: 200px;
+										display: inline-block;
+										padding: 8px;
+									}

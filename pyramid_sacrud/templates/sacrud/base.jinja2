@@ -2,13 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>
-        SACRUD
-        {% block title %}{% endblock %}
-    </title>
+    <title>SACRUD{% block title %}{% endblock %}</title>
 
     <link href="{{ request.static_url('pyramid_sacrud:static/favicon.ico') }}" rel="shortcut icon" type="image/x-icon">
-
+    
     {% block sa_head_meta %}
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
     {% endblock %}
@@ -16,6 +13,9 @@
     {% block sa_head_css %}
         {% assets "sa_css" %}
             <link rel="stylesheet" href="{{ ASSET_URL }}"/>
+            <!-- Ебанный НАСОС -->
+            <link href="{{ request.static_url('pyramid_sacrud:static/css/sacrud-deform/sacrud-deform.css') }}" rel="stylesheet" />
+
         {% endassets %}
     {% endblock %}
 
