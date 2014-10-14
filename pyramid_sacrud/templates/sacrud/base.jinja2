@@ -13,8 +13,9 @@
     {% block sa_head_css %}
         {% assets "sa_css" %}
             <link rel="stylesheet" href="{{ ASSET_URL }}"/>
-            <!-- Ебанный НАСОС -->
+
             <link href="{{ request.static_url('pyramid_sacrud:static/css/sacrud-deform/sacrud-deform.css') }}" rel="stylesheet" />
+            <link href="{{ request.static_url('pyramid_sacrud:static/css/toolbar/toolbar.css') }}" rel="stylesheet" />
 
         {% endassets %}
     {% endblock %}

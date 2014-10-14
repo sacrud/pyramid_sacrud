@@ -21,15 +21,15 @@
             <div class="sacrud-grid__toolbar">
                 <div class="toolbar clear-fix">
                     <div class="toolbar-button">
-                        <div class="toolbar-button__item">
+                        <div class="toolbar-button__item toolbar-button__item_type_confirm">
                              <button type="submit" name="form.submitted" class="toolbar-button__item-button">Save</button>
                         </div>
                         {% if obj %}
-                            <div class="action_button toolbar-button__item toolbar-button__item_type_red">
+                            <div class="toolbar-button__item toolbar-button__item_type_delete">
                                 <div class="toolbar-button__item-name">Delete</div>
                             </div>
                         {% endif %}
-                        <div class="toolbar-button__item">
+                        <div class="toolbar-button__item toolbar-button__item_type_cancel">
                             <a href="{{ request.route_url('sa_list', table=obj_cls.__tablename__) }}" class="toolbar-button__item-link">Cancel</a>
                         </div>
                     </div>
@@ -41,17 +41,17 @@
             <div class="sacrud-grid__toolbar">
                 <div class="toolbar clear-fix">
                     <div class="toolbar-button">
-                        <div class="toolbar-button__item">
+                        <div class="toolbar-button__item toolbar-button__item_type_confirm">
                              <button type="submit" name="form.submitted" class="toolbar-button__item-button">Save</button>
                         </div>
                         {% if obj %}
-                            <div class="toolbar-button__item toolbar-button__item_type_red">
+                            <div class="toolbar-button__item toolbar-button__item_type_delete">
                                 <a href="{{ request.route_url('sa_delete', table=obj_cls.__tablename__,
                                             pk=pk_to_list(obj)) }}"
                                    class="toolbar-button__item-link">Delete</a>
                             </div>
                         {% endif %}
-                        <div class="toolbar-button__item">
+                        <div class="toolbar-button__item toolbar-button__item_type_cancel">
                             <a href="{{ request.route_url('sa_list', table=obj_cls.__tablename__) }}" class="toolbar-button__item-link">Cancel</a>
                         </div>
                     </div>
