@@ -37,12 +37,12 @@ def webassets_init(config):
 
 def add_css_assets(config):
     settings = config.registry.settings
-    css_file = os.path.join(settings["webassets.base_dir"], 'css', '_base.css')
+    css_file = os.path.join(settings["webassets.base_dir"], 'css', '__main.css')
     css_bundle = Bundle('css/*.css', 'css/**/*.css',
                         filters='cssmin')
     if settings.get('sacrud.debug_css', False):
         css_bundle = Bundle(css_bundle,  # pragma: no cover
-                            Bundle('styl/*.styl', 'styl/**/*.styl',
+                            Bundle('css/*.styl', 'css/**/*.styl',
                                    filters=['stylus', 'cssmin'],
                                    output=css_file,
                                    ),
