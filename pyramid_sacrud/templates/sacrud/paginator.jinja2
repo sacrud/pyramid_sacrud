@@ -1,2 +1,5 @@
 <ins class="paginator__title">Pages:</ins>
-{{ paginator.pager(link_attr={'class': 'pyramid_sacrud_pager_link'})|safe }}
+{{ paginator.pager(link_attr={'class': 'pyramid_sacrud_pager_link'},
+                   curpage_attr={'class': 'pyramid_sacrud_pager_curpage'},
+                   dotdot_attr={'class': 'pyramid_sacrud_pager_dotdot'}
+)|safe }}
