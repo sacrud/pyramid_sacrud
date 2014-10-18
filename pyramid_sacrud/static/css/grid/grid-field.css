@@ -1,0 +1,16 @@
+.sacrud-grid-field
+{
+	display: table;
+	white-space: nowrap;
+	float: left;
+	margin: 0 1.5em 0 0;
+}
+	.sacrud-grid-field__item
+	{
+		display: inline-block;
+	}
+	.sacrud-grid-field__name
+	{
+		display: inline-block;
+		padding: .2em 0 0 .2em;
+	}

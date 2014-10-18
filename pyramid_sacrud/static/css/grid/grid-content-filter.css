@@ -1,0 +1,46 @@
+.sacrud-grid-content-filter
+{
+	width: auto;
+}
+	.sacrud-grid-content-filter__group
+	{
+		border-bottom: solid 1px #eee;
+		margin: 0 0 20px 0;
+	}
+		.sacrud-grid-content-filter__group-title
+		{
+			border: solid 1px #eee;
+			border-bottom: none;
+			display: block;
+			position: relative;
+			padding: 10px 20px;
+			text-decoration: none;
+			color: #444;
+			background: #edf4fc;
+			font: 1.2em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+		}
+		.sacrud-grid-content-filter__group-title:hover
+		{
+			color: #4183c4;
+			text-decoration: underline;
+		}
+		.sacrud-grid-content-filter__group-item
+		{
+			border: solid 1px #eee;
+			padding: 10px 20px;
+			font: .9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+			display: block;
+			text-decoration: none;
+			color: #444;
+		}
+		.sacrud-grid-content-filter__group-item_state_active,
+		.sacrud-grid-content-filter__group-item_state_active:hover
+		{
+			background: #4183c4;
+			color: #fff !important;
+		}
+		.sacrud-grid-content-filter__group-item:hover
+		{
+			color: #4183c4;
+			text-decoration: underline;
+		}

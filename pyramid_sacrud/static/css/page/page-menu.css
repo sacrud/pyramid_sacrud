@@ -1,0 +1,43 @@
+.page-menu {
+  position: relative;
+  width: 100%;
+  margin: 0 0 30px 0;
+}
+.page-menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  display: block;
+  overflow: hidden;
+}
+.page-menu-list__item {
+  border-bottom: 1px #006fa6 solid;
+}
+.page-menu-list__item:last-child {
+  border: none;
+}
+.page-menu-list__item-link {
+  color: #fff;
+  font: bold 0.95em Tahoma, "Trebuchet MS", Calibri, "Century Gothic";
+  text-decoration: none;
+  padding: 1em 2em;
+  display: block;
+  background: #0094de;
+}
+.page-menu-list__item-link:hover {
+  color: #fff;
+  background: #00a3f4;
+}
+.page-menu-list__item-link_state_current {
+  color: #000;
+  text-decoration: none;
+  background: #eee;
+  background-repeat: no-repeat;
+  background-image: url(unquote('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAALCAYAAABCm8wlAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTE0RDZGNzBENUI2MTFFMkJBQ0JBQTFDN0QwNzU2ODQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTE0RDZGNzFENUI2MTFFMkJBQ0JBQTFDN0QwNzU2ODQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxMTRENkY2RUQ1QjYxMUUyQkFDQkFBMUM3RDA3NTY4NCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxMTRENkY2RkQ1QjYxMUUyQkFDQkFBMUM3RDA3NTY4NCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsaPd7EAAABqSURBVHjaYvz//z8DOmCcen8+kDIAYkcWHJIJUG4CI7IJaJIL/mcrJjLhkwQxmPBJguUYptxrANL1UP4DoKQispuYgAIgBQugfAWoaQgFIAJq5AK4y5EUwR2JSxEjekChObiQkVBIAgQYAP0GOaf4dbUSAAAAAElFTkSuQmCC'));
+  background-position: 0.8em 50%;
+
+}

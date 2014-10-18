@@ -1,0 +1,14 @@
+.textarea
+	{
+  min-width: 500px;
+  margin: 0;
+  padding: 0.5em;
+  min-height: 150px;
+  overflow: auto;
+  border: 1px #d9d9d9 solid;
+}
+.textarea:focus
+	{
+  outline: 0;
+  border-color: #919191;
+}

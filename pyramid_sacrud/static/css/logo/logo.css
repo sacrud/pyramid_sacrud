@@ -1,0 +1,16 @@
+.logo
+	{
+  float: left;
+}
+.logo__text
+	{
+  font: bold 0.9em 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+.logo__text-link
+	{
+  text-decoration: none;
+  color: #fff;
+
+}

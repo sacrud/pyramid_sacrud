@@ -1,0 +1,22 @@
+.message
+	{
+  padding: 0.7em 1.2em 0.8em 1.2em;
+}
+.message__text
+	{
+  font-family: 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
+  color: #fff;
+  font-size: 1.1em;
+}
+.message_type_success
+	{
+  background: #96B52D;
+}
+.message_type_error
+{
+  background: #E73212;
+}
+.message_type_warning
+	{
+  background: #EAB13C;
+}

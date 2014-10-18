@@ -62,15 +62,97 @@
 							}
 								.sacrud-deform ul.mapping li ul li.field
 								{
-									padding: 0;
+									padding: 8px;
 									border: solid 1px #eaeaea;
+									background: #fff;
 									border-top: none;
+									-webkit-transition: background-color 500ms ease-out 3ms;
+									-moz-transition: background-color 500ms ease-out 3ms;
+									-o-transition: background-color 500ms ease-out 3ms;
+									transition: background-color 500ms ease-out 3ms;
 								}
+								.sacrud-deform ul.mapping li ul li.field:hover
+								{
+									background: #F4F9FE;
+									color: #fff;
+									webkit-transition: background-color 500ms ease-out 3ms;
+									-moz-transition: background-color 500ms ease-out 3ms;
+									-o-transition: background-color 500ms ease-out 3ms;
+									transition: background-color 500ms ease-out 3ms;
+  								}
 									.sacrud-deform ul.mapping li ul li.field .desc
 									{
 										width: 200px;
 										display: inline-block;
-										padding: 8px;
+										
 										font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 										color: #444;
 									}
+input.sacrud_deform
+{
+	background: #fff;
+	border-left: solid 1px #c6c6c6;
+	border-top: solid 1px #a3a3a3;
+	border-right: solid 1px #c6c6c6;
+	border-bottom: solid 1px #e5e5e5;
+	display: block;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+	color: #333333;
+	position: relative;
+	padding: 0.3em 1% 0.2em 0.3em;
+	outline-width: 0;
+	-webkit-transition: all 200ms linear;
+	-o-transition: all 200ms linear;
+	-moz-transition: all 200ms linear;
+	-ms-transition: all 200ms linear;
+	-kthtml-transition: all 200ms linear;
+	transition: all 200ms linear;
+	display: inline-block;
+}
+input.sacrud_deform:focus
+{
+	border: solid 1px #4183c4;
+	-webkit-transition: all 200ms linear;
+	-o-transition: all 200ms linear;
+	-moz-transition: all 200ms linear;
+	-ms-transition: all 200ms linear;
+	-kthtml-transition: all 200ms linear;
+	transition: all 200ms linear;
+}
+textarea.sacrud_deform
+{
+	background: #fff;
+	border-left: solid 1px #c6c6c6;
+	border-top: solid 1px #a3a3a3;
+	border-right: solid 1px #c6c6c6;
+	border-bottom: solid 1px #e5e5e5;
+	display: block;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+	color: #333333;
+	position: relative;
+	padding: 0.3em 1% 0.2em 0.3em;
+	outline-width: 0;
+	-webkit-transition: all 200ms linear;
+	-o-transition: all 200ms linear;
+	-moz-transition: all 200ms linear;
+	-ms-transition: all 200ms linear;
+	-kthtml-transition: all 200ms linear;
+	transition: all 200ms linear;
+	display: inline-block;
+}
+textarea.sacrud_deform:focus
+{
+	border: solid 1px #4183c4;
+	-webkit-transition: all 200ms linear;
+	-o-transition: all 200ms linear;
+	-moz-transition: all 200ms linear;
+	-ms-transition: all 200ms linear;
+	-kthtml-transition: all 200ms linear;
+	transition: all 200ms linear;
+}

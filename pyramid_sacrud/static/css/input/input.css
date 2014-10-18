@@ -1,0 +1,43 @@
+.input
+  {
+  margin: 0;
+  padding: 0.5em;
+}
+.input:focus
+  {
+  outline: 0;
+  border-color: #919191;
+}
+.input_type_number
+  {
+  border: 1px #d9d9d9 solid;
+}
+.input_type_integer
+  {
+  border: 1px #d9d9d9 solid;
+}
+.input_type_string
+  {
+  min-width: 500px
+  border: 1px #d9d9d9 solid;
+}
+.input_type_biginteger
+  {
+  border: 1px #d9d9d9 solid;
+}
+.input_type_float
+  {
+  border: 1px #d9d9d9 solid;
+}
+.input_type_unicode
+  {
+  border: 1px #d9d9d9 solid;
+}
+.input_type_hstore
+  {
+  border: 1px #d9d9d9 solid;
+}
+.input_type_guid
+  {
+  border: 1px #d9d9d9 solid;
+}

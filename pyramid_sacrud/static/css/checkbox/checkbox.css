@@ -1,0 +1,64 @@
+.checkbox
+  {
+  position: relative;
+  padding: 0.4em 0 0 0;
+  display: inline-block;
+  cursor: pointer;
+}
+.checkbox__status
+  {
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border: 1px #d9d9d9 solid;
+  padding: 0;
+  margin: 0 5px 0 0;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+.checkbox__status:after
+  {
+  width: 20px;
+  height: 20px;
+  background: url(unquote('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAANCAYAAACZ3F9/AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMDUvMTAvMTRv8xQvAAAAwUlEQVQokY3RIU5DQRCA4e8BIUE1aQ0Kg66q5wLInqF3QGNA4+pxJARugOAGhAuQkuBKgsGQwexLhqFN3yQjdv79Z3dnRYQhiT0scRoRBklNXCDwhcVQ6RifTQw8DBXvk7TCuAczjLZI8yT94KzVTVqXJxwWaYKPJF4m5jGBO+wneJvYc2GuEwzcNHCeamuc/LlN21TlK7yn9fzf29PRVe5zuXFoZRhVfsXRTrHI35hu+9sDJSLious6eIuIl8r7+AWLQEirlNTSCwAAAABJRU5ErkJggg==')) no-repeat 50% 50%;
+  top: -1px;
+  left: 0;
+  color: #1d1d1d;
+  position: absolute;
+  content: '';
+  display: none;
+}
+.checkbox__checkbox
+  {
+  width: 20px;
+  height: 20px;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  visibility: visible;
+  opacity: 0;
+  z-index: 100;
+}
+.checkbox__name
+  {
+  font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  color: #444;
+  font-size: 1em;
+  position: relative;
+  top: 0.05em;
+}
+.textarea:focus
+  {
+  outline: 0;
+  border-color: #919191;
+}
+.checkbox:hover .checkbox__status
+  {
+  border-color: #919191;
+}
+.checkbox_state_cheked .checkbox__status:after
+  {
+  display: block;
+}

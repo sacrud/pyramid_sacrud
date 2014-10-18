@@ -1,4 +1,3 @@
-<div class="sacrud-grid-content__button">
-    <a href="{{ request.route_url('sa_update', table=sa_crud['table'].__tablename__,
-                pk=pk_to_list(row)) }}">Edit</a>
-</div>
+<a href="{{ request.route_url('sa_update', table=sa_crud['table'].__tablename__,
+            pk=pk_to_list(row)) }}"
+   class="sacrud-grid-content-grid__body-item-link">Edit</a>

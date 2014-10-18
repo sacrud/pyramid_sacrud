@@ -1,0 +1,31 @@
+.sacrud-grid-content
+{
+	width: 100%;
+	padding: 0;
+	zoom: 1;
+}
+.sacrud-grid-content:after
+{
+	display: block;
+	clear: both;
+	content: '';
+}
+	.sacrud-grid-content__left
+	{
+		width: 100%;
+		float: left;
+		position: relative;
+	}
+		.sacrud-grid-content__left-inner
+		{
+			padding: 0 220px 0 0;
+			overflow: auto;
+			min-height: 200px;
+		}
+	.sacrud-grid-content__right
+	{
+		width: 200px;
+		float: right;
+		margin-left: -205px;
+		position: relative;
+	}
