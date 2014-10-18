@@ -102,11 +102,14 @@
 
             {% block sa_body %}{% endblock %}
 
-            <div class="footer">
-                {% block sa_footer %}
-                    &copy; 2013-2014, ITCase. <a href="https://github.com/ITCase/sacrud">SACRUD</a>
-                {% endblock %}
-            </div>
+            {% block sa_footer %}
+                <div class="footer">
+                    <div class="footer-inner">
+                        &copy; 2013-2014, ITCase
+                        <a href="https://github.com/ITCase/sacrud" class="footer-inner__link">SACRUD</a>
+                    </div>
+                </div>
+            {% endblock %}
         </div>
     </div>
 

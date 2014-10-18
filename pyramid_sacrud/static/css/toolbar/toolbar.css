@@ -99,7 +99,7 @@
 .toolbar-button__item_type_confirm .toolbar-button__item-link,
 .toolbar-button__item_type_confirm .toolbar-button__item-button
 {
-	background: DarkGreen;
+	background: #96B52D;
 	color: #fff;
 }
 .toolbar-button__item_type_confirm:hover .toolbar-button__item-name,
