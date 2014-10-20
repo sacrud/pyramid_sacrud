@@ -5,7 +5,6 @@
 # Copyright © 2014 uralbash <root@uralbash.ru>
 #
 # Distributed under terms of the MIT license.
-
 """
 Assets
 """
@@ -18,10 +17,10 @@ from webassets import Bundle
 def webassets_init(config):
     curdir = os.path.dirname(os.path.abspath(__file__))
     settings = config.registry.settings
+    settings["webassets.debug"] = "True"
     settings["webassets.base_dir"] = os.path.join(curdir, 'static')
     settings["webassets.base_url"] = "/%s/sa_static" % config.route_prefix
-    settings["webassets.debug"] = "True"
-    settings["webassets.updater"] = "timestamp"
+    settings["webassets.updater"] = "always"
     settings["webassets.jst_compiler"] = "Handlebars.compile"
     settings["webassets.url_expire"] = "False"
     settings["webassets.static_view"] = "True"
@@ -37,16 +36,18 @@ def webassets_init(config):
 
 def add_css_assets(config):
     settings = config.registry.settings
-    css_file = os.path.join(
-        settings["webassets.base_dir"], 'css', '__main.css')
-    if settings.get('sacrud.debug_css', False):
-        css_bundle = Bundle(                                # pragma: no cover
-            'css/*.css',
-            'css/**/*.css',
-            filters='cssmin', output=css_file)
-        config.add_webasset('sa_css', css_bundle)
-    else:
-        config.add_webasset('sa_css', 'css/__main.css')
+    css_file = os.path.join(settings["webassets.base_dir"],
+                            'css', '__main.css')
+    debug_css = settings.get('sacrud.debug_css', False)
+    if debug_css == "True":
+        bundle = Bundle('css/*.css',
+                        'css/**/*.css',
+                        filters='cssmin',
+                        output=css_file)
+        env = config.get_webassets_env()
+        bundle._set_env(env)
+        bundle.build()
+    config.add_webasset('sa_css', css_file)
 
 
 def add_js_assets(config):                                  # pragma: no cover
