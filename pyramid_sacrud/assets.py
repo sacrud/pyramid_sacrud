@@ -44,7 +44,9 @@ def add_css_assets(config):
             'css/*.css',
             'css/**/*.css',
             filters='cssmin', output=css_file)
-    config.add_webasset('sa_css', css_bundle)
+        config.add_webasset('sa_css', css_bundle)
+    else:
+        config.add_webasset('sa_css', 'css/__main.css')
 
 
 def add_js_assets(config):                                  # pragma: no cover
