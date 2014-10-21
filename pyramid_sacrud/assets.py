@@ -39,4 +39,6 @@ def add_js_assets(config):                                  # pragma: no cover
 
 
 def includeme(config):
+    config.add_static_view('sa_static', 'pyramid_sacrud:static')
+    config.add_static_view('sa_deform_static', 'deform:static')
     config.include(add_js_assets)
