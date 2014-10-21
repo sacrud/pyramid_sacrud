@@ -5,15 +5,13 @@
     <title>SACRUD{% block title %}{% endblock %}</title>
 
     <link href="{{ request.static_url('pyramid_sacrud:static/favicon.ico') }}" rel="shortcut icon" type="image/x-icon">
-    
+
     {% block sa_head_meta %}
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     {% endblock %}
 
     {% block sa_head_css %}
-        {% assets "sa_css" %}
-            <link rel="stylesheet" href="{{ ASSET_URL }}" />
-        {% endassets %}
+        <link rel="stylesheet" href="{{ request.static_url('pyramid_sacrud:static/css/__main.css') }}" />
     {% endblock %}
 
     {% block sa_head_extra_css %}
