@@ -178,14 +178,14 @@ class ViewPageTest(BaseViewsTest):
         self.failUnless('profile' in str(res.body))
 
     def test_sa_list(self):
-        res = self.testapp.get('/admin/user', status=200)
+        res = self.testapp.get('/admin/user/', status=200)
         self.failUnless("user_[&#39;id&#39;, 2]" in str(res.body))
-        res = self.testapp.get('/admin/profile', status=200)
+        res = self.testapp.get('/admin/profile/', status=200)
         self.failUnless("profile_[&#39;id&#39;, 1]" not in str(res.body))
 
     def test_sa_list_delete_actions(self):
         items_list = [u'["id", 1]', u'["id", 2]']
-        self.testapp.post('/admin/user',
+        self.testapp.post('/admin/user/',
                           {'selected_action': 'delete',
                            'selected_item': items_list},
                           status=200)
@@ -205,13 +205,13 @@ class ViewPageTest(BaseViewsTest):
         self.assertEqual(user.name, 'foo bar')
 
     def test_sa_create(self):
-        res = self.testapp.get('/admin/user/create', status=200)
+        res = self.testapp.get('/admin/user/create/', status=200)
         self.failUnless('create' in str(res.body))
         # XXX: not good
         self.failUnless('Add a new user' in str(res.body))
 
     def test_sa_create_post(self):
-        self.testapp.post('/admin/user/create',
+        self.testapp.post('/admin/user/create/',
                           {'form.submitted': '1',
                            'name': 'foo bar baz'},
                           status=302)

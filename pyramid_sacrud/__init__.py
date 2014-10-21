@@ -24,8 +24,8 @@ def add_routes(config):
     config.add_route('sa_home',           prefix + '/')
     config.add_route('sa_list',           prefix + '{table}/')
     config.add_route('sa_create',         prefix + '{table}/create/')
-    config.add_route('sa_update',         prefix + '{table}/update/*pk/')
-    config.add_route('sa_delete',         prefix + '{table}/delete/*pk/')
+    config.add_route('sa_update',         prefix + '{table}/update/*pk')
+    config.add_route('sa_delete',         prefix + '{table}/delete/*pk')
 
 
 def add_jinja2(config):
