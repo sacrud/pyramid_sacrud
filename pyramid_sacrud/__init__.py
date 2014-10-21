@@ -14,6 +14,8 @@ import sqlalchemy
 import sqlalchemy.orm as orm
 from zope.sqlalchemy import ZopeTransactionExtension
 
+from pyramid_sacrud import views
+
 from .common import _silent_none, pkg_prefix
 
 
@@ -44,18 +46,8 @@ def add_database(config):
 
 
 def includeme(config):
-
     add_database(config)
     add_jinja2(config)
-
-    # Routes
     config.include(add_routes)
-
-    # Assets
     config.include('pyramid_sacrud.assets')
-
-    # Static
-    config.add_static_view('sa_static', 'pyramid_sacrud:static')
-    config.add_static_view('sa_deform_static',
-                           'deform:static')
-    config.scan()
+    config.scan(views)

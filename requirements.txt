@@ -8,7 +8,3 @@ pyramid_beaker
 transaction
 paginate_sqlalchemy
 webtest
-webassets
-pyramid_webassets
-cssmin
-jsmin
