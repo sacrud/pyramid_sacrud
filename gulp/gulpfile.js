@@ -3,7 +3,7 @@ var gulp = require('gulp'),
     watch = require('gulp-watch');
 
 var staticPath = '../pyramid_sacrud/static/';
-    
+
 gulp.task('concat', function() {
     gulp.src([
         staticPath + 'css/*.css',
