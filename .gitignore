@@ -15,6 +15,7 @@ nohup.out
 
 # JavaScript
 node_modules
+gulp/node_modules/
 
 # Python
 cover
