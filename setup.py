@@ -2,11 +2,11 @@ import os
 
 from setuptools import find_packages, setup
 
-this = os.path.dirname(os.path.realpath(__file__))
+here = os.path.dirname(os.path.realpath(__file__))
 
 
 def read(name):
-    with open(os.path.join(this, name)) as f:
+    with open(os.path.join(here, name)) as f:
         return f.read()
 
 setup(
