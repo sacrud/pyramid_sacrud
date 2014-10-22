@@ -18,10 +18,10 @@ gulp.task('build', function () {
 });
 
 gulp.task('browserify', function() {
-    var main = browserify(staticPath + '/js/main.js') // { debug: true }
-                .bundle()
-                .pipe(source('__main.js'))
-                .pipe(gulp.dest(staticPath + './js/'));
+    browserify(staticPath + '/js/main.js', { debug: true })
+        .bundle()
+        .pipe(source('__main.js'))
+        .pipe(gulp.dest(staticPath + './js/'));
 });
 
 gulp.task('css', function() {
@@ -47,12 +47,11 @@ gulp.task('js', function() {
 });
 
 gulp.task('watch', function () {
-    gulp.src(cssFiles)
+    gulp.src(cssFiles, jsFiles)
         .pipe(watch(cssFiles, function (files) {
-            gulp.start('css');
-        }));
-    gulp.src(jsFiles)
+            return gulp.start('css');
+        }))
         .pipe(watch(jsFiles, function (files) {
-            gulp.start('browserify');
+            return gulp.start('browserify');
         }));
 });

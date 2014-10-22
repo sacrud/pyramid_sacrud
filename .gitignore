@@ -16,6 +16,7 @@ nohup.out
 # JavaScript
 node_modules
 gulp/node_modules/
+pyramid_sacrud_example/node_modules/
 
 # Python
 cover

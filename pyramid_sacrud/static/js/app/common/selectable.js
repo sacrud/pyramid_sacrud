@@ -1,4 +1,7 @@
-module.exports = function(vars) {
+var $ = require('jquery'),
+    jquery_ui = require('jquery-ui');
+
+module.exports = function() {
 
     $(function() {
 

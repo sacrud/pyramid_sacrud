@@ -1,4 +1,6 @@
-module.exports = function(vars) {
+var $ = require('jquery');
+
+module.exports = function() {
 
     $(function() {
         function show_delete_content() {

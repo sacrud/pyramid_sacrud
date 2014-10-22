@@ -38,7 +38,7 @@
 }
 .nav__item_state_current
   {
-  font: 0.8em 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  font: 0.8em 'Segoe UIs', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
   color: #000;
   position: relative;
   text-transform: uppercase;

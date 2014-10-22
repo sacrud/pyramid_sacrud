@@ -1,4 +1,4 @@
-module.exports = function(vars) {
+module.exports = function() {
 
     $(function() {
         $(document).on('focus', '#site_search', function () {
@@ -6,5 +6,5 @@ module.exports = function(vars) {
             // $(this).val('');
         });
     });
-
+    console.log("list");
 };

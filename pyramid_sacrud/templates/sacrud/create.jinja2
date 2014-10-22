@@ -10,32 +10,20 @@
 
 {% block sa_head_js %}
     <!-- Deform -->
-    <script type="text/javascript"
-        src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery.min.js') }}"></script>
-    <script type="text/javascript"
-        src="{{ request.static_url('deform:static/scripts/deform.js') }}"></script>
-    <script type="text/javascript"
-        src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery.maskedinput.min.js') }}"></script>
-    <script type="text/javascript"
-        src="{{ request.static_url('pyramid_sacrud:static/js/lib/modernizr.js') }}"></script>
-    <script type="text/javascript"
-        src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.js') }}"></script>
-    <script type="text/javascript"
-        src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.date.js') }}"></script>
-    <script type="text/javascript"
-        src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.time.js') }}"></script>
+    <script src="{{ request.static_url('deform:static/scripts/deform.js') }}" type="text/javascript"></script>
+    <script src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery.maskedinput.min.js') }}" type="text/javascript"></script>
+    <script src="{{ request.static_url('pyramid_sacrud:static/js/lib/modernizr.js') }}" type="text/javascript"></script>
+    <!--
     <script type="text/javascript">
         $.mask.definitions['h'] = "[A-Fa-f0-9]";
     </script>
+    -->
     {% for lib in js_list %}
         <script type="text/javascript"
         src="{{ request.static_url('pyramid_sacrud:static/js/lib/%s' % lib) }}">
         </script>
     {% endfor %}
-
-    <!-- requirejs -->
     {{ super() }}
-    <script type="text/javascript">requirejs(["app/create"]);</script>
 {% endblock %}
 
 {% block sa_popup_content %}
