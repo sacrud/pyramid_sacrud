@@ -18,7 +18,7 @@
                 {% if widget.tables|length > 0 %}
                     <div class="widget widget_type_drag" name="{{ widget.name }}">
                         <div class="widget-title">
-                            {{ widget.name }}
+                            {{ gettext(widget.name) }}
                             <span class="widget-title_state_switch k-icon k-i-arrowhead-n">
                             </span>
                         </div>
@@ -44,7 +44,9 @@
 {% endblock %}
 
 {% block extrascript %}
-    <script type="text/javascript">
-        requirejs(["app/dashboard"]);
-    </script>
+    <!--
+        <script type="text/javascript">
+            requirejs(["app/dashboard"]);
+        </script>
+    -->
 {% endblock %}

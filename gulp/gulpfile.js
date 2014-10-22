@@ -1,7 +1,6 @@
 var browserify = require('browserify'),
     concat = require('gulp-concat'),
     gulp = require('gulp'),
-    //merge = require('merge-stream'),
     source = require('vinyl-source-stream'),
     watch = require('gulp-watch');
 
@@ -9,13 +8,13 @@ var staticPath = '../pyramid_sacrud/static/';
 var cssFiles = [staticPath + 'css/*.css', staticPath + 'css/**/*.css', '!' + staticPath + 'css/__main.css'];
 var jsFiles = [staticPath + 'js/*.js', staticPath + 'js/**/*.js', '!' + staticPath + 'js/__main.js'];
 
-
 gulp.task('default', function () {
    // Your default task
 });
 
 gulp.task('browserify', function() {
-    return browserify(staticPath + '/js/main.js')
+    //return browserify(staticPath + '/js/main.js', { debug: true })
+    return browserify('./app.js')
     .bundle()
     .pipe(source('__main.js'))
     .pipe(gulp.dest(staticPath + './js/'));

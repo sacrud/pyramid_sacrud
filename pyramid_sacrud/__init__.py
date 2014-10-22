@@ -21,9 +21,9 @@ from .common import _silent_none, pkg_prefix
 
 def add_routes(config):
     prefix = pkg_prefix(config)
-    config.add_route('sa_home',           prefix)
-    config.add_route('sa_list',           prefix + '{table}')
-    config.add_route('sa_create',         prefix + '{table}/create')
+    config.add_route('sa_home',           prefix + '/')
+    config.add_route('sa_list',           prefix + '{table}/')
+    config.add_route('sa_create',         prefix + '{table}/create/')
     config.add_route('sa_update',         prefix + '{table}/update/*pk')
     config.add_route('sa_delete',         prefix + '{table}/delete/*pk')
 
@@ -49,5 +49,5 @@ def includeme(config):
     add_database(config)
     add_jinja2(config)
     config.include(add_routes)
-    #config.include('pyramid_sacrud.assets')
+    config.include('pyramid_sacrud.assets')
     config.scan(views)

@@ -18,13 +18,11 @@
     {% endblock %}
 
     {% block sa_head_js %}
-        <script data-main="{{ request.static_url('pyramid_sacrud:static/js/main') }}"
-                src="{{ request.static_url('pyramid_sacrud:static/js/lib/require.js') }}"></script>
+        <script src="{{ request.static_url('pyramid_sacrud:static/js/__main.js') }}"></script>
     {% endblock %}
 
     {% block userspace %}
     {% endblock %}
-
 </head>
 
 <body>

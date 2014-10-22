@@ -29,5 +29,8 @@
     "gulp-watch": "^1.1.0",
     "vinyl-source-stream": "^1.0.0"
   },
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "jquery": "^2.1.1"
+  }
 }
