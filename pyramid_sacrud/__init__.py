@@ -49,5 +49,5 @@ def includeme(config):
     add_database(config)
     add_jinja2(config)
     config.include(add_routes)
-    config.include('pyramid_sacrud.assets')
+    #config.include('pyramid_sacrud.assets')
     config.scan(views)
