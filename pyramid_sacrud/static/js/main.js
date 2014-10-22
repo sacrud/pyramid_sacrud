@@ -16,4 +16,4 @@ requirejs.config({
       "jquery.alpha": ["jquery"],
       "jquery.beta": ["jquery"]
   }
-})
+});

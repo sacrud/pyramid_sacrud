@@ -1,4 +1,3 @@
-define(['jquery', 'jquery-ui', 'checkbox', 'popup',
-        'chosen'],
-        function ($) {
-});
+define(['jquery', 'jquery-ui', 'checkbox', 'popup', 'chosen'],
+    function ($) {}
+);

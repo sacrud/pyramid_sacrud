@@ -50,7 +50,7 @@ def add_css_assets(config):
     config.add_webasset('sa_css', css_bundle)
 
 
-def add_js_assets(config):                                          # pragma: no cover
+def add_js_assets(config):                                  # pragma: no cover
     settings = config.registry.settings
     if not settings.get('sacrud.debug_js', False):
         return
@@ -62,7 +62,6 @@ def add_js_assets(config):                                          # pragma: no
              "speakingurl/speakingurl.min.js",
              "jqueryui-timepicker-addon/src/jquery-ui-timepicker-addon.js",
              "requirejs/require.js",
-             "elfinder/src/elfinder/js/elfinder.js",
              "jquery-maskedinput/dist/jquery.maskedinput.min.js",
              "modernizr/modernizr.js",
              "pickadate/lib/compressed/picker.js",

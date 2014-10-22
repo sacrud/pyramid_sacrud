@@ -141,7 +141,8 @@ class CRUD(object):
         form, js_list = form_generator(dbsession=dbsession,
                                        obj=obj,
                                        table=self.table,
-                                       columns_by_group=columns)
+                                       columns_by_group=columns,
+                                       request=self.request)
         resp = action.CRUD(self.request.dbsession, self.table, self.pk)
 
         if 'form.submitted' in self.request.params:
