@@ -74,7 +74,6 @@
 								.sacrud-deform ul.mapping li ul li.field:hover
 								{
 									background: #F4F9FE;
-									color: #fff;
 									webkit-transition: background-color 500ms ease-out 3ms;
 									-moz-transition: background-color 500ms ease-out 3ms;
 									-o-transition: background-color 500ms ease-out 3ms;

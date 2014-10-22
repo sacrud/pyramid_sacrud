@@ -1,3 +1,5 @@
+'use strict';
+
 requirejs.config({
   "paths": {
     "app": "app",
@@ -16,4 +18,4 @@ requirejs.config({
       "jquery.alpha": ["jquery"],
       "jquery.beta": ["jquery"]
   }
-})
+});

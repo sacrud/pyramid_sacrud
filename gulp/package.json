@@ -23,9 +23,14 @@
     "node": ">= 0.8.0"
   },
   "devDependencies": {
+    "browserify": "^6.1.0",
     "gulp": "^3.8.8",
     "gulp-concat": "^2.4.1",
-    "gulp-watch": "^1.1.0"
+    "gulp-watch": "^1.1.0",
+    "vinyl-source-stream": "^1.0.0"
   },
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "jquery": "^2.1.1"
+  }
 }
