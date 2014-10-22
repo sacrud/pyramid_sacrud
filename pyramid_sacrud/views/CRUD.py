@@ -25,6 +25,9 @@ from sacrud import action
 from sacrud.common import columns_by_group, get_obj, pk_to_list
 from sacrud_deform import form_generator
 
+from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
+                        PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_UPDATE)
+
 
 def get_table(tname, request):
     """ Return table by table name from pyramid_sacrud.models in settings.
@@ -101,7 +104,8 @@ class CRUD(object):
             self.request.session.flash([message, status])
 
     @sacrud_env
-    @view_config(route_name='sa_list', renderer='/sacrud/list.jinja2')
+    @view_config(route_name='sa_list', renderer='/sacrud/list.jinja2',
+                 permission=PYRAMID_SACRUD_LIST)
     def sa_list(self):
         table = self.table
         request = self.request
@@ -128,8 +132,10 @@ class CRUD(object):
                 'breadcrumbs': breadcrumbs(self.tname, 'sa_list')}
 
     @sacrud_env
-    @view_config(route_name='sa_update', renderer='/sacrud/create.jinja2')
-    @view_config(route_name='sa_create', renderer='/sacrud/create.jinja2')
+    @view_config(route_name='sa_update', renderer='/sacrud/create.jinja2',
+                 permission=PYRAMID_SACRUD_UPDATE)
+    @view_config(route_name='sa_create', renderer='/sacrud/create.jinja2',
+                 permission=PYRAMID_SACRUD_CREATE)
     def sa_add(self):
         bc = breadcrumbs(self.tname, 'sa_create')
         if self.pk:
@@ -175,7 +181,7 @@ class CRUD(object):
                 'js_list': js_list,
                 'breadcrumbs': bc}
 
-    @view_config(route_name='sa_delete')
+    @view_config(route_name='sa_delete', permission=PYRAMID_SACRUD_DELETE)
     def sa_delete(self):
         action.CRUD(self.request.dbsession, self.table, pk=self.pk).delete()
         self.flash_message("You have removed object of %s" % self.tname)
