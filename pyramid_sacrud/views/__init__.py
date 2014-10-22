@@ -31,7 +31,8 @@ def sorted_dashboard_widget(tables):
     return widgets
 
 
-@view_config(route_name='sa_home', renderer='/sacrud/home.jinja2')
+@view_config(route_name='sa_home', renderer='/sacrud/home.jinja2',
+             permission='pyramid_sacrud_home')
 def sa_home(request):
     tables = get_settings_param(request, 'pyramid_sacrud.models')
     dashboard_columns = request.registry.settings\
