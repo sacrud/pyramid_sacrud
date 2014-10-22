@@ -14,15 +14,9 @@
         <link rel="stylesheet" href="{{ request.static_url('pyramid_sacrud:static/css/__main.css') }}" />
     {% endblock %}
 
-    {% block sa_head_extra_css %}
-    {% endblock %}
-
-    {% block sa_head_js %}
-        <script src="{{ request.static_url('pyramid_sacrud:static/js/__main.js') }}"></script>
-    {% endblock %}
-
-    {% block userspace %}
-    {% endblock %}
+    {% block sa_head_extra_css %}{% endblock %}
+    {% block sa_head_js %}{% endblock %}
+    {% block userspace %}{% endblock %}
 </head>
 
 <body>
@@ -109,7 +103,10 @@
         </div>
     </div>
 
-    {% block extrascript %}
+    {% block script %}
+        <script src="{{ request.static_url('pyramid_sacrud:static/js/__main.js') }}"></script>
     {% endblock %}
+
+    {% block extrascript %}{% endblock %}
 </body>
 </html>

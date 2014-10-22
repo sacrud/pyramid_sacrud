@@ -1,3 +1,72 @@
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var modulePath = '../pyramid_sacrud/gulp/_node_modules/';
+
+var $ = require(modulePath + 'jquery');
+
+var list = require('./app/list.js'),
+    popup = require('./app/common/popup.js'),
+    checkbox = require('./app/common/checkbox.js'),
+    selectable = require('./app/common/selectable.js');
+
+},{"./app/common/checkbox.js":2,"./app/common/popup.js":3,"./app/common/selectable.js":4,"./app/list.js":5}],2:[function(require,module,exports){
+module.exports = function(vars) {
+
+    $(function() {
+        function check_checkbox (checkbox) {
+            if (checkbox.prop('checked')) {
+                checkbox.parents('label.checkbox').addClass('checkbox_state_cheked');
+            } else {
+                checkbox.parents('label.checkbox').removeClass('checkbox_state_cheked');
+            }
+        }
+
+        $(document).on('change', '.checkbox__checkbox', function () {
+            check_checkbox($(this));
+        });
+
+        $('input[type="checkbox"]:checked').each(function(){
+            check_checkbox($(this));
+        });
+    });
+};
+},{}],3:[function(require,module,exports){
+module.exports = function(vars) {
+
+    $(function() {
+        function show_delete_content() {
+            $('.popup-inner__content-delete').show();
+            $('.popup-inner__content-elfinder').hide();
+        }
+
+        $(document).on('click', '.action_button', function () {
+            $('.popup').show();
+            show_delete_content();
+        });
+
+        $(document).on('click', '.popup-inner__content-link-text', function (event) {
+            $('.popup').hide();
+            show_delete_content();
+            event.preventDefault();
+        });
+
+        $(document).on('click', '.popup-button__item', function () {
+            var status = $(this).data('status');
+            if (status == 'cancel') {
+                $('.popup').hide();
+            } else if (typeof options != "undefined") {
+                $(options.input_selected_action).val(status);
+                $('#sacrud-form').submit();
+            }
+        });
+
+        // $(document).on('click', function (e) {
+        //     if (!($(e.target).closest('.popup-inner').length) && $('.popup').is(':visible')) {
+        //         $('.popup').hide();
+        //     }
+        // });
+    });
+};
+},{}],4:[function(require,module,exports){
 module.exports = function(vars) {
 
     $(function() {
@@ -109,3 +178,15 @@ module.exports = function(vars) {
         });
     });
 };
+},{}],5:[function(require,module,exports){
+module.exports = function(vars) {
+
+    $(function() {
+        $(document).on('focus', '#site_search', function () {
+            // console.log($(this));
+            // $(this).val('');
+        });
+    });
+
+};
+},{}]},{},[1]);

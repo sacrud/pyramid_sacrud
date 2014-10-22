@@ -1,21 +1,8 @@
-'use strict';
+var modulePath = '../pyramid_sacrud/gulp/_node_modules/';
 
-requirejs.config({
-  "paths": {
-    "app": "app",
+var $ = require(modulePath + 'jquery');
 
-    "jquery": "lib/jquery.min",
-    "chosen": "lib/chosen.jquery.min",
-    "jquery-ui": "lib/jquery-ui.min",
-    "speakingurl": "lib/speakingurl.min",
-    "jquery-ui-timepicker-addon": "lib/jquery-ui-timepicker-addon",
-
-    "popup": "app/common/popup",
-    "checkbox": "app/common/checkbox",
-    "selectable": "app/common/selectable",
-  },
-  "shim": {
-      "jquery.alpha": ["jquery"],
-      "jquery.beta": ["jquery"]
-  }
-});
+var list = require('./app/list.js'),
+    popup = require('./app/common/popup.js'),
+    checkbox = require('./app/common/checkbox.js'),
+    selectable = require('./app/common/selectable.js');
