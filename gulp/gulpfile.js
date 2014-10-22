@@ -47,11 +47,10 @@ gulp.task('js', function() {
 });
 
 gulp.task('watch', function () {
-    gulp.src(cssFiles, jsFiles)
-        .pipe(watch(cssFiles, function (files) {
-            return gulp.start('css');
-        }))
-        .pipe(watch(jsFiles, function (files) {
-            return gulp.start('browserify');
-        }));
+    watch(cssFiles, function (files) {
+        return gulp.start('css');
+    });
+    watch(jsFiles, function (files) {
+        return gulp.start('browserify');
+    });
 });
