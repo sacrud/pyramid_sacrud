@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyramid_sacrud 0.0.1a1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-22 13:19+0600\n"
+"POT-Creation-Date: 2014-10-23 18:49+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,4 +16,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+
+#: pyramid_sacrud/breadcrumbs.py:32 pyramid_sacrud/templates/sacrud/home.jinja2:7
+msgid "Dashboard"
+msgstr ""
 

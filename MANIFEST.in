@@ -5,4 +5,5 @@ recursive-include pyramid_sacrud/static/img *.ico *.png *.css *.gif *.jpg *.pt *
 recursive-include pyramid_sacrud/static/js/app *.ico *.png *.css *.gif *.jpg *.pt *.txt *.mak *.mako *.jinja2 *.js *.html *.xml
 recursive-include pyramid_sacrud/static/js/lib *.ico *.png *.css *.gif *.jpg *.pt *.txt *.mak *.mako *.jinja2 *.js *.html *.xml
 include requirements.txt
+include message-extraction.ini
 include pyramid_sacrud/static/js/main.js

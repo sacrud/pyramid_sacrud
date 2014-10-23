@@ -9,6 +9,7 @@
 """
 Breadcrumbs for sacrud pyramid extension.
 """
+from .includes.localization import _ps
 
 
 def get_crumb(name, visible, view, params):
@@ -28,7 +29,8 @@ def get_crumb(name, visible, view, params):
 
 def breadcrumbs(tname, view, id=None):
     bc = {}
-    bc['sa_list'] = [get_crumb('Dashboard', True, 'sa_home', {'table': tname}),
+    bc['sa_list'] = [get_crumb(_ps('Dashboard'), True,
+                               'sa_home', {'table': tname}),
                      get_crumb(tname, True, 'sa_list', {'table': tname})]
 
     bc['sa_create'] = bc['sa_list'] +\

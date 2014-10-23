@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyramid_sacrud 0.0.1a1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-21 21:34+0600\n"
+"POT-Creation-Date: 2014-10-23 18:49+0600\n"
 "PO-Revision-Date: 2014-10-21 20:58+0600\n"
 "Last-Translator: uralbash <root@uralbash.ru>\n"
 "Language-Team: Russian\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
+#: pyramid_sacrud/breadcrumbs.py:32
 #: pyramid_sacrud/templates/sacrud/home.jinja2:7
-#: pyramid_sacrud/templates/sacrud/home.jinja2:8
 msgid "Dashboard"
 msgstr "Панель управления"
 
 #~ msgid "Dashboard"
-#~ msgstr "Панель управления"
+#~ msgstr ""
 
