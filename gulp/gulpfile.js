@@ -1,10 +1,10 @@
-var autoprefixer = require('gulp-autoprefixer'),
-    browserify = require('browserify'),
+var gulp = require('gulp'),
+    autoprefixer = require('gulp-autoprefixer'),
     concat = require('gulp-concat'),
-    gulp = require('gulp'),
-    source = require('vinyl-source-stream'),
     minifyCSS = require('gulp-minify-css'),
-    watch = require('gulp-watch');
+    watch = require('gulp-watch'),
+    browserify = require('browserify'),
+    source = require('vinyl-source-stream');
 
 var staticPath = '../pyramid_sacrud/static/';
 var cssFiles = [staticPath + 'css/*.css', staticPath + 'css/**/*.css', '!' + staticPath + 'css/__main.css'];

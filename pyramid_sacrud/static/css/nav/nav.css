@@ -10,6 +10,7 @@
   display: inline-block;
   position: relative;
   z-index: 1001;
+
 }
 .nav__link
   {
@@ -58,31 +59,30 @@
   border-radius: 5px;
 }
 .nav__sitemap:after
-  {
+{
   display: block;
   clear: both;
   content: "";
   //zoom: 1;
 }
 .nav__sitemap-group
-  {
+{
 }
 .nav__sitemap-group-link
-  {
+{
   display: inline-block;
   border: solid 1px lime;
   font: 1.1em Tahoma;
   color: #525252;
 }
 .nav__sitemap-subgroup
-  {
+{
 }
 .nav__sitemap-subgroup__item
-  {
+{
 }
 .nav__sitemap-subgroup__item-link
-  {
+{
   font: 0.8em Tahoma;
   color: #525252;
-
-  }
+}
