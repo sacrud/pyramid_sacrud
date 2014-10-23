@@ -1,0 +1,17 @@
+.footer
+{
+	margin: 20px 0 50px 0;
+}
+	.footer-inner
+	{
+		text-align: center;
+		font: 0.75em 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
+	}
+		.footer-inner__link
+		{
+			color: #4183c4;
+		}
+		.footer-inner__link:hover
+		{
+			color: #000;
+		}

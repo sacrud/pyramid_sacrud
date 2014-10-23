@@ -3,6 +3,7 @@
 	clear: both;
 	zoom: 1;
 	border: 1px solid #ccc;
+
 }
 .toolbar-button
 {
@@ -11,11 +12,14 @@
 }
 	.toolbar-button__item
 	{
-		width: 100px;
+		min-width: 100px;
 		display: table-cell;
 		text-align: center;
 		border-right: 1px solid #ccc;
 		cursor: pointer;
+		padding: 0;
+		margin: 0;
+		vertical-align: top;
 	}
 		.toolbar-button__item-name
 		{
@@ -77,7 +81,7 @@
 	width: 20%;
 	float: right;
 	display: table;
-	padding: 10px 15px 5px 0;
+	padding: 3px 3px 2px 0;
 }
 .toolbar-search__inner
 {
@@ -95,7 +99,7 @@
 .toolbar-button__item_type_confirm .toolbar-button__item-link,
 .toolbar-button__item_type_confirm .toolbar-button__item-button
 {
-	background: DarkGreen;
+	background: #96B52D;
 	color: #fff;
 }
 .toolbar-button__item_type_confirm:hover .toolbar-button__item-name,

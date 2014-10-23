@@ -1,0 +1,24 @@
+.sacrud-grid
+{
+	width: auto;
+}
+	.sacrud-grid__title
+	{
+		float: left;
+		font-family: 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
+		font-weight: 300;
+		color: #000;
+		font-size: 1.6em;
+		text-transform: uppercase;
+		padding: 0 0 .5em 0;
+	}
+	.sacrud-grid__action
+	{
+		float: right;
+	}
+	.sacrud-grid__toolbar
+	{
+		width: 100%;
+		margin: 1em 0 20px 0;
+		clear: both;
+	}

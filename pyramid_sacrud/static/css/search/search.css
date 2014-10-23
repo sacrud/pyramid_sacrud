@@ -1,0 +1,75 @@
+.search
+{
+    display: block;
+    position: relative;
+}
+
+    .search__input
+    {
+        position: relative;
+    }
+
+        .search__input-box
+        {
+            display: block;
+            text-decoration: none;
+            border: solid 1px #AFAFAF;
+            background: #fff;
+            position: relative;
+            -webkit-transition: all 200ms linear;
+            -o-transition: all 200ms linear;
+            -moz-transition: all 200ms linear;
+            -ms-transition: all 200ms linear;
+            -kthtml-transition: all 200ms linear;
+            transition: all 200ms linear;
+            overflow: hidden;
+            margin: 0 60px 0 0;
+        }
+
+            .search__input-box-text
+            {
+                width: 100%;
+                font: 0.9em Arial;
+                color: #444;
+                border: none;
+                background: transparent;
+                padding: 0.6em 0.3em 0.5em 0.8em;
+                position: relative;
+                z-index: 2;
+                margin: -0.2em 0 0 0;
+                position: relative;
+            }
+
+            .search__input-box-text:focus
+            .search__input-box-text::-ms-clear
+            {
+                display: none;
+            }
+        .search__input-button
+        {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 60px;
+            border: solid 0 #fff;
+            padding: 0;
+            margin: 0;
+            display: block;
+            font: 0.8em 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
+            vertical-align: middle;
+            padding: 7px 15px;
+            color: #fff;
+            text-decoration: none;
+            background: #4183c4;
+        }
+    .search__input-icon
+    {
+        top: 0.55em;
+        left: 0.3em;
+        position: absolute;
+        z-index: 3;
+        width: 12px;
+        height: 11px;
+        background-repeat: no-repeat;
+        background: url(unquote('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAALCAYAAABLcGxfAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMTIvMTIvMTNSk3cXAAABAklEQVQokX2OoY6DUBBFT2lpEEhEDQEBAovBYPgEJKrpd1UhKvoDTV1r0ThCSCjhBxCEPPFexW7pst3sVZOZczJ3pZRSfKcoCtq2Rdd1HMchDEN+Z6WUUnVdc7vdPo4Ah8OBzWazFI7HIwBZlmGaJgBd13G9Xtlut+z3+1nQ7vc7AGmazjCAbdvEcYwQgqqq3kLbtgBYlvVRJwgCAF4MgLZer//s/jOapr1n3/cB6Pv+AxyGAYAXA6BFUQTA5XJZdC3LkvP5DMA4jvN+pZRS0zRxOp2QUi4+GIaBlBIhBEmS4Hnel/ACHo8HTdNgGAau67Lb7QDI83yWFsJ/yfMc27Z5Asv2bL8IlFk2AAAAAElFTkSuQmCC'));
+    }

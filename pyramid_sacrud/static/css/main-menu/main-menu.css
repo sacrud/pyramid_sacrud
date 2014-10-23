@@ -1,0 +1,30 @@
+.main-menu
+  {
+  position: relative;
+}
+.main-menu__wrapper
+  {
+  min-height: 100%;
+  position: relative;
+  display: table;
+  border-collapse: separate;
+}
+.main-menu__item
+  {
+  display: table-cell;
+  text-align: center;
+  position: relative;
+  padding: 0.95em 1em 0.9em 1em;
+}
+.main-menu__item-link
+  {
+  font: 1.2em 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.main-menu__item:hover
+  {
+  background: #000;
+}

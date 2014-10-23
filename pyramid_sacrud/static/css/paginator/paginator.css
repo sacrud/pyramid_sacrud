@@ -1,0 +1,62 @@
+.paginator
+{
+	clear: both;
+	border: solid 1px #eee;
+	padding: 0.5em 0 0.5em 1em;
+	margin: 0 0 50px 0;
+}
+	.paginator-inner
+	{
+		position: relative;
+		vertical-align: top;
+		padding: 0.5em 10% 0.5em 6%;
+		text-align: center;
+		text-decoration: none;
+
+	}
+		.paginator__title
+		{
+			font: 0.9em 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
+			color: #444;
+			display: inline-block;
+			text-decoration: none;
+			padding: 0.6em 0.6em 0 0;
+		}
+		.paginator__item
+		{
+			display: inline-block;
+			vertical-align: top;
+			text-decoration: none;
+			margin: 0 0.2em;
+			font: 1.2em 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
+			color: #444;
+			padding: 0.2em 0.5em 0.3em 0.5em;
+			text-decoration: none;
+			-webkit-transition: background-color 500ms ease-out 3ms;
+			-moz-transition: background-color 500ms ease-out 3ms;
+			-o-transition: background-color 500ms ease-out 3ms;
+			transition: background-color 500ms ease-out 3ms;
+			cursor: pointer;
+		}
+		.paginator__item:hover
+		{
+			color: #4183c4;
+			text-decoration: underline;
+			background: #f4f9fe;
+			-webkit-transition: background-color 500ms ease-out 3ms;
+			-moz-transition: background-color 500ms ease-out 3ms;
+			-o-transition: background-color 500ms ease-out 3ms;
+			transition: background-color 500ms ease-out 3ms;
+		}
+		.paginator__item_state_current
+		{
+			color: #fff;
+			text-decoration: none;
+			background: #4183c4;
+		}
+		.paginator__item_state_current:hover
+		{
+			color: #fff;
+			text-decoration: none;
+			background: #777;
+		}

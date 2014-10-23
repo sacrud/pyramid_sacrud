@@ -1,4 +1,7 @@
-define(['jquery'], function ($) {
+var $ = require('jquery');
+
+module.exports = function() {
+
     $(function() {
         function show_delete_content() {
             $('.popup-inner__content-delete').show();
@@ -32,4 +35,4 @@ define(['jquery'], function ($) {
         //     }
         // });
     });
-});
+};

@@ -1,0 +1,25 @@
+.header
+  {
+  width: 100%;
+  position: relative;
+  margin: 0 0 10px 0;
+  background: #333;
+}
+.header__inner
+  {
+  position: relative;
+  padding: 0.2em 20px;
+  margin: 0 auto;
+  max-width: 1160px;
+  min-width: 950px;
+  position: relative;
+}
+.header__inner-menu
+  {
+  float: left;
+}
+.header__user
+  {
+  float: right;
+
+}

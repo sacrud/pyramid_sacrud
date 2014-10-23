@@ -8,7 +8,7 @@
         <div class="toolbar clear-fix">
             <div class="toolbar-button">
                 {% include "sacrud/forms/actions/add.jinja2" %}
-                <div class="action_button toolbar-button__item toolbar-button__item_state_disable">
+                <div class="toolbar-button__item toolbar-button__item_type_delete">
                     <div class="toolbar-button__item-name">Delete</div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                                     <span class="search__input-icon">&nbsp;</span>
                                 </ins>
                                 <input type="hidden" name="{{ param }}" value="{{ param_value }}"/>
-                                <button class="search__input-button" type="submit">search</button>
+                                <button class="search__input-button" type="submit">find</button>
                             </div>
                         </form>
                     </div>
@@ -56,7 +56,8 @@
                                     <tr id="{{ sa_crud['table'].__tablename__ }}_{{ pk_to_list(row) }}"
                                         class="sacrud-grid-content-grid__body-row">
                                         <td class="sacrud-grid-content-grid__body-item">
-                                            <input type="checkbox" name="selected_item" value="{{ pk_to_list(row, True) }}" />
+                                            <input class="sacrud-grid-content-grid__body-item-checkbox"
+                                                   type="checkbox" name="selected_item" value="{{ pk_to_list(row, True) }}" />
                                         </td>
                                         <td class="sacrud-grid-content-grid__body-item">
                                             {% include 'sacrud/forms/actions.jinja2' with context %}
@@ -89,9 +90,7 @@
                 {% if 'row' in sa_crud %}
                     <div class="sacrud-grid-content__paginator">
                         {% if paginator.items.__len__() > 1 and paginator.page_count > 1 %}
-                            <div class="paginator">
-                                {% include "sacrud/paginator.jinja2" %}
-                            </div>
+                            {% include "sacrud/paginator.jinja2" %}
                         {% endif %}
                     </div>
                 {% endif %}

@@ -1,4 +1,8 @@
-define(['jquery'], function ($) {
+var $ = require('jquery'),
+    jquery_ui = require('jquery-ui');
+
+module.exports = function() {
+
     $(function() {
 
         var rows_state_unselecting,
@@ -107,4 +111,4 @@ define(['jquery'], function ($) {
             $(options.table_checkboxes).prop('checked', $(this).prop('checked')).change();
         });
     });
-});
+};

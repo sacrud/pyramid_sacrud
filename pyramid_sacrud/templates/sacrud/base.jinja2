@@ -7,26 +7,16 @@
     <link href="{{ request.static_url('pyramid_sacrud:static/favicon.ico') }}" rel="shortcut icon" type="image/x-icon">
 
     {% block sa_head_meta %}
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     {% endblock %}
 
     {% block sa_head_css %}
-        {% assets "sa_css" %}
-            <link rel="stylesheet" href="{{ ASSET_URL }}"/>
-        {% endassets %}
+        <link rel="stylesheet" href="{{ request.static_url('pyramid_sacrud:static/css/__main.css') }}" />
     {% endblock %}
 
-    {% block sa_head_extra_css %}
-    {% endblock %}
-
-    {% block sa_head_js %}
-        <script data-main="{{ request.static_url('pyramid_sacrud:static/js/main') }}"
-                src="{{ request.static_url('pyramid_sacrud:static/js/lib/require.js') }}"></script>
-    {% endblock %}
-
-    {% block userspace %}
-    {% endblock %}
-
+    {% block sa_head_extra_css %}{% endblock %}
+    {% block sa_head_js %}{% endblock %}
+    {% block userspace %}{% endblock %}
 </head>
 
 <body>
@@ -102,15 +92,21 @@
 
             {% block sa_body %}{% endblock %}
 
-            <div class="footer">
-                {% block sa_footer %}
-                    &copy; 2013-2014, ITCase. <a href="https://github.com/ITCase/sacrud">SACRUD</a>
-                {% endblock %}
-            </div>
+            {% block sa_footer %}
+                <div class="footer">
+                    <div class="footer-inner">
+                        &copy; 2013-2014, ITCase
+                        <a href="https://github.com/ITCase/sacrud" class="footer-inner__link">SACRUD</a>
+                    </div>
+                </div>
+            {% endblock %}
         </div>
     </div>
 
-    {% block extrascript %}
+    {% block script %}
+        <script src="{{ request.static_url('pyramid_sacrud:static/js/__main.js') }}"></script>
     {% endblock %}
+
+    {% block extrascript %}{% endblock %}
 </body>
 </html>

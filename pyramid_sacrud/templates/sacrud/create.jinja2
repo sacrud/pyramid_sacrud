@@ -10,30 +10,33 @@
 {% endblock sa_head_extra_css %}
 
 {% block sa_head_js %}
-    <!-- Jquery -->
+    <!-- Jquery
     <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery-ui-timepicker-addon.js') }}"></script>
     <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery.maskedinput.min.js') }}"></script>
+    -->
     <!-- Deform -->
     <script type="text/javascript" src="{{ request.static_url('deform:static/scripts/deform.js') }}"></script>
-    <!-- Modernizr -->
+    <!-- Modernizr
     <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/modernizr.js') }}"></script>
-    <!-- Picker -->
+    -->
+    <!-- Picker x
     <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.js') }}"></script>
     <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.date.js') }}"></script>
     <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.time.js') }}"></script>
+    -->
+    <!--
     <script type="text/javascript">
         $.mask.definitions['h'] = "[A-Fa-f0-9]";
     </script>
+    -->
     <!-- Special list for some fields -->
     {% for lib in js_list %}
         <!-- <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/%s' % lib) }}"></script> -->
         <script type="text/javascript" src="{{ request.static_url(lib) }}"></script>
     {% endfor %}
-    <!-- Requirejs -->
     {{ super() }}
-    <script type="text/javascript">requirejs(["app/create"]);</script>
 {% endblock %}
 
 {% block sa_popup_content %}

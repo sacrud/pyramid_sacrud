@@ -1,0 +1,28 @@
+.user
+  {
+  width: 100%;
+}
+.user__text
+  {
+  font: 0.8em 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.user__link
+  {
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0 1em 0 0;
+}.
+.user__link:hover
+  {
+  color: #4183c4;
+}
+.user__link:last-child
+  {
+  margin: 0;
+
+  }
