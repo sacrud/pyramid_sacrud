@@ -30,7 +30,7 @@ def get_crumb(name, visible, view, params):
 def breadcrumbs(name, verbose, view, id=None):
     bc = {}
     bc['sa_list'] = [get_crumb(_ps('Dashboard'), True,
-                               'sa_home', {'table': name}),
+                               'sa_home', {'name': name}),
                      get_crumb(verbose, True, 'sa_list', {'name': name})]
 
     bc['sa_create'] = bc['sa_list'] +\
@@ -38,8 +38,5 @@ def breadcrumbs(name, verbose, view, id=None):
 
     bc['sa_read'] = bc['sa_update'] = bc['sa_list'] +\
         [get_crumb(id, False, 'sa_list', {'name': name})]
-
-    bc['sa_union'] = bc['sa_list'] +\
-        [get_crumb('union', False, 'sa_list', {'name': name})]
 
     return bc[view]
