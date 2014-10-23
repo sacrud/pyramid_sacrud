@@ -17,6 +17,7 @@ from paginate_sqlalchemy import SqlalchemyOrmPage
 from peppercorn import parse
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
+from sqlalchemy.orm.exc import NoResultFound
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs
 from pyramid_sacrud.common import get_settings_param, sacrud_env
@@ -154,7 +155,10 @@ class CRUD(object):
                              get_table_verbose_name(self.table),
                              'sa_update', id=self.pk)
         dbsession = self.request.dbsession
-        obj = get_obj(dbsession, self.table, self.pk)
+        try:
+            obj = get_obj(dbsession, self.table, self.pk)
+        except NoResultFound:
+            raise HTTPNotFound
         columns = columns_by_group(self.table)
 
         form, js_list = form_generator(dbsession=dbsession,
