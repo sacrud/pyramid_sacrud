@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyramid_sacrud 0.0.1a1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-23 18:49+0600\n"
+"POT-Creation-Date: 2014-10-23 20:22+0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,5 +19,25 @@ msgstr ""
 
 #: pyramid_sacrud/breadcrumbs.py:32 pyramid_sacrud/templates/sacrud/home.jinja2:7
 msgid "Dashboard"
+msgstr ""
+
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:25
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:45
+msgid "Save"
+msgstr ""
+
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:29
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:51
+#: pyramid_sacrud/templates/sacrud/forms/list.jinja2:12
+msgid "Delete"
+msgstr ""
+
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:33
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:55
+msgid "Cancel"
+msgstr ""
+
+#: pyramid_sacrud/templates/sacrud/forms/actions/add.jinja2:4
+msgid "Add a new"
 msgstr ""
 
