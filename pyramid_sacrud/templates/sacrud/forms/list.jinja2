@@ -1,6 +1,6 @@
 <div class="sacrud-grid">
     <div class="sacrud-grid__title">
-        {{ sa_crud['table'].__tablename__ }} administration
+        {{ _ps(_(table.verbose_name or table.__tablename__)) }}
     </div>
     <div class="sacrud-grid__action" id="sa_grid_action">
     </div>

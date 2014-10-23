@@ -17,7 +17,7 @@
 
     {% if sa_crud %}
         <div class="sacrud-grid">
-            <div class="sacrud-grid__title">Add a new {{ sa_crud['table'].__tablename__ }}</div>
+            <div class="sacrud-grid__title">{{ _(obj_cls.verbose_name or obj_cls.__tablename__) }}</div>
             <div class="sacrud-grid__toolbar">
                 <div class="toolbar clear-fix">
                     <div class="toolbar-button">
