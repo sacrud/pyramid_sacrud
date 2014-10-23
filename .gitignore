@@ -11,18 +11,16 @@ TODO
 TODO.txt
 nohup.out
 .cache
-.webassets*
 
 # JavaScript
 node_modules
 gulp/node_modules/
-pyramid_sacrud_example/node_modules/
 
 # Python
-cover
-.coverage
 build
+cover
 dist
+.coverage
 *.egg-info
 example
 htmlcov
@@ -40,4 +38,3 @@ _pyramid_sacrud_example
 # Tox
 .tox
 __pycache__
-pyramid_sacrud/static/js/lib
