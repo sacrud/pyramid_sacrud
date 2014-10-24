@@ -1,6 +1,6 @@
 <div class="sacrud-grid">
     <div class="sacrud-grid__title">
-        {{ sa_crud['table'].__tablename__ }} administration
+        {{ _(table.verbose_name or table.__tablename__) }}
     </div>
     <div class="sacrud-grid__action" id="sa_grid_action">
     </div>
@@ -9,7 +9,7 @@
             <div class="toolbar-button">
                 {% include "sacrud/forms/actions/add.jinja2" %}
                 <div class="toolbar-button__item toolbar-button__item_type_delete action_button">
-                    <div class="toolbar-button__item-name">Delete</div>
+                    <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
                 </div>
             </div>
             {% if sa_crud['table'].sacrud_search_col %}

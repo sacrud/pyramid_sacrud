@@ -24,6 +24,7 @@ Usage
 
    pages/install
    pages/configuration
+   pages/localization
    pages/api
 
 .. include:: includes/include_contribute.rst

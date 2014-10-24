@@ -60,11 +60,13 @@
                     <div class="nav">
                         {% for crumb in breadcrumbs %}
                             {% if not loop.last %}
-                                <a href="{% if crumb.visible %} {{ request.route_path(crumb.view, **crumb.param) }} {% endif %}"
-                                   class="nav__link">{{ crumb.name }}</a>
+                                <a href="{% if crumb.visible %}
+                                             {{ request.route_path(crumb.view, table=crumb.param['name']) }}
+                                         {% endif %}"
+                                   class="nav__link">{{ _ps(_(crumb.name)) }}</a>
                                 <ins class="nav__separator">&nbsp;</ins>
                             {% else %}
-                                <span class="nav__item_state_current">{{ crumb.name }}</span>
+                                <span class="nav__item_state_current">{{ _ps(_(crumb.name)) }}</span>
                             {% endif %}
                         {% endfor %}
                     </div>

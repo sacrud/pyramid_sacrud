@@ -17,6 +17,7 @@ from paginate_sqlalchemy import SqlalchemyOrmPage
 from peppercorn import parse
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
+from sqlalchemy.orm.exc import NoResultFound
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs
 from pyramid_sacrud.common import get_settings_param, sacrud_env
@@ -41,6 +42,14 @@ def get_table(tname, request):
     if not tables:
         return None
     return tables[0]
+
+
+def get_table_verbose_name(table):
+    if hasattr(table, 'verbose_name'):
+        return table.verbose_name
+    elif hasattr(table, '__tablename__'):
+        return table.__tablename__
+    return table.name
 
 
 def update_difference_object(obj, key, value):
@@ -129,7 +138,9 @@ class CRUD(object):
         return {'sa_crud': resp,
                 'paginator': paginator,
                 'pk_to_list': pk_to_list,
-                'breadcrumbs': breadcrumbs(self.tname, 'sa_list')}
+                'breadcrumbs': breadcrumbs(self.tname,
+                                           get_table_verbose_name(self.table),
+                                           'sa_list')}
 
     @sacrud_env
     @view_config(route_name='sa_update', renderer='/sacrud/create.jinja2',
@@ -137,11 +148,17 @@ class CRUD(object):
     @view_config(route_name='sa_create', renderer='/sacrud/create.jinja2',
                  permission=PYRAMID_SACRUD_CREATE)
     def sa_add(self):
-        bc = breadcrumbs(self.tname, 'sa_create')
+        bc = breadcrumbs(self.tname,
+                         get_table_verbose_name(self.table), 'sa_create')
         if self.pk:
-            bc = breadcrumbs(self.tname, 'sa_update', id=self.pk)
+            bc = breadcrumbs(self.tname,
+                             get_table_verbose_name(self.table),
+                             'sa_update', id=self.pk)
         dbsession = self.request.dbsession
-        obj = get_obj(dbsession, self.table, self.pk)
+        try:
+            obj = get_obj(dbsession, self.table, self.pk)
+        except NoResultFound:
+            raise HTTPNotFound
         columns = columns_by_group(self.table)
 
         form, js_list = form_generator(dbsession=dbsession,

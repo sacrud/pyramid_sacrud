@@ -52,40 +52,35 @@ class BaseTest(unittest.TestCase):
 class BreadCrumbsTest(BaseTest):
 
     def test_get_crumb(self):
-        crumb = get_crumb('Dashboard', True, 'sa_home', {'table': 'foo'})
+        crumb = get_crumb('Dashboard', True, 'sa_home', {'name': 'foo'})
         self.assertEqual(crumb, {'visible': True, 'name': 'Dashboard',
-                                 'param': {'table': 'foo'},
+                                 'param': {'name': 'foo'},
                                  'view': 'sa_home'})
 
     def test_breadcrumbs(self):
-        bc = breadcrumbs('foo', 'sa_list')
+        bc = breadcrumbs('foo', 'ffoo', 'sa_list')
         self.assertEqual(bc,
-                         [{'visible': True, 'name': 'Dashboard',
-                           'param': {'table': 'foo'},
+                         [{'visible': True, 'name': u'Dashboard',
+                           'param': {'name': 'foo'},
                            'view': 'sa_home'},
-                          {'visible': True, 'name': 'foo',
-                           'param': {'table': 'foo'}, 'view': 'sa_list'}])
-        bc = breadcrumbs('foo', 'sa_create')
+                          {'visible': True, 'name': 'ffoo',
+                           'param': {'name': 'foo'}, 'view': 'sa_list'}])
+
+        bc = breadcrumbs('foo', 'barr', 'sa_create')
         self.assertEqual(bc, [{'visible': True, 'name': 'Dashboard',
-                               'param': {'table': 'foo'}, 'view': 'sa_home'},
-                              {'visible': True, 'name': 'foo',
-                               'param': {'table': 'foo'}, 'view': 'sa_list'},
+                               'param': {'name': 'foo'}, 'view': 'sa_home'},
+                              {'visible': True, 'name': 'barr',
+                               'param': {'name': 'foo'}, 'view': 'sa_list'},
                               {'visible': False, 'name': 'create',
-                               'param': {'table': 'foo'}, 'view': 'sa_list'}])
-        bc = breadcrumbs('foo', 'sa_read')
+                               'param': {'name': 'foo'}, 'view': 'sa_list'}])
+
+        bc = breadcrumbs('foo', 'bazz', 'sa_read')
         self.assertEqual(bc, [{'visible': True, 'name': 'Dashboard',
-                               'param': {'table': 'foo'}, 'view': 'sa_home'},
-                              {'visible': True, 'name': 'foo',
-                               'param': {'table': 'foo'}, 'view': 'sa_list'},
+                               'param': {'name': 'foo'}, 'view': 'sa_home'},
+                              {'visible': True, 'name': 'bazz',
+                               'param': {'name': 'foo'}, 'view': 'sa_list'},
                               {'visible': False, 'name': None,
-                               'param': {'table': 'foo'}, 'view': 'sa_list'}])
-        bc = breadcrumbs('foo', 'sa_union')
-        self.assertEqual(bc, [{'visible': True, 'name': 'Dashboard',
-                               'param': {'table': 'foo'}, 'view': 'sa_home'},
-                              {'visible': True, 'name': 'foo',
-                               'param': {'table': 'foo'}, 'view': 'sa_list'},
-                              {'visible': False, 'name': 'union',
-                               'param': {'table': 'foo'}, 'view': 'sa_list'}])
+                               'param': {'name': 'foo'}, 'view': 'sa_list'}])
 
 
 class CommonTest(BaseTest):
@@ -194,7 +189,7 @@ class ViewPageTest(BaseViewsTest):
 
     def test_sa_update_get(self):
         res = self.testapp.get('/admin/user/update/id/1/', status=200)
-        self.failUnless('Add a new user' in str(res.body))
+        self.failUnless('Delete' in str(res.body))
 
     def test_sa_update_post(self):
         self.testapp.post('/admin/user/update/id/1/',
@@ -207,8 +202,6 @@ class ViewPageTest(BaseViewsTest):
     def test_sa_create(self):
         res = self.testapp.get('/admin/user/create/', status=200)
         self.failUnless('create' in str(res.body))
-        # XXX: not good
-        self.failUnless('Add a new user' in str(res.body))
 
     def test_sa_create_post(self):
         self.testapp.post('/admin/user/create/',
