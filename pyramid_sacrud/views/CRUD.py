@@ -205,15 +205,10 @@ class CRUD(object):
 
     @view_config(route_name='sa_delete', permission=PYRAMID_SACRUD_DELETE)
     def sa_delete(self):
-        print
-        print '---------'
-        print self
-        print type(self)
-        print
-        print self.__dict__
-        print raw_input('stop')
-        print
-        action.CRUD(self.request.dbsession, self.table, pk=self.pk).delete()
+        try:
+            action.CRUD(self.request.dbsession, self.table, pk=self.pk).delete()
+        except NoResultFound:
+            raise HTTPNotFound
         self.flash_message("You have removed object of %s" % self.tname)
         return HTTPFound(location=self.request.route_url('sa_list',
                                                          table=self.tname))

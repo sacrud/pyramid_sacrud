@@ -24,12 +24,9 @@
                              <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
                         </div>
                         {% if obj %}
-                            <br>
-                            delete_button<br>
-                            <hr><br>
-                            <br>
                             <div class="toolbar-button__item toolbar-button__item_type_delete">
-                                <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
+                                <a href="{{ request.route_url('sa_delete', table=obj_cls.__tablename__, pk=pk_to_list(obj)) }}"
+                                   class="toolbar-button__item-link">{{ _ps('Delete') }}</a>
                             </div>
                         {% endif %}
                         <div class="toolbar-button__item toolbar-button__item_type_cancel">
@@ -49,10 +46,6 @@
                         </div>
                         {% if obj %}
                             <div class="toolbar-button__item toolbar-button__item_type_delete">
-                                <br>
-                                delete_button<br>
-                                <hr><br>
-                                <br>
                                 <a href="{{ request.route_url('sa_delete', table=obj_cls.__tablename__, pk=pk_to_list(obj)) }}"
                                    class="toolbar-button__item-link">{{ _ps('Delete') }}</a>
                             </div>

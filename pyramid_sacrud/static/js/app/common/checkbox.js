@@ -1,6 +1,6 @@
 // var $ = require('jquery');
 
-module.exports = function(elem) {
+module.exports = function() {
     function check_checkbox (checkbox) {
         if (checkbox.prop('checked')) {
             checkbox.parents('label.checkbox').addClass('checkbox_state_cheked');
