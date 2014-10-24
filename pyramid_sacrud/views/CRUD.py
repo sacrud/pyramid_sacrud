@@ -126,7 +126,10 @@ class CRUD(object):
             for item in items_list:
                 pk_list = json.loads(item)
                 pk = pk_list_to_dict(pk_list)
-                action.CRUD(request.dbsession, table, pk=pk).delete()
+                try:
+                    action.CRUD(request.dbsession, table, pk=pk).delete()
+                except NoResultFound:
+                    raise HTTPNotFound
 
         # paginator
         items_per_page = getattr(table, 'items_per_page', 10)
