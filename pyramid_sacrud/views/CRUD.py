@@ -34,7 +34,8 @@ def get_table(tname, request):
     """ Return table by table name from pyramid_sacrud.models in settings.
     """
     # convert values of models dict to flat list
-    setting_params = get_settings_param(request, 'pyramid_sacrud.models').values()
+    setting_params = get_settings_param(request,
+                                        'pyramid_sacrud.models').values()
     tables_lists = [x['tables'] for x in setting_params]
     tables = itertools.chain(*tables_lists)
     tables = [table for table in tables if (table.__tablename__).
@@ -126,7 +127,10 @@ class CRUD(object):
             for item in items_list:
                 pk_list = json.loads(item)
                 pk = pk_list_to_dict(pk_list)
-                action.CRUD(request.dbsession, table, pk=pk).delete()
+                try:
+                    action.CRUD(request.dbsession, table, pk=pk).delete()
+                except NoResultFound:
+                    raise HTTPNotFound
 
         # paginator
         items_per_page = getattr(table, 'items_per_page', 10)
