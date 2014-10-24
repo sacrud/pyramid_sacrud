@@ -6,9 +6,9 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     source = require('vinyl-source-stream');
 
-var staticPath = '../pyramid_sacrud/static/';
-var cssFiles = [staticPath + 'css/*.css', staticPath + 'css/**/*.css', '!' + staticPath + 'css/__main.css'];
-var jsFiles = [staticPath + 'js/*.js', staticPath + 'js/**/*.js', '!' + staticPath + 'js/__main.js'];
+var staticPath = '';
+var cssFiles = ['../css/*.css', '../css/**/*.css', '!../css/__main.css'];
+var jsFiles = ['../js/*.js', '../js/**/*.js', '!../js/__main.js'];
 
 gulp.task('build', function () {
    gulp.src(cssFiles)
@@ -18,10 +18,10 @@ gulp.task('build', function () {
 });
 
 gulp.task('browserify', function() {
-    browserify(staticPath + '/js/main.js', { debug: true })
+    browserify('./main.js', { debug: true })
         .bundle()
-        .pipe(source('__main.js'))
-        .pipe(gulp.dest(staticPath + './js/'));
+        .pipe(source('./__main.js'))
+        .pipe(gulp.dest('./'));
 });
 
 gulp.task('css', function() {
@@ -33,7 +33,8 @@ gulp.task('css', function() {
                 'Opera >= 9',
                 'Chrome >= 15',
                 'Safari >= 4',
-                '> 1%'],
+                '> 1%'
+            ],
             cascade: false
         }))
         .pipe(concat('__main.css'))

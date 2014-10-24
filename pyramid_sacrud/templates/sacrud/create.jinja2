@@ -10,33 +10,23 @@
 {% endblock sa_head_extra_css %}
 
 {% block sa_head_js %}
-    <!-- Jquery
-    <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery-ui.min.js') }}"></script>
-    <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery-ui-timepicker-addon.js') }}"></script>
-    <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/jquery.maskedinput.min.js') }}"></script>
-    -->
+    {{ super() }}
     <!-- Deform -->
     <script type="text/javascript" src="{{ request.static_url('deform:static/scripts/deform.js') }}"></script>
-    <!-- Modernizr
-    <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/modernizr.js') }}"></script>
-    -->
-    <!-- Picker x
+    <!-- Picker
     <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.js') }}"></script>
     <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.date.js') }}"></script>
     <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.time.js') }}"></script>
     -->
-    <!--
     <script type="text/javascript">
         $.mask.definitions['h'] = "[A-Fa-f0-9]";
     </script>
-    -->
+
     <!-- Special list for some fields -->
     {% for lib in js_list %}
-        <!-- <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/%s' % lib) }}"></script> -->
         <script type="text/javascript" src="{{ request.static_url(lib) }}"></script>
     {% endfor %}
-    {{ super() }}
+
 {% endblock %}
 
 {% block sa_popup_content %}
@@ -49,8 +39,7 @@
             <div>ЗДЕСЬ СПИСОК ЭЛЕМЕНТОВ ЕСЛИ ИХ НЕТ НЕ ПИШЕШЬ НИЧЕГО</div>
             <div class="popup-button">
                 <div class="popup-button__item" data-status="delete">
-                    <a href="{{ request.route_url('sa_delete', table=sa_crud['table'].__tablename__, pk=pk_to_list(sa_crud['obj'])) }}"
-                       class="popup-button__item-link">Confirm</a>
+                    <a href="{{ request.route_url('sa_delete', table=sa_crud['table'].__tablename__, pk=pk_to_list(sa_crud['obj'])) }}" class="popup-button__item-link">Confirm</a>
                 </div>
                 <div class="popup-button__item" data-status="cancel">
                     <span class="popup-button__item-name">Cancel</span>

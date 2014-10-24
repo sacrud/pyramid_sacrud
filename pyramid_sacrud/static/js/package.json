@@ -1,7 +1,74 @@
 {
-  "name": "main",
-  "dependencies": {
-    "jquery": "^2.1.1",
-    "jquery-ui": "^1.10.5"
+  "name": "gulp_pyramid_sacrud",
+  "title": "Pyramid CRUD interface",
+  "description": "Pyramid CRUD interface based on sacrud and SQLAlchemy.",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ITCase/pyramid_sacrud",
+  "author": {
+    "name": "ITCase",
+    "email": "info@itcase.pro"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ITCase/pyramid_sacrud.git"
+  },
+  "bugs": "https://github.com/ITCase/pyramid_sacrud/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": ""
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "devDependencies": {
+    "browserify": "^6.1.0",
+    "browserify-shim": "",
+    "gulp": "^3.8.8",
+    "gulp-autoprefixer": "^1.0.1",
+    "gulp-concat": "^2.4.1",
+    "gulp-minify-css": "^0.3.11",
+    "gulp-watch": "^1.1.0",
+    "vinyl-source-stream": "^1.0.0"
+  },
+  "browserify": {
+    "transform": [
+        "browserify-shim"
+    ]
+  },
+  "browser": {
+    "jquery": "./bower_components/jquery/dist/jquery.js",
+    "jquery-ui": "./bower_components/jquery-ui/ui/jquery-ui.js",
+    "jquery-maskedinput": "./bower_components/jquery-maskedinput/dist/jquery.maskedinput.js",
+    "jqueryui-timepicker-addon": "./bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js",
+    "speakingurl": "./bower_components/speakingurl/speakingurl.min.js",
+    "modernizr": "./bower_components/modernizr/modernizr.js",
+    "pickadate": "./bower_components/pickadate/lib/picker.js"
+  },
+  "browserify-shim": {
+    "jquery": {
+        "exports": "$"
+    },
+    "jquery-ui": {
+        "exports": "selectable",
+        "depends": "jquery"
+    },
+    "jquery-maskedinput": {
+        "exports": null,
+        "depends": "jquery"
+    },
+    "jqueryui-timepicker-addon": {
+        "exports": null,
+        "depends": "jquery-ui"
+    },
+    "speakingurl": {
+        "exports": null,
+        "depends": "jquery"
+    },
+    "modernizr": {
+        "exports": "modernizr",
+        "depends": "jquery"
+    }
   }
 }

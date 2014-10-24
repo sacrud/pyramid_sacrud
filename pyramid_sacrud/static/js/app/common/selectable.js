@@ -1,5 +1,5 @@
-var $ = require('jquery'),
-    jquery_ui = require('jquery-ui');
+// var $ = require('jquery'),
+    // jquery_ui = require('jquery-ui');
 
 module.exports = function() {
 

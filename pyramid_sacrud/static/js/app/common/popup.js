@@ -1,7 +1,6 @@
-var $ = require('jquery');
+// var $ = require('jquery');
 
 module.exports = function() {
-
     $(function() {
         function show_delete_content() {
             $('.popup-inner__content-delete').show();

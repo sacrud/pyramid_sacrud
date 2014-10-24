@@ -15,7 +15,9 @@
     {% endblock %}
 
     {% block sa_head_extra_css %}{% endblock %}
-    {% block sa_head_js %}{% endblock %}
+    {% block sa_head_js %}
+        <script src="{{ request.static_url('pyramid_sacrud:static/js/__main.js') }}"></script>
+    {% endblock %}
     {% block userspace %}{% endblock %}
 </head>
 
@@ -102,11 +104,7 @@
             {% endblock %}
         </div>
     </div>
-
-    {% block script %}
-        <script src="{{ request.static_url('pyramid_sacrud:static/js/__main.js') }}"></script>
-    {% endblock %}
-
+    {% block script %}{% endblock %}
     {% block extrascript %}{% endblock %}
 </body>
 </html>
