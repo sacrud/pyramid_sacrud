@@ -9,8 +9,7 @@
         {% if not obj %}
             action="{{ request.route_url('sa_create', table=obj_cls.__tablename__) }}"
         {% else %}
-            action="{{ request.route_url('sa_update', table=obj_cls.__tablename__,
-                       pk=pk_to_list(obj)) }}"
+            action="{{ request.route_url('sa_update', table=obj_cls.__tablename__, pk=pk_to_list(obj)) }}"
         {% endif %}
     {% endif %}>
 
@@ -25,6 +24,10 @@
                              <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
                         </div>
                         {% if obj %}
+                            <br>
+                            delete_button<br>
+                            <hr><br>
+                            <br>
                             <div class="toolbar-button__item toolbar-button__item_type_delete">
                                 <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
                             </div>
@@ -46,8 +49,11 @@
                         </div>
                         {% if obj %}
                             <div class="toolbar-button__item toolbar-button__item_type_delete">
-                                <a href="{{ request.route_url('sa_delete', table=obj_cls.__tablename__,
-                                            pk=pk_to_list(obj)) }}"
+                                <br>
+                                delete_button<br>
+                                <hr><br>
+                                <br>
+                                <a href="{{ request.route_url('sa_delete', table=obj_cls.__tablename__, pk=pk_to_list(obj)) }}"
                                    class="toolbar-button__item-link">{{ _ps('Delete') }}</a>
                             </div>
                         {% endif %}

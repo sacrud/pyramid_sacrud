@@ -1,7 +1,6 @@
 // var $ = require('jquery');
 
 module.exports = function(elem) {
-
     function check_checkbox (checkbox) {
         if (checkbox.prop('checked')) {
             checkbox.parents('label.checkbox').addClass('checkbox_state_cheked');
@@ -17,5 +16,4 @@ module.exports = function(elem) {
     $('input[type="checkbox"]:checked').each(function(){
         check_checkbox($(this));
     });
-
 };

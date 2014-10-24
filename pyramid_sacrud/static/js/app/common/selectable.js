@@ -17,7 +17,7 @@ module.exports = function() {
             'table_checkboxes_checked': 'input[name="selected_item"]:checked',
             'table_checkboxes_not_checked': 'input[name="selected_item"]:not(:checked)',
             'input_selected_action': 'input[name="selected_action"]',
-            'div_action_button': '.action_button',
+            'div_delete_button': '.delete_button',
         };
 
         $('table > tbody').selectable({
@@ -69,9 +69,9 @@ module.exports = function() {
 
         function change_buttons () {
             if ($(options.table_checkboxes_checked).length) {
-                $(options.div_action_button).removeClass(options.state_disable_class);
+                $(options.div_delete_button).removeClass(options.state_disable_class);
             } else {
-                $(options.div_action_button).addClass(options.state_disable_class);
+                $(options.div_delete_button).addClass(options.state_disable_class);
             }
         }
 
