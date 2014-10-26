@@ -24,8 +24,8 @@ DIRNAME = os.path.dirname(__file__)
 PHOTO_PATH = os.path.join(DIRNAME)
 
 
-DB_FILE = ':memory:'  # os.path.join(DIRNAME, 'test.sqlite')
-TEST_DATABASE_CONNECTION_STRING = 'sqlite:///%s' % 'test.sqlite'
+DB_FILE = os.path.join(DIRNAME, 'test.sqlite')
+TEST_DATABASE_CONNECTION_STRING = 'sqlite:///%s' % DB_FILE
 
 
 class MockCGIFieldStorage(object):

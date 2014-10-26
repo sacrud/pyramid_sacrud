@@ -10,19 +10,21 @@
 Test for sacrud.common
 """
 
+import os
 import unittest
 
+import transaction
 from pyramid import testing
 from pyramid.httpexceptions import HTTPNotFound
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs, get_crumb
 from pyramid_sacrud.common import get_obj_from_settings
-from pyramid_sacrud.tests import Profile, TEST_DATABASE_CONNECTION_STRING, User
+from pyramid_sacrud.tests import (DB_FILE, Profile,
+                                  TEST_DATABASE_CONNECTION_STRING, User)
 from pyramid_sacrud.views.CRUD import (CRUD, get_table, pk_list_to_dict,
                                        update_difference_object)
 
 from .test_models import _initTestingDB, user_add
-import transaction
 
 
 class BaseTest(unittest.TestCase):
@@ -45,6 +47,7 @@ class BaseTest(unittest.TestCase):
         DBSession.remove()
         DBSession.close()
         transaction.commit()
+        os.remove(DB_FILE)
 
 
 class BreadCrumbsTest(unittest.TestCase):
