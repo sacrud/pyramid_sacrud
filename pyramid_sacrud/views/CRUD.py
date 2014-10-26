@@ -128,7 +128,8 @@ class CRUD(object):
                 pk_list = json.loads(item)
                 pk = pk_list_to_dict(pk_list)
                 try:
-                    action.CRUD(request.dbsession, table, pk=pk).delete()
+                    action.CRUD(request.dbsession, table, pk=pk)\
+                        .delete(commit=False)
                 except NoResultFound:
                     raise HTTPNotFound
 
@@ -206,7 +207,8 @@ class CRUD(object):
     @view_config(route_name='sa_delete', permission=PYRAMID_SACRUD_DELETE)
     def sa_delete(self):
         try:
-            action.CRUD(self.request.dbsession, self.table, pk=self.pk).delete()
+            action.CRUD(self.request.dbsession,
+                        self.table, pk=self.pk).delete()
         except NoResultFound:
             raise HTTPNotFound
         self.flash_message("You have removed object of %s" % self.tname)

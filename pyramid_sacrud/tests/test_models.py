@@ -12,15 +12,16 @@ Models for SACRUD tests
 import transaction
 from sqlalchemy import create_engine
 
-from pyramid_sacrud.tests import Base, DBSession, TEST_DATABASE_CONNECTION_STRING, User
+from pyramid_sacrud.tests import (Base, DBSession,
+                                  TEST_DATABASE_CONNECTION_STRING, User)
 
 
 def user_add(session):
     user = User(u'Vasya', u'Pupkin', u"123")
     session.add(user)
     transaction.commit()
-    user = session.query(User).get(1)
-    return user
+    id = user.id
+    return id
 
 
 def _initTestingDB(url=TEST_DATABASE_CONNECTION_STRING):

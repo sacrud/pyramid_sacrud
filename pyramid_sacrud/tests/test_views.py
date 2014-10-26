@@ -10,20 +10,19 @@
 Test for sacrud.common
 """
 
-import os
 import unittest
 
 from pyramid import testing
 from pyramid.httpexceptions import HTTPNotFound
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs, get_crumb
-from pyramid_sacrud.common import get_obj_from_settings, set_jinja2_silent_none
-from pyramid_sacrud.tests import (DB_FILE, Profile,
-                                  TEST_DATABASE_CONNECTION_STRING, User)
+from pyramid_sacrud.common import get_obj_from_settings
+from pyramid_sacrud.tests import Profile, TEST_DATABASE_CONNECTION_STRING, User
 from pyramid_sacrud.views.CRUD import (CRUD, get_table, pk_list_to_dict,
                                        update_difference_object)
 
 from .test_models import _initTestingDB, user_add
+import transaction
 
 
 class BaseTest(unittest.TestCase):
@@ -34,10 +33,8 @@ class BaseTest(unittest.TestCase):
         app = main({}, **settings)
         DBSession = _initTestingDB()
         self.DBSession = DBSession
-        user_add(DBSession)
-        user_add(DBSession)
-        # user = user_add(DBSession)
-        # profile_add(DBSession, user)
+        self.user_1 = user_add(DBSession)
+        self.user_2 = user_add(DBSession)
 
         from webtest import TestApp
         self.testapp = TestApp(app)
@@ -46,10 +43,11 @@ class BaseTest(unittest.TestCase):
         del self.testapp
         from pyramid_sacrud.tests import DBSession
         DBSession.remove()
-        os.remove(DB_FILE)
+        DBSession.close()
+        transaction.commit()
 
 
-class BreadCrumbsTest(BaseTest):
+class BreadCrumbsTest(unittest.TestCase):
 
     def test_get_crumb(self):
         crumb = get_crumb('Dashboard', True, 'sa_home', {'name': 'foo'})
@@ -83,7 +81,7 @@ class BreadCrumbsTest(BaseTest):
                                'param': {'name': 'foo'}, 'view': 'sa_list'}])
 
 
-class CommonTest(BaseTest):
+class CommonTest(unittest.TestCase):
 
     def test_get_obj_from_settings(self):
         request = testing.DummyRequest()
@@ -100,7 +98,6 @@ class CommonTest(BaseTest):
 class CommonCrudTest(BaseTest):
 
     # TODO: may be this need move to common
-
     def test_update_difference_object(self):
         class Foo: pass
         obj = Foo()
@@ -121,14 +118,11 @@ class CommonCrudTest(BaseTest):
         self.assertEqual(resp, None)
 
 
-class BaseViewsTest(BaseTest):
+class ViewPageTest(BaseTest):
 
     def _include_sacrud(self):
         request = testing.DummyRequest()
         config = testing.setUp(request=request)
-        config.include('pyramid_jinja2')
-        set_jinja2_silent_none(config)
-        config.commit()
 
         config.registry.settings['sqlalchemy.url'] = TEST_DATABASE_CONNECTION_STRING
         config.include('pyramid_sacrud', route_prefix='/admin')
@@ -137,9 +131,6 @@ class BaseViewsTest(BaseTest):
                                              'Auth models': {'tables': [User, Profile]}
                                              }
         return request
-
-
-class ViewPageTest(BaseViewsTest):
 
     def test_bad_pk_init(self):
         request = self._include_sacrud()
@@ -179,24 +170,28 @@ class ViewPageTest(BaseViewsTest):
         self.failUnless("profile_[&#39;id&#39;, 1]" not in str(res.body))
 
     def test_sa_list_delete_actions(self):
-        items_list = [u'["id", 1]', u'["id", 2]']
+        items_list = [u'["id", %s]' % self.user_1,
+                      u'["id", %s]' % self.user_2]
         self.testapp.post('/admin/user/',
                           {'selected_action': 'delete',
                            'selected_item': items_list},
                           status=200)
-        count = self.DBSession.query(User).filter(User.id.in_([1, 2])).count()
+        transaction.commit()
+        count = self.DBSession.query(User).filter(
+            User.id.in_([self.user_1, self.user_2])).count()
         self.assertEqual(count, 0)
 
     def test_sa_update_get(self):
-        res = self.testapp.get('/admin/user/update/id/1/', status=200)
+        res = self.testapp.get('/admin/user/update/id/%s/' % self.user_1,
+                               status=200)
         self.failUnless('Delete' in str(res.body))
 
     def test_sa_update_post(self):
-        self.testapp.post('/admin/user/update/id/1/',
+        self.testapp.post('/admin/user/update/id/%s/' % self.user_1,
                           {'form.submitted': '1',
                            'name': 'foo bar'},
                           status=302)
-        user = self.DBSession.query(User).get(1)
+        user = self.DBSession.query(User).get(self.user_1)
         self.assertEqual(user.name, 'foo bar')
 
     def test_sa_create(self):
@@ -212,4 +207,4 @@ class ViewPageTest(BaseViewsTest):
         self.assertEqual(user.name, 'foo bar baz')
 
     def test_sa_delete(self):
-        self.testapp.get('/admin/user/delete/id/1/', status=302)
+        self.testapp.get('/admin/user/delete/id/%s/' % self.user_1, status=302)
