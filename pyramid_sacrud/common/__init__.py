@@ -14,6 +14,8 @@ from sacrud.common import get_attrname_by_colname
 
 
 def import_from_string(path):
+    if not isinstance(path, str):
+        return path
     parts = path.split(':')
     temp = __import__(parts[0], globals(), locals(), [parts[1], ], 0)
     return getattr(temp, parts[1], None)
