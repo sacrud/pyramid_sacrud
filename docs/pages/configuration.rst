@@ -230,7 +230,7 @@ Composite fields and column as custom function
 
 .. code-block:: python
 
-    from sacrud.common.custom import widget_link, widget_m2m
+    from pyramid_sacrud.common.custom import widget_link, widget_m2m
 
 Column as link widget
 ~~~~~~~~~~~~~~~~~~~~~
