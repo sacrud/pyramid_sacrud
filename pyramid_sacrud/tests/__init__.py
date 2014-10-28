@@ -9,9 +9,9 @@
 """
 Tests of pyramid_sacrud
 """
-from .models import Session
-from ._mock_session import MockSession
 import unittest
+
+from .models import Session
 
 
 class AppTest(unittest.TestCase):
@@ -36,15 +36,3 @@ class TransactionalTest(AppTest):
         self.connection.close()
         self.session.close()
         super(TransactionalTest, self).tearDown()
-
-
-class MockDatabaseTest(AppTest):
-    """Run tests against a mock query system."""
-
-    def setUp(self):
-        super(MockDatabaseTest, self).setUp()
-        Session.registry.set(MockSession())
-
-    def tearDown(self):
-        Session.remove()
-        super(MockDatabaseTest, self).tearDown()

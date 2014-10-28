@@ -9,40 +9,48 @@
 """
 Tests of viwes
 """
+from nose.tools import raises
 from pyramid import testing
+from pyramid.httpexceptions import HTTPNotFound
 
 from . import TransactionalTest
 from ..views import sa_home
-from .models.account import Account, Transaction
-
-# from .models import Session
+from ..views.CRUD import CRUD
+from .models import engine, Session
+from .models.auth import Groups, Profile, User
 
 
 class _TransactionalFixture(TransactionalTest):
 
-    def _client_fixture(self):
-        pass
-        # client = Client(identifier='12345', secret="some secret")
-        # Session.add(client)
-        # return client
+    def _create_tables(self):
+        User.__table__.create(engine, checkfirst=True)
+        Profile.__table__.create(engine, checkfirst=True)
+
+    def _user_fixture(self):
+        self._create_tables()
+        user = User(name="some user", fullname="full name", password="123")
+        Session.add(user)
+        return user
 
     def _init_pyramid_sacrud_settings(self, request):
-        settings = request.registry.settings
-        settings['pyramid_sacrud.models'] =\
+        if not request.registry.settings:
+            request.registry.settings = {}
+        request.registry.settings['pyramid_sacrud.models'] =\
             {
                 'Permissions': {
                     'tables': (
-                        Account,
+                        User,
                     ),
                     'position': 1,
                 },
                 'Users': {
                     'tables': (
-                        Transaction,
+                        Groups,
                     ),
                     'position': 4,
                 }
             }
+        return request
 
 
 class HomeTests(_TransactionalFixture):
@@ -61,9 +69,64 @@ class HomeTests(_TransactionalFixture):
         responce = sa_home(request)
         self.assertEquals(responce['dashboard_columns'], 3)
         self.assertEquals(len(responce['widgets']), 4)
-        self.assertEquals(responce['widgets'][0].tables, (Account,))
+        self.assertEquals(responce['widgets'][0].tables, (User,))
         self.assertEquals(responce['widgets'][0].position, 1)
         self.assertEquals(responce['widgets'][1].tables, [])
         self.assertEquals(responce['widgets'][2].tables, [])
-        self.assertEquals(responce['widgets'][3].tables, (Transaction,))
+        self.assertEquals(responce['widgets'][3].tables, (Groups,))
         self.assertEquals(responce['widgets'][3].position, 4)
+
+
+class ListTests(_TransactionalFixture):
+
+    def test_user_list_success(self):
+        request = testing.DummyRequest()
+        self._user_fixture()
+        request.dbsession = self.session
+        request.matchdict['table'] = 'user'
+        self._init_pyramid_sacrud_settings(request)
+        responce = CRUD(request).sa_list()
+        self.assertEquals(responce['breadcrumbs'],
+                          [{'visible': True, 'name': u'Dashboard',
+                            'param': {'name': 'user'}, 'view': 'sa_home'},
+                           {'visible': True, 'name': 'user',
+                            'param': {'name': 'user'}, 'view': 'sa_list'}]
+                          )
+        self.assertEquals(responce['sa_crud']['table'], User)
+
+    @raises(HTTPNotFound)
+    def test_not_exist_table(self):
+        self._user_fixture()
+
+        request = testing.DummyRequest()
+        request.dbsession = self.session
+        request.matchdict['table'] = 'not_exist_table'
+        self._init_pyramid_sacrud_settings(request)
+        self.assertRaises(HTTPNotFound, CRUD(request).sa_list)
+
+
+class CreateTests(_TransactionalFixture):
+
+    @raises(HTTPNotFound)
+    def test_create_not_exist_form(self):
+        request = testing.DummyRequest()
+        request.dbsession = self.session
+        request.matchdict['table'] = 'not_exist_table'
+        self._init_pyramid_sacrud_settings(request)
+        self.assertRaises(HTTPNotFound, CRUD(request).sa_add)
+
+    def test_create_user_form(self):
+        request = testing.DummyRequest()
+        request.dbsession = self.session
+        request.matchdict['table'] = 'user'
+        self._init_pyramid_sacrud_settings(request)
+        responce = CRUD(request).sa_add()
+        self.assertEqual(responce['breadcrumbs'],
+                         [{'visible': True, 'name': u'Dashboard', 'param': {'name': 'user'},
+                           'view': 'sa_home'},
+                          {'visible': True, 'name': 'user', 'param': {'name': 'user'},
+                           'view': 'sa_list'},
+                          {'visible': False, 'name': 'create', 'param': {'name': 'user'},
+                           'view': 'sa_list'}]
+                         )
+        self.assertEqual(responce['sa_crud']['table'], User)

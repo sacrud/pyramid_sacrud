@@ -122,7 +122,11 @@ class CRUD(object):
 
         # Some actions with objects in grid
         selected_action = request.POST.get('selected_action')
-        items_list = request.POST.getall('selected_item')
+        items_list = None
+        try:
+            items_list = request.POST.getall('selected_item')
+        except AttributeError:
+            items_list = request.POST.get('selected_item')
         if selected_action == 'delete':
             for item in items_list:
                 pk_list = json.loads(item)
