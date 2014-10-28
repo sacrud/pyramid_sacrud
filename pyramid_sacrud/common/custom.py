@@ -16,6 +16,8 @@ def get_name(column):
         return column.info['verbose_name']
     if column.name:
         return column.name
+    if isinstance(column, str):
+        return column
     return ''
 
 
@@ -43,6 +45,17 @@ def widget_link(*args, **kwargs):
                      },
             'name': get_name(kwargs['column']),
             }
+
+
+@widget
+def widget_row_lambda(*args, **kwargs):
+    return {
+        'name': kwargs['name'],
+        'info': {
+            'sacrud_position': 'inline',
+            'sacrud_list_content': kwargs['content'],
+        },
+    }
 
 
 class Widget(object):

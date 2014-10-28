@@ -45,7 +45,7 @@
                                     {% for col in visible_columns %}
                                         <th class="sacrud-grid-content-grid__header-item">
                                             <a href="" class="sacrud-grid-content-grid__header-item-link">
-                                                {{ col.info.verbose_name or col.name or col.sacrud_name or None }}
+                                                {{ _(col.info.verbose_name or col.name or col.sacrud_name or None) }}
                                             </a>
                                         </th>
                                     {% endfor %}
@@ -68,8 +68,11 @@
                                                     {% if col.__class__.__name__ in ['Column', 'InstrumentedAttribute'] %}
                                                         {% set col_value=row.__getattribute__(get_attrname_by_colname(row, col.name)) %}
                                                     {% endif %}
+
                                                     {% if col.info['sacrud_list_template'] %}
                                                         {% include col.info['sacrud_list_template'] %}
+                                                    {% elif col.info['sacrud_list_content'] %}
+                                                        {{ col.info['sacrud_list_content'](row) }}
                                                     {% else %}
                                                         {{ col_value|string|truncate(200) }}
                                                     {% endif %}

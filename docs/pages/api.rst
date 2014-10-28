@@ -47,3 +47,11 @@ Views
     :members:
     :undoc-members:
     :show-inheritance:
+
+Security
+--------
+
+.. automodule:: pyramid_sacrud.security
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -230,7 +230,7 @@ Composite fields and column as custom function
 
 .. code-block:: python
 
-    from sacrud.common.custom import widget_link, widget_m2m
+    from pyramid_sacrud.common.custom import widget_link, widget_m2m
 
 Column as link widget
 ~~~~~~~~~~~~~~~~~~~~~
@@ -256,6 +256,22 @@ Adds link for rows in column "name"
 
 .. image:: ../_static/img/widget_as_link.png
     :alt: Column as link
+
+Column as lambda function
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+    widget_row_lambda(name=_('Name'),
+                        content=lambda x: x.surname + ' ' + x.name +
+                        ' ' + x.middlename)
+
+
+Adds result of function
+
+.. image:: ../_static/img/widget_lambda.png
+    :alt: Column as result of function
+
 
 M2M relation widget
 ~~~~~~~~~~~~~~~~~~~

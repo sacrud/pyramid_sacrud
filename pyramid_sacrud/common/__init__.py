@@ -87,7 +87,7 @@ def set_jinja2_silent_none(config):
 
 def get_settings_param(request, name):
     settings = request.registry.settings
-    return settings[name]
+    return settings.get(name, {})
 
 
 def get_obj_from_settings(request, name):
