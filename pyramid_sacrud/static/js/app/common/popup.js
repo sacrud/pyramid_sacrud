@@ -8,7 +8,7 @@ module.exports = function(options) {
         }
 
         $(document).on('click', '.delete_button', function () {
-            $('.popup').show();
+            $('.popup').css("display", "table");
             show_delete_content();
         });
 

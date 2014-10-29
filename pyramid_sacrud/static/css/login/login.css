@@ -1,0 +1,16 @@
+.login
+{
+
+}
+    .login-inner
+    {
+
+    }
+        .login__link
+        {
+            font: 0.9em 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+            letter-spacing: 0.02em;
+            color: #fff;
+            text-transform: uppercase;
+            margin: 0 0 0 1em;
+        }

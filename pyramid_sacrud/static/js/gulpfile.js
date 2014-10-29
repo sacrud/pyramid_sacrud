@@ -1,12 +1,13 @@
 var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
+    clean = require('gulp-clean'),
     concat = require('gulp-concat'),
     minifyCSS = require('gulp-minify-css'),
     watch = require('gulp-watch'),
     browserify = require('browserify'),
     source = require('vinyl-source-stream');
 
-var staticPath = '';
+var staticPath = '../';
 var cssFiles = ['../css/*.css', '../css/**/*.css', '!../css/__main.css'];
 var jsFiles = ['../js/*.js', '../js/**/*.js', '!../js/__main.js'];
 
@@ -22,6 +23,11 @@ gulp.task('browserify', function() {
         .bundle()
         .pipe(source('./__main.js'))
         .pipe(gulp.dest('./'));
+});
+
+gulp.task('clean', function() {
+    gulp.src('../css/__main.css', { read: false })
+        .pipe(clean({ force: true }));
 });
 
 gulp.task('css', function() {
@@ -41,17 +47,13 @@ gulp.task('css', function() {
         .pipe(gulp.dest(staticPath + 'css/'));
 });
 
-gulp.task('js', function() {
-    gulp.src(jsFiles)
-        .pipe(concat('__main.js'))
-        .pipe(gulp.dest(staticPath + 'js/'));
-});
-
 gulp.task('watch', function () {
     watch(cssFiles, function (files) {
-        return gulp.start('css');
+        return gulp.start('clean', 'css');
     });
     watch(jsFiles, function (files) {
         return gulp.start('browserify');
     });
 });
+
+gulp.task('default', ['clean', 'css', 'browserify']);
