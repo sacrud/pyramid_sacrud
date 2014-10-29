@@ -9,18 +9,18 @@
 """
 Views for Pyramid frontend
 """
-import itertools
 import json
 
 import deform
 from paginate_sqlalchemy import SqlalchemyOrmPage
-from peppercorn import parse
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
 from sqlalchemy.orm.exc import NoResultFound
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs
-from pyramid_sacrud.common import get_settings_param, sacrud_env
+from pyramid_sacrud.common import (get_table, get_table_verbose_name,
+                                   pk_list_to_dict, request_to_sacrud,
+                                   sacrud_env)
 from pyramid_sacrud.common.paginator import get_paginator
 from sacrud import action
 from sacrud.common import columns_by_group, get_obj, pk_to_list
@@ -28,65 +28,6 @@ from sacrud_deform import form_generator
 
 from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
                         PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_UPDATE)
-
-
-def get_table(tname, request):
-    """ Return table by table name from pyramid_sacrud.models in settings.
-    """
-    # convert values of models dict to flat list
-    setting_params = get_settings_param(request,
-                                        'pyramid_sacrud.models').values()
-    tables_lists = [x['tables'] for x in setting_params]
-    tables = itertools.chain(*tables_lists)
-    tables = [table for table in tables if (table.__tablename__).
-              lower() == tname.lower()]
-    if not tables:
-        return None
-    return tables[0]
-
-
-def get_table_verbose_name(table):
-    if hasattr(table, 'verbose_name'):
-        return table.verbose_name
-    elif hasattr(table, '__tablename__'):
-        return table.__tablename__
-    return table.name
-
-
-def update_difference_object(obj, key, value):
-    if isinstance(obj, dict):
-        obj.update({key: value})
-    else:
-        setattr(obj, key, value)
-
-
-def pk_list_to_dict(pk_list):
-    if pk_list and len(pk_list) % 2 == 0:
-        return dict(zip(pk_list[::2], pk_list[1::2]))
-    return None
-
-
-def request_to_sacrud(r):
-    fields = r.POST.items()
-    data = parse(fields)
-
-    _r = {}
-
-    def request_to_flat(request):
-        for key, value in request.items():
-            if type(value) is dict:
-                if 'upload' in value:
-                    upload = value['upload']
-                    if hasattr(upload, 'file'):
-                        if upload.file:
-                            _r[key] = upload
-                else:
-                    request_to_flat(value)
-                continue
-            _r[key] = value
-
-    request_to_flat(data)
-    return _r
 
 
 class CRUD(object):
@@ -166,7 +107,7 @@ class CRUD(object):
         dbsession = self.request.dbsession
         try:
             obj = get_obj(dbsession, self.table, self.pk)
-        except NoResultFound:
+        except (NoResultFound, KeyError):
             raise HTTPNotFound
         columns = columns_by_group(self.table)
 
@@ -213,7 +154,7 @@ class CRUD(object):
         try:
             action.CRUD(self.request.dbsession,
                         self.table, pk=self.pk).delete()
-        except NoResultFound:
+        except (NoResultFound, KeyError):
             raise HTTPNotFound
         self.flash_message("You have removed object of %s" % self.tname)
         return HTTPFound(location=self.request.route_url('sa_list',

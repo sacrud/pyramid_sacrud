@@ -9,18 +9,22 @@
 """
 SQLAlchemy settings
 """
+import os
+
 from pyramid.threadlocal import get_current_request
 from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 Base = declarative_base()
 
-TEST_DATABASE_CONNECTION_STRING = 'sqlite:///:memory:'
+DIRNAME = os.path.dirname(__file__)
+DATABASE_FILE = os.path.join(DIRNAME, 'test.sqlite')
+TEST_DATABASE_CONNECTION_STRING = 'sqlite:///%s' % DATABASE_FILE
+# TEST_DATABASE_CONNECTION_STRING = 'sqlite:///:memory:'
 
 # an Engine, which the Session will use for connection
 # resources
-# engine = create_engine('sqlite:///pyramid_sacrud_tests.sqlite')
 engine = create_engine(TEST_DATABASE_CONNECTION_STRING)
 
 # create a configured "Session" class

@@ -16,21 +16,28 @@ from pyramid.httpexceptions import HTTPNotFound
 from . import TransactionalTest
 from ..views import sa_home
 from ..views.CRUD import CRUD
-from .models import engine, Session
-from .models.auth import Groups, Profile, User
+from .models import engine, Session, Base
+from .models.auth import Groups, User
 
 
 class _TransactionalFixture(TransactionalTest):
 
     def _create_tables(self):
-        User.__table__.create(engine, checkfirst=True)
-        Profile.__table__.create(engine, checkfirst=True)
+        Base.metadata.drop_all(engine)
+        Base.metadata.create_all(engine)
 
-    def _user_fixture(self):
+    def _is_table_exist(self, table_name):
+        return engine.dialect.has_table(engine.connect(), table_name)
+
+    def _user_fixture(self, ids=(1,)):
         self._create_tables()
-        user = User(name="some user", fullname="full name", password="123")
-        Session.add(user)
-        return user
+        for id in ids:
+            user = User(name="some user %s" % id,
+                        fullname="full name %s" % id,
+                        password="123 %s" % id)
+            user.id = id
+            Session.add(user)
+        Session.commit()
 
     def _init_pyramid_sacrud_settings(self, request):
         if not request.registry.settings:
@@ -51,6 +58,27 @@ class _TransactionalFixture(TransactionalTest):
                 }
             }
         return request
+
+
+class InitTests(_TransactionalFixture):
+
+    def test_bad_pk_init(self):
+        request = testing.DummyRequest()
+        request.matchdict["pk"] = ("foo", "bar", "baz")  # bad pk's
+        request.matchdict["table"] = "user"
+        with self.assertRaises(HTTPNotFound) as cm:
+            CRUD(request)
+        the_exception = str(cm.exception)
+        self.assertEqual(the_exception, 'The resource could not be found.')
+
+    def test_bad_table_init(self):
+        request = testing.DummyRequest()
+        request.matchdict["pk"] = ("foo", "bar")
+        request.matchdict["table"] = "user666"
+        with self.assertRaises(HTTPNotFound) as cm:
+            CRUD(request)
+        the_exception = str(cm.exception)
+        self.assertEqual(the_exception, 'The resource could not be found.')
 
 
 class HomeTests(_TransactionalFixture):
@@ -81,7 +109,7 @@ class ListTests(_TransactionalFixture):
 
     def test_user_list_success(self):
         request = testing.DummyRequest()
-        self._user_fixture()
+        self._create_tables()
         request.dbsession = self.session
         request.matchdict['table'] = 'user'
         self._init_pyramid_sacrud_settings(request)
@@ -96,8 +124,7 @@ class ListTests(_TransactionalFixture):
 
     @raises(HTTPNotFound)
     def test_not_exist_table(self):
-        self._user_fixture()
-
+        self._create_tables()
         request = testing.DummyRequest()
         request.dbsession = self.session
         request.matchdict['table'] = 'not_exist_table'
@@ -130,3 +157,45 @@ class CreateTests(_TransactionalFixture):
                            'view': 'sa_list'}]
                          )
         self.assertEqual(responce['sa_crud']['table'], User)
+
+
+class UpdateTests(_TransactionalFixture):
+
+    @raises(HTTPNotFound)
+    def test_update_not_exist_form(self):
+        request = testing.DummyRequest()
+        request.dbsession = self.session
+        request.matchdict['table'] = 'not_exist_table'
+        request.matchdict['pk'] = ('id', '1')
+        self._init_pyramid_sacrud_settings(request)
+        self.assertRaises(HTTPNotFound, CRUD(request).sa_add)
+
+    def test_update_user_form(self):
+        self._user_fixture()
+        request = testing.DummyRequest()
+        request.dbsession = self.session
+        request.matchdict['table'] = 'user'
+        request.matchdict['pk'] = ('id', '1')
+        self._init_pyramid_sacrud_settings(request)
+        responce = CRUD(request).sa_add()
+        self.assertEqual(responce['breadcrumbs'],
+                         [{'visible': True, 'name': u'Dashboard', 'param': {'name': 'user'},
+                           'view': 'sa_home'},
+                          {'visible': True, 'name': 'user', 'param': {'name': 'user'},
+                           'view': 'sa_list'},
+                          {'visible': False, 'name': ' id=1', 'param': {'name': 'user'},
+                           'view': 'sa_list'}]
+                         )
+        self.assertEqual(responce['sa_crud']['table'], User)
+
+
+class DeleteTests(_TransactionalFixture):
+
+    @raises(HTTPNotFound)
+    def test_delete_not_exist_table(self):
+        request = testing.DummyRequest()
+        request.dbsession = self.session
+        request.matchdict['table'] = 'not_exist_table'
+        request.matchdict['pk'] = ('id', '1')
+        self._init_pyramid_sacrud_settings(request)
+        self.assertRaises(HTTPNotFound, CRUD(request).sa_delete)

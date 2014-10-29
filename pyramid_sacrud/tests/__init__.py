@@ -9,9 +9,10 @@
 """
 Tests of pyramid_sacrud
 """
+import os
 import unittest
 
-from .models import Session
+from .models import DATABASE_FILE, Session
 
 
 class AppTest(unittest.TestCase):
@@ -35,4 +36,5 @@ class TransactionalTest(AppTest):
         self.transaction.rollback()
         self.connection.close()
         self.session.close()
+        os.remove(DATABASE_FILE)
         super(TransactionalTest, self).tearDown()
