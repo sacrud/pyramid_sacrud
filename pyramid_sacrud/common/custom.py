@@ -59,12 +59,13 @@ def widget_row_lambda(*args, **kwargs):
 
 
 class Widget(object):
-    def __init__(self, column, name=''):
-        self.column = column
+    def __init__(self, name=''):
         self.info = {'verbose_name': name,
                      'name': name}
 
 
 class WidgetM2M(Widget):
-    def __init__(self, column, name=''):
-        super(WidgetM2M, self).__init__(column, name='')
+    def __init__(self, relation, table=None, name=''):
+        super(WidgetM2M, self).__init__(name=name)
+        self.table = table
+        self.relation = relation
