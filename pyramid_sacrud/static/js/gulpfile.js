@@ -7,9 +7,11 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     source = require('vinyl-source-stream');
 
+var glob = require("glob");
+
 var staticPath = '../';
 var cssFiles = ['../css/*.css', '../css/**/*.css', '!../css/__main.css'];
-var jsFiles = ['../js/*.js', '../js/**/*.js', '!../js/__main.js'];
+var jsFiles = ['*.js', '**/*.js', '!gulpfile.js', '!__main.js'];
 
 gulp.task('build', function () {
    gulp.src(cssFiles)
@@ -19,14 +21,14 @@ gulp.task('build', function () {
 });
 
 gulp.task('browserify', function() {
-    browserify('./main.js', { debug: true })
+    browserify('./main.js', { debug: false })
         .bundle()
-        .pipe(source('./__main.js'))
+        .pipe(source('__main.js'))
         .pipe(gulp.dest('./'));
 });
 
 gulp.task('clean', function() {
-    gulp.src('../css/__main.css', { read: false })
+    gulp.src(staticPath + 'css/__main.css', { read: false })
         .pipe(clean({ force: true }));
 });
 
@@ -47,13 +49,19 @@ gulp.task('css', function() {
         .pipe(gulp.dest(staticPath + 'css/'));
 });
 
+
 gulp.task('watch', function () {
     watch(cssFiles, function (files) {
         return gulp.start('clean', 'css');
     });
-    watch(jsFiles, function (files) {
-        return gulp.start('browserify');
-    });
 });
 
 gulp.task('default', ['clean', 'css', 'browserify']);
+
+gulp.task('glob', function () {
+    glob("app/**/*", {
+        ignore: 'app/list.js'
+    }, function (er, files) {
+      console.log(files);
+    });
+});

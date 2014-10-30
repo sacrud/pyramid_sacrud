@@ -63,11 +63,6 @@
 {
 	color: #fff;
 }
-.toolbar-button__item_state_disable
-{
-	background: #eee;
-	cursor: default;
-}
 
 .toolbar-button__item_state_disable:hover .toolbar-button__item-name,
 .toolbar-button__item_state_disable:hover .toolbar-button__item-link,
@@ -133,4 +128,15 @@
 .toolbar-button__item_type_cancel:hover .toolbar-button__item-button
 {
 	background: #777;
+}
+.toolbar-button__item_state_disable .toolbar-button__item-name
+{
+	background: #eee;
+	color: #ccc;
+	cursor: default;
+}
+.toolbar-button__item_state_disable:hover .toolbar-button__item-name
+{
+	background: #e4e4e4;
+	color: #ccc;
 }

@@ -34,7 +34,7 @@
   },
   "browserify": {
     "transform": [
-        "browserify-shim"
+      "browserify-shim"
     ]
   },
   "browser": {
@@ -48,27 +48,27 @@
   },
   "browserify-shim": {
     "jquery": {
-        "exports": "$"
+      "exports": "$"
     },
     "jquery-ui": {
-        "exports": "selectable",
-        "depends": "jquery"
+      "exports": "selectable",
+      "depends": "jquery"
     },
     "jquery-maskedinput": {
-        "exports": null,
-        "depends": "jquery"
+      "exports": null,
+      "depends": "jquery"
     },
     "jqueryui-timepicker-addon": {
-        "exports": null,
-        "depends": "jquery-ui"
+      "exports": null,
+      "depends": "jquery-ui"
     },
     "speakingurl": {
-        "exports": null,
-        "depends": "jquery"
+      "exports": null,
+      "depends": "jquery"
     },
     "modernizr": {
-        "exports": "modernizr",
-        "depends": "jquery"
+      "exports": "modernizr",
+      "depends": "jquery"
     }
   }
 }
