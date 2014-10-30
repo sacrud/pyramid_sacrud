@@ -6,5 +6,7 @@ module.exports = function() {
             // $(this).val('');
         });
     });
+
     console.log("list");
+
 };
