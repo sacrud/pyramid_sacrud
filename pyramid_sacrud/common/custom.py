@@ -21,51 +21,24 @@ def get_name(column):
     return ''
 
 
-def widget(fun):
-    def wrapped(*args, **kwargs):
-        sacrud_name = ''
-        params = {}
-        if 'column' in kwargs:
-            if hasattr(kwargs['column'], 'property'):
-                sacrud_name = kwargs['column'].property.key
-            params.update({'column': kwargs['column']})
-        if 'sacrud_name' in kwargs:
-            sacrud_name = kwargs['sacrud_name']
-        params.update({'sacrud_name': sacrud_name, 'name': sacrud_name})
-        response = fun(*args, **kwargs)
-        params.update(response)
-        return params
-    return wrapped
-
-
-@widget
-def widget_link(*args, **kwargs):
-    return {'info': {'sacrud_position': 'inline',
-                     'sacrud_list_template': 'sacrud/custom/WidgetLinkList.jinja2',
-                     },
-            'name': get_name(kwargs['column']),
-            }
-
-
-@widget
-def widget_row_lambda(*args, **kwargs):
-    return {
-        'name': kwargs['name'],
-        'info': {
-            'sacrud_position': 'inline',
-            'sacrud_list_content': kwargs['content'],
-        },
-    }
-
-
 class Widget(object):
     def __init__(self, name=''):
         self.info = {'verbose_name': name,
                      'name': name}
 
 
-class WidgetM2M(Widget):
+class WidgetRelationship(Widget):
     def __init__(self, relation, table=None, name=''):
-        super(WidgetM2M, self).__init__(name=name)
+        super(WidgetRelationship, self).__init__(name=name)
         self.table = table
         self.relation = relation
+
+
+class WidgetRowLambda(Widget):
+    def __init__(self, function, name=''):
+        super(WidgetRowLambda, self).__init__(name=name)
+        self.name = name
+        self.info.update({
+            'sacrud_position': 'inline',
+            'sacrud_list_content': function,
+        })

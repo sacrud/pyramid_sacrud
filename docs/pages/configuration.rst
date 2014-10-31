@@ -230,59 +230,151 @@ Composite fields and column as custom function
 
 .. code-block:: python
 
-    from pyramid_sacrud.common.custom import widget_link, widget_m2m
+    from pyramid_sacrud.common.custom import WidgetRelationship, WidgetRowLambda
 
-Column as link widget
-~~~~~~~~~~~~~~~~~~~~~
+Column as lambda function of row
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
     :linenos:
-    :emphasize-lines: 12
+    :emphasize-lines: 15-17
 
     class TestCustomizing(Base):
         __tablename__ = "test_customizing"
 
         id = Column(Integer, primary_key=True)
         name = Column(String, info={"description": "put there name"})
+        surname = Column(String, info={"description": "put there name"})
+        middlename = Column(String, info={"description": "put there name"})
         date = Column(Date, info={"verbose_name": 'date JQuery-ui'})
         name_ru = Column(String, info={"verbose_name": u'Название', })
         name_fr = Column(String, info={"verbose_name": u'nom', })
         name_bg = Column(String, info={"verbose_name": u'Име', })
         name_cze = Column(String, info={"verbose_name": u'název', })
 
-        sacrud_list_col = [widget_link(column=name, sacrud_name=u'name'), name_ru, name_cze]
+        sacrud_list_col = [
+            WidgetRowLambda(name=_('Name'),
+                            function=lambda x: x.surname + ' ' + x.name +
+                            ' ' + x.middlename)
+            name_ru, name_cze]
 
-Adds link for rows in column "name"
 
-.. image:: ../_static/img/widget_as_link.png
-    :alt: Column as link
+.. image:: ../_static/img/widget_row_lambda.png
+    :alt: Column as lambda of row
 
-Column as lambda function
-~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Column as relationship
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
+    :linenos:
 
-    widget_row_lambda(name=_('Name'),
-                        content=lambda x: x.surname + ' ' + x.name +
-                        ' ' + x.middlename)
+    class User(Base):
+        __tablename__ = 'users'
+        verbose_name = _('Users')
 
-
-Adds result of function
-
-.. image:: ../_static/img/widget_lambda.png
-    :alt: Column as result of function
+        id = Column(Integer, primary_key=True, autoincrement=True)
+        name = Column(Unicode, nullable=False)
 
 
-M2M relation widget
-~~~~~~~~~~~~~~~~~~~
+    class Company2User(Base):
+        __tablename__ = 'm2m_company2user'
+        verbose_name = _('Company of user')
+
+        user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
+        user = relationship("User")
+        company_id = Column(Integer, ForeignKey('company.id'), primary_key=True)
+        company = relationship("Company")
+
+
+    class Company(Base):
+        __tablename__ = 'company'
+        verbose_name = _('Company')
+
+        id = Column(Integer, primary_key=True, autoincrement=True)
+        name = Column(Unicode)
+        company_id = Column(Integer, ForeignKey('company.id'), nullable=True,
+                            info={'verbose_name': _('Main company')})
+        company = relationship('Company')
+        users = relationship('User', secondary='m2m_company2user',
+                            backref='company')
+
+        # SACRUD
+        @TableProperty
+        def sacrud_detail_col(cls):
+            return [('', [Company.name, cls.c.company_id,
+                        WidgetRelationship(Company.users,
+                                            table=User,
+                                            name=_("Users"),
+                                            ),
+                        WidgetRelationship(Company.company,
+                                            table=Company,
+                                            name=_("Affiliate company"),
+                                            )
+                        ]),
+                    ]
+
+        def __repr__(self):
+            return self.name
+
+
+**ManyToMany**
 
 .. |ManyToManyField| image:: ../_static/img/ManyToManyField.png
 
 .. note::
 
-    Will be made in the next version.
     I think it should look like Django ManyToManyField.
+    Will be made in the next version.
     |ManyToManyField|
+
+.. code-block:: python
+    :linenos:
+    :emphasize-lines: 8-11
+
+    users = relationship('User', secondary='m2m_company2user',
+                        backref='company')
+
+    # SACRUD
+    @TableProperty
+    def sacrud_detail_col(cls):
+        return [('', [Company.name, cls.c.company_id,
+                    WidgetRelationship(Company.users,
+                                        table=User,
+                                        name=_("Users"),
+                                        ),
+                    WidgetRelationship(Company.company,
+                                        table=Company,
+                                        name=_("Affiliate company"),
+                                        )
+                    ]),
+                ]
+
+
+
+**OneToMany**
+
+.. code-block:: python
+    :linenos:
+    :emphasize-lines: 12-15
+
+    users = relationship('User', secondary='m2m_company2user',
+                        backref='company')
+
+    # SACRUD
+    @TableProperty
+    def sacrud_detail_col(cls):
+        return [('', [Company.name, cls.c.company_id,
+                    WidgetRelationship(Company.users,
+                                        table=User,
+                                        name=_("Users"),
+                                        ),
+                    WidgetRelationship(Company.company,
+                                        table=Company,
+                                        name=_("Affiliate company"),
+                                        )
+                    ]),
+                ]
 
 Template redefinition
 ---------------------
