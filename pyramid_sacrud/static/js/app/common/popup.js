@@ -7,7 +7,7 @@ module.exports = function(options) {
             $('.popup-inner__content-elfinder').hide();
         }
 
-        $(document).on('click', '.delete_button', function () {
+        $(document).on('click', options.div_delete_button, function () {
             $('.popup').css("display", "table");
             show_delete_content();
         });

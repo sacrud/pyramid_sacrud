@@ -24,8 +24,8 @@
                         </div>
                         {% if obj %}
                             <div class="toolbar-button__item toolbar-button__item_type_delete">
-                                <a href="{{ request.route_url('sa_delete', table=obj_cls.__tablename__, pk=pk_to_list(obj)) }}"
-                                   class="toolbar-button__item-link">{{ _ps('Delete') }}</a>
+                                {# <a href="{{ request.route_url('sa_delete', table=obj_cls.__tablename__, pk=pk_to_list(obj)) }}" class="toolbar-button__item-link">{{ _ps('Delete') }}</a> #}
+                                <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
                             </div>
                         {% endif %}
                         <div class="toolbar-button__item toolbar-button__item_type_cancel">
@@ -45,8 +45,8 @@
                         </div>
                         {% if obj %}
                             <div class="toolbar-button__item toolbar-button__item_type_delete">
-                                <a href="{{ request.route_url('sa_delete', table=obj_cls.__tablename__, pk=pk_to_list(obj)) }}"
-                                   class="toolbar-button__item-link">{{ _ps('Delete') }}</a>
+                                {# <a href="{{ request.route_url('sa_delete', table=obj_cls.__tablename__, pk=pk_to_list(obj)) }}" class="toolbar-button__item-link">{{ _ps('Delete') }}</a> #}
+                                <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
                             </div>
                         {% endif %}
                         <div class="toolbar-button__item toolbar-button__item_type_cancel">

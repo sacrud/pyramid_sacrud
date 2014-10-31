@@ -55,7 +55,7 @@ module.exports = function(options) {
         });
 
         function change_buttons () {
-            if ($(options.table_checkboxes_checked).length) {
+            if (!($(options.table_checkboxes).length) || $(options.table_checkboxes_checked).length) {
                 $(options.div_delete_button).removeClass(options.state_disable_class);
             } else {
                 $(options.div_delete_button).addClass(options.state_disable_class);
