@@ -12,12 +12,12 @@ Any instruments for customizing Models
 
 
 def get_name(column):
+    if isinstance(column, str):
+        return column
     if 'verbose_name' in column.info:
         return column.info['verbose_name']
     if column.name:
         return column.name
-    if isinstance(column, str):
-        return column
     return ''
 
 
@@ -37,7 +37,6 @@ class WidgetRelationship(Widget):
 class WidgetRowLambda(Widget):
     def __init__(self, function, name=''):
         super(WidgetRowLambda, self).__init__(name=name)
-        self.name = name
         self.info.update({
             'sacrud_position': 'inline',
             'sacrud_list_content': function,

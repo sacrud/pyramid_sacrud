@@ -22,6 +22,7 @@ class CustomTest(unittest.TestCase):
         self.assertEqual('sex', get_name(User.sex))
         self.assertEqual('id', get_name(User.id))
         self.assertEqual('user password', get_name(User.password))
+        self.assertEqual('foo', get_name('foo'))
 
         class EmptyType: pass
         foo = EmptyType()
@@ -39,7 +40,6 @@ class CustomTest(unittest.TestCase):
     def test_widget_row_lambda(self):
         def func(x): return x.name + x.surname
         w = WidgetRowLambda(func, name='foo')
-        self.assertEqual(w.name, 'foo')
         self.assertEqual(w.info, {'sacrud_position': 'inline',
                                   'sacrud_list_content': func,
                                   'verbose_name': 'foo',
@@ -49,4 +49,3 @@ class CustomTest(unittest.TestCase):
         w = WidgetRelationship('foo', 'bar', name='baz')
         self.assertEqual(w.relation, 'foo')
         self.assertEqual(w.table, 'bar')
-        self.assertEqual(w.name, 'baz')
