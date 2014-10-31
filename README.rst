@@ -98,3 +98,9 @@ The project is licensed under the MIT license.
    :target: http://waffle.io/ITCase/pyramid_sacrud
 .. |PyPI| image:: http://img.shields.io/pypi/dm/pyramid_sacrud.svg
    :target: https://pypi.python.org/pypi/pyramid_sacrud/
+
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/ITCase/pyramid_sacrud/trend.png
+   :alt: Bitdeli badge
+   :target: https://bitdeli.com/free
+
