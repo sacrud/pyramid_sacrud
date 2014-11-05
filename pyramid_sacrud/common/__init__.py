@@ -150,12 +150,6 @@ def update_difference_object(obj, key, value):
         setattr(obj, key, value)
 
 
-def pk_list_to_dict(pk_list):
-    if pk_list and len(pk_list) % 2 == 0:
-        return dict(zip(pk_list[::2], pk_list[1::2]))
-    return None
-
-
 def request_to_sacrud(r):
     fields = r.POST.items()
     data = parse(fields)

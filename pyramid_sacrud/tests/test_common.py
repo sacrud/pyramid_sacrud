@@ -15,8 +15,7 @@ from pyramid import testing
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs, get_crumb
 from pyramid_sacrud.common import (get_obj_from_settings, get_table,
-                                   import_from_string, pk_list_to_dict,
-                                   update_difference_object)
+                                   import_from_string, update_difference_object)
 
 from .models.auth import User
 from .test_views import _TransactionalFixture
@@ -87,15 +86,6 @@ class CommonTest(_TransactionalFixture):
         obj = {}
         update_difference_object(obj, "foo", "bar")
         self.assertEqual(obj["foo"], "bar")
-
-    def test_pk_list_to_dict(self):
-        foo = [1, 2, 3, "a", "b", {"foo": "bar"}]
-        resp = pk_list_to_dict(foo)
-        self.assertEqual(resp, {1: 2, 3: 'a', 'b': {'foo': 'bar'}})
-
-        foo = [1, 2, 3, "a", "b"]
-        resp = pk_list_to_dict(foo)
-        self.assertEqual(resp, None)
 
     def test_get_table(self):
         request = testing.DummyRequest()
