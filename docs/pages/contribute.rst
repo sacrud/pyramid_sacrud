@@ -65,7 +65,7 @@ File for browserify build is **main.js** on `pyramid_sacrud/static/js/`.
 
 Project modules are on `pyramid_sacrud/static/js/app/`.
 
-Before changing js modules you need to run 'watch' task with gulp: 
+Before changing js modules you need to run \'watch\' task with gulp: 
 
 .. code:: bash
 
