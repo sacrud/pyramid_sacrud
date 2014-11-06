@@ -78,7 +78,7 @@ We welcome any contribution: suggestions, ideas, commits with new futures, bug f
 
 If you know Flask framework, it would be nice create connector to him like this.
 
-If you have question, contact me sacrud@uralbash.ru
+If you have question, contact me sacrud@uralbash.ru or IRC channel #sacrud
 
 License
 =======
