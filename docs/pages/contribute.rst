@@ -6,50 +6,37 @@ Same as `contributor's section of the documentation <http://docs.pylonsproject.o
 Frontend contribute
 -------------------
 
-CSS
-~~~
-
-.. note::
-    You need install nodejs and stylus preprocessor only for develop
-
-We use stylus preprocessor for write and concat CSS. If you want edit this, add to ini file setting ``sacrud.debug_css = True``
-
-
-JavaScript coder
-~~~~~~~~~~~~~~~~
-
-For working with JavaScript you need install Node.js_, NPM_, Browserify_ and Gulp_.
+For working with CSS and JavaScript you need install Node.js_, NPM_, Bower_, Browserify_ and Gulp_.
 
 .. _Node.js: http://nodejs.org/
 .. _NPM: https://www.npmjs.org/
+.. _Bower: http://bower.io/
 .. _Browserify: http://browserify.org/
 .. _Gulp: http://gulpjs.com/
 
-If you don’t have node and npm installed, get it first.
+.. note::
+
+    If you don’t have Node.js and NPM installed, get it first.
 
 
 Install components
-==================
+~~~~~~~~~~~~~~~~~~
 
-**package.json** for npm in the `pyramid_sacrud/static/js/` folder.
+**package.json** for NPM, **gulpfile.js** for Gulp and **bower.json** for Bower in the `pyramid_sacrud/static/` folder.
 
-Installing browserify, gulp and other dependencies:
+Installing Browserify, Gulp and other dependencies:
 
 .. code:: bash
 
     npm install
 
-Install Bower_:
-
-.. _Bower: http://bower.io/
+Install Bower:
 
 .. code:: bash
 
     npm install -g bower
       
-Manifest file **bower.json** in the `pyramid_sacrud/static/js/` folder.
-
-Install packages with bower install:
+Install packages with Bower install:
 
 .. code:: bash
 
@@ -58,6 +45,24 @@ Install packages with bower install:
 Packages installs to `pyramid_sacrud/static/js/bower_components/`
 
 
+
+CSS
+~~~
+
+СSS files are on `pyramid_sacrud/static/css/`.
+    
+Before changing css files you need to run "watch" task with gulp: 
+
+.. code:: bash
+
+    gulp watch
+
+When you change any css file gulp concatenates all in **__main.css** on `pyramid_sacrud/static/css/`.
+
+
+JavaScript coder
+~~~~~~~~~~~~~~~~
+
 Getting Started
 ===============
 
@@ -65,7 +70,7 @@ File for browserify build is **main.js** on `pyramid_sacrud/static/js/`.
 
 Project modules are on `pyramid_sacrud/static/js/app/`.
 
-Before changing js modules you need to run \'watch\' task with gulp: 
+Before changing js modules you need to run "watch" task with gulp: 
 
 .. code:: bash
 

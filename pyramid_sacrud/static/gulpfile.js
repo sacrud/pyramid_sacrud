@@ -9,26 +9,25 @@ var gulp = require('gulp'),
 
 var glob = require("glob");
 
-var staticPath = '../';
-var cssFiles = ['../css/*.css', '../css/**/*.css', '!../css/__main.css'];
-var jsFiles = ['*.js', '**/*.js', '!gulpfile.js', '!__main.js'];
+var cssFiles = ['css/*.css', 'css/**/*.css', '!css/__main.css'];
+var jsFiles = ['js/*.js', 'js/**/*.js', '!js/__main.js'];
 
 gulp.task('build', function () {
    gulp.src(cssFiles)
         .pipe(concat('style.min.css'))
         .pipe(minifyCSS())
-        .pipe(gulp.dest(staticPath + 'build/'));
+        .pipe(gulp.dest('build/'));
 });
 
 gulp.task('browserify', function() {
-    browserify('./main.js', { debug: false })
+    browserify('./js/main.js', { debug: false })
         .bundle()
         .pipe(source('__main.js'))
-        .pipe(gulp.dest('./'));
+        .pipe(gulp.dest('js/'));
 });
 
 gulp.task('clean', function() {
-    gulp.src(staticPath + 'css/__main.css', { read: false })
+    gulp.src('css/__main.css', { read: false })
         .pipe(clean({ force: true }));
 });
 
@@ -46,7 +45,7 @@ gulp.task('css', function() {
             cascade: false
         }))
         .pipe(concat('__main.css'))
-        .pipe(gulp.dest(staticPath + 'css/'));
+        .pipe(gulp.dest('css/'));
 });
 
 
@@ -62,8 +61,8 @@ gulp.task('watch', function () {
 gulp.task('default', ['clean', 'css', 'browserify']);
 
 gulp.task('glob', function () {
-    glob("app/**/*", {
-        ignore: 'app/list.js'
+    glob("js/app/**/*", {
+        ignore: 'js/app/list.js'
     }, function (er, files) {
       console.log(files);
     });

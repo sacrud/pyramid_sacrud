@@ -28,6 +28,7 @@
     "gulp": "^3.8.8",
     "gulp-autoprefixer": "^1.0.1",
     "gulp-concat": "^2.4.1",
+    "gulp-clean": "",
     "gulp-minify-css": "^0.3.11",
     "gulp-watch": "^1.1.0",
     "vinyl-source-stream": "^1.0.0"
@@ -38,13 +39,13 @@
     ]
   },
   "browser": {
-    "jquery": "./bower_components/jquery/dist/jquery.js",
-    "jquery-ui": "./bower_components/jquery-ui/ui/jquery-ui.js",
-    "jquery-maskedinput": "./bower_components/jquery-maskedinput/dist/jquery.maskedinput.js",
-    "jqueryui-timepicker-addon": "./bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js",
-    "speakingurl": "./bower_components/speakingurl/speakingurl.min.js",
-    "modernizr": "./bower_components/modernizr/modernizr.js",
-    "pickadate": "./bower_components/pickadate/lib/picker.js"
+    "jquery": "./js/bower_components/jquery/dist/jquery.js",
+    "jquery-ui": "./js/bower_components/jquery-ui/ui/jquery-ui.js",
+    "jquery-maskedinput": "./js/bower_components/jquery-maskedinput/dist/jquery.maskedinput.js",
+    "jqueryui-timepicker-addon": "./js/bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js",
+    "speakingurl": "./js/bower_components/speakingurl/speakingurl.min.js",
+    "modernizr": "./js/bower_components/modernizr/modernizr.js",
+    "pickadate": "./js/bower_components/pickadate/lib/picker.js"
   },
   "browserify-shim": {
     "jquery": {
