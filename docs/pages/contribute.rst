@@ -25,7 +25,7 @@ For working with JavaScript you need install Node.js_, NPM_, Browserify_ and Gul
 .. _Browserify: http://browserify.org/
 .. _Gulp: http://gulpjs.com/
 
-If you don’t have node and npm installed, get it here first.
+If you don’t have node and npm installed, get it first.
 
 
 Install components
@@ -33,7 +33,7 @@ Install components
 
 **package.json** for npm in the `pyramid_sacrud/static/js/` folder.
 
-Installing all dependencies:
+Installing browserify, gulp and other dependencies:
 
 .. code:: bash
 
@@ -63,7 +63,7 @@ Getting Started
 
 File for browserify build is **main.js** on `pyramid_sacrud/static/js/`.
 
-Project modules are on path `pyramid_sacrud/static/js/app/`.
+Project modules are on `pyramid_sacrud/static/js/app/`.
 
 Before changing js modules you need to run 'watch' task with gulp: 
 
