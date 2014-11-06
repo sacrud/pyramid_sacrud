@@ -14,21 +14,104 @@ CSS
 
 We use stylus preprocessor for write and concat CSS. If you want edit this, add to ini file setting ``sacrud.debug_css = True``
 
-.. literalinclude:: ../../pyramid_sacrud/assets.py
-   :linenos:
-   :language: py
-   :pyobject: add_css_assets
 
 JavaScript coder
 ~~~~~~~~~~~~~~~~
-If you want edit this, add to ini file setting ``sacrud.debug_js = True``
 
-Use `<http://bower.io>`_ and assets hook:
+For working with JavaScript you need install Node.js_, NPM_, Browserify_ and Gulp_.
 
-.. literalinclude:: ../../pyramid_sacrud/assets.py
-   :linenos:
-   :language: py
-   :pyobject: add_js_assets
+.. _Node.js: http://nodejs.org/
+.. _NPM: https://www.npmjs.org/
+.. _Browserify: http://browserify.org/
+.. _Gulp: http://gulpjs.com/
+
+If you don’t have node and npm installed, get it here first.
+
+
+Install components
+==================
+
+**package.json** for npm in the `pyramid_sacrud/static/js/` folder.
+
+Installing all dependencies:
+
+.. code:: bash
+
+    npm install
+
+Install Bower_:
+
+.. _Bower: http://bower.io/
+
+.. code:: bash
+
+    npm install -g bower
+      
+Manifest file **bower.json** in the `pyramid_sacrud/static/js/` folder.
+
+Install packages with bower install:
+
+.. code:: bash
+
+    bower install
+
+Packages installs to `pyramid_sacrud/static/js/bower_components/`
+
+
+Getting Started
+===============
+
+File for browserify build is **main.js** on `pyramid_sacrud/static/js/`.
+
+Project modules are on path `pyramid_sacrud/static/js/app/`.
+
+Before changing js modules you need to run 'watch' task with gulp: 
+
+.. code:: bash
+
+    gulp watch
+    
+When you change any js file browserify build **__main.js** on `pyramid_sacrud/static/js/`.
+
+
+Using modules
+=============
+
+To use module, you need to define it in **main.js** via require() function:
+
+.. code-block:: javascript
+    
+    require('jquery');
+
+After that, they will be available for entire project.
+
+
+Сreate a new module
+===================
+
+To define a module, just create a JavaScript file, and write something like this:
+
+.. code-block:: javascript
+    
+    module.exports = function() {
+        function some_func() {
+            // anything do
+        }
+    };
+
+Add it in **main.js** via require() function and call, to use in site:
+
+.. code-block:: javascript
+
+    var myModule = require('my_module');
+    myModule();
+
+
+Testing
+=======
+
+`coming soon`
+
 
 Documentation contribute
 ------------------------
@@ -42,7 +125,7 @@ For generate README.rst run:
 This hook make single \*.rst file replacing ".. include::" directive on plain text.
 It is necessary for github and PyPi main page because he does not know how to include.
 
-.. literalinclude:: make_README.py
+.. literalinclude:: ../make_README.py
    :linenos:
    :language: py
 

@@ -1,12 +1,10 @@
 module.exports = function() {
 
-    $(function() {
-        $(document).on('focus', '#site_search', function () {
-            // console.log($(this));
-            // $(this).val('');
-        });
+    $(document).on('focus', '#site_search', function () {
+        // console.log($(this));
+        // $(this).val('');
     });
 
-    console.log("list");
+    // console.log("list");
 
 };
