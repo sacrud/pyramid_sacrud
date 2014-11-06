@@ -10,4 +10,4 @@ bug fixes, refactoring, docs, tests, translations etc
 If you know Flask framework, it would be nice create connector
 of `sacrud <https://github.com/ITCase/sacrud/>`_ like this.
 
-If you have question, contact me sacrud@uralbash.ru
+If you have question, contact me sacrud@uralbash.ru or IRC channel #sacrud

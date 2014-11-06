@@ -44,10 +44,13 @@
                         <a href="{{ request.route_url('sa_home') }}" class="logo__text-link">SACRUD</a>
                     </div>
                 </div>
-                <div class="header__inner-menu">&nbsp;</div>
+                <div class="header__inner-menu">
+                    {% block sa_inner_menu %}
+                    {% endblock %}
+                </div>
                 <div class="header__user">
                     {% block sa_auth %}
-                    {% endblock sa_auth %}
+                    {% endblock %}
                 </div>
             </div>
         </div>

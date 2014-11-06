@@ -78,7 +78,7 @@ We welcome any contribution: suggestions, ideas, commits with new futures, bug f
 
 If you know Flask framework, it would be nice create connector to him like this.
 
-If you have question, contact me sacrud@uralbash.ru
+If you have question, contact me sacrud@uralbash.ru or IRC channel #sacrud
 
 License
 =======
@@ -98,3 +98,9 @@ The project is licensed under the MIT license.
    :target: http://waffle.io/ITCase/pyramid_sacrud
 .. |PyPI| image:: http://img.shields.io/pypi/dm/pyramid_sacrud.svg
    :target: https://pypi.python.org/pypi/pyramid_sacrud/
+
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/ITCase/pyramid_sacrud/trend.png
+   :alt: Bitdeli badge
+   :target: https://bitdeli.com/free
+
