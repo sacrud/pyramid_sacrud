@@ -21,4 +21,3 @@ var list = require('./app/list.js'),
 
 selectable(options);
 popup(options);
-// checkbox();  // use only with custom checkboxes
