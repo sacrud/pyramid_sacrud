@@ -13,11 +13,6 @@
     {{ super() }}
     <!-- Deform -->
     <script type="text/javascript" src="{{ request.static_url('deform:static/scripts/deform.js') }}"></script>
-    <!-- Picker
-    <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.js') }}"></script>
-    <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.date.js') }}"></script>
-    <script type="text/javascript" src="{{ request.static_url('pyramid_sacrud:static/js/lib/picker.time.js') }}"></script>
-    -->
     <script type="text/javascript">
         $.mask.definitions['h'] = "[A-Fa-f0-9]";
     </script>
@@ -36,7 +31,6 @@
     {% if sa_crud['obj'] %}
         <div class="popup-inner__content-delete">
             <div class="popup-inner__content-title">Are you sure you want to delete an object?</div>
-            <div>ЗДЕСЬ СПИСОК ЭЛЕМЕНТОВ ЕСЛИ ИХ НЕТ НЕ ПИШЕШЬ НИЧЕГО</div>
             <div class="popup-button">
                 <div class="popup-button__item" data-status="delete">
                     <a href="{{ request.route_url('sa_delete', table=sa_crud['table'].__tablename__, pk=pk_to_list(sa_crud['obj'])) }}" class="popup-button__item-link">Confirm</a>
