@@ -11,7 +11,11 @@ language: python
 notifications:
   email: "sacrud@uralbash.ru"
   email: "arkadiy@bk.ru"
-  irc: "chat.freenode.net#sacrud"
+  irc:
+    channels:
+      - "chat.freenode.net#sacrud"
+    on_success: change
+    on_failure: always
 
 python:
   - "2.7"
@@ -22,11 +26,7 @@ env:
   - TOXENV=py34
 
 install:
-  - pip install nose coverage coveralls
-  - pip install pyramid pyramid_beaker tox
-  - pip install pyramid_jinja2==1.10
-  - pip install git+git://github.com/ITCase/sacrud.git@develop
-  - pip install git+git://github.com/ITCase/sacrud_deform.git@develop
+  - pip install nose coverage coveralls tox
   - pip install -r requirements.txt
 
 script:
