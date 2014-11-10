@@ -47,7 +47,8 @@ class User(Base):
 
     groups = relationship("Groups", secondary=association_table)
 
-    def __init__(self, name, fullname, password, sex='unknown'):
+    def __init__(self, name, fullname='', password='123',
+                 sex='unknown', groups=[]):
         self.name = name
         self.fullname = fullname
         self.password = password
