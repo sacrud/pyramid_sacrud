@@ -68,14 +68,18 @@ class CRUD(object):
         except AttributeError:
             items_list = request.POST.get('selected_item')
         if selected_action == 'delete':
+            obj_list = []
             for item in items_list:
                 pk_list = json.loads(item)
                 pk = pk_list_to_dict(pk_list)
                 try:
-                    action.CRUD(request.dbsession, table, pk=pk)\
+                    obj = action.CRUD(request.dbsession, table, pk=pk)\
                         .delete(commit=False)
+                    obj_list.append(obj['name'])
                 except NoResultFound:
                     raise HTTPNotFound
+            self.flash_message("You delete the following objects:<br/>" +
+                               "<br/>".join(obj_list))
 
         # paginator
         items_per_page = getattr(table, 'items_per_page', 10)
