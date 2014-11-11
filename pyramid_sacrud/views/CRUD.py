@@ -25,6 +25,7 @@ from sacrud import action
 from sacrud.common import columns_by_group, get_obj, pk_list_to_dict, pk_to_list
 from sacrud_deform import form_generator
 
+from ..includes.localization import _ps
 from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
                         PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_UPDATE)
 
@@ -78,8 +79,8 @@ class CRUD(object):
                     obj_list.append(obj['name'])
                 except NoResultFound:
                     raise HTTPNotFound
-            self.flash_message("You delete the following objects:<br/>" +
-                               "<br/>".join(obj_list))
+            self.flash_message(_ps("You delete the following objects:<br/>"))
+            self.flash_message("<br/>".join(obj_list))
 
         # paginator
         items_per_page = getattr(table, 'items_per_page', 10)
@@ -140,9 +141,11 @@ class CRUD(object):
             resp.request = request_to_sacrud(self.request)
             resp.add()
             if self.pk:
-                self.flash_message("You updated object of %s" % self.tname)
+                self.flash_message(_ps("You updated object of ${name}",
+                                       mapping={'name': self.tname}))
             else:
-                self.flash_message("You created new object of %s" % self.tname)
+                self.flash_message(_ps("You created new object of ${name}",
+                                       mapping={'name': self.tname}))
             return HTTPFound(location=self.request.route_url('sa_list',
                                                              table=self.tname))
         sa_crud = resp.add()
@@ -159,6 +162,7 @@ class CRUD(object):
                         self.table, pk=self.pk).delete()
         except (NoResultFound, KeyError):
             raise HTTPNotFound
-        self.flash_message("You have removed object of %s" % self.tname)
+        self.flash_message(_ps("You have removed object of ${name}",
+                               mapping={'name': self.tname}))
         return HTTPFound(location=self.request.route_url('sa_list',
                                                          table=self.tname))

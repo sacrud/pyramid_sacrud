@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyramid_sacrud 0.0.1a1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-23 20:22+0600\n"
+"POT-Creation-Date: 2014-11-11 16:31+0500\n"
 "PO-Revision-Date: 2014-10-21 20:58+0600\n"
 "Last-Translator: uralbash <root@uralbash.ru>\n"
 "Language-Team: Russian\n"
@@ -24,23 +24,39 @@ msgstr ""
 msgid "Dashboard"
 msgstr "Панель управления"
 
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:25
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:45
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:23
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:44
 msgid "Save"
 msgstr "Сохранить"
 
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:29
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:51
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:28
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:49
 #: pyramid_sacrud/templates/sacrud/forms/list.jinja2:12
 msgid "Delete"
 msgstr "Удалить"
 
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:33
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:55
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:32
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:53
 msgid "Cancel"
 msgstr "Отмена"
 
 #: pyramid_sacrud/templates/sacrud/forms/actions/add.jinja2:4
 msgid "Add a new"
 msgstr "Добавить"
+
+#: pyramid_sacrud/views/CRUD.py:82
+msgid "You delete the following objects:<br/>"
+msgstr "Вы удалили следующие объекты:<br/>"
+
+#: pyramid_sacrud/views/CRUD.py:144
+msgid "You updated object of ${name}"
+msgstr "Вы обновили объект ${name}"
+
+#: pyramid_sacrud/views/CRUD.py:147
+msgid "You created new object of ${name}"
+msgstr "Вы создали новый объект ${name}"
+
+#: pyramid_sacrud/views/CRUD.py:165
+msgid "You have removed object of ${name}"
+msgstr "Вы удалили объект ${name}"
 
