@@ -26,8 +26,10 @@ env:
   - TOXENV=py34
 
 install:
-  - pip install nose coverage coveralls tox
+  - pip install nose coverage coveralls tox webtest
   - pip install -r requirements.txt
+  - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git@develop
+  - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud.git@develop
 
 script:
   - tox
