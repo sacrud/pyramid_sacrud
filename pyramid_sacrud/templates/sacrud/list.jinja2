@@ -2,15 +2,15 @@
 
 {% block sa_popup_content %}
     <div class="popup-inner__content-link">
-        <a href="#" class="popup-inner__content-link-text">close</a>
+        <a href="#" class="popup-inner__content-link-text">{{ _ps('close') }}</a>
     </div>
-    <div class="popup-inner__content-title">Are you sure you want to delete an object?</div>
+    <div class="popup-inner__content-title">{{ _ps('Are you sure you want to delete an object?') }}</div>
     <div class="popup-button">
         <div class="popup-button__item" data-status="delete">
-            <span class="popup-button__item-name">Confirm</span>
+            <span class="popup-button__item-name">{{ _ps('Confirm') }}</span>
         </div>
         <div class="popup-button__item" data-status="cancel">
-            <span class="popup-button__item-name">Cancel</span>
+            <span class="popup-button__item-name">{{ _ps('Cancel') }}</span>
         </div>
     </div>
 {% endblock sa_popup_content %}

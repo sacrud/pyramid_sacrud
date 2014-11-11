@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyramid_sacrud 0.0.3\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-11 16:31+0500\n"
+"POT-Creation-Date: 2014-11-11 17:29+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,20 +21,37 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
+#: pyramid_sacrud/templates/sacrud/create.jinja2:29
+#: pyramid_sacrud/templates/sacrud/list.jinja2:5
+msgid "close"
+msgstr ""
+
+#: pyramid_sacrud/templates/sacrud/create.jinja2:33
+#: pyramid_sacrud/templates/sacrud/list.jinja2:7
+msgid "Are you sure you want to delete an object?"
+msgstr ""
+
+#: pyramid_sacrud/templates/sacrud/create.jinja2:36
+#: pyramid_sacrud/templates/sacrud/list.jinja2:10
+msgid "Confirm"
+msgstr ""
+
+#: pyramid_sacrud/templates/sacrud/create.jinja2:39
+#: pyramid_sacrud/templates/sacrud/list.jinja2:13
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:31
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:51
+msgid "Cancel"
+msgstr ""
+
 #: pyramid_sacrud/templates/sacrud/forms/create.jinja2:23
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:44
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:43
 msgid "Save"
 msgstr ""
 
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:28
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:49
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:27
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:47
 #: pyramid_sacrud/templates/sacrud/forms/list.jinja2:12
 msgid "Delete"
-msgstr ""
-
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:32
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:53
-msgid "Cancel"
 msgstr ""
 
 #: pyramid_sacrud/templates/sacrud/forms/actions/add.jinja2:4
@@ -42,7 +59,7 @@ msgid "Add a new"
 msgstr ""
 
 #: pyramid_sacrud/views/CRUD.py:82
-msgid "You delete the following objects:<br/>"
+msgid "You delete the following objects:"
 msgstr ""
 
 #: pyramid_sacrud/views/CRUD.py:144

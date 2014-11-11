@@ -79,7 +79,7 @@ class CRUD(object):
                     obj_list.append(obj['name'])
                 except NoResultFound:
                     raise HTTPNotFound
-            self.flash_message(_ps("You delete the following objects:<br/>"))
+            self.flash_message(_ps("You delete the following objects:"))
             self.flash_message("<br/>".join(obj_list))
 
         # paginator
