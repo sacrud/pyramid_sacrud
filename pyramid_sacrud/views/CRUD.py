@@ -17,21 +17,36 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
 from sqlalchemy.orm.exc import NoResultFound
 
-from pyramid_sacrud.breadcrumbs import breadcrumbs
-from pyramid_sacrud.common import (get_table, get_table_verbose_name,
-                                   request_to_sacrud, sacrud_env)
-from pyramid_sacrud.common.paginator import get_paginator
 from sacrud import action
-from sacrud.common import columns_by_group, get_obj, pk_list_to_dict, pk_to_list
+from sacrud.common import (columns_by_group, get_flat_columns, get_obj,
+                           pk_list_to_dict, pk_to_list)
 from sacrud_deform import form_generator
 
+from ..breadcrumbs import breadcrumbs
+from ..common import (get_table, get_table_verbose_name, request_to_sacrud,
+                      sacrud_env)
+from ..common.custom import Widget
+from ..common.paginator import get_paginator
 from ..includes.localization import _ps
 from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
                         PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_UPDATE)
 
 
-class CRUD(object):
+class EventsCRUD(object):
 
+    def event_add(self, obj):
+        self.widget_postprocessing(obj)
+
+    def widget_postprocessing(self, obj):
+        columns = get_flat_columns(self.table)
+        session = self.request.dbsession
+        for column in columns:
+            if not isinstance(column, Widget):
+                continue
+            column.postprocessing(obj, session, self.request)
+
+
+class BaseCRUD(object):
     def __init__(self, request):
         self.pk = None
         self.request = request
@@ -40,10 +55,8 @@ class CRUD(object):
         self.params = request.params
         if hasattr(self.params, 'dict_of_lists'):
             self.params = self.params.dict_of_lists()
-
         if not self.table:
             raise HTTPNotFound
-
         pk = request.matchdict.get('pk')
         if pk and len(pk) % 2 == 0:
             self.pk = pk_list_to_dict(pk)
@@ -54,47 +67,12 @@ class CRUD(object):
         if hasattr(self.request, 'session'):
             self.request.session.flash([message, status])
 
-    @sacrud_env
-    @view_config(route_name='sa_list', renderer='/sacrud/list.jinja2',
-                 permission=PYRAMID_SACRUD_LIST)
-    def sa_list(self):
-        table = self.table
-        request = self.request
 
-        # Some actions with objects in grid
-        selected_action = request.POST.get('selected_action')
-        items_list = None
-        try:
-            items_list = request.POST.getall('selected_item')
-        except AttributeError:
-            items_list = request.POST.get('selected_item')
-        if selected_action == 'delete':
-            obj_list = []
-            for item in items_list:
-                pk_list = json.loads(item)
-                pk = pk_list_to_dict(pk_list)
-                try:
-                    obj = action.CRUD(request.dbsession, table, pk=pk)\
-                        .delete(commit=False)
-                    obj_list.append(obj['name'])
-                except NoResultFound:
-                    raise HTTPNotFound
-            self.flash_message(_ps("You delete the following objects:"))
-            self.flash_message("<br/>".join(obj_list))
+class CRUD(BaseCRUD, EventsCRUD):
+    pass
 
-        # paginator
-        items_per_page = getattr(table, 'items_per_page', 10)
 
-        resp = action.CRUD(request.dbsession, table).rows_list()
-        paginator_attr = get_paginator(request, items_per_page)
-        paginator = SqlalchemyOrmPage(resp['row'], **paginator_attr)
-
-        return {'sa_crud': resp,
-                'paginator': paginator,
-                'pk_to_list': pk_to_list,
-                'breadcrumbs': breadcrumbs(self.tname,
-                                           get_table_verbose_name(self.table),
-                                           'sa_list')}
+class ADD(CRUD):
 
     @sacrud_env
     @view_config(route_name='sa_update', renderer='/sacrud/create.jinja2',
@@ -114,14 +92,12 @@ class CRUD(object):
         except (NoResultFound, KeyError):
             raise HTTPNotFound
         columns = columns_by_group(self.table)
-
         form, js_list = form_generator(dbsession=dbsession,
                                        obj=obj,
                                        table=self.table,
                                        columns_by_group=columns,
                                        request=self.request)
         resp = action.CRUD(self.request.dbsession, self.table, self.pk)
-
         if 'form.submitted' in self.request.params:
             controls = self.request.POST.items()
             try:
@@ -139,13 +115,14 @@ class CRUD(object):
                             breadcrumbs=bc,
                             pk_to_list=pk_to_list)
             resp.request = request_to_sacrud(self.request)
-            resp.add()
+            self.event_add(obj)
+            obj = resp.add()
             if self.pk:
-                self.flash_message(_ps("You updated object of ${name}",
-                                       mapping={'name': self.tname}))
+                self.flash_message(_ps(u"You updated object of ${name}",
+                                       mapping={'name': obj['name']}))
             else:
                 self.flash_message(_ps("You created new object of ${name}",
-                                       mapping={'name': self.tname}))
+                                       mapping={'name': obj['name']}))
             return HTTPFound(location=self.request.route_url('sa_list',
                                                              table=self.tname))
         sa_crud = resp.add()
@@ -155,14 +132,57 @@ class CRUD(object):
                 'js_list': js_list,
                 'breadcrumbs': bc}
 
+
+class LIST(CRUD):
+
+    def make_selected_action(self):
+        selected_action = self.request.POST.get('selected_action')
+        items_list = None
+        try:
+            items_list = self.request.POST.getall('selected_item')
+        except AttributeError:
+            items_list = self.request.POST.get('selected_item')
+        if selected_action == 'delete':
+            obj_list = []
+            for item in items_list:
+                pk_list = json.loads(item)
+                pk = pk_list_to_dict(pk_list)
+                try:
+                    obj = action.CRUD(self.request.dbsession,
+                                      self.table, pk=pk).delete(commit=False)
+                    obj_list.append(obj['name'])
+                except NoResultFound:
+                    raise HTTPNotFound
+            self.flash_message(_ps("You delete the following objects:"))
+            self.flash_message("<br/>".join(obj_list))
+
+    @sacrud_env
+    @view_config(route_name='sa_list', renderer='/sacrud/list.jinja2',
+                 permission=PYRAMID_SACRUD_LIST)
+    def sa_list(self):
+        self.make_selected_action()
+        items_per_page = getattr(self.table, 'items_per_page', 10)
+        resp = action.CRUD(self.request.dbsession, self.table).rows_list()
+        paginator_attr = get_paginator(self.request, items_per_page)
+        paginator = SqlalchemyOrmPage(resp['row'], **paginator_attr)
+        return {'sa_crud': resp,
+                'paginator': paginator,
+                'pk_to_list': pk_to_list,
+                'breadcrumbs': breadcrumbs(self.tname,
+                                           get_table_verbose_name(self.table),
+                                           'sa_list')}
+
+
+class DELETE(CRUD):
+
     @view_config(route_name='sa_delete', permission=PYRAMID_SACRUD_DELETE)
     def sa_delete(self):
         try:
-            action.CRUD(self.request.dbsession,
-                        self.table, pk=self.pk).delete()
+            obj = action.CRUD(self.request.dbsession,
+                              self.table, pk=self.pk).delete()
         except (NoResultFound, KeyError):
             raise HTTPNotFound
         self.flash_message(_ps("You have removed object of ${name}",
-                               mapping={'name': self.tname}))
+                               mapping={'name': obj['name']}))
         return HTTPFound(location=self.request.route_url('sa_list',
                                                          table=self.tname))

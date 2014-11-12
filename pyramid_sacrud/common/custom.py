@@ -22,21 +22,54 @@ def get_name(column):
 
 
 class Widget(object):
-    def __init__(self, name=''):
-        self.info = {'verbose_name': name,
-                     'name': name}
+
+    @property
+    def info(self):
+        return {'verbose_name': self.name,
+                'name': self.name}
+
+    def preprocessing(self, *args, **kwargs):
+        """ Run when show form. GET method
+        """
+        pass
+
+    def postprocessing(self, *args, **kwargs):
+        """ Run after submit form. POST method
+        """
+        pass
 
 
 class WidgetRelationship(Widget):
-    def __init__(self, relation, table=None, name=''):
-        super(WidgetRelationship, self).__init__(name=name)
+
+    def __init__(self, relation, table, name=''):
+        self.name = name
         self.table = table
         self.relation = relation
 
 
+class WidgetInlines(Widget):
+
+    def __init__(self, relation, table, schema, name=''):
+        self.name = name
+        self.table = table
+        self.relation = relation
+        self.schema = schema
+
+    def preprocessing(self, obj=None):
+        """ Add linked values of obj to form inlines.
+        """
+        pass
+
+    def postprocessing(self, obj, session, request):
+        """ CREATE or UPDATE inline rows before save obj.
+        """
+        import ipdb; ipdb.set_trace()  # XXX BREAKPOINT
+
+
 class WidgetRowLambda(Widget):
+
     def __init__(self, function, name=''):
-        super(WidgetRowLambda, self).__init__(name=name)
+        self.name = name
         self.info.update({
             'sacrud_position': 'inline',
             'sacrud_list_content': function,
