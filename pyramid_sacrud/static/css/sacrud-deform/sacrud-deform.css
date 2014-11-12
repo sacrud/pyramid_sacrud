@@ -2,7 +2,7 @@
 {
 	width: auto;
 }
-	.sacrud-deform fieldset.deformFormFieldset
+	.sacrud-deform .deformFormFieldset
 	{
 		padding: 0;
 		margin: 0;
@@ -13,21 +13,24 @@
 			list-style: none;
 			padding: 0;
 			margin: 0 0 20px 0;
+			display: block;
 		}
 			.sacrud-deform ul li
 			{
 				padding: 0;
 				margin: 0;
+				display: block;
 			}
 				.sacrud-deform ul li fieldset.deformMappingFieldset
 				{
 					padding: 0;
 					margin: 0;
 					border: none;
+					display: block;
 				}
 				.sacrud-deform ul li fieldset.deformMappingFieldset legend
 				{
-					padding: 5px 10px 4px;
+					padding: 5px 10px 4px 10px;
 					background: #4183c4;
 					font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 					color: #fff;
@@ -36,8 +39,6 @@
 					display: block;
 					width: 100%;
 					box-sizing: border-box;
-					-moz-box-sizing: border-box; 
-					-webkit-box-sizing: border-box;
 					border: solid 1px #eaeaea;
 					border-bottom: 0;
 				}
@@ -47,18 +48,20 @@
 						margin: 0;
 						list-style: none;
 						border-top: solid 1px #eaeaea;
+						display: block;
 					}
 						.sacrud-deform ul.mapping li
 						{
 							padding: 0;
 							margin: 0;
-							
+							display: block;
 						}
 							.sacrud-deform ul.mapping li ul
 							{
 								list-style: none;
 								margin: 0;
 								padding: 0;
+								display: block;
 							}
 								.sacrud-deform ul.mapping li ul li.field
 								{
@@ -66,24 +69,18 @@
 									border: solid 1px #eaeaea;
 									background: #fff;
 									border-top: none;
-									-webkit-transition: background-color 500ms ease-out 3ms;
-									-moz-transition: background-color 500ms ease-out 3ms;
-									-o-transition: background-color 500ms ease-out 3ms;
 									transition: background-color 500ms ease-out 3ms;
+									vertical-align: top;
 								}
 								.sacrud-deform ul.mapping li ul li.field:hover
 								{
 									background: #F4F9FE;
-									webkit-transition: background-color 500ms ease-out 3ms;
-									-moz-transition: background-color 500ms ease-out 3ms;
-									-o-transition: background-color 500ms ease-out 3ms;
 									transition: background-color 500ms ease-out 3ms;
-  								}
+								}
 									.sacrud-deform ul.mapping li ul li.field .desc
 									{
 										width: 200px;
 										display: inline-block;
-										
 										font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 										color: #444;
 									}
@@ -94,31 +91,18 @@ input.sacrud_deform
 	border-top: solid 1px #a3a3a3;
 	border-right: solid 1px #c6c6c6;
 	border-bottom: solid 1px #e5e5e5;
-	display: block;
 	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
 	font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 	color: #333333;
 	position: relative;
 	padding: 0.3em 1% 0.2em 0.3em;
 	outline-width: 0;
-	-webkit-transition: all 200ms linear;
-	-o-transition: all 200ms linear;
-	-moz-transition: all 200ms linear;
-	-ms-transition: all 200ms linear;
-	-kthtml-transition: all 200ms linear;
 	transition: all 200ms linear;
 	display: inline-block;
 }
 input.sacrud_deform:focus
 {
 	border: solid 1px #4183c4;
-	-webkit-transition: all 200ms linear;
-	-o-transition: all 200ms linear;
-	-moz-transition: all 200ms linear;
-	-ms-transition: all 200ms linear;
-	-kthtml-transition: all 200ms linear;
 	transition: all 200ms linear;
 }
 textarea.sacrud_deform
@@ -128,31 +112,19 @@ textarea.sacrud_deform
 	border-top: solid 1px #a3a3a3;
 	border-right: solid 1px #c6c6c6;
 	border-bottom: solid 1px #e5e5e5;
-	display: block;
 	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
 	font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 	color: #333333;
 	position: relative;
 	padding: 0.3em 1% 0.2em 0.3em;
 	outline-width: 0;
-	-webkit-transition: all 200ms linear;
-	-o-transition: all 200ms linear;
-	-moz-transition: all 200ms linear;
-	-ms-transition: all 200ms linear;
-	-kthtml-transition: all 200ms linear;
 	transition: all 200ms linear;
 	display: inline-block;
+	min-height:  150px;
 }
 textarea.sacrud_deform:focus
 {
 	border: solid 1px #4183c4;
-	-webkit-transition: all 200ms linear;
-	-o-transition: all 200ms linear;
-	-moz-transition: all 200ms linear;
-	-ms-transition: all 200ms linear;
-	-kthtml-transition: all 200ms linear;
 	transition: all 200ms linear;
 }
 select.sacrud_deform
@@ -164,28 +136,16 @@ select.sacrud_deform
 	border-bottom: solid 1px #e5e5e5;
 	display: block;
 	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
 	font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 	color: #333333;
 	position: relative;
 	padding: 0.3em 1% 0.2em 0.3em;
 	outline-width: 0;
-	-webkit-transition: all 200ms linear;
-	-o-transition: all 200ms linear;
-	-moz-transition: all 200ms linear;
-	-ms-transition: all 200ms linear;
-	-kthtml-transition: all 200ms linear;
 	transition: all 200ms linear;
 	display: inline-block;
 }
 select.sacrud_deform:focus
 {
 	border: solid 1px #4183c4;
-	-webkit-transition: all 200ms linear;
-	-o-transition: all 200ms linear;
-	-moz-transition: all 200ms linear;
-	-ms-transition: all 200ms linear;
-	-kthtml-transition: all 200ms linear;
 	transition: all 200ms linear;
 }
