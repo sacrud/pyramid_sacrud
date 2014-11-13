@@ -15,7 +15,7 @@ from pyramid.httpexceptions import HTTPNotFound
 
 from . import TransactionalTest
 from ..views import sa_home
-from ..views.CRUD import CRUD
+from ..views.CRUD import CRUD, Add, List, Delete
 from .models import engine, Session, Base
 from .models.auth import Groups, User
 
@@ -113,7 +113,7 @@ class ListTests(_TransactionalFixture):
         request.dbsession = self.session
         request.matchdict['table'] = 'user'
         self._init_pyramid_sacrud_settings(request)
-        responce = CRUD(request).sa_list()
+        responce = List(request).sa_list()
         self.assertEquals(responce['breadcrumbs'],
                           [{'visible': True, 'name': u'Dashboard',
                             'param': {'name': 'user'}, 'view': 'sa_home'},
@@ -140,14 +140,14 @@ class CreateTests(_TransactionalFixture):
         request.dbsession = self.session
         request.matchdict['table'] = 'not_exist_table'
         self._init_pyramid_sacrud_settings(request)
-        self.assertRaises(HTTPNotFound, CRUD(request).sa_add)
+        self.assertRaises(HTTPNotFound, Add(request).sa_add)
 
     def test_create_user_form(self):
         request = testing.DummyRequest()
         request.dbsession = self.session
         request.matchdict['table'] = 'user'
         self._init_pyramid_sacrud_settings(request)
-        responce = CRUD(request).sa_add()
+        responce = Add(request).sa_add()
         self.assertEqual(responce['breadcrumbs'],
                          [{'visible': True, 'name': u'Dashboard', 'param': {'name': 'user'},
                            'view': 'sa_home'},
@@ -177,7 +177,7 @@ class UpdateTests(_TransactionalFixture):
         request.matchdict['table'] = 'user'
         request.matchdict['pk'] = ('id', '1')
         self._init_pyramid_sacrud_settings(request)
-        responce = CRUD(request).sa_add()
+        responce = Add(request).sa_add()
         self.assertEqual(responce['breadcrumbs'],
                          [{'visible': True, 'name': u'Dashboard', 'param': {'name': 'user'},
                            'view': 'sa_home'},
@@ -198,4 +198,4 @@ class DeleteTests(_TransactionalFixture):
         request.matchdict['table'] = 'not_exist_table'
         request.matchdict['pk'] = ('id', '1')
         self._init_pyramid_sacrud_settings(request)
-        self.assertRaises(HTTPNotFound, CRUD(request).sa_delete)
+        self.assertRaises(HTTPNotFound, Delete(request).sa_delete)

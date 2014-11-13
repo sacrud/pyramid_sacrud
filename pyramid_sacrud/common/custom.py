@@ -24,10 +24,19 @@ def get_name(column):
 
 class Widget(object):
 
+    def __init__(self, name=''):
+        self.name = name
+        self.info = {}
+
     @property
     def info(self):
-        return {'verbose_name': self.name,
+        return self._info
+
+    @info.setter
+    def info(self, value):
+        base = {'verbose_name': self.name,
                 'name': self.name}
+        self._info = dict(base.items() + value.items())
 
     def preprocessing(self, *args, **kwargs):
         """ Run when show form. GET method
@@ -77,7 +86,7 @@ class WidgetRowLambda(Widget):
 
     def __init__(self, function, name=''):
         self.name = name
-        self.info.update({
+        self.info = {
             'sacrud_position': 'inline',
             'sacrud_list_content': function,
-        })
+        }

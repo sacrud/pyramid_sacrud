@@ -32,6 +32,7 @@ class CustomTest(unittest.TestCase):
 
     def test_widget(self):
         w = Widget()
+        w.name = ''
         self.assertEqual(w.info, {'verbose_name': '', 'name': ''})
 
         w = Widget(name='foo')
