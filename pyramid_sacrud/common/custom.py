@@ -26,16 +26,13 @@ class Widget(object):
 
     def __init__(self, name=''):
         self.name = name
+        self.info = self.get_info({})
 
-    @property
-    def info(self):
-        self._info = {'verbose_name': self.name,
-                      'name': self.name}
-        return self._info
-
-    @info.setter
-    def info(self, value):
-        self._info = dict(list(self._info.items()) + list(value.items()))
+    def get_info(self, value):
+        base = {'verbose_name': self.name,
+                'name': self.name}
+        return dict(list(base.items()) +
+                    list(value.items()))
 
     def preprocessing(self, *args, **kwargs):
         """ Run when show form. GET method
@@ -52,6 +49,7 @@ class WidgetRelationship(Widget):
 
     def __init__(self, relation, table, name=''):
         self.name = name
+        self.info = self.get_info({})
         self.table = table
         self.relation = relation
 
@@ -60,6 +58,7 @@ class WidgetInlines(Widget):
 
     def __init__(self, relation, table, schema, name=''):
         self.name = name
+        self.info = self.get_info({})
         self.table = table
         self.schema = schema
         self.relation = relation
@@ -85,7 +84,9 @@ class WidgetRowLambda(Widget):
 
     def __init__(self, function, name=''):
         self.name = name
-        self.info = {
+        self.function = function
+        info = {
             'sacrud_position': 'inline',
             'sacrud_list_content': function,
         }
+        self.info = self.get_info(info)
