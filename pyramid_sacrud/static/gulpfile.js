@@ -53,9 +53,9 @@ gulp.task('watch', function () {
     watch(cssFiles, function (files) {
         return gulp.start('clean', 'css');
     });
-    watch(jsFiles, function (files) {
-        return gulp.start('browserify');
-    });
+    // watch(jsFiles, function (files) {
+    //     return gulp.start('browserify');
+    // });
 });
 
 gulp.task('default', ['clean', 'css', 'browserify']);

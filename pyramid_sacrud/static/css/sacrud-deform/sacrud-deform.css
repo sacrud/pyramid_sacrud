@@ -8,82 +8,67 @@
 		margin: 0;
 		border: none;
 	}
-		.sacrud-deform ul
+		.sacrud-deform .panel
 		{
-			list-style: none;
-			padding: 0;
-			margin: 0 0 20px 0;
-			display: block;
+
 		}
-			.sacrud-deform ul li
+			.sacrud-deform .panel-heading
+			{
+				padding: 5px 10px 4px 10px;
+				background: #4183c4;
+				font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+				color: #fff;
+				position: relative;
+				min-height: 15px;
+				display: block;
+				width: 100%;
+				box-sizing: border-box;
+				border: solid 1px #eaeaea;
+				border-bottom: 0;
+			}
+			.sacrud-deform .panel-body
 			{
 				padding: 0;
 				margin: 0;
-				display: block;
+				list-style: none;
+				border-top: solid 1px #eaeaea;
 			}
-				.sacrud-deform ul li fieldset.deformMappingFieldset
+				.sacrud-deform .form-group
 				{
-					padding: 0;
-					margin: 0;
-					border: none;
-					display: block;
-				}
-				.sacrud-deform ul li fieldset.deformMappingFieldset legend
-				{
-					padding: 5px 10px 4px 10px;
-					background: #4183c4;
-					font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-					color: #fff;
-					position: relative;
-					min-height: 15px;
-					display: block;
-					width: 100%;
-					box-sizing: border-box;
+					padding: 8px;
 					border: solid 1px #eaeaea;
-					border-bottom: 0;
+					background: #fff;
+					border-top: none;
+					transition: background-color 500ms ease-out 3ms;
+					zoom: 1;
 				}
-					.sacrud-deform ul.mapping
+				.sacrud-deform .form-group:after
+				{
+					display: block;
+					clear: both;
+					content: "";
+				}
+				.sacrud-deform .form-group:hover
+				{
+					background: #F4F9FE;
+					transition: background-color 500ms ease-out 3ms;
+				}
+					.sacrud-deform .control-label 
 					{
-						padding: 0;
-						margin: 0;
-						list-style: none;
-						border-top: solid 1px #eaeaea;
+						width: 200px;
 						display: block;
+						font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+						color: #444;
+						float: left;
+						padding: 0.2em 0 0 0;
 					}
-						.sacrud-deform ul.mapping li
-						{
-							padding: 0;
-							margin: 0;
-							display: block;
-						}
-							.sacrud-deform ul.mapping li ul
-							{
-								list-style: none;
-								margin: 0;
-								padding: 0;
-								display: block;
-							}
-								.sacrud-deform ul.mapping li ul li.field
-								{
-									padding: 8px;
-									border: solid 1px #eaeaea;
-									background: #fff;
-									border-top: none;
-									transition: background-color 500ms ease-out 3ms;
-									vertical-align: top;
-								}
-								.sacrud-deform ul.mapping li ul li.field:hover
-								{
-									background: #F4F9FE;
-									transition: background-color 500ms ease-out 3ms;
-								}
-									.sacrud-deform ul.mapping li ul li.field .desc
-									{
-										width: 200px;
-										display: inline-block;
-										font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-										color: #444;
-									}
+					.sacrud-deform .help-block
+					{
+						padding: 0.5em 0 0 200px;
+						margin: 0;
+						color: #777;
+						font: italic 0.75em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+					}
 input.sacrud_deform
 {
 	background: #fff;
@@ -99,6 +84,7 @@ input.sacrud_deform
 	outline-width: 0;
 	transition: all 200ms linear;
 	display: inline-block;
+	min-width: 400px;
 }
 input.sacrud_deform:focus
 {
@@ -120,7 +106,8 @@ textarea.sacrud_deform
 	outline-width: 0;
 	transition: all 200ms linear;
 	display: inline-block;
-	min-height:  150px;
+	min-height: 150px;
+	min-width: 400px;
 }
 textarea.sacrud_deform:focus
 {
@@ -143,6 +130,7 @@ select.sacrud_deform
 	outline-width: 0;
 	transition: all 200ms linear;
 	display: inline-block;
+	min-width: 400px;
 }
 select.sacrud_deform:focus
 {
