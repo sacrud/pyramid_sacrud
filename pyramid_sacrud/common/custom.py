@@ -36,7 +36,7 @@ class Widget(object):
     def info(self, value):
         base = {'verbose_name': self.name,
                 'name': self.name}
-        self._info = dict(base.items() + value.items())
+        self._info = dict(list(base.items()) + list(value.items()))
 
     def preprocessing(self, *args, **kwargs):
         """ Run when show form. GET method

@@ -121,7 +121,7 @@ class Add(CRUD):
             try:
                 self.event_add(obj['obj'], values)
                 transaction.commit()
-            except Exception, e:
+            except Exception as e:
                 transaction.abort()
                 raise e
             if self.pk:
