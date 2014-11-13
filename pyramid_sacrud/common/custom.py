@@ -26,17 +26,16 @@ class Widget(object):
 
     def __init__(self, name=''):
         self.name = name
-        self.info = {}
 
     @property
     def info(self):
+        self._info = {'verbose_name': self.name,
+                      'name': self.name}
         return self._info
 
     @info.setter
     def info(self, value):
-        base = {'verbose_name': self.name,
-                'name': self.name}
-        self._info = dict(list(base.items()) + list(value.items()))
+        self._info = dict(list(self._info.items()) + list(value.items()))
 
     def preprocessing(self, *args, **kwargs):
         """ Run when show form. GET method
