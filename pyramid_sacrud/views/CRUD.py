@@ -12,6 +12,7 @@ Views for Pyramid frontend
 import json
 
 import deform
+import transaction
 from paginate_sqlalchemy import SqlalchemyOrmPage
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
@@ -34,16 +35,16 @@ from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
 
 class EventsCRUD(object):
 
-    def event_add(self, obj):
-        self.widget_postprocessing(obj)
+    def event_add(self, obj, values):
+        self.widget_postprocessing(obj, values)
 
-    def widget_postprocessing(self, obj):
+    def widget_postprocessing(self, obj, values):
         columns = get_flat_columns(self.table)
         session = self.request.dbsession
         for column in columns:
             if not isinstance(column, Widget):
                 continue
-            column.postprocessing(obj, session, self.request)
+            column.postprocessing(obj, session, values)
 
 
 class BaseCRUD(object):
@@ -72,7 +73,7 @@ class CRUD(BaseCRUD, EventsCRUD):
     pass
 
 
-class ADD(CRUD):
+class Add(CRUD):
 
     @sacrud_env
     @view_config(route_name='sa_update', renderer='/sacrud/create.jinja2',
@@ -114,9 +115,15 @@ class ADD(CRUD):
                             js_list=js_list,
                             breadcrumbs=bc,
                             pk_to_list=pk_to_list)
-            resp.request = request_to_sacrud(self.request)
-            self.event_add(obj)
-            obj = resp.add()
+            values = request_to_sacrud(self.request)
+            resp.request = values
+            obj = resp.add(commit=False)
+            try:
+                self.event_add(obj['obj'], values)
+                transaction.commit()
+            except Exception, e:
+                transaction.abort()
+                raise e
             if self.pk:
                 self.flash_message(_ps(u"You updated object of ${name}",
                                        mapping={'name': obj['name']}))
@@ -133,7 +140,7 @@ class ADD(CRUD):
                 'breadcrumbs': bc}
 
 
-class LIST(CRUD):
+class List(CRUD):
 
     def make_selected_action(self):
         selected_action = self.request.POST.get('selected_action')
@@ -173,7 +180,7 @@ class LIST(CRUD):
                                            'sa_list')}
 
 
-class DELETE(CRUD):
+class Delete(CRUD):
 
     @view_config(route_name='sa_delete', permission=PYRAMID_SACRUD_DELETE)
     def sa_delete(self):

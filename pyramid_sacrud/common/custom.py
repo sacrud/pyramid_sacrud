@@ -9,6 +9,7 @@
 """
 Any instruments for customizing Models
 """
+from sacrud import action
 
 
 def get_name(column):
@@ -52,8 +53,9 @@ class WidgetInlines(Widget):
     def __init__(self, relation, table, schema, name=''):
         self.name = name
         self.table = table
-        self.relation = relation
         self.schema = schema
+        self.relation = relation
+        self.remote_side = list(self.relation.property.remote_side)
 
     def preprocessing(self, obj=None):
         """ Add linked values of obj to form inlines.
@@ -63,7 +65,12 @@ class WidgetInlines(Widget):
     def postprocessing(self, obj, session, request):
         """ CREATE or UPDATE inline rows before save obj.
         """
-        import ipdb; ipdb.set_trace()  # XXX BREAKPOINT
+        values = request[self.relation.key+'[]']
+        for value in values:
+            for rs in self.remote_side:
+                pk = list(rs.foreign_keys)[0].column
+                value[rs.name] = getattr(obj, pk.name)
+            action.CRUD(session, self.table, request=value).add(commit=False)
 
 
 class WidgetRowLambda(Widget):

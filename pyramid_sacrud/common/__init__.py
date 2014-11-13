@@ -150,10 +150,10 @@ def update_difference_object(obj, key, value):
         setattr(obj, key, value)
 
 
-def request_to_sacrud(r):
-    fields = r.POST.items()
-    data = parse(fields)
-
+def request_to_sacrud(data):
+    if hasattr(data, 'POST'):
+        fields = data.POST.items()
+        data = parse(fields)
     _r = {}
 
     def request_to_flat(request):
