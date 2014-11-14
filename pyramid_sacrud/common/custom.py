@@ -67,7 +67,9 @@ class WidgetInlines(Widget):
     def preprocessing(self, obj=None):
         """ Add linked values of obj to form inlines.
         """
-        pass
+        schema = self.schema()
+        schema.children.append(schema.children[0])
+        return schema
 
     def postprocessing(self, obj, session, request):
         """ CREATE or UPDATE inline rows before save obj.
