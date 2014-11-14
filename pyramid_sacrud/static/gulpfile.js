@@ -10,7 +10,8 @@ var gulp = require('gulp'),
 var glob = require("glob");
 
 var cssFiles = ['css/*.css', 'css/**/*.css', '!css/__main.css'];
-var jsFiles = ['js/*.js', 'js/**/*.js', '!js/__main.js'];
+var jsFiles = ['js/*.js', 'js/app/**/*.js', '!js/__main.js',
+               '!js/bower_components/*.*', '!js/node_modules/*.*'];
 
 gulp.task('build', function () {
    gulp.src(cssFiles)
@@ -53,9 +54,9 @@ gulp.task('watch', function () {
     watch(cssFiles, function (files) {
         return gulp.start('clean', 'css');
     });
-    // watch(jsFiles, function (files) {
-    //     return gulp.start('browserify');
-    // });
+    watch(jsFiles, function (files) {
+        return gulp.start('browserify');
+    });
 });
 
 gulp.task('default', ['clean', 'css', 'browserify']);

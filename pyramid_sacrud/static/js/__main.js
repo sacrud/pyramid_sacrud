@@ -22,7 +22,6 @@ var list = require('./app/list.js'),
 
 selectable(options);
 popup(options);
-// checkbox();  // use only with custom checkboxes
 
 },{"./app/common/checkbox.js":2,"./app/common/popup.js":3,"./app/common/selectable.js":4,"./app/list.js":5,"jquery":8,"jquery-maskedinput":6,"jquery-ui":7,"jqueryui-timepicker-addon":9,"modernizr":10}],2:[function(require,module,exports){
 // var $ = require('jquery');
