@@ -10,7 +10,6 @@
 Views for Pyramid frontend
 """
 import json
-from gettext import gettext as _
 
 import deform
 import transaction
@@ -128,7 +127,7 @@ class Add(CRUD):
                 self.event_add(obj['obj'], values)
                 transaction.commit()
             except SacrudMessagedException as e:
-                self.flash_message(_(e.message), status=e.status)
+                self.flash_message(e.message, status=e.status)
                 return get_responce(form)
             except Exception as e:
                 transaction.abort()

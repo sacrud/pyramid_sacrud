@@ -14,7 +14,8 @@ Exceptions for pyramid_sacrud
 class SacrudMessagedException(Exception):
     """ Just raise this exception
 
-    .. code-block:
+    .. code-block:: python
+
         raise SacrudMessagedException('My Super Message', status='error')
 
     status = error|warning|success
