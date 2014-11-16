@@ -10,6 +10,7 @@
 Views for Pyramid frontend
 """
 import json
+from gettext import gettext as _
 
 import deform
 import transaction
@@ -28,6 +29,7 @@ from ..common import (get_table, get_table_verbose_name, request_to_sacrud,
                       sacrud_env)
 from ..common.custom import Widget
 from ..common.paginator import get_paginator
+from ..exceptions import SacrudMessagedException
 from ..includes.localization import _ps
 from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
                         PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_UPDATE)
@@ -99,28 +101,35 @@ class Add(CRUD):
                                        columns_by_group=columns,
                                        request=self.request)
         resp = action.CRUD(self.request.dbsession, self.table, self.pk)
-        if 'form.submitted' in self.request.params:
-            controls = self.request.POST.items()
-            try:
-                form.validate(controls)
-            except deform.ValidationFailure as e:
-                # Form is NOT valid
+
+        def get_responce(form, sa_crud=None):
+            if not sa_crud:
                 sa_crud = {'obj': obj,
                            'pk': self.pk,
                            'col': columns,
                            'table': self.table
                            }
-                return dict(form=e.render(),
-                            sa_crud=sa_crud,
-                            js_list=js_list,
-                            breadcrumbs=bc,
-                            pk_to_list=pk_to_list)
+            return dict(form=form.render(),
+                        sa_crud=sa_crud,
+                        js_list=js_list,
+                        breadcrumbs=bc,
+                        pk_to_list=pk_to_list)
+
+        if 'form.submitted' in self.request.params:
+            controls = self.request.POST.items()
+            try:
+                form.validate(controls)
+            except deform.ValidationFailure as e:
+                return get_responce(e)
             values = request_to_sacrud(self.request)
             resp.request = values
-            obj = resp.add(commit=False)
             try:
-                self.event_add(obj['obj'], values)
+                obj = resp.add(commit=False)['obj']
+                self.event_add(obj, values)
                 transaction.commit()
+            except SacrudMessagedException as e:
+                self.flash_message(_(e.message), status=e.status)
+                return get_responce(form)
             except Exception as e:
                 transaction.abort()
                 raise e
@@ -133,11 +142,7 @@ class Add(CRUD):
             return HTTPFound(location=self.request.route_url('sa_list',
                                                              table=self.tname))
         sa_crud = resp.add()
-        return {'form': form.render(),
-                'sa_crud': sa_crud,
-                'pk_to_list': pk_to_list,
-                'js_list': js_list,
-                'breadcrumbs': bc}
+        return get_responce(form, sa_crud)
 
 
 class List(CRUD):

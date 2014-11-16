@@ -55,3 +55,12 @@ Security
     :members:
     :undoc-members:
     :show-inheritance:
+
+
+Exceptions
+----------
+
+.. automodule:: pyramid_sacrud.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
