@@ -123,7 +123,7 @@ class Add(CRUD):
             values = request_to_sacrud(self.request)
             resp.request = values
             try:
-                obj = resp.add(commit=False)
+                obj = resp.add(commit=True)
                 self.event_add(obj['obj'], values)
                 transaction.commit()
             except SacrudMessagedException as e:
