@@ -89,7 +89,6 @@ class Add(CRUD):
                              get_table_verbose_name(self.table),
                              'sa_update', id=self.pk)
         dbsession = self.request.dbsession
-        dbsession.expire_on_commit = False
         try:
             obj = get_obj(dbsession, self.table, self.pk)
         except (NoResultFound, KeyError):
