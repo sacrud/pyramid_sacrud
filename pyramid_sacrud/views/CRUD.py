@@ -123,10 +123,12 @@ class Add(CRUD):
             values = request_to_sacrud(self.request)
             resp.request = values
             try:
-                obj = resp.add(commit=False)
-                self.event_add(obj['obj'], values)
+                foo = resp.add(commit=False)
+                obj = foo['obj']
+                self.event_add(obj, values)
                 transaction.commit()
             except SacrudMessagedException as e:
+                # transaction.abort()
                 self.flash_message(e.message, status=e.status)
                 return get_responce(form)
             except Exception as e:
@@ -134,10 +136,10 @@ class Add(CRUD):
                 raise e
             if self.pk:
                 self.flash_message(_ps(u"You updated object of ${name}",
-                                       mapping={'name': obj['name']}))
+                                       mapping={'name': foo['name']}))
             else:
                 self.flash_message(_ps("You created new object of ${name}",
-                                       mapping={'name': obj['name']}))
+                                       mapping={'name': foo['name']}))
             return HTTPFound(location=self.request.route_url('sa_list',
                                                              table=self.tname))
         sa_crud = resp.add()
