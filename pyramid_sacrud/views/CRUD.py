@@ -176,7 +176,7 @@ class List(CRUD):
         self.make_selected_action()
         items_per_page = getattr(self.table, 'items_per_page', 10)
         resp = action.CRUD(self.request.dbsession, self.table).rows_list()
-        paginator_attr = get_paginator(self.request, items_per_page)
+        paginator_attr = get_paginator(self.request, items_per_page-1)
         paginator = SqlalchemyOrmPage(resp['row'], **paginator_attr)
         return {'sa_crud': resp,
                 'paginator': paginator,

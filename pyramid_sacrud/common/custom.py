@@ -68,13 +68,14 @@ class WidgetInlines(Widget):
         """ Add linked values of obj to form inlines.
         """
         schema = self.schema()
-        fstruct = schema.flatten(schema)
-        appstruct = schema.unflatten(fstruct)
-        key = appstruct.popitem()[0][:-2]
-        values = []
-        for item in getattr(obj, key):
-            values.append(item.__dict__)
-        schema.children[0].default = values
+        if obj:
+            fstruct = schema.flatten(schema)
+            appstruct = schema.unflatten(fstruct)
+            key = appstruct.popitem()[0][:-2]
+            values = []
+            for item in getattr(obj, key):
+                values.append(item.__dict__)
+            schema.children[0].default = values
         return schema
 
     def postprocessing(self, obj, session, request):
