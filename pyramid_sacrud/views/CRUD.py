@@ -122,10 +122,10 @@ class Add(CRUD):
                 return get_responce(e)
             values = request_to_sacrud(self.request)
             resp.request = values
+            obj_as_dict = resp.add(commit=False)
+            obj = obj_as_dict['obj']
+            self.event_add(obj, values)
             try:
-                obj_as_dict = resp.add(commit=False)
-                obj = obj_as_dict['obj']
-                self.event_add(obj, values)
                 dbsession.flush()
             except SacrudMessagedException as e:
                 self.flash_message(e.message, status=e.status)

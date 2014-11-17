@@ -67,13 +67,14 @@ class WidgetInlines(Widget):
     def preprocessing(self, obj=None):
         """ Add linked values of obj to form inlines.
         """
-        # XXX: under construction
-        # import colander
-        # class Permission(colander.MappingSchema):
-        # perm_name = colander.SchemaNode(colander.String())
         schema = self.schema()
-        # schema.children.append(schema.children[0])
-        # import ipdb; ipdb.set_trace()  # XXX BREAKPOINT
+        fstruct = schema.flatten(schema)
+        appstruct = schema.unflatten(fstruct)
+        key = appstruct.popitem()[0][:-2]
+        values = []
+        for item in getattr(obj, key):
+            values.append(item.__dict__)
+        schema.children[0].default = values
         return schema
 
     def postprocessing(self, obj, session, request):
