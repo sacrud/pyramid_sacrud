@@ -89,6 +89,7 @@ class Add(CRUD):
                              get_table_verbose_name(self.table),
                              'sa_update', id=self.pk)
         dbsession = self.request.dbsession
+        dbsession.expire_on_commit = False
         try:
             obj = get_obj(dbsession, self.table, self.pk)
         except (NoResultFound, KeyError):
@@ -123,23 +124,23 @@ class Add(CRUD):
             values = request_to_sacrud(self.request)
             resp.request = values
             try:
-                foo = resp.add(commit=False)
-                obj = foo['obj']
+                obj_as_dict = resp.add(commit=False)
+                obj = obj_as_dict['obj']
                 self.event_add(obj, values)
-                transaction.commit()
+                dbsession.flush()
             except SacrudMessagedException as e:
-                # transaction.abort()
                 self.flash_message(e.message, status=e.status)
                 return get_responce(form)
             except Exception as e:
                 transaction.abort()
                 raise e
+            transaction.commit()
             if self.pk:
                 self.flash_message(_ps(u"You updated object of ${name}",
-                                       mapping={'name': foo['name']}))
+                                       mapping={'name': obj_as_dict['name']}))
             else:
                 self.flash_message(_ps("You created new object of ${name}",
-                                       mapping={'name': foo['name']}))
+                                       mapping={'name': obj_as_dict['name']}))
             return HTTPFound(location=self.request.route_url('sa_list',
                                                              table=self.tname))
         sa_crud = resp.add()

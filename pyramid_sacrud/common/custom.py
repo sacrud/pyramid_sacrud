@@ -73,6 +73,7 @@ class WidgetInlines(Widget):
         # perm_name = colander.SchemaNode(colander.String())
         schema = self.schema()
         # schema.children.append(schema.children[0])
+        # import ipdb; ipdb.set_trace()  # XXX BREAKPOINT
         return schema
 
     def postprocessing(self, obj, session, request):
