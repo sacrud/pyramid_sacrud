@@ -5,7 +5,7 @@
 {# generate form action in view #}
 <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"
     {% if sa_crud %}
-        {% if not sa_crud['pk'] %}
+        {% if not sa_crud['pk'] or not obj %}
             action="{{ request.route_url('sa_create', table=obj_cls.__tablename__) }}"
         {% else %}
             action="{{ request.route_url('sa_update', table=obj_cls.__tablename__, pk=pk_to_list(obj)) }}"
