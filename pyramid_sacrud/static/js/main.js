@@ -16,7 +16,7 @@ var list = require('./app/list.js'),
         'table_checkboxes_checked': 'input[name="selected_item"]:checked',
         'table_checkboxes_not_checked': 'input[name="selected_item"]:not(:checked)',
         'input_selected_action': 'input[name="selected_action"]',
-        'div_delete_button': '.toolbar-button__item_type_delete',
+        'div_delete_bbower utton': '.toolbar-button__item_type_delete',
     };
 
 selectable(options);
