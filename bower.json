@@ -5,7 +5,7 @@
   "authors": [
     "Dmitry <root@uralbash.ru>"
   ],
-  "description": "sacrud   CRUD interface for SQLAlchemy with Pyramid connector",
+  "description": "SACRUD CRUD interface for SQLAlchemy with Pyramid connector",
   "moduleType": [
     "amd"
   ],
