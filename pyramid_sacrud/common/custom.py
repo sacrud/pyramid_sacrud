@@ -81,6 +81,8 @@ class WidgetInlines(Widget):
     def postprocessing(self, obj, session, request):
         """ CREATE or UPDATE inline rows before save obj.
         """
+        # XXX: rewrite it
+        # TODO: add to docs WidgetInlines
         values = request[self.relation.key+'[]']
         for value in values:
             for rs in self.remote_side:
