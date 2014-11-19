@@ -1,35 +1,58 @@
-// var $ = require('jquery');
 
-module.exports = function(options) {
-    function show_delete_content() {
-        $('.popup-inner__content-delete').show();
-        $('.popup-inner__content-elfinder').hide();
+var Popup = function (el, options) {
+    if (!(this instanceof Popup)) {
+        return new Popup(el, options);
     }
-
-    $(document).on('click', options.div_delete_button, function () {
-        $('.popup').css("display", "table");
-        show_delete_content();
-    });
-
-    $(document).on('click', '.popup-inner__content-link-text', function (event) {
-        $('.popup').hide();
-        show_delete_content();
-        event.preventDefault();
-    });
-
-    $(document).on('click', '.popup-button__item', function () {
-        var status = $(this).data('status');
-        if (status == 'cancel') {
-            $('.popup').hide();
-        } else if (typeof options != "undefined") {
-            $(options.input_selected_action).val(status);
-            $('#sacrud-form').submit();
-        }
-    });
-
-    // $(document).on('click', function (e) {
-    //     if (!($(e.target).closest('.popup-inner').length) && $('.popup').is(':visible')) {
-    //         $('.popup').hide();
-    //     }
-    // });
+    this.el = $(el);
+    this.options = options;
+    this._bindEvents();
 };
+
+Popup.prototype._bindEvents = function() {
+    $(document).on('click', this.options.div_delete_button, this.showDeletePopup.bind(this));
+    $(document).on('click', this.options.popup_close_button, this.hidePopup.bind(this));
+    $(document).on('click', this.options.popup_main_button, this.checkButton.bind(this));
+};
+
+Popup.prototype.showDeletePopup = function (evnt) {
+    this.el.css("display", "table");
+    $('.popup-inner__content-delete').show();
+    $('.popup-inner__content-elfinder').hide();
+    // this.showDeletePopupContent();
+};
+
+Popup.prototype.hidePopup = function (evnt) {
+    this.el.hide();
+    $('.popup-inner__content-delete').hide();
+    $('.popup-inner__content-elfinder').hide();
+    if ($(evnt.currentTarget).attr('href') !== undefined) {
+        evnt.preventDefault();
+    }
+    // this.hidePopupContent();
+};
+
+// Popup.prototype.showDeletePopupContent = function (evnt) {};
+// Popup.prototype.hidePopupContent = function (evnt) {};
+
+Popup.prototype.checkButton = function (evnt) {
+    var status = $(evnt.currentTarget).data('status');
+    if ((status === undefined) || (status == 'cancel')) {
+        this.hidePopup(evnt);
+    } else if ($(this.options.sacrud_form).length) {  // if (typeof options != "undefined")
+        this._formSubmit($(this.options.sacrud_form), status);
+    }
+};
+
+// Used in list template
+Popup.prototype._formSubmit = function (form, status) {
+    // for delete object, need to send status 'delete'
+    $(this.options.input_selected_action).val(status);
+    form.submit();
+};
+
+// Main entry point
+module.exports = function popup(el, options) {
+    return new Popup(el, options);
+};
+
+module.exports.Popup = Popup;

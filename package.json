@@ -36,6 +36,9 @@
     "underscore": "^1.7.0",
     "vinyl-source-stream": "^1.0.0"
   },
+  "scripts": {
+    "test": "mocha pyramid_sacrud/static/js/app/test/**"
+  },
   "browserify": {
     "transform": [
       "browserify-shim"
@@ -72,6 +75,10 @@
     },
     "modernizr": {
       "exports": "modernizr",
+      "depends": "jquery"
+    },
+    "pickadate": {
+      "exports": "pickadate",
       "depends": "jquery"
     }
   }
