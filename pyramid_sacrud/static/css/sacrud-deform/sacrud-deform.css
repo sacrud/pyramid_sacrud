@@ -12,7 +12,6 @@
 		{
 
 		}
-		
 			.sacrud-deform .panel-heading
 			{
 				padding: 5px 10px 4px 10px;
@@ -54,7 +53,7 @@
 					background: #F4F9FE;
 					transition: background-color 500ms ease-out 3ms;
 				}
-					.sacrud-deform .control-label 
+					.sacrud-deform .control-label
 					{
 						width: 200px;
 						display: block;
