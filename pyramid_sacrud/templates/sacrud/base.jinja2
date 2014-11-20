@@ -83,7 +83,7 @@
                             {% set flash = request.session.pop_flash() %}
                             {% for message in flash %}
                               <div class="message message_type_{{ message[1] }}" id="flash">
-                                  <div class="message__text">{{ _ps(message[0])|save }}</div>
+                                  <div class="message__text">{{ _ps(message[0])|safe }}</div>
                               </div>
                             {% endfor %}
                         </div>
