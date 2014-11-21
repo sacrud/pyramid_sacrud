@@ -1,9 +1,11 @@
 var webdriver = require('selenium-webdriver');
 
-var URL = 'http://127.0.0.1:8000/login/';
+var SELENIUM_HOST = 'http://127.0.0.1:4444/wd/hub',
+    URL = 'http://127.0.0.1:8000/login/';
 
 var driver = new webdriver.Builder()
-    .withCapabilities({ 'browserName': 'chrome' })
+    //.usingServer(SELENIUM_HOST)
+    .withCapabilities({ 'browserName': 'phantomjs' })
     .build();
 
 var chai = require('chai'),
@@ -13,10 +15,6 @@ var chai = require('chai'),
 describe('SACRUD Tests', function() {
     before(function(done) {
         driver.get(URL).then(function(){ done(); });
-    });
-
-    after(function(done) {
-        driver.quit().then(function(){ done();});
     });
 
     it('Login to SACRUD', function() {
@@ -42,5 +40,9 @@ describe('SACRUD Tests', function() {
     it('Logout to SACRUD', function(){
         var logout = driver.findElement(webdriver.By.name('logoutLink'));
             logout.click();
+    });
+
+    after(function(done) {
+        driver.quit().then(function(){ done();});
     });
 });
