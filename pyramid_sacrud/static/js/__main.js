@@ -6,21 +6,7 @@ require('jquery-maskedinput');
 require('modernizr');
 require('pickadate');
 $(function() {
-    var options = {
-            // Popup
-            'popup_close_button': 'a.popup-inner__content-link-text',
-            'popup_main_button': 'div.popup-button__item',
-            'div_delete_button': 'div.toolbar-button__item_type_delete',
-            'sacrud_form': 'form#sacrud-form',
-            // Selectable (jquery-ui)
-            'tr_selected_class': 'sacrud-grid-content-grid__body-row_state_active',
-            'state_disable_class': 'toolbar-button__item_state_disable',
-            'input_selected_action': 'input[name="selected_action"]',
-            'all_checkboxes_button': 'input#selected_all_item',
-            'table_checkboxes': 'input[name="selected_item"]',
-            'table_checkboxes_checked': 'input[name="selected_item"]:checked',
-            'table_checkboxes_not_checked': 'input[name="selected_item"]:not(:checked)',
-        };
+    var options = require('./app/options.js');
     var popup = require('./app/common/popup.js').Popup('div.popup', options);
     var checkbox = require('./app/common/checkbox.js');
     var selectable = require('./app/common/selectable.js');
@@ -29,7 +15,7 @@ $(function() {
     // popup(options);
 });
 
-},{"./app/common/checkbox.js":2,"./app/common/popup.js":3,"./app/common/selectable.js":4,"jquery":7,"jquery-maskedinput":5,"jquery-ui":6,"jqueryui-timepicker-addon":8,"modernizr":9,"pickadate":10}],2:[function(require,module,exports){
+},{"./app/common/checkbox.js":2,"./app/common/popup.js":3,"./app/common/selectable.js":4,"./app/options.js":5,"jquery":8,"jquery-maskedinput":6,"jquery-ui":7,"jqueryui-timepicker-addon":9,"modernizr":10,"pickadate":11}],2:[function(require,module,exports){
 // var $ = require('jquery');
 
 module.exports = function() {
@@ -214,6 +200,23 @@ module.exports = function(options) {
 };
 
 },{}],5:[function(require,module,exports){
+module.exports = {
+    // Popup
+    'popup_close_button': 'a.popup-inner__content-link-text',
+    'popup_main_button': 'div.popup-button__item',
+    'div_delete_button': 'div.toolbar-button__item_type_delete',
+    'sacrud_form': 'form#sacrud-form',
+    // Selectable (jquery-ui)
+    'tr_selected_class': 'sacrud-grid-content-grid__body-row_state_active',
+    'state_disable_class': 'toolbar-button__item_state_disable',
+    'input_selected_action': 'input[name="selected_action"]',
+    'all_checkboxes_button': 'input#selected_all_item',
+    'table_checkboxes': 'input[name="selected_item"]',
+    'table_checkboxes_checked': 'input[name="selected_item"]:checked',
+    'table_checkboxes_not_checked': 'input[name="selected_item"]:not(:checked)',
+};
+
+},{}],6:[function(require,module,exports){
 (function (global){
 
 ; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js");
@@ -559,7 +562,7 @@ $.fn.extend({
 }).call(global, module, undefined, undefined);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":7}],6:[function(require,module,exports){
+},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":8}],7:[function(require,module,exports){
 (function (global){
 
 ; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js");
@@ -15578,7 +15581,7 @@ $.widget( "ui.tooltip", {
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":7}],7:[function(require,module,exports){
+},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":8}],8:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
@@ -24777,7 +24780,7 @@ return jQuery;
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function (global){
 
 ; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery-ui/ui/jquery-ui.js");
@@ -26989,7 +26992,7 @@ return jQuery;
 }).call(global, module, undefined, undefined);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery-ui/ui/jquery-ui.js":6}],9:[function(require,module,exports){
+},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery-ui/ui/jquery-ui.js":7}],10:[function(require,module,exports){
 (function (global){
 
 ; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js");
@@ -28406,7 +28409,7 @@ window.Modernizr = (function( window, document, undefined ) {
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":7}],10:[function(require,module,exports){
+},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":8}],11:[function(require,module,exports){
 (function (global){
 
 ; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js");
@@ -29494,4 +29497,4 @@ return PickerConstructor
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":7}]},{},[1]);
+},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":8}]},{},[1]);

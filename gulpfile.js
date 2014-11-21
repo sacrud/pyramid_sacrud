@@ -68,6 +68,7 @@ gulp.task('watch', function () {
         watchJSFiles = getFiles(pathJS, 'js');
 
     watchJSFiles.push('!./pyramid_sacrud/static/js/bower_components/**/*');
+    watchJSFiles.push('!./pyramid_sacrud/static/js/test/**/*');
 
     watch(watchCSSFiles, function (files, cb) {
         gulp.start('css', cb);

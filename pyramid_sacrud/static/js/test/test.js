@@ -3,7 +3,7 @@ var webdriver = require('selenium-webdriver');
 var URL = 'http://127.0.0.1:8000/login/';
 
 var driver = new webdriver.Builder()
-    .withCapabilities({ 'browserName': 'chrome' })
+    .withCapabilities({ 'browserName': 'firefox' })
     .build();
 
 var chai = require('chai'),
