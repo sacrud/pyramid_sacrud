@@ -12,6 +12,8 @@ TODO
 TODO.txt
 nohup.out
 .cache
+selenium-server-standalone-2.44.0.jar
+phantomjsdriver.log
 
 # JavaScript
 node_modules

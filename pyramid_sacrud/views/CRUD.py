@@ -14,6 +14,7 @@ import json
 import deform
 import transaction
 from paginate_sqlalchemy import SqlalchemyOrmPage
+from pyramid.compat import escape
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
 from sqlalchemy.orm.exc import NoResultFound
@@ -135,11 +136,13 @@ class Add(CRUD):
                 raise e
             transaction.commit()
             if self.pk:
-                self.flash_message(_ps(u"You updated object of ${name}",
-                                       mapping={'name': obj_as_dict['name']}))
+                self.flash_message(
+                    _ps(u"You updated object of ${name}",
+                        mapping={'name': escape(obj_as_dict['name'])}))
             else:
-                self.flash_message(_ps("You created new object of ${name}",
-                                       mapping={'name': obj_as_dict['name']}))
+                self.flash_message(
+                    _ps("You created new object of ${name}",
+                        mapping={'name': escape(obj_as_dict['name'])}))
             return HTTPFound(location=self.request.route_url('sa_list',
                                                              table=self.tname))
         sa_crud = resp.add()
@@ -167,7 +170,7 @@ class List(CRUD):
                 except NoResultFound:
                     raise HTTPNotFound
             self.flash_message(_ps("You delete the following objects:"))
-            self.flash_message("<br/>".join(obj_list))
+            self.flash_message("<br/>".join(map(escape, obj_list)))
 
     @sacrud_env
     @view_config(route_name='sa_list', renderer='/sacrud/list.jinja2',
@@ -199,6 +202,6 @@ class Delete(CRUD):
         except (NoResultFound, KeyError):
             raise HTTPNotFound
         self.flash_message(_ps("You have removed object of ${name}",
-                               mapping={'name': obj['name']}))
+                               mapping={'name': escape(obj['name'])}))
         return HTTPFound(location=self.request.route_url('sa_list',
                                                          table=self.tname))
