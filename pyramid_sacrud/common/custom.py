@@ -73,7 +73,7 @@ class WidgetInlines(Widget):
             appstruct = schema.unflatten(fstruct)
             key = appstruct.popitem()[0][:-2]
             values = []
-            for item in getattr(obj, key):
+            for item in getattr(obj, key) or ():
                 values.append(item.__dict__)
             schema.children[0].default = values
         return schema
