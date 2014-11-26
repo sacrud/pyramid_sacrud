@@ -9,9 +9,18 @@ var Popup = function (el, options) {
 };
 
 Popup.prototype._bindEvents = function() {
+    $(document).on('click', 'div.'+this.options.state_disable_class, this.blockDisabledButton.bind(this));
     $(document).on('click', this.options.div_delete_button, this.showDeletePopup.bind(this));
     $(document).on('click', this.options.popup_close_button, this.hidePopup.bind(this));
     $(document).on('click', this.options.popup_main_button, this.checkButton.bind(this));
+};
+
+// $(document).on('click', 'div.popup', function function_name (argument) {
+//     console.log('yippee-ki-yay motherf*cker');
+// });
+
+Popup.prototype.blockDisabledButton = function (evnt) {
+    evnt.stopImmediatePropagation();
 };
 
 Popup.prototype.showDeletePopup = function (evnt) {

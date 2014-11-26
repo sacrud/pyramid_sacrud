@@ -90,10 +90,6 @@ module.exports = function(options) {
             }
         });
 
-        $(document).on('click', '.'+options.state_disable_class , function (event) {
-            event.stopImmediatePropagation();
-        });
-
         $(document).on('change', options.all_checkboxes_button , function () {
             $(options.table_checkboxes).prop('checked', $(this).prop('checked')).change();
         });
