@@ -1,6 +1,6 @@
 var SELENIUM_HOST = 'http://127.0.0.1:4444/wd/hub',
     LOGIN_URL = 'http://127.0.0.1:8000/login/',
-    POPUP_TEST_URL = 'http://127.0.0.1:8000/admin/test_bool/';
+    POPUP_TEST_URL = 'http://127.0.0.1:8000/admin/test_bool/'; //test_all_types  test_bool
 
 var webdriver = require('selenium-webdriver');
 var driver = new webdriver.Builder()
@@ -46,7 +46,7 @@ describe('SACRUD Tests', function() {
                     if (done !== undefined) { done(); }
                 });
             }
-            check_element_existence('div_popup', 'div.popup');
+            check_element_existence('div_popup', options.popup);
             check_element_existence('div_delete_button', options.div_delete_button);
             check_element_existence('popup_close_button', options.popup_close_button);
             check_element_existence('popup_main_button', options.popup_main_button, done);
@@ -62,7 +62,7 @@ describe('SACRUD Tests', function() {
                 $ = require('../bower_components/jquery/dist/jquery.js')(dom_window);
 
                 var Popup = require("../app/common/popup.js").Popup,
-                    popup_obj = new Popup('div.popup', options);
+                    popup_obj = new Popup(options.popup, options);
 
                 elements['div_delete_button'].getAttribute('class').then(function(class_value) {
                     expect(class_value).to.contain(options.state_disable_class, 'The "Delete" button should be disabled if nothing is selected');
@@ -74,9 +74,9 @@ describe('SACRUD Tests', function() {
                 // });
 
                 // console.log('--- jquery popup ---');
-                // $('div.popup').click();
-                // console.log($('div.popup').length);
-                // console.log($('div.popup').hasClass('popup'));
+                // $(options.popup).click();
+                // console.log($(options.popup).length);
+                // console.log($(options.popup).hasClass('popup'));
                 // $('.sacrud-grid-content-grid__body-item-checkbox').attr('checked', true);
                 // console.log($('.sacrud-grid-content-grid__body-item-checkbox').attr('checked'));
             });

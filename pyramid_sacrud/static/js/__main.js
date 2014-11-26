@@ -7,7 +7,7 @@ require('modernizr');
 require('pickadate');
 $(function() {
     var options = require('./app/options.js');
-    var popup = require('./app/common/popup.js').Popup('div.popup', options);
+    var popup = require('./app/common/popup.js').Popup(options.popup, options);
     var checkbox = require('./app/common/checkbox.js');
     var selectable = require('./app/common/selectable.js');
 
@@ -207,6 +207,7 @@ module.exports = function(options) {
 },{}],5:[function(require,module,exports){
 module.exports = {
     // Popup
+    'popup': 'div.popup',
     'popup_close_button': 'a.popup-inner__content-link-text',
     'popup_main_button': 'div.popup-button__item',
     'div_delete_button': 'div.toolbar-button__item_type_delete',

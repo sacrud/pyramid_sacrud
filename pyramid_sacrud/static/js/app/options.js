@@ -1,5 +1,6 @@
 module.exports = {
     // Popup
+    'popup': 'div.popup',
     'popup_close_button': 'a.popup-inner__content-link-text',
     'popup_main_button': 'div.popup-button__item',
     'div_delete_button': 'div.toolbar-button__item_type_delete',
