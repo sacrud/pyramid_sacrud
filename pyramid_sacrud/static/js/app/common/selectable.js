@@ -1,97 +1,123 @@
-// var $ = require('jquery'),
-    // jquery_ui = require('jquery-ui');
 
-module.exports = function(options) {
-    $(function() {
-        var rows_state_unselecting,
-            current_rows,
-            first_selected_row;
+var rows_state_unselecting, current_rows, first_selected_row, global_options;
 
-        $('table > tbody').selectable({
-            filter: 'tr', // :not(td)
-            cancel: 'a, input, .selectable_disabled',
-            start: function (event, ui) {
-              current_rows = $(this).data('ui-selectable').selectees.filter('.ui-selected');
-            },
-            // unselecting: function (event, ui) {},
-            selecting: function (event, ui) {
-                var selecting_count = $(this).data('ui-selectable').selectees.filter('.ui-selecting').length;
-                if (!(rows_state_unselecting)) {
-                    rows_state_unselecting = $(this).data('ui-selectable').selectees.filter('.ui-unselecting');
-                }
-                if (selecting_count == 1) {
-                    rows_state_unselecting.removeClass('ui-unselecting');
-                    rows_state_unselecting.addClass('ui-selecting');
-                    if (current_rows.is(ui.selecting)) {
-                        first_selected_row = $(ui.selecting);
-                        $(ui.selecting).removeClass('ui-selecting');
-                        $(ui.selecting).addClass('ui-unselecting');
-                    }
-                } else {
-                    rows_state_unselecting = rows_state_unselecting.not(ui.selecting);
-                    rows_state_unselecting.removeClass('ui-selecting');
-                    rows_state_unselecting.addClass('ui-unselecting');
-                    if (first_selected_row) {
-                        first_selected_row.removeClass('ui-unselecting');
-                        first_selected_row.addClass('ui-selecting');
-                        first_selected_row = null;
-                    }
-                }
-            },
-            selected: function (event, ui) {
-                $(ui.selected).addClass(options.tr_selected_class);
-                $(ui.selected).find(options.table_checkboxes).prop('checked', true).change();
-                // console.log(ui.selected);
-                // console.log($(this).data('uiSelectable').selectees.filter('.ui-selected'));
-            },
-            unselected: function (event, ui) {
-                $(ui.unselected).removeClass(options.tr_selected_class);
-                $(ui.unselected).find(options.table_checkboxes).prop('checked', false).change();
-            },
-            stop: function (event, ui) {
-                rows_state_unselecting = null;
-                first_selected_row = null;
-            },
-        });
+var SelectableTable = function (el, options) {
+    if (!(this instanceof SelectableTable)) {
+        return new SelectableTable(el, options);
+    }
+    global_options = options;
+    this.el = $(el);
+    this._bindEvents();
+    this._bindSelectable();
+    this._afterInit();
+};
 
-        function change_buttons () {
-            if (!($(options.table_checkboxes).length) || $(options.table_checkboxes_checked).length) {
-                $(options.div_delete_button).removeClass(options.state_disable_class);
-            } else {
-                $(options.div_delete_button).addClass(options.state_disable_class);
-            }
-        }
+SelectableTable.prototype._checkCheckbox = function (checkbox) {
+    var $parent_tr = $(checkbox).parents('.sacrud-grid-content-grid__body-row');
+    if ($(checkbox).prop('checked')) {
+        $parent_tr.addClass(global_options.tr_selected_class);
+        $parent_tr.addClass('ui-selected');
+    } else {
+        $parent_tr.removeClass(global_options.tr_selected_class);
+        $parent_tr.removeClass('ui-selected');
+    }
+};
 
-        function check_checkbox (checkbox) {
-            var $parent_tr = checkbox.parents('.sacrud-grid-content-grid__body-row');
-            if (checkbox.prop('checked')) {
-                $parent_tr.addClass(options.tr_selected_class);
-                $parent_tr.addClass('ui-selected');
-            } else {
-                $parent_tr.removeClass(options.tr_selected_class);
-                $parent_tr.removeClass('ui-selected');
-            }
-        }
+SelectableTable.prototype._changeButtons = function () {
+    if (!($(global_options.table_checkboxes).length) || $(global_options.table_checkboxes_checked).length) {
+        $(global_options.div_delete_button).removeClass(global_options.state_disable_class);
+    } else {
+        $(global_options.div_delete_button).addClass(global_options.state_disable_class);
+    }
+};
 
-        $(options.table_checkboxes_checked).each(function (){
-            check_checkbox($(this));
-        });
+SelectableTable.prototype._bindEvents = function() {
+    $(document).on('change', global_options.table_checkboxes, this.checkboxChange.bind(this));
+    $(document).on('change', global_options.all_checkboxes_button , this.allCheckboxChange.bind(this));
+};
 
-        change_buttons();
+SelectableTable.prototype.checkboxChange = function (evnt) {
+    this._checkCheckbox($(evnt.currentTarget));
+    this._changeButtons();
+    if ($(global_options.table_checkboxes_not_checked).length) {
+        $(global_options.all_checkboxes_button).prop('checked', false);
+    } else {
+        $(global_options.all_checkboxes_button).prop('checked', true);
+    }
+};
 
-        $(document).on('change', options.table_checkboxes , function () {
-            check_checkbox($(this));
-            change_buttons();
-            // if (!($('input:checkbox:not(:checked)'))) {
-            if ($(options.table_checkboxes_not_checked).length) {
-                $(options.all_checkboxes_button).prop('checked', false);
-            } else {
-                $(options.all_checkboxes_button).prop('checked', true);
-            }
-        });
+SelectableTable.prototype.allCheckboxChange = function (evnt) {
+    $(global_options.table_checkboxes).prop('checked', $(evnt.currentTarget).prop('checked')).change();
+};
 
-        $(document).on('change', options.all_checkboxes_button , function () {
-            $(options.table_checkboxes).prop('checked', $(this).prop('checked')).change();
-        });
+SelectableTable.prototype._bindSelectable = function() {
+    this.el.selectable({
+        filter: 'tr', // :not(td)
+        cancel: 'a, input, .selectable_disabled',
+        start: this._start,
+        selecting: this._selecting,
+        selected: this._selected,
+        unselected: this._unselected,
+        stop: this._stop,
+        // unselecting: function (event, ui) {},
     });
 };
+
+SelectableTable.prototype._afterInit = function() {
+    var checkboxes = $(global_options.table_checkboxes_checked);
+    for (var i=0; i < checkboxes.length; i++) {
+        this._checkCheckbox(checkboxes[i]);
+    }
+    this._changeButtons();
+};
+
+// jquery-ui.selectable functions
+SelectableTable.prototype._start = function(event, ui) {
+    current_rows = $(this).data('ui-selectable').selectees.filter('.ui-selected');
+};
+
+SelectableTable.prototype._selecting = function (event, ui) {
+    var selecting_count = $(this).data('ui-selectable').selectees.filter('.ui-selecting').length;
+    if (!(rows_state_unselecting)) {
+        rows_state_unselecting = $(this).data('ui-selectable').selectees.filter('.ui-unselecting');
+    }
+    if (selecting_count == 1) {
+        rows_state_unselecting.switchClass('ui-unselecting', 'ui-selecting');
+        if (current_rows.is(ui.selecting)) {
+            first_selected_row = $(ui.selecting);
+            $(ui.selecting).switchClass('ui-selecting', 'ui-unselecting');
+        }
+    } else {
+        rows_state_unselecting = rows_state_unselecting.not(ui.selecting);
+        rows_state_unselecting.switchClass('ui-selecting', 'ui-unselecting');
+        if (first_selected_row) {
+            rows_state_unselecting.switchClass('ui-unselecting', 'ui-selecting');
+            first_selected_row = null;
+        }
+    }
+};
+
+SelectableTable.prototype._selected = function (event, ui) {
+    $(ui.selected).addClass(global_options.tr_selected_class);
+    $(ui.selected).find(global_options.table_checkboxes).prop('checked', true).change();
+    // console.log(ui.selected);
+    // console.log($(this).data('uiSelectable').selectees.filter('.ui-selected'));
+};
+
+SelectableTable.prototype._unselected = function (event, ui) {
+    $(ui.unselected).removeClass(global_options.tr_selected_class);
+    $(ui.unselected).find(global_options.table_checkboxes).prop('checked', false).change();
+};
+
+SelectableTable.prototype._stop = function (event, ui) {
+    rows_state_unselecting = null;
+    first_selected_row = null;
+};
+
+
+// Main entry point
+module.exports = function selectable_table(el, options) {
+    return new SelectableTable(el, options);
+};
+
+module.exports.SelectableTable = SelectableTable;
