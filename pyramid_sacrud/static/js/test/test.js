@@ -27,12 +27,12 @@ describe('SACRUD Tests', function() {
     });
 
     describe('Login', function() {
-        it('Login to SACRUD', function(){
+        it('Login to SACRUD', function(done){
              var username = driver.findElement(webdriver.By.name('login'));
             username.sendKeys('admin');
             var password = driver.findElement(webdriver.By.name('password'));
             password.sendKeys('123');
-            password.submit();
+            password.submit().then(function(){ done(); });
         });
     });
 
@@ -95,9 +95,9 @@ describe('SACRUD Tests', function() {
     });
 
     describe('Logout', function() {
-        it('Logout to SACRUD', function(){
+        it('Logout to SACRUD', function(done){
             var logout = driver.findElement(webdriver.By.name('logoutLink'));
-                logout.click();
+                logout.click().then(function(){ done(); });
         });
     });
 
