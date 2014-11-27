@@ -1,6 +1,5 @@
 var SELENIUM_HOST = 'http://127.0.0.1:4444/wd/hub',
-    URL = 'http://127.0.0.1:8000/login/',
-    POPUP_TEST_URL = 'http://127.0.0.1:8000/admin/test_bool/'; //test_all_types  test_bool
+    URL = 'http://127.0.0.1:8000/login/';
 
 var webdriver = require('selenium-webdriver');
 var driver = new webdriver.Builder()
@@ -24,16 +23,24 @@ var jsdom = require("jsdom").jsdom;
 describe('SACRUD Tests', function() {
 
     before(function(done) {
-        driver.get(URL);
-        var username = driver.findElement(webdriver.By.name('login'));
-        username.sendKeys('admin');
-        var password = driver.findElement(webdriver.By.name('password'));
-        password.sendKeys('123');
-        password.submit();
-        driver.get(POPUP_TEST_URL).then(function(){ done(); });
+        driver.get(URL).then(function(){ done(); });
+    });
+
+    describe('Login', function() {
+        it('Login to SACRUD', function(){
+             var username = driver.findElement(webdriver.By.name('login'));
+            username.sendKeys('admin');
+            var password = driver.findElement(webdriver.By.name('password'));
+            password.sendKeys('123');
+            password.submit();
+        });
     });
 
     describe('Popup', function() {
+
+        before(function(done) {
+            driver.get('http://127.0.0.1:8000/admin/test_bool/').then(function(){ done(); });
+        });
 
         var elements = {};
 
