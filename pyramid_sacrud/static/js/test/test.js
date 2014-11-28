@@ -124,6 +124,17 @@ describe('SACRUD tests', function() {
             });
         });
 
+        it('"Delete" button should be disabled, after clicking on checkbox', function(done) {
+            elements['table_checkbox'].click();
+            elements['table_checkbox'].getAttribute('checked').then(function(checked) {
+                expect(checked).to.be.null();
+            });
+            elements['div_delete_button'].getAttribute('class').then(function(class_value) {
+                expect(class_value).to.contain(options.state_disable_class, 'The "Delete" button should be active, after selecting item');
+                done();
+            });
+        });
+
 
         // it('Should correctly handle found elements', function(done) {
         //     var Popup = require("../app/common/popup.js").Popup,
