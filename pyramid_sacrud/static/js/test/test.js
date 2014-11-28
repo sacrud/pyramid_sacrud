@@ -98,19 +98,6 @@ describe('SACRUD tests', function() {
                 expect(visible, options.popup + ' must be invisible').to.be.false();
                 done();
             });
-            // elements['popup_cancel_button'].getAttribute('data-status').then(function(status) {
-            //     console.log('======2======');
-            //     console.log(status);
-            //     done();
-            // });
-
-            // elements['popup_delete_button'].getAttribute('data-status').then(function(status) {
-            //     console.log('======1======');
-            //     console.log(status);
-            // });
-
-            // driver.findElement(By.cssSelector('[data-element="city"]'));
-            // 'div.popup-button__item'+'[data-status="delete"]'
         });
 
         it('Popup should be invisible, after clicking on close link', function(done) {
@@ -142,34 +129,27 @@ describe('SACRUD tests', function() {
         //     var SelectableTable = require("../app/common/selectable.js").SelectableTable;
         //     SelectableTable.prototype._bindSelectable = function() {};
         //     var selectable_table_obj = new SelectableTable('table > tbody', options);
-
         //     driver.findElements(webdriver.By.css(options.table_checkboxes)).then(function(element_list) {
         //         console.log('-----');
         //         console.log(element_list.length);
         //         expect(element_list).to.not.have.length(0);
         //         console.log(element_list[0]);
-
         //         element_list[0].getAttribute('class').then(function(class_value) {
         //             console.log('.......');
         //             console.log(class_value);
         //             done();
         //         });
-
         //     });
-
         //     webdriver.until.elementIsVisible(div_popup).fn().then(function(val) {
         //         driver.executeScript('arguments[0].style.display="block";', div_popup);
         //     });
-
         //     console.log('--- jquery popup ---');
         //     $(options.popup).click();
         //     console.log($(options.popup).length);
         //     console.log($(options.popup).hasClass('popup'));
         //     $('.sacrud-grid-content-grid__body-item-checkbox').attr('checked', true);
         //     console.log($('.sacrud-grid-content-grid__body-item-checkbox').attr('checked'));
-
         // });
-
         // it('Go to SACRUD!', function(){
             // var goButton = driver.findElement(webdriver.By.name('goToSACRUD'));
             //     goButton.click();
