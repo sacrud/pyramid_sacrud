@@ -108,10 +108,14 @@ SelectableTable.prototype._checkCheckbox = function (checkbox) {
 };
 
 SelectableTable.prototype._changeButtons = function () {
-    if (!($(global_options.table_checkboxes).length) || $(global_options.table_checkboxes_checked).length) {
-        $(global_options.div_delete_button).removeClass(global_options.state_disable_class);
+    if ($(global_options.sacrud_form).length) {
+        if ($(global_options.table_checkboxes_checked).length) {
+            $(global_options.div_delete_button).removeClass(global_options.state_disable_class);
+        } else {
+            $(global_options.div_delete_button).addClass(global_options.state_disable_class);
+        }
     } else {
-        $(global_options.div_delete_button).addClass(global_options.state_disable_class);
+        $(global_options.div_delete_button).removeClass(global_options.state_disable_class);
     }
 };
 
