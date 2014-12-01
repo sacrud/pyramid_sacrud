@@ -54,7 +54,9 @@
     "jqueryui-timepicker-addon": "./pyramid_sacrud/static/js/bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js",
     "speakingurl": "./pyramid_sacrud/static/js/bower_components/speakingurl/speakingurl.min.js",
     "modernizr": "./pyramid_sacrud/static/js/bower_components/modernizr/modernizr.js",
-    "pickadate": "./pyramid_sacrud/static/js/bower_components/pickadate/lib/picker.js"
+    "Picker": "./pyramid_sacrud/static/js/bower_components/pickadate/lib/compressed/picker.js",
+    "pickadate": "./pyramid_sacrud/static/js/bower_components/pickadate/lib/compressed/picker.date.js",
+    "pickatime": "./pyramid_sacrud/static/js/bower_components/pickadate/lib/compressed/picker.time.js"
   },
   "browserify-shim": {
     "jquery": {
@@ -80,9 +82,17 @@
       "exports": "modernizr",
       "depends": "jquery"
     },
+    "Picker": {
+      "exports": "Picker",
+      "depends": "jquery"
+    },
     "pickadate": {
       "exports": "pickadate",
-      "depends": "jquery"
+      "depends": ["Picker", "jquery"]
+    },
+    "pickatime": {
+      "exports": "pickatime",
+      "depends": ["Picker", "jquery"]
     }
   }
 }

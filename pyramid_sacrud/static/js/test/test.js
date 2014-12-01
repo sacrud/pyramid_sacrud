@@ -5,8 +5,22 @@ var driver = new webdriver.Builder().withCapabilities({'browserName': 'phantomjs
 var chai = require('chai'),
     expect = chai.expect;
 
+var options = require('../app/options.js');
+var elements = {};
+
 
 describe('SACRUD tests', function() {
+
+    function check_element_existence (name, css_arg, err_msg, done) {
+        if (err_msg === undefined) {
+            err_msg = 'Element "'+css_arg+'" is not found';
+        }
+        driver.isElementPresent(webdriver.By.css(css_arg)).then(function(exists) {
+            expect(exists, err_msg).to.be.true();
+            elements[name] = driver.findElement(webdriver.By.css(css_arg));
+            if (done !== undefined) { done(); }
+        });
+    }
 
     before(function(done) {
         driver.get('http://127.0.0.1:8000/login/').then(function(){ done(); });
@@ -24,20 +38,7 @@ describe('SACRUD tests', function() {
 
     describe('Popup', function() {
 
-        var elements = {};
-        var options = require('../app/options.js');
         // var jsdom = require("jsdom").jsdom;
-
-        function check_element_existence (name, css_arg, err_msg, done) {
-            if (err_msg === undefined) {
-                err_msg = 'Element "'+css_arg+'" is not found';
-            }
-            driver.isElementPresent(webdriver.By.css(css_arg)).then(function(exists) {
-                expect(exists, err_msg).to.be.true();
-                elements[name] = driver.findElement(webdriver.By.css(css_arg));
-                if (done !== undefined) { done(); }
-            });
-        }
 
         before(function(done) {
             driver.get('http://127.0.0.1:8000/admin/test_bool/').then(function(){ done(); });  //test_bool  test_all_types
@@ -84,7 +85,7 @@ describe('SACRUD tests', function() {
             });
         });
 
-        it('Popup should be visible, after clicking on "Delete" button', function(done) {
+        it('Popup should be visible, after clicking on active "Delete" button', function(done) {
             elements['div_delete_button'].click();
             webdriver.until.elementIsVisible(elements['div_popup']).fn().then(function(visible) {
                 expect(visible, options.popup + ' must be visible').to.be.true();
@@ -122,6 +123,14 @@ describe('SACRUD tests', function() {
             });
         });
 
+        it('Popup should be invisible, after clicking on disabled "Delete" button', function(done) {
+            elements['div_delete_button'].click();
+            webdriver.until.elementIsVisible(elements['div_popup']).fn().then(function(visible) {
+                expect(visible, options.popup + ' must be visible').to.be.false();
+                done();
+            });
+        });
+
 
         // it('Should correctly handle found elements', function(done) {
         //     var Popup = require("../app/common/popup.js").Popup,
@@ -154,6 +163,41 @@ describe('SACRUD tests', function() {
             // var goButton = driver.findElement(webdriver.By.name('goToSACRUD'));
             //     goButton.click();
         // });
+    });
+
+    describe('Selectable', function() {
+
+        it('Should find elements for selectable in DOM', function(done) {
+            elements = {};
+            check_element_existence('sacrud_form', options.sacrud_form);
+            check_element_existence('all_checkboxes_button', options.all_checkboxes_button);
+
+            driver.isElementPresent(webdriver.By.tagName('tbody')).then(function(exists) {
+                expect(exists, 'Not found table body on page').to.be.true();
+                driver.findElement(webdriver.By.tagName('tbody')).findElements(webdriver.By.tagName('tr')).then(function(element_list) {
+                    expect(element_list, 'Not found rows in table').to.not.have.length(0);
+                    elements['rows_list'] = element_list;
+                    done();
+                });
+            });
+        });
+
+        it('Table row should change class, after clicking', function(done) {
+            elements['rows_list'][0].click();
+            elements['rows_list'][0].getAttribute('class').then(function(class_value) {
+                expect(class_value).to.contain(options.tr_selected_class, 'Table row must contain class "'+options.tr_selected_class+'" after first clicking');
+                done();
+            });
+        });
+
+        it('All table rows should change class, after clicking header checkbox', function(done) {
+            elements['all_checkboxes_button'].click();
+            driver.findElements(webdriver.By.className(options.tr_selected_class)).then(function(element_list) {
+                expect(element_list.length, 'Select not all checkboxes').to.equal(elements['rows_list'].length);
+                done();
+            });
+        });
+
     });
 
     describe('Logout', function() {
