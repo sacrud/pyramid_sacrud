@@ -63,15 +63,17 @@ describe('SACRUD tests', function() {
                 done();
             });
         });
+    });
 
-        it('"Delete" button should be disabled, after opening page', function(done) {
+    describe('Grid', function() {
+        it('"Delete" button state should be disabled by default', function(done) {
             elements['div_delete_button'].getAttribute('class').then(function(class_value) {
                 expect(class_value).to.contain(options.state_disable_class, '"Delete" button must contain class "'+options.state_disable_class+'" if nothing is selected');
                 done();
             });
         });
 
-        it('"Delete" button should change class, after clicking on checkbox', function(done) {
+        it('"Delete" button state should be active(change class), after check item', function(done) {
             check_element_existence('table_checkbox', options.table_checkboxes, 'Not found objects in grid. Change url for test or create objects.', function() {
                 elements['table_checkbox'].click();
                 elements['table_checkbox'].getAttribute('checked').then(function(checked) {
@@ -100,7 +102,7 @@ describe('SACRUD tests', function() {
             });
         });
 
-        it('Popup should be invisible, after clicking on close link', function(done) {
+        it('Popup should be invisible, after clicking on "close" link', function(done) {
             driver.executeScript('arguments[0].style.display="block";', elements['div_popup']);
             // not work in phantomjs
             // elements['popup_close_button'].click(); // driver.executeScript("arguments[0].click();", elements['popup_close_button']);
@@ -111,7 +113,7 @@ describe('SACRUD tests', function() {
             });
         });
 
-        it('"Delete" button should be disabled, after clicking on checkbox', function(done) {
+        it('"Delete" button state should be disabled(change class), after uncheck item', function(done) {
             elements['table_checkbox'].click();
             elements['table_checkbox'].getAttribute('checked').then(function(checked) {
                 expect(checked).to.be.null();
