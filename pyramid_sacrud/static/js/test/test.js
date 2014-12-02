@@ -1,4 +1,3 @@
-
 var webdriver = require('selenium-webdriver');
 var driver = new webdriver.Builder().withCapabilities({'browserName': 'phantomjs'}).build();
 

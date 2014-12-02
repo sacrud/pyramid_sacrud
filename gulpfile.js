@@ -1,8 +1,5 @@
-var autoprefixer = require('gulp-autoprefixer'),
-    concat = require('gulp-concat'),
-    gulp = require('gulp'),
+var gulp = require('gulp'),
     gutil = require('gulp-util'),
-    minifyCSS = require('gulp-minify-css'),
     watch = require('gulp-watch');
 
 var _ = require("underscore"),
@@ -34,45 +31,13 @@ gulp.task('browserify', function() {
         .pipe(gulp.dest('./pyramid_sacrud/static/js/'));
 });
 
-gulp.task('css', function() {
-
-    var path = glob.sync('./*/static/css/'),
-        concatFiles = getFiles(path ,'css');
-
-    gulp.src(concatFiles)
-        .pipe(autoprefixer({
-            browsers: [
-                'Firefox >= 3',
-                'Explorer >= 6',
-                'Opera >= 9',
-                'Chrome >= 15',
-                'Safari >= 4',
-                '> 1%'],
-            cascade: false
-        }))
-        .on('error', function(err){
-            gutil.log(gutil.colors.red('Failed to autoprefixer'), gutil.colors.yellow(err.message));
-        })
-        .pipe(minifyCSS())
-        .pipe(concat('__sacrud.css'))
-        .pipe(gulp.dest(path + '/'));
-});
-
-
 gulp.task('watch', function () {
-
-    var pathCSS = glob.sync('./*/static/css/'),
-        watchCSSFiles = getFiles(pathCSS, 'css');
 
     var pathJS = glob.sync('./*/static/js/'),
         watchJSFiles = getFiles(pathJS, 'js');
 
     watchJSFiles.push('!./pyramid_sacrud/static/js/bower_components/**/*');
     watchJSFiles.push('!./pyramid_sacrud/static/js/test/**/*');
-
-    watch(watchCSSFiles, function (files, cb) {
-        gulp.start('css', cb);
-    });
 
     watch(watchJSFiles, function (files, cb) {
         gulp.start('browserify', cb);
