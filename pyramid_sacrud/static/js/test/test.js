@@ -35,6 +35,11 @@ describe('SACRUD tests', function() {
         });
     });
 
+    it('Should correctly handle found elements', function(done) {
+        var SelectableTable = require("../app/common/selectable.js").SelectableTable;
+        SelectableTable.prototype._bindSelectable = function() {};
+    });
+
     describe('Popup', function() {
 
         // var jsdom = require("jsdom").jsdom;
