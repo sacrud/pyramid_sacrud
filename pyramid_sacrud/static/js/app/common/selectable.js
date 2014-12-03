@@ -12,7 +12,7 @@ var SelectableTable = function (el, options) {
     this._afterInit();
 };
 
-SelectableTable.prototype._checkCheckbox = function (checkbox) {
+SelectableTable.prototype.checkCheckbox = function (checkbox) {
     var $parent_tr = $(checkbox).parents('.sacrud-grid-content-grid__body-row');
     if ($(checkbox).prop('checked')) {
         $parent_tr.addClass(global_options.tr_selected_class);
@@ -23,7 +23,7 @@ SelectableTable.prototype._checkCheckbox = function (checkbox) {
     }
 };
 
-SelectableTable.prototype._changeButtons = function () {
+SelectableTable.prototype.changeButtons = function () {
     if ($(global_options.sacrud_form).length) {
         if ($(global_options.table_checkboxes_checked).length) {
             $(global_options.div_delete_button).removeClass(global_options.state_disable_class);
@@ -41,8 +41,8 @@ SelectableTable.prototype._bindEvents = function() {
 };
 
 SelectableTable.prototype.checkboxChange = function (evnt) {
-    this._checkCheckbox($(evnt.currentTarget));
-    this._changeButtons();
+    this.checkCheckbox($(evnt.currentTarget));
+    this.changeButtons();
     if ($(global_options.table_checkboxes_not_checked).length) {
         $(global_options.all_checkboxes_button).prop('checked', false);
     } else {
@@ -70,9 +70,9 @@ SelectableTable.prototype._bindSelectable = function() {
 SelectableTable.prototype._afterInit = function() {
     var checkboxes = $(global_options.table_checkboxes_checked);
     for (var i=0; i < checkboxes.length; i++) {
-        this._checkCheckbox(checkboxes[i]);
+        this.checkCheckbox(checkboxes[i]);
     }
-    this._changeButtons();
+    this.changeButtons();
 };
 
 // jquery-ui.selectable functions
