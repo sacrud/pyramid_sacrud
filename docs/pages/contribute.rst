@@ -1,10 +1,10 @@
 Backend contrubute
-------------------
+==================
 
 Same as `contributor's section of the documentation <http://docs.pylonsproject.org/en/latest/#contributing>`_ of Pyramid project.
 
 Frontend contribute
--------------------
+===================
 
 For working with CSS and JavaScript you need install Node.js_, NPM_, Bower_, Browserify_ and Gulp_.
 
@@ -20,7 +20,7 @@ For working with CSS and JavaScript you need install Node.js_, NPM_, Bower_, Bro
 
 
 Install components
-~~~~~~~~~~~~~~~~~~
+------------------
 
 **package.json** for NPM, **gulpfile.js** for Gulp and **bower.json** for Bower in the `pyramid_sacrud/static/` folder.
 
@@ -47,7 +47,7 @@ Packages installs to `pyramid_sacrud/static/js/bower_components/`
 
 
 CSS
-~~~
+---
 
 СSS files are on `pyramid_sacrud/static/css/`.
     
@@ -61,10 +61,10 @@ When you change any css file gulp concatenates all in **__main.css** on `pyramid
 
 
 JavaScript coder
-~~~~~~~~~~~~~~~~
+----------------
 
 Getting Started
-===============
+~~~~~~~~~~~~~~~
 
 File for browserify build is **main.js** on `pyramid_sacrud/static/js/`.
 
@@ -76,12 +76,72 @@ Before changing js modules you need to run "watch" task with gulp:
 
     gulp watch
     
-When you change any js file browserify build **__main.js** on `pyramid_sacrud/static/js/`.
+When you change any js file, browserify build **__main.js** on `pyramid_sacrud/static/js/`.
+
+
+Project modules
+~~~~~~~~~~~~~~~
+Options
+.......
+JQuery selectors list.
+
+Popup
+.....
+Popup object is needed for works with pop-up window.
+
+Create a new Popup:
+
+.. code-block:: javascript
+
+    var Popup = require('popup.js');
+    var popup = new Popup(el, options);
+    
+::
+    Arguments:
+        * el - JQuery selector (set in options.popup).
+        * options - Options object.
+
+SelectableTable
+...............
+
+SelectableTable object is needed for works with table. Using JQuery-UI Selectable widget.
+
+Create a new SelectableTable:
+
+.. code-block:: javascript
+
+    var SelectableTable = require('selectable.js');
+    var selectable_table = new SelectableTable(el, options);
+    
+::
+    Arguments:
+        * el - JQuery selector (set in options.popup).
+        * options - Options object.
+
+
+Install modules
+~~~~~~~~~~~~~~~
+All modules are installed using the bower. After installing, you need set path to new module in package.json in "browser" and specify "exports" and "depends"(if need) in "browserify-shim" settings:
+
+.. code-block:: json
+
+    "browser": {
+        "jquery": "path_to_module/jquery.js",
+        "jquery-ui": "path_to_module/jquery-ui.js"
+    },
+    "browserify-shim": {
+        "jquery": {
+            "exports": "$"
+        },
+        "jquery-ui": {
+          "exports": null,
+          "depends": "jquery"
+        }
+    }
 
 
 Using modules
-=============
-
+~~~~~~~~~~~~~
 To use module, you need to define it in **main.js** via require() function:
 
 .. code-block:: javascript
@@ -92,30 +152,49 @@ After that, they will be available for entire project.
 
 
 Сreate a new module
-===================
+~~~~~~~~~~~~~~~~~~~
 
 To define a module, just create a JavaScript file, and write something like this:
 
 .. code-block:: javascript
     
-    module.exports = function() {
-        function some_func() {
-            // anything do
-        }
-    };
+    module.exports = function some_func(args) { 
+        // anything do
+    };    
 
 Add it in **main.js** via require() function and call, to use in site:
 
 .. code-block:: javascript
 
     var myModule = require('my_module');
-    myModule();
+    myModule(some_args);
 
 
 Testing
-=======
+~~~~~~~
+The tests are written using Mocha framework.
+For their work, you need install Mocha_, Chai_ and Selenium-webdriver_.
 
-`coming soon`
+.. _Mocha: http://mochajs.org/
+.. _Chai: http://chaijs.com/
+.. _Selenium-webdriver: https://www.npmjs.org/package/selenium-webdriver/
+
+
+Install Mocha in global(with -g) on Windows.
+
+.. code:: bash
+
+    npm install mocha
+    npm install chai
+    npm install selenium-webdriver
+    
+All tests are in the directory `pyramid_sacrud/static/js/test/`
+
+To run tests for javascript, you need to use **npm test** command from category containing package.json:
+
+.. code:: bash
+
+    npm test
 
 
 Documentation contribute

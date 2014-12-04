@@ -63,7 +63,7 @@
       "exports": "$"
     },
     "jquery-ui": {
-      "exports": "selectable",
+      "exports": null,
       "depends": "jquery"
     },
     "jquery-maskedinput": {
