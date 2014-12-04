@@ -96,7 +96,7 @@ Create a new Popup:
     var Popup = require('popup.js');
     var popup = new Popup(el, options);
     
-::
+.. epigraph::
     Arguments:
         * el - JQuery selector (set in options.popup).
         * options - Options object.
@@ -113,7 +113,8 @@ Create a new SelectableTable:
     var SelectableTable = require('selectable.js');
     var selectable_table = new SelectableTable(el, options);
     
-::
+.. epigraph::
+
     Arguments:
         * el - JQuery selector (set in options.popup).
         * options - Options object.
