@@ -50,6 +50,7 @@ class EventsCRUD(object):
 
 
 class BaseCRUD(object):
+
     def __init__(self, request):
         self.pk = None
         self.request = request
@@ -180,7 +181,7 @@ class List(CRUD):
         items_per_page = getattr(self.table, 'items_per_page', 10)
         resp = action.CRUD(self.request.dbsession, self.table).rows_list()
         try:
-            paginator_attr = get_paginator(self.request, items_per_page-1)
+            paginator_attr = get_paginator(self.request, items_per_page - 1)
         except ValueError:
             raise HTTPNotFound
         paginator = SqlalchemyOrmPage(resp['row'], **paginator_attr)
