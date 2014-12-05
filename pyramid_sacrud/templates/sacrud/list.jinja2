@@ -24,10 +24,10 @@
     {% endif %}
 
     <div class="page">
-      {% if table.sacrud_list_template %}
-        {% include table.sacrud_list_template with context %}
-      {% else %}
-        {% include '/sacrud/forms/list.jinja2' with context %}
-      {% endif %}
+        {% if table.sacrud_list_template %}
+            {% include table.sacrud_list_template with context %}
+        {% else %}
+            {% include '/sacrud/forms/list.jinja2' with context %}
+        {% endif %}
     </div>
 {% endblock %}
