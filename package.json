@@ -48,15 +48,15 @@
     ]
   },
   "browser": {
-    "jquery": "./pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js",
-    "jquery-ui": "./pyramid_sacrud/static/js/bower_components/jquery-ui/ui/jquery-ui.js",
-    "jquery-maskedinput": "./pyramid_sacrud/static/js/bower_components/jquery-maskedinput/dist/jquery.maskedinput.js",
-    "jqueryui-timepicker-addon": "./pyramid_sacrud/static/js/bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js",
-    "speakingurl": "./pyramid_sacrud/static/js/bower_components/speakingurl/speakingurl.min.js",
-    "modernizr": "./pyramid_sacrud/static/js/bower_components/modernizr/modernizr.js",
-    "Picker": "./pyramid_sacrud/static/js/bower_components/pickadate/lib/compressed/picker.js",
-    "pickadate": "./pyramid_sacrud/static/js/bower_components/pickadate/lib/compressed/picker.date.js",
-    "pickatime": "./pyramid_sacrud/static/js/bower_components/pickadate/lib/compressed/picker.time.js"
+    "jquery": "./bower_components/jquery/dist/jquery.js",
+    "jquery-ui": "./bower_components/jquery-ui/ui/jquery-ui.js",
+    "jquery-maskedinput": "./bower_components/jquery-maskedinput/dist/jquery.maskedinput.js",
+    "jqueryui-timepicker-addon": "./bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js",
+    "speakingurl": "./bower_components/speakingurl/speakingurl.min.js",
+    "modernizr": "./bower_components/modernizr/modernizr.js",
+    "Picker": "./bower_components/pickadate/lib/compressed/picker.js",
+    "pickadate": "./bower_components/pickadate/lib/compressed/picker.date.js",
+    "pickatime": "./bower_components/pickadate/lib/compressed/picker.time.js"
   },
   "browserify-shim": {
     "jquery": {

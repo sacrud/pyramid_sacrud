@@ -1,27 +1,15 @@
 {
-  "name": "sacrud",
-  "version": "0.1.2",
-  "homepage": "https://github.com/ITCase/sacrud",
+  "name": "pyramid_sacrud",
+  "version": "0.0.2",
+  "homepage": "https://github.com/ITCase/pyramid_sacrud",
   "authors": [
-    "Dmitry <root@uralbash.ru>"
+    "ITCase <info@itcase.pro>"
   ],
-  "description": "SACRUD CRUD interface for SQLAlchemy with Pyramid connector",
   "moduleType": [
-    "amd"
-  ],
-  "keywords": [
-    "SQALchemy",
-    "Pyramid",
-    "CRUD"
+    "amd",
+    "node"
   ],
   "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
   "dependencies": {
     "jquery": "~2.1.1",
     "jquery-ui": "~1.10.4",

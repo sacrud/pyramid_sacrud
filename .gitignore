@@ -15,6 +15,10 @@ nohup.out
 selenium-server-standalone-2.44.0.jar
 phantomjsdriver.log
 
+
+# Bower
+bower_components
+
 # JavaScript
 node_modules
 
@@ -28,9 +32,6 @@ example
 htmlcov
 .ropeproject
 *.pyc
-
-# Bower
-bower_components
 
 # Docs
 _build
