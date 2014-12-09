@@ -21,12 +21,21 @@ python:
   - "2.7"
 
 env:
+  - TOXENV=py27
+  - TOXENV=py33
+  - TOXENV=py34
   global:
     - secure: B1lboPg2yLle0zYmBR7CfBsThySYVwVGt7+uJASLo7i8125qSVMt7L7az/B22NHTzsGVPvNI2o3jAoiK3iwfUK5XuQcDbP5M6LTt9yodn2sauRsWDivb6xV5o4dH0algsQlAr8yebp3wofGZ2Dn52SUmgdvJHrHWOYTQF0Tf2Fo=
 
 install:
   - pip install nose coverage coveralls tox webtest
-  - pip install -r requirements.txt
+  - pip install SQLAlchemy>=0.8.0b1
+  - pip install peppercorn
+  - pip install pyramid_jinja2==1.10
+  - pip install pyramid
+  - pip install pyramid_beaker
+  - pip install transaction
+  - pip install paginate_sqlalchemy
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git@develop
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud.git@develop
 
@@ -36,5 +45,5 @@ script:
 
 after_success:
   - chmod 755 ./travis_build_pse.sh
-  - sh travis_build_pse.sh
+  - sh ./travis_build_pse.sh
   - coveralls
