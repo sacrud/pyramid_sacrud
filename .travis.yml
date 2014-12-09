@@ -8,6 +8,13 @@
 
 language: python
 
+cache:
+  directories:
+    - node_modules
+
+addons:
+  postgresql: "9.3"
+
 notifications:
   email: "sacrud@uralbash.ru"
   email: "arkadiy@bk.ru"
@@ -26,10 +33,19 @@ env:
   - TOXENV=py34
 
 install:
+  - npm install mocha
+  - npm install chai
+  - npm install selenium-webdriver
   - pip install nose coverage coveralls tox webtest
   - pip install -r requirements.txt
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git@develop
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud.git@develop
+  - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/pyramid_sacrud_example.git@develop
+
+before_script:
+  - ls -la
+  - pip list
+
 
 script:
   - tox
