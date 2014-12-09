@@ -16,7 +16,7 @@ import sys
 import os
 
 # Add and use Pylons theme
-if 'sphinx-build' in ' '.join(sys.argv):  # protect against dumb importers
+if 'sphinx-build' in ' '.join(sys.argv) and 'nt' not in os.name:  # protect against dumb importers
     from subprocess import call, Popen, PIPE
 
     p = Popen('which git', shell=True, stdout=PIPE)

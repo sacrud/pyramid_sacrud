@@ -36,9 +36,6 @@ gulp.task('watch', function () {
     var pathJS = glob.sync('./*/static/js/'),
         watchJSFiles = getFiles(pathJS, 'js');
 
-    watchJSFiles.push('!./pyramid_sacrud/static/js/bower_components/**/*');
-    watchJSFiles.push('!./pyramid_sacrud/static/js/test/**/*');
-
     watch(watchJSFiles, function (files, cb) {
         gulp.start('browserify', cb);
     });

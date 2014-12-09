@@ -14,226 +14,10 @@ $(function() {
     // var checkbox = require('./app/common/checkbox.js');
 });
 
-},{"./app/common/popup.js":2,"./app/common/selectable.js":3,"./app/options.js":4,"jquery":7,"jquery-maskedinput":5,"jquery-ui":6,"jqueryui-timepicker-addon":8,"modernizr":9,"pickadate":10,"pickatime":12}],2:[function(require,module,exports){
-
-var Popup = function (el, options) {
-    if (!(this instanceof Popup)) {
-        return new Popup(el, options);
-    }
-    this.el = $(el);
-    this.options = options;
-    this._bindEvents();
-};
-
-Popup.prototype._bindEvents = function() {
-    $(document).on('click', 'div.'+this.options.state_disable_class, this.blockDisabledButton.bind(this));
-    $(document).on('click', this.options.div_delete_button, this.showDeletePopup.bind(this));
-    $(document).on('click', this.options.popup_close_button, this.hidePopup.bind(this));
-    $(document).on('click', this.options.popup_main_button, this.checkButton.bind(this));
-};
-
-// $(document).on('click', 'div.popup', function function_name (argument) {
-//     console.log('yippee-ki-yay motherf*cker');
-// });
-
-Popup.prototype.blockDisabledButton = function (evnt) {
-    evnt.stopImmediatePropagation();
-};
-
-Popup.prototype.showDeletePopup = function (evnt) {
-    this.el.css("display", "table");
-    $('.popup-inner__content-delete').show();
-    $('.popup-inner__content-elfinder').hide();
-    // this.showDeletePopupContent();
-};
-
-Popup.prototype.hidePopup = function (evnt) {
-    this.el.hide();
-    $('.popup-inner__content-delete').hide();
-    $('.popup-inner__content-elfinder').hide();
-    if ($(evnt.currentTarget).attr('href') !== undefined) {
-        evnt.preventDefault();
-    }
-    // this.hidePopupContent();
-};
-
-// Popup.prototype.showDeletePopupContent = function (evnt) {};
-// Popup.prototype.hidePopupContent = function (evnt) {};
-
-Popup.prototype.checkButton = function (evnt) {
-    var status = $(evnt.currentTarget).data('status');
-    if ((status === undefined) || (status == 'cancel')) {
-        this.hidePopup(evnt);
-    } else if ($(this.options.sacrud_form).length) {  // if (typeof options != "undefined")
-        this._formSubmit($(this.options.sacrud_form), status);
-    }
-};
-
-// Used in list template
-Popup.prototype._formSubmit = function (form, status) {
-    // for delete object, need to send status 'delete'
-    $(this.options.input_selected_action).val(status);
-    form.submit();
-};
-
-// Main entry point
-module.exports = function popup(el, options) {
-    return new Popup(el, options);
-};
-
-module.exports.Popup = Popup;
-
-},{}],3:[function(require,module,exports){
-
-var rows_state_unselecting, current_rows, first_selected_row, global_options;
-
-var SelectableTable = function (el, options) {
-    if (!(this instanceof SelectableTable)) {
-        return new SelectableTable(el, options);
-    }
-    global_options = options;
-    this.el = $(el);
-    this._bindEvents();
-    this._bindSelectable();
-    this._afterInit();
-};
-
-SelectableTable.prototype.checkCheckbox = function (checkbox) {
-    var $parent_tr = $(checkbox).parents('.sacrud-grid-content-grid__body-row');
-    if ($(checkbox).prop('checked')) {
-        $parent_tr.addClass(global_options.tr_selected_class);
-        $parent_tr.addClass('ui-selected');
-    } else {
-        $parent_tr.removeClass(global_options.tr_selected_class);
-        $parent_tr.removeClass('ui-selected');
-    }
-};
-
-SelectableTable.prototype.changeButtons = function () {
-    if ($(global_options.sacrud_form).length) {
-        if ($(global_options.table_checkboxes_checked).length) {
-            $(global_options.div_delete_button).removeClass(global_options.state_disable_class);
-        } else {
-            $(global_options.div_delete_button).addClass(global_options.state_disable_class);
-        }
-    } else {
-        $(global_options.div_delete_button).removeClass(global_options.state_disable_class);
-    }
-};
-
-SelectableTable.prototype._bindEvents = function() {
-    $(document).on('change', global_options.table_checkboxes, this.checkboxChange.bind(this));
-    $(document).on('change', global_options.all_checkboxes_button , this.allCheckboxChange.bind(this));
-};
-
-SelectableTable.prototype.checkboxChange = function (evnt) {
-    this.checkCheckbox($(evnt.currentTarget));
-    this.changeButtons();
-    if ($(global_options.table_checkboxes_not_checked).length) {
-        $(global_options.all_checkboxes_button).prop('checked', false);
-    } else {
-        $(global_options.all_checkboxes_button).prop('checked', true);
-    }
-};
-
-SelectableTable.prototype.allCheckboxChange = function (evnt) {
-    $(global_options.table_checkboxes).prop('checked', $(evnt.currentTarget).prop('checked')).change();
-};
-
-SelectableTable.prototype._bindSelectable = function() {
-    this.el.selectable({
-        filter: 'tr', // :not(td)
-        cancel: 'a, input, .selectable_disabled',
-        start: this._start,
-        selecting: this._selecting,
-        selected: this._selected,
-        unselected: this._unselected,
-        stop: this._stop,
-        // unselecting: function (event, ui) {},
-    });
-};
-
-SelectableTable.prototype._afterInit = function() {
-    var checkboxes = $(global_options.table_checkboxes_checked);
-    for (var i=0; i < checkboxes.length; i++) {
-        this.checkCheckbox(checkboxes[i]);
-    }
-    this.changeButtons();
-};
-
-// jquery-ui.selectable functions
-SelectableTable.prototype._start = function(event, ui) {
-    current_rows = $(this).data('ui-selectable').selectees.filter('.ui-selected');
-};
-
-SelectableTable.prototype._selecting = function (event, ui) {
-    var selecting_count = $(this).data('ui-selectable').selectees.filter('.ui-selecting').length;
-    if (!(rows_state_unselecting)) {
-        rows_state_unselecting = $(this).data('ui-selectable').selectees.filter('.ui-unselecting');
-    }
-    if (selecting_count == 1) {
-        rows_state_unselecting.switchClass('ui-unselecting', 'ui-selecting');
-        if (current_rows.is(ui.selecting)) {
-            first_selected_row = $(ui.selecting);
-            $(ui.selecting).switchClass('ui-selecting', 'ui-unselecting');
-        }
-    } else {
-        rows_state_unselecting = rows_state_unselecting.not(ui.selecting);
-        rows_state_unselecting.switchClass('ui-selecting', 'ui-unselecting');
-        if (first_selected_row) {
-            rows_state_unselecting.switchClass('ui-unselecting', 'ui-selecting');
-            first_selected_row = null;
-        }
-    }
-};
-
-SelectableTable.prototype._selected = function (event, ui) {
-    $(ui.selected).addClass(global_options.tr_selected_class);
-    $(ui.selected).find(global_options.table_checkboxes).prop('checked', true).change();
-    // console.log(ui.selected);
-    // console.log($(this).data('uiSelectable').selectees.filter('.ui-selected'));
-};
-
-SelectableTable.prototype._unselected = function (event, ui) {
-    $(ui.unselected).removeClass(global_options.tr_selected_class);
-    $(ui.unselected).find(global_options.table_checkboxes).prop('checked', false).change();
-};
-
-SelectableTable.prototype._stop = function (event, ui) {
-    rows_state_unselecting = null;
-    first_selected_row = null;
-};
-
-
-// Main entry point
-module.exports = function selectable_table(el, options) {
-    return new SelectableTable(el, options);
-};
-
-module.exports.SelectableTable = SelectableTable;
-
-},{}],4:[function(require,module,exports){
-module.exports = {
-    // Popup
-    'popup': 'div.popup',
-    'popup_close_button': 'a.popup-inner__content-link-text',
-    'popup_main_button': 'div.popup-button__item',
-    'div_delete_button': 'div.toolbar-button__item_type_delete',
-    'sacrud_form': 'form#sacrud-form',
-    // Selectable
-    'tr_selected_class': 'sacrud-grid-content-grid__body-row_state_active',
-    'state_disable_class': 'toolbar-button__item_state_disable',
-    'input_selected_action': 'input[name="selected_action"]',
-    'all_checkboxes_button': 'input#selected_all_item',
-    'table_checkboxes': 'input[name="selected_item"]',
-    'table_checkboxes_checked': 'input[name="selected_item"]:checked',
-    'table_checkboxes_not_checked': 'input[name="selected_item"]:not(:checked)',
-};
-
-},{}],5:[function(require,module,exports){
+},{"./app/common/popup.js":10,"./app/common/selectable.js":11,"./app/options.js":12,"jquery":4,"jquery-maskedinput":2,"jquery-ui":3,"jqueryui-timepicker-addon":5,"modernizr":6,"pickadate":7,"pickatime":9}],2:[function(require,module,exports){
 (function (global){
 
-; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js");
+; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, define, require) {
 /*
 	Masked Input plugin for jQuery
@@ -576,10 +360,10 @@ $.fn.extend({
 }).call(global, module, undefined, undefined);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":7}],6:[function(require,module,exports){
+},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4}],3:[function(require,module,exports){
 (function (global){
 
-; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js");
+; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, define, require) {
 /*! jQuery UI - v1.10.4 - 2014-04-02
 * http://jqueryui.com
@@ -15593,7 +15377,7 @@ $.widget( "ui.tooltip", {
 }).call(global, module, undefined, undefined);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":7}],7:[function(require,module,exports){
+},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4}],4:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
@@ -24792,10 +24576,10 @@ return jQuery;
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],8:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 (function (global){
 
-; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery-ui/ui/jquery-ui.js");
+; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery-ui\\ui\\jquery-ui.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, define, require) {
 /*! jQuery Timepicker Addon - v1.4.6 - 2014-08-09
 * http://trentrichardson.com/examples/timepicker
@@ -27004,10 +26788,10 @@ return jQuery;
 }).call(global, module, undefined, undefined);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery-ui/ui/jquery-ui.js":6}],9:[function(require,module,exports){
+},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery-ui\\ui\\jquery-ui.js":3}],6:[function(require,module,exports){
 (function (global){
 
-; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js");
+; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
  * Modernizr v2.8.3
@@ -28421,11 +28205,11 @@ window.Modernizr = (function( window, document, undefined ) {
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":7}],10:[function(require,module,exports){
+},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4}],7:[function(require,module,exports){
 (function (global){
 
-; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/pickadate/lib/compressed/picker.js");
-require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js");
+; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\pickadate\\lib\\compressed\\picker.js");
+require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
  * Date picker for pickadate.js v3.5.4
@@ -28437,10 +28221,10 @@ require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bo
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":7,"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/pickadate/lib/compressed/picker.js":11}],11:[function(require,module,exports){
+},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4,"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\pickadate\\lib\\compressed\\picker.js":8}],8:[function(require,module,exports){
 (function (global){
 
-; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js");
+; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
  * pickadate.js v3.5.4, 2014/09/11
@@ -28454,11 +28238,11 @@ require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bo
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":7}],12:[function(require,module,exports){
+},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4}],9:[function(require,module,exports){
 (function (global){
 
-; require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/pickadate/lib/compressed/picker.js");
-require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js");
+; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\pickadate\\lib\\compressed\\picker.js");
+require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
  * Time picker for pickadate.js v3.5.4
@@ -28470,4 +28254,220 @@ require("/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bo
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/jquery/dist/jquery.js":7,"/home/nikita/projects/itcase/pyramid_sacrud/pyramid_sacrud/static/js/bower_components/pickadate/lib/compressed/picker.js":11}]},{},[1]);
+},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4,"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\pickadate\\lib\\compressed\\picker.js":8}],10:[function(require,module,exports){
+
+var Popup = function (el, options) {
+    if (!(this instanceof Popup)) {
+        return new Popup(el, options);
+    }
+    this.el = $(el);
+    this.options = options;
+    this._bindEvents();
+};
+
+Popup.prototype._bindEvents = function() {
+    $(document).on('click', 'div.'+this.options.state_disable_class, this.blockDisabledButton.bind(this));
+    $(document).on('click', this.options.div_delete_button, this.showDeletePopup.bind(this));
+    $(document).on('click', this.options.popup_close_button, this.hidePopup.bind(this));
+    $(document).on('click', this.options.popup_main_button, this.checkButton.bind(this));
+};
+
+// $(document).on('click', 'div.popup', function function_name (argument) {
+//     console.log('yippee-ki-yay motherf*cker');
+// });
+
+Popup.prototype.blockDisabledButton = function (evnt) {
+    evnt.stopImmediatePropagation();
+};
+
+Popup.prototype.showDeletePopup = function (evnt) {
+    this.el.css("display", "table");
+    $('.popup-inner__content-delete').show();
+    $('.popup-inner__content-elfinder').hide();
+    // this.showDeletePopupContent();
+};
+
+Popup.prototype.hidePopup = function (evnt) {
+    this.el.hide();
+    $('.popup-inner__content-delete').hide();
+    $('.popup-inner__content-elfinder').hide();
+    if ($(evnt.currentTarget).attr('href') !== undefined) {
+        evnt.preventDefault();
+    }
+    // this.hidePopupContent();
+};
+
+// Popup.prototype.showDeletePopupContent = function (evnt) {};
+// Popup.prototype.hidePopupContent = function (evnt) {};
+
+Popup.prototype.checkButton = function (evnt) {
+    var status = $(evnt.currentTarget).data('status');
+    if ((status === undefined) || (status == 'cancel')) {
+        this.hidePopup(evnt);
+    } else if ($(this.options.sacrud_form).length) {  // if (typeof options != "undefined")
+        this._formSubmit($(this.options.sacrud_form), status);
+    }
+};
+
+// Used in list template
+Popup.prototype._formSubmit = function (form, status) {
+    // for delete object, need to send status 'delete'
+    $(this.options.input_selected_action).val(status);
+    form.submit();
+};
+
+// Main entry point
+module.exports = function popup(el, options) {
+    return new Popup(el, options);
+};
+
+module.exports.Popup = Popup;
+
+},{}],11:[function(require,module,exports){
+
+var rows_state_unselecting, current_rows, first_selected_row, global_options;
+
+var SelectableTable = function (el, options) {
+    if (!(this instanceof SelectableTable)) {
+        return new SelectableTable(el, options);
+    }
+    global_options = options;
+    this.el = $(el);
+    this._bindEvents();
+    this._bindSelectable();
+    this._afterInit();
+};
+
+SelectableTable.prototype.checkCheckbox = function (checkbox) {
+    var $parent_tr = $(checkbox).parents('.sacrud-grid-content-grid__body-row');
+    if ($(checkbox).prop('checked')) {
+        $parent_tr.addClass(global_options.tr_selected_class);
+        $parent_tr.addClass('ui-selected');
+    } else {
+        $parent_tr.removeClass(global_options.tr_selected_class);
+        $parent_tr.removeClass('ui-selected');
+    }
+};
+
+SelectableTable.prototype.changeButtons = function () {
+    if ($(global_options.sacrud_form).length) {
+        if ($(global_options.table_checkboxes_checked).length) {
+            $(global_options.div_delete_button).removeClass(global_options.state_disable_class);
+        } else {
+            $(global_options.div_delete_button).addClass(global_options.state_disable_class);
+        }
+    } else {
+        $(global_options.div_delete_button).removeClass(global_options.state_disable_class);
+    }
+};
+
+SelectableTable.prototype._bindEvents = function() {
+    $(document).on('change', global_options.table_checkboxes, this.checkboxChange.bind(this));
+    $(document).on('change', global_options.all_checkboxes_button , this.allCheckboxChange.bind(this));
+};
+
+SelectableTable.prototype.checkboxChange = function (evnt) {
+    this.checkCheckbox($(evnt.currentTarget));
+    this.changeButtons();
+    if ($(global_options.table_checkboxes_not_checked).length) {
+        $(global_options.all_checkboxes_button).prop('checked', false);
+    } else {
+        $(global_options.all_checkboxes_button).prop('checked', true);
+    }
+};
+
+SelectableTable.prototype.allCheckboxChange = function (evnt) {
+    $(global_options.table_checkboxes).prop('checked', $(evnt.currentTarget).prop('checked')).change();
+};
+
+SelectableTable.prototype._bindSelectable = function() {
+    this.el.selectable({
+        filter: 'tr', // :not(td)
+        cancel: 'a, input, .selectable_disabled',
+        start: this._start,
+        selecting: this._selecting,
+        selected: this._selected,
+        unselected: this._unselected,
+        stop: this._stop,
+        // unselecting: function (event, ui) {},
+    });
+};
+
+SelectableTable.prototype._afterInit = function() {
+    var checkboxes = $(global_options.table_checkboxes_checked);
+    for (var i=0; i < checkboxes.length; i++) {
+        this.checkCheckbox(checkboxes[i]);
+    }
+    this.changeButtons();
+};
+
+// jquery-ui.selectable functions
+SelectableTable.prototype._start = function(event, ui) {
+    current_rows = $(this).data('ui-selectable').selectees.filter('.ui-selected');
+};
+
+SelectableTable.prototype._selecting = function (event, ui) {
+    var selecting_count = $(this).data('ui-selectable').selectees.filter('.ui-selecting').length;
+    if (!(rows_state_unselecting)) {
+        rows_state_unselecting = $(this).data('ui-selectable').selectees.filter('.ui-unselecting');
+    }
+    if (selecting_count == 1) {
+        rows_state_unselecting.switchClass('ui-unselecting', 'ui-selecting');
+        if (current_rows.is(ui.selecting)) {
+            first_selected_row = $(ui.selecting);
+            $(ui.selecting).switchClass('ui-selecting', 'ui-unselecting');
+        }
+    } else {
+        rows_state_unselecting = rows_state_unselecting.not(ui.selecting);
+        rows_state_unselecting.switchClass('ui-selecting', 'ui-unselecting');
+        if (first_selected_row) {
+            rows_state_unselecting.switchClass('ui-unselecting', 'ui-selecting');
+            first_selected_row = null;
+        }
+    }
+};
+
+SelectableTable.prototype._selected = function (event, ui) {
+    $(ui.selected).addClass(global_options.tr_selected_class);
+    $(ui.selected).find(global_options.table_checkboxes).prop('checked', true).change();
+    // console.log(ui.selected);
+    // console.log($(this).data('uiSelectable').selectees.filter('.ui-selected'));
+};
+
+SelectableTable.prototype._unselected = function (event, ui) {
+    $(ui.unselected).removeClass(global_options.tr_selected_class);
+    $(ui.unselected).find(global_options.table_checkboxes).prop('checked', false).change();
+};
+
+SelectableTable.prototype._stop = function (event, ui) {
+    rows_state_unselecting = null;
+    first_selected_row = null;
+};
+
+
+// Main entry point
+module.exports = function selectable_table(el, options) {
+    return new SelectableTable(el, options);
+};
+
+module.exports.SelectableTable = SelectableTable;
+
+},{}],12:[function(require,module,exports){
+module.exports = {
+    // Popup
+    'popup': 'div.popup',
+    'popup_close_button': 'a.popup-inner__content-link-text',
+    'popup_main_button': 'div.popup-button__item',
+    'div_delete_button': 'div.toolbar-button__item_type_delete',
+    'sacrud_form': 'form#sacrud-form',
+    // Selectable
+    'tr_selected_class': 'sacrud-grid-content-grid__body-row_state_active',
+    'state_disable_class': 'toolbar-button__item_state_disable',
+    'input_selected_action': 'input[name="selected_action"]',
+    'all_checkboxes_button': 'input#selected_all_item',
+    'table_checkboxes': 'input[name="selected_item"]',
+    'table_checkboxes_checked': 'input[name="selected_item"]:checked',
+    'table_checkboxes_not_checked': 'input[name="selected_item"]:not(:checked)',
+};
+
+},{}]},{},[1]);

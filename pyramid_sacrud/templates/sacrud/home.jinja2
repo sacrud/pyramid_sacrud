@@ -12,7 +12,7 @@
                         </div>
                     {% endif %}
                     <div class="dashboard__column sortable"
-                         data-number="{{widget.position}}">
+                         data-number="{{ widget.position }}">
                 {% endif %}
 
                 {% if widget.tables|length > 0 %}
@@ -43,10 +43,4 @@
     </div>
 {% endblock %}
 
-{% block extrascript %}
-    <!--
-        <script type="text/javascript">
-            requirejs(["app/dashboard"]);
-        </script>
-    -->
-{% endblock %}
+{% block extrascript %}{% endblock %}

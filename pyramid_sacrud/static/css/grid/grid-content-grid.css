@@ -92,7 +92,7 @@
 			border-color: #eee transparent transparent transparent;
 			line-height: 0;
 			_border-color: #eee #000 #000 #000;
-			// _filter: progid:DXImageTransform.Microsoft.Chroma(color='#eeeeee');
+			_filter: progid:DXImageTransform.Microsoft.Chroma(color='#eeeeee');
 			content: '';
 			display: block;
 		}

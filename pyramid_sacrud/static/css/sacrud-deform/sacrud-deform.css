@@ -10,7 +10,6 @@
 	}
 		.sacrud-deform .panel
 		{
-
 		}
 			.sacrud-deform .panel-heading
 			{
@@ -69,7 +68,7 @@
 						color: #777;
 						font: italic 0.75em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 					}
-input.sacrud_deform
+input.form-control
 {
 	background: #fff;
 	border-left: solid 1px #c6c6c6;
@@ -86,7 +85,7 @@ input.sacrud_deform
 	display: inline-block;
 	min-width: 400px;
 }
-input.sacrud_deform:focus
+input.form-control:focus
 {
 	border: solid 1px #4183c4;
 	transition: all 200ms linear;
@@ -114,7 +113,7 @@ textarea.sacrud_deform:focus
 	border: solid 1px #4183c4;
 	transition: all 200ms linear;
 }
-select.sacrud_deform
+select.form-control
 {
 	background: #fff;
 	border-left: solid 1px #c6c6c6;
@@ -132,7 +131,7 @@ select.sacrud_deform
 	display: inline-block;
 	min-width: 400px;
 }
-select.sacrud_deform:focus
+select.form-control:focus
 {
 	border: solid 1px #4183c4;
 	transition: all 200ms linear;
