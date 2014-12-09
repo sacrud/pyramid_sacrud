@@ -8,7 +8,7 @@
 
 language: python
 
-echonotifications:
+notifications:
   email: "sacrud@uralbash.ru"
   email: "arkadiy@bk.ru"
   irc:
