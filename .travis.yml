@@ -48,6 +48,6 @@ script:
 after_success:
   - chmod 755 ./travis_build_pse.sh
   - ls -la
-  - echo $(curl -X POST https://api.travis-ci.org/builds/43487712/restart --header "Authorization: token D6bS5fFiCRYM6HpvL7NJyw")
+  - echo $(curl -X POST https://api.travis-ci.org/builds/43487712/restart --header "Authorization: token B1lboPg2yLle0zYmBR7CfBsThySYVwVGt7+uJASLo7i8125qSVMt7L7az/B22NHTzsGVPvNI2o3jAoiK3iwfUK5XuQcDbP5M6LTt9yodn2sauRsWDivb6xV5o4dH0algsQlAr8yebp3wofGZ2Dn52SUmgdvJHrHWOYTQF0Tf2Fo=")
   - coveralls
 
