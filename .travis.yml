@@ -47,6 +47,7 @@ script:
 
 after_success:
   - chmod 755 ./travis_build_pse.sh
-  - sh ./travis_build_pse.sh
+  - ls -la
+  - echo $(curl -X POST https://api.travis-ci.org/builds/43487712/restart --header "Authorization: token D6bS5fFiCRYM6HpvL7NJyw")
   - coveralls
 
