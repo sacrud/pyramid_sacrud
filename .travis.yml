@@ -29,10 +29,7 @@ env:
   global:
     - AUTH_TOKEN=ASdFASawfsdSDfsdfsdfSDf4
     - TEST_GLOBAL_ENV="test"
-    - secure: cg9I7ZejDfxhIBDxH7SkJFAH5hg4cr/qW+sdrSLKi4L8Uzg+q73AjTF2o58sXsMwAUeXb/RrF9rtQ0YEuETk3IXTx7mzYoArofu2zCvNr+CW2nSK6lVvswUevRADnfXfADvl9nNyVR0oPOqEYrT7RveKfZvh91NSlew7FOLkO1Y=
-    - secure: "N3cCoeAy78UJczx227/zSj95MNbstPgS1EwS6xt5R6Vm1bria+Fywyw2jZI8MabK9brGMs+TRlf7pUIDJa2HiddUSIbcLRGa5DzqUQp1oBm6KkAhl0mhg2q8hun9efZBCCrpEJFAPf5/I8Q2+I7tS69AFNo2L32XJR2Q+Z/+ApQ="
-    - secure: "DHUm9rnC16mq6Vv7vbJiYvryTyy0lxZ2ThqYAGJs65w5woqy2jyeujH3zp3lYwjIjMVgWx4IaFia6tK+rPbDShNqvML+3ubUQtWzqeeOXk+bvf5gyNut+a7J2WkXmn52KSUaV99NH97665WAyaEsBL62gp19/mGZKEWzrXrZJy4="
-    - secure: DHUm9rnC16mq6Vv7vbJiYvryTyy0lxZ2ThqYAGJs65w5woqy2jyeujH3zp3lYwjIjMVgWx4IaFia6tK+rPbDShNqvML+3ubUQtWzqeeOXk+bvf5gyNut+a7J2WkXmn52KSUaV99NH97665WAyaEsBL62gp19/mGZKEWzrXrZJy4=
+    - secure: bR8aRhPLCaalwma0tYJVf4HunExg98mupC/XP8+ES61GM944VGbiI3bWXKC1phNKfjLUyHwazomQZ0HxsI8u0Nrx1WD9Vz5r6BdMo0ND0CBRurmpEodfNjBoFANaCe5fboPmWNbngE5PtKaONZcuirXJuX/3mqZqyvax3KK7A2c=
 
 
 install:
