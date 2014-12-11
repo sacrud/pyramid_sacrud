@@ -27,9 +27,7 @@ env:
 
 env:
   global:
-    - AUTH_TOKEN=ASdFASawfsdSDfsdfsdfSDf4
-    - TEST_GLOBAL_ENV="test"
-    - secure: bR8aRhPLCaalwma0tYJVf4HunExg98mupC/XP8+ES61GM944VGbiI3bWXKC1phNKfjLUyHwazomQZ0HxsI8u0Nrx1WD9Vz5r6BdMo0ND0CBRurmpEodfNjBoFANaCe5fboPmWNbngE5PtKaONZcuirXJuX/3mqZqyvax3KK7A2c=
+    - secure: fezifIUTMdw5C+2oD8DnKqc1c1+iXY7XpO5XVn05wXExv0KWQs4NKBxiNO3d/IHgwR1421KXqCDh6U2Vc/OqGWGX9ZgUltjAOmOpoZN4HJt5S4DuWzYpdHwS4WfiMdx8XsWBbWz48CQxy3Jb5dTVZ4tQH1W1Cinc0pN3HBIGG4c=
 
 
 install:
@@ -49,7 +47,5 @@ script:
 
 after_success:
   - chmod 755 ./travis_build_pse.sh
-  - ls -la
-  - echo $TEST_GLOBAL_ENV
   - sh ./travis_build_pse.sh
   - coveralls
