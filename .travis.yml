@@ -28,6 +28,8 @@ env:
 env:
   global:
     - secure: "N3cCoeAy78UJczx227/zSj95MNbstPgS1EwS6xt5R6Vm1bria+Fywyw2jZI8MabK9brGMs+TRlf7pUIDJa2HiddUSIbcLRGa5DzqUQp1oBm6KkAhl0mhg2q8hun9efZBCCrpEJFAPf5/I8Q2+I7tS69AFNo2L32XJR2Q+Z/+ApQ="
+    - TEST_GLOBAL_ENV="True"
+
 
 install:
   - pip install nose coverage coveralls tox webtest
@@ -47,5 +49,6 @@ script:
 after_success:
   - chmod 755 ./travis_build_pse.sh
   - ls -la
+  - echo $TEST_GLOBAL_ENV
   - sh ./travis_build_pse.sh
   - coveralls
