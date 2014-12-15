@@ -181,6 +181,13 @@ For their work, you need install Mocha_, Chai_ and Selenium-webdriver_.
 .. _Selenium-webdriver: https://www.npmjs.org/package/selenium-webdriver/
 
 .. note::
+
+    Also, you need a project running on the localhost with 8000 port. For example, you may use pyramid_sacrud_example_ (docs_)
+
+    .. _pyramid_sacrud_example: https://github.com/ITCase/pyramid_sacrud_example
+    .. _docs: http://pyramid-sacrud-example.readthedocs.org/en/latest/index.html
+
+.. note::
     
     Install Mocha in global(with -g) on Windows.
 
@@ -190,14 +197,7 @@ For their work, you need install Mocha_, Chai_ and Selenium-webdriver_.
     npm install chai
     npm install selenium-webdriver
 
-.. note::
 
-    Also, you need a project running on the localhost with 8000 port. For example, you may use pyramid_sacrud_example_ (docs_)
-
-    .. _pyramid_sacrud_example: https://github.com/ITCase/pyramid_sacrud_example
-    .. _docs: http://pyramid-sacrud-example.readthedocs.org/en/latest/index.html
-    
-        
 All tests are in the directory `pyramid_sacrud/static/js/test/`
 
 To run tests for javascript, you need to use **npm test** command from category containing package.json:
