@@ -86,8 +86,6 @@ License
 The project is licensed under the MIT license.
 
 
-
-
 .. |Build Status| image:: https://travis-ci.org/ITCase/pyramid_sacrud.svg?branch=master
    :target: https://travis-ci.org/ITCase/pyramid_sacrud
 .. |Coverage Status| image:: https://coveralls.io/repos/ITCase/pyramid_sacrud/badge.png?branch=master
@@ -98,9 +96,3 @@ The project is licensed under the MIT license.
    :target: http://waffle.io/ITCase/pyramid_sacrud
 .. |PyPI| image:: http://img.shields.io/pypi/dm/pyramid_sacrud.svg
    :target: https://pypi.python.org/pypi/pyramid_sacrud/
-
-
-.. image:: https://d2weczhvl823v0.cloudfront.net/ITCase/pyramid_sacrud/trend.png
-   :alt: Bitdeli badge
-   :target: https://bitdeli.com/free
-
