@@ -1,9 +1,5 @@
-SQLAlchemy>=0.8.0b1
 peppercorn
 pyramid_jinja2==1.10
 pyramid
-colander==1.0b1
 sacrud_deform>=0.0.5
-pyramid_beaker
-transaction
 paginate_sqlalchemy
