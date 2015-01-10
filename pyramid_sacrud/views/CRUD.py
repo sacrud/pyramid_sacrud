@@ -22,7 +22,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from sacrud import action
 from sacrud.common import (columns_by_group, get_flat_columns, get_obj,
                            pk_list_to_dict, pk_to_list)
-from sacrud_deform import form_generator
+from sacrud_deform import SacrudForm
 
 from ..breadcrumbs import breadcrumbs
 from ..common import (get_table, get_table_verbose_name, request_to_sacrud,
@@ -96,23 +96,22 @@ class Add(CRUD):
         except (NoResultFound, KeyError):
             raise HTTPNotFound
         columns = columns_by_group(self.table)
-        form, js_list = form_generator(dbsession=dbsession,
-                                       obj=obj,
-                                       table=self.table,
-                                       columns_by_group=columns,
-                                       request=self.request)
         resp = action.CRUD(self.request.dbsession, self.table, self.pk)
+        form = SacrudForm(dbsession,
+                          obj,
+                          self.table,
+                          columns_by_group=columns).build()
 
         def get_responce(form, sa_crud=None):
+
             if not sa_crud:
                 sa_crud = {'obj': obj,
                            'pk': self.pk,
                            'col': columns,
-                           'table': self.table
+                           'table': self.table,
                            }
             return dict(form=form.render(),
                         sa_crud=sa_crud,
-                        js_list=js_list,
                         breadcrumbs=bc,
                         pk_to_list=pk_to_list)
 
