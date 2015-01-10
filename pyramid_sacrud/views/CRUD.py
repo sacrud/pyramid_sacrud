@@ -20,7 +20,7 @@ from pyramid.view import view_config
 from sqlalchemy.orm.exc import NoResultFound
 
 from sacrud import action
-from sacrud.common import (columns_by_group, get_flat_columns, get_obj,
+from sacrud.common import (get_flat_columns, get_obj,
                            pk_list_to_dict, pk_to_list)
 from sacrud_deform import SacrudForm
 
@@ -95,19 +95,15 @@ class Add(CRUD):
             obj = get_obj(dbsession, self.table, self.pk)
         except (NoResultFound, KeyError):
             raise HTTPNotFound
-        columns = columns_by_group(self.table)
-        resp = action.CRUD(self.request.dbsession, self.table, self.pk)
-        form = SacrudForm(dbsession,
-                          obj,
-                          self.table,
-                          columns_by_group=columns).build()
+        resp = action.CRUD(dbsession, self.table, self.pk)
+        form = SacrudForm(obj=obj, dbsession=dbsession,
+                          request=self.request, table=self.table).build()
 
         def get_responce(form, sa_crud=None):
 
             if not sa_crud:
                 sa_crud = {'obj': obj,
                            'pk': self.pk,
-                           'col': columns,
                            'table': self.table,
                            }
             return dict(form=form.render(),
