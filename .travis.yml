@@ -40,8 +40,8 @@ install:
   - pip install pyramid_beaker
   - pip install transaction
   - pip install paginate_sqlalchemy
-  - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git@develop
-  - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud.git@develop
+  - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git
+  - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud.git
 
 script:
   - nosetests --with-coverage --cover-package pyramid_sacrud --cover-erase --with-doctest
