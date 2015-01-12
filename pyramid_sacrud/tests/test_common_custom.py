@@ -11,8 +11,7 @@ Test for sacrud.common.custom
 """
 import unittest
 
-from pyramid_sacrud.common.custom import (get_name, Widget, WidgetRelationship,
-                                          WidgetRowLambda)
+from pyramid_sacrud.common.custom import (get_name, Widget, WidgetRowLambda)
 from pyramid_sacrud.tests.models.auth import User
 
 
@@ -24,7 +23,8 @@ class CustomTest(unittest.TestCase):
         self.assertEqual('user password', get_name(User.password))
         self.assertEqual('foo', get_name('foo'))
 
-        class EmptyType: pass
+        class EmptyType:
+            pass
         foo = EmptyType()
         foo.info = {}
         foo.name = ''
@@ -39,7 +39,8 @@ class CustomTest(unittest.TestCase):
         self.assertEqual(w.info, {'verbose_name': 'foo', 'name': 'foo'})
 
     def test_widget_row_lambda(self):
-        def func(x): return x.name + x.surname
+        def func(x):
+            return x.name + x.surname
         w = WidgetRowLambda(func, name='foo')
         self.assertEqual(w.info,
                          {'sacrud_position': 'inline',
@@ -47,8 +48,3 @@ class CustomTest(unittest.TestCase):
                           'verbose_name': 'foo',
                           'name': 'foo'}
                          )
-
-    def test_widget_relationship(self):
-        w = WidgetRelationship('foo', 'bar', name='baz')
-        self.assertEqual(w.relation, 'foo')
-        self.assertEqual(w.table, 'bar')
