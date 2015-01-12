@@ -73,7 +73,7 @@ Column verbose name
 
         id = Column(Integer, primary_key=True)
         name = Column(String,
-                      info={"verbose_name": u'name of user', })
+                      info={"colanderalchemy": {'title': u'name of user'}})
 
         def __init__(self, name):
             self.name = name
@@ -96,8 +96,8 @@ Description for column
 
         id = Column(Integer, primary_key=True)
         name = Column(String,
-                      info={"verbose_name": u'name of user',
-                            "description": "put there name"})
+                      info={"colanderalchemy": {'title': u'name of user',
+                                                'description': 'put username there'}})
 
         def __init__(self, name):
             self.name = name
@@ -112,24 +112,17 @@ Add css class for column
 
 .. code-block:: python
     :linenos:
-    :emphasize-lines: 14-16
+    :emphasize-lines: 7
 
     class TestCustomizing(Base):
         __tablename__ = "test_customizing"
 
         id = Column(Integer, primary_key=True)
-        name = Column(String, info={"description": "put there name"})
-        date = Column(Date, info={"verbose_name": 'date JQuery-ui'})
-        name_ru = Column(String, info={"verbose_name": u'Название', })
-        name_fr = Column(String, info={"verbose_name": u'nom', })
-        name_bg = Column(String, info={"verbose_name": u'Име', })
-        name_cze = Column(String, info={"verbose_name": u'název', })
-        description = Column(Text)
-        description2 = Column(Text)
-
-        sacrud_css_class = {'tinymce': [description, description2],
-                            'content': [description],
-                            'name': [name], 'Date': [date]}
+        description = Column(Text,
+            info={'colanderalchemy': {
+                    'widget': deform.widget.TextAreaWidget(css_class='tinymce content')}})
+        )
+    ...
 
 Adds css class for column
 
@@ -141,28 +134,24 @@ Configure displayed fields in grid
 
 .. code-block:: python
     :linenos:
-    :emphasize-lines: 18
+    :emphasize-lines: 14
 
     class TestCustomizing(Base):
         __tablename__ = "test_customizing"
 
         id = Column(Integer, primary_key=True)
-        name = Column(String, info={"description": "put there name"})
-        date = Column(Date, info={"verbose_name": 'date JQuery-ui'})
-        name_ru = Column(String, info={"verbose_name": u'Название', })
-        name_fr = Column(String, info={"verbose_name": u'nom', })
-        name_bg = Column(String, info={"verbose_name": u'Име', })
-        name_cze = Column(String, info={"verbose_name": u'název', })
+        name = Column(String)
+        date = Column(Date)
+        name_ru = Column(String)
+        name_fr = Column(String)
+        name_bg = Column(String)
+        name_cze = Column(String)
         description = Column(Text)
         description2 = Column(Text)
 
-        sacrud_css_class = {'tinymce': [description, description2],
-                            'content': [description],
-                            'name': [name], 'Date': [date]}
-
         sacrud_list_col = [name, name_ru, name_cze]
 
-Use sacrud_list_col attribute of Model.
+Use ``sacrud_list_col`` attribute of Model.
 It shows only name, name_ru and name_cze columns in grid.
 
 .. image:: ../_static/img/sacrud_list_col.png
@@ -179,35 +168,22 @@ Configure displayed columns for detailed object
         __tablename__ = "test_customizing"
 
         id = Column(Integer, primary_key=True)
-        name = Column(String, info={"description": "put there name"})
-        date = Column(Date, info={"verbose_name": 'date JQuery-ui'})
-        name_ru = Column(String, info={"verbose_name": u'Название', })
-        name_fr = Column(String, info={"verbose_name": u'nom', })
-        name_bg = Column(String, info={"verbose_name": u'Име', })
-        name_cze = Column(String, info={"verbose_name": u'název', })
+        name = Column(String)
+        date = Column(Date)
+        name_ru = Column(String)
+        name_fr = Column(String)
+        name_bg = Column(String)
+        name_cze = Column(String)
         description = Column(Text)
         description2 = Column(Text)
 
-        sacrud_css_class = {'tinymce': [description, description2],
-                            'content': [description],
-                            'name': [name], 'Date': [date]}
-
-        sacrud_list_col = [name, name_ru, name_cze]
-
-        sacrud_detail_col = [('name space', [name,
-                                            ('i18 names', (name_ru, name_bg,
-                                                            name_fr, name_cze)
-                                            )]
-                            ),
-                            ('description', [description, date,
-                                            (u"Расположение",
-                                            (in_menu, visible, in_banner)
-                                            ),
-                                            description2])
-                            ]
+        sacrud_detail_col = [
+            ('name space', [name, name_ru, name_bg, name_fr, name_cze]),
+            ('description', [description, date, in_menu, visible, in_banner, description2])
+        ]
 
 
-Use sacrud_detail_col attribute of Model.
+Use ``sacrud_detail_col`` attribute of Model.
 It agregate and composite columns in detail view.
 
 .. image:: ../_static/img/sacrud_detail_col.png
@@ -218,19 +194,12 @@ Models attributes as property
 
 Use :py:class:`sacrud.common.TableProperty` decorator.
 
-.. literalinclude:: ../_pyramid_sacrud_example/sacrud_example/models/funny_models.py
-   :linenos:
-   :language: py
-   :pyobject: MPTTPages
-   :emphasize-lines: 6-21
-
-
 Composite fields and column as custom function
 ----------------------------------------------
 
 .. code-block:: python
 
-    from pyramid_sacrud.common.custom import WidgetRelationship, WidgetRowLambda
+    from pyramid_sacrud.common.custom import WidgetRowLambda
 
 Column as lambda function of row
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -268,6 +237,7 @@ Column as relationship
 
 .. code-block:: python
     :linenos:
+    :emphasize-lines: 39
 
     class User(Base):
         __tablename__ = 'users'
@@ -282,9 +252,13 @@ Column as relationship
         verbose_name = _('Company of user')
 
         user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
-        user = relationship("User")
+        user = relationship("User",
+            info={'colanderalchemy': {'title': _("Users")}}
+        )
         company_id = Column(Integer, ForeignKey('company.id'), primary_key=True)
-        company = relationship("Company")
+        company = relationship("Company",
+            info={'colanderalchemy': {'title': _("Affiliate company")}}
+        )
 
 
     class Company(Base):
@@ -303,30 +277,14 @@ Column as relationship
         @TableProperty
         def sacrud_detail_col(cls):
             return [('', [Company.name, cls.c.company_id,
-                        WidgetRelationship(Company.users,
-                                            table=User,
-                                            name=_("Users"),
-                                            ),
-                        WidgetRelationship(Company.company,
-                                            table=Company,
-                                            name=_("Affiliate company"),
-                                            )
-                        ]),
-                    ]
+                          Company.users, Company.company])
+                   ]
 
         def __repr__(self):
             return self.name
 
 
 **ManyToMany**
-
-.. |ManyToManyField| image:: ../_static/img/ManyToManyField.png
-
-.. note::
-
-    I think it should look like Django ManyToManyField.
-    Will be made in the next version.
-    |ManyToManyField|
 
 .. code-block:: python
     :linenos:
@@ -338,43 +296,7 @@ Column as relationship
     # SACRUD
     @TableProperty
     def sacrud_detail_col(cls):
-        return [('', [Company.name, cls.c.company_id,
-                    WidgetRelationship(Company.users,
-                                        table=User,
-                                        name=_("Users"),
-                                        ),
-                    WidgetRelationship(Company.company,
-                                        table=Company,
-                                        name=_("Affiliate company"),
-                                        )
-                    ]),
-                ]
-
-
-
-**OneToMany**
-
-.. code-block:: python
-    :linenos:
-    :emphasize-lines: 12-15
-
-    users = relationship('User', secondary='m2m_company2user',
-                        backref='company')
-
-    # SACRUD
-    @TableProperty
-    def sacrud_detail_col(cls):
-        return [('', [Company.name, cls.c.company_id,
-                    WidgetRelationship(Company.users,
-                                        table=User,
-                                        name=_("Users"),
-                                        ),
-                    WidgetRelationship(Company.company,
-                                        table=Company,
-                                        name=_("Affiliate company"),
-                                        )
-                    ]),
-                ]
+        return [('', [Company.name, cls.c.company_id, Company.users])]
 
 Template redefinition
 ---------------------
@@ -394,14 +316,13 @@ Example from `<https://github.com/ITCase/pyramid_sacrud_example>`_
 
 Configure your project:
 
-.. literalinclude:: ../_pyramid_sacrud_example/sacrud_example/__init__.py
+.. literalinclude:: ../_pyramid_sacrud_example/pyramid_sacrud_example/includes/admin/__init__.py
    :linenos:
-   :emphasize-lines: 85-88
    :language: py
 
 Dict of models example for :mod:`pyramid_sacrud`:
 
-.. literalinclude:: ../_pyramid_sacrud_example/sacrud_example/sacrud_config.py
+.. literalinclude:: ../_pyramid_sacrud_example/pyramid_sacrud_example/includes/admin/config.py
    :linenos:
    :emphasize-lines: 31-
    :language: py
