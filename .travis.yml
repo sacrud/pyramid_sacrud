@@ -35,7 +35,6 @@ install:
   - pip install nose coverage coveralls tox webtest
   - pip install SQLAlchemy>=0.8.0b1
   - pip install peppercorn
-  - pip install pyramid_jinja2==1.10
   - pip install pyramid
   - pip install pyramid_beaker
   - pip install transaction
