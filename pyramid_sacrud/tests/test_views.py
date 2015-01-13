@@ -10,6 +10,7 @@
 Tests of viwes
 """
 from nose.tools import raises
+from collections import OrderedDict
 from pyramid import testing
 from pyramid.httpexceptions import HTTPNotFound
 
@@ -42,21 +43,10 @@ class _TransactionalFixture(TransactionalTest):
     def _init_pyramid_sacrud_settings(self, request):
         if not request.registry.settings:
             request.registry.settings = {}
-        request.registry.settings['pyramid_sacrud.models'] =\
-            {
-                'Permissions': {
-                    'tables': (
-                        User,
-                    ),
-                    'position': 1,
-                },
-                'Users': {
-                    'tables': (
-                        Groups,
-                    ),
-                    'position': 4,
-                }
-            }
+        request.registry.settings['pyramid_sacrud.models'] = (
+            ('Permissions', [User]),
+            ('Users', [Groups])
+        )
         return request
 
 
@@ -88,21 +78,17 @@ class HomeTests(_TransactionalFixture):
         request.registry.settings = {}
         self.assertEquals(
             sa_home(request),
-            {'widgets': [], 'dashboard_columns': 3}
+            {'dashboard_row_len': 3, 'tables': OrderedDict()}
         )
 
     def test_with_models_success(self):
         request = testing.DummyRequest()
         self._init_pyramid_sacrud_settings(request)
         responce = sa_home(request)
-        self.assertEquals(responce['dashboard_columns'], 3)
-        self.assertEquals(len(responce['widgets']), 4)
-        self.assertEquals(responce['widgets'][0].tables, (User,))
-        self.assertEquals(responce['widgets'][0].position, 1)
-        self.assertEquals(responce['widgets'][1].tables, [])
-        self.assertEquals(responce['widgets'][2].tables, [])
-        self.assertEquals(responce['widgets'][3].tables, (Groups,))
-        self.assertEquals(responce['widgets'][3].position, 4)
+        self.assertEquals(responce['dashboard_row_len'], 3)
+        self.assertEquals(len(responce['tables']), 2)
+        tables = OrderedDict([('Permissions', [User]), ('Users', [Groups])])
+        self.assertEquals(responce['tables'], tables)
 
 
 class ListTests(_TransactionalFixture):

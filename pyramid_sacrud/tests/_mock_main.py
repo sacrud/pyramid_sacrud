@@ -23,14 +23,8 @@ def main(global_config, **settings):
     # SACRUD
     config.include('pyramid_sacrud', route_prefix='/admin')
     settings = config.registry.settings
-    settings['pyramid_sacrud.models'] = {
-        '': {
-            'tables': [User],
-            'position': 1,
-        },
-        'Auth models': {
-            'tables': [User, Profile],
-            'position': 4,
-        },
-    }
+    settings['pyramid_sacrud.models'] = (
+        ('', [User]),
+        ('Auth models', [User, Profile])
+    )
     return config.make_wsgi_app()
