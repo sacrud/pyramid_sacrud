@@ -12,14 +12,8 @@ Look how easy it is to use with Pyramid:
     # add sacrud and project models
     config.include('pyramid_sacrud')
     settings = config.registry.settings
-    settings['pyramid_sacrud.models'] = {'Group1': {
-                                            'tables': [Model1,
-                                                       Model2],
-                                            'position': 1,},
-                                         'Group2': {
-                                            'tables': [Model3],
-                                            'position': 4,}
-                                         }
+    settings['pyramid_sacrud.models'] = (('Group1', [Model1, Model2]),
+                                         ('Group2', [Model3]))
 
 go to http://localhost:6543/sacrud/
 

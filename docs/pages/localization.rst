@@ -21,9 +21,8 @@ you can use standart translate method for Pyramid.
     from pyramid.i18n import TranslationStringFactory
 
     _ = TranslationStringFactory('myapplication')
-    settings['pyramid_sacrud.models'] = {
-        _('Permissions'): {
-            'tables': (
+    settings['pyramid_sacrud.models'] = (
+        (_('Permissions'), (
                 UserPermission,
                 UserGroup,
                 Group,
@@ -32,17 +31,10 @@ you can use standart translate method for Pyramid.
                 UserResourcePermission,
                 GroupResourcePermission,
                 ExternalIdentity,
-            ),
-            'position': 1,
-        },
-        _('Users'): {
-            'tables': (
-                User,
-                Staff,
-            ),
-            'position': 4,
-        }
-    }
+            )
+        ),
+        (_('Users'), (User, Staff))
+    )
 
 For more information see `Internationalization and Localization <http://docs.pylonsproject.org/docs/pyramid/en/latest/narr/i18n.html>`_
 

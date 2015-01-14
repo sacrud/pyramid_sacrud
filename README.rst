@@ -22,16 +22,12 @@ Look how easy it is to use with Pyramid:
     # add sacrud and project models
     config.include('pyramid_sacrud')
     settings = config.registry.settings
-    settings['pyramid_sacrud.models'] = {'Group1': {
-                                            'tables': [Model1,
-                                                       Model2],
-                                            'position': 1,},
-                                         'Group2': {
-                                            'tables': [Model3],
-                                            'position': 4,}
-                                         }
+    settings['pyramid_sacrud.models'] = (('Group1', [Model1, Model2]),
+                                         ('Group2', [Model3]))
 
 go to http://localhost:6543/sacrud/
+
+Online example can be found here `pyramid_sacrud_example <http://pyramid-sacrud-example.readthedocs.org/en/latest/demo.html#online-on-runnable-com>`_
 
 And see...
 
@@ -46,12 +42,6 @@ github
 .. code-block:: bash
 
     pip install git+http://github.com/ITCase/pyramid_sacrud.git
-
-current develop version
-
-.. code-block:: bash
-
-    pip install git+http://github.com/ITCase/pyramid_sacrud.git@develop
 
 PyPi
 ----
@@ -68,15 +58,25 @@ source
     git clone git+http://github.com/ITCase/pyramid_sacrud.git
     python setup.py install
 
+contribute
+----------
+
+.. code-block:: bash
+
+    git clone git+http://github.com/ITCase/pyramid_sacrud.git
+    python setup.py develop
+
 Support and Development
 =======================
 
 To report bugs, use the `issue tracker <https://github.com/ITCase/pyramid_sacrud/issues>`_
 or `waffle board <https://waffle.io/ITCase/pyramid_sacrud>`_.
 
-We welcome any contribution: suggestions, ideas, commits with new futures, bug fixes, refactoring, docs, tests, translations etc
+We welcome any contribution: suggestions, ideas, commits with new futures,
+bug fixes, refactoring, docs, tests, translations etc
 
-If you know Flask framework, it would be nice create connector to him like this.
+If you know Flask framework, it would be nice create connector
+of `sacrud <https://github.com/ITCase/sacrud/>`_ like this.
 
 If you have question, contact me sacrud@uralbash.ru or IRC channel #sacrud
 
@@ -84,6 +84,8 @@ License
 =======
 
 The project is licensed under the MIT license.
+
+
 
 
 .. |Build Status| image:: https://travis-ci.org/ITCase/pyramid_sacrud.svg?branch=master
