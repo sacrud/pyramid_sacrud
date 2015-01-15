@@ -20,8 +20,7 @@ from pyramid.view import view_config
 from sqlalchemy.orm.exc import NoResultFound
 
 from sacrud import action
-from sacrud.common import (get_flat_columns, get_obj,
-                           pk_list_to_dict, pk_to_list)
+from sacrud.common import get_flat_columns, get_obj, pk_list_to_dict, pk_to_list
 from sacrud_deform import SacrudForm
 
 from ..breadcrumbs import breadcrumbs

@@ -13,10 +13,13 @@ from collections import OrderedDict
 from pyramid.view import view_config
 
 from ..common import get_settings_param
+from ..security import PYRAMID_SACRUD_HOME
 
 
-@view_config(route_name='sa_home', renderer='/sacrud/home.jinja2',
-             permission='pyramid_sacrud_home')
+@view_config(
+    route_name='sa_home',
+    renderer='/sacrud/home.jinja2',
+    permission=PYRAMID_SACRUD_HOME)
 def sa_home(request):
     tables = OrderedDict(get_settings_param(request, 'pyramid_sacrud.models'))
     dashboard_row_len = get_settings_param(request,

@@ -25,4 +25,3 @@ def includeme(config):
     config.include('sacrud_deform')
     config.add_static_view('deform_static', 'deform:static')
     config.add_static_view('sa_static', 'pyramid_sacrud:static')
-    config.add_static_view('sa_elfinder_static', 'pyramid_elfinder:static')
