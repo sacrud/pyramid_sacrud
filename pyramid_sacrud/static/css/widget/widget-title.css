@@ -1,0 +1,10 @@
+.widget-title
+{
+    padding: 6px 10px;
+    background: #4183c4;
+    font-family: 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    color: #fff;
+    position: relative;
+    font-weight: 300;
+    font-size: 1.1em;
+}
