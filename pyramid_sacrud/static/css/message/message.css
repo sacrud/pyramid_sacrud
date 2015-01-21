@@ -20,3 +20,21 @@
 	{
   background: #EAB13C;
 }
+
+.alert-danger
+{
+  padding: 0.7em 1.2em 0.8em 1.2em;
+  background: red;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+.alert-danger .errorMsgLbl
+  {
+  font-family: 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
+  color: #fff;
+  font-size: 1.1em;
+}
+.alert-danger .errorMsg
+{
+  display: none;
+}

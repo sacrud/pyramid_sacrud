@@ -13,12 +13,15 @@
 	}
 	.dashboard-inner
 	{
-
+ 		width: 100%;
+        display: table;
+        border-collapse: separate;
+        border-spacing: 0;
+        empty-cells: show;
 	}
 		.dashboard-column
 		{
-			width: 25%;
-			float: left;
+			display: table-cell;
 			padding: 0 20px 0 0;
 			box-sizing: border-box;
 		}
