@@ -8,7 +8,7 @@
 	.header__inner
 	{
 		position: relative;
-		padding: 0.2em 20px;
+		padding: 0.3em 20px;
 		margin: 0 auto;
 		max-width: 1160px;
 		min-width: 950px;
@@ -16,6 +16,11 @@
 		.header__inner-menu
 		{
 			float: left;
+		}
+		.header__lang
+		{
+			float: left;
+			padding: 0 0 0 30px;
 		}
 		.header__user
 		{

@@ -4,13 +4,16 @@
 }
     .login-inner
     {
-
+        padding: 1px 0 0 0;
     }
         .login__link
         {
-            font: 0.9em 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+            font: 0.8em 'Segoe UI', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
             letter-spacing: 0.02em;
             color: #fff;
-            text-transform: uppercase;
             margin: 0 0 0 1em;
+        }
+        .login__link:hover
+        {
+            color: #4183c4;
         }

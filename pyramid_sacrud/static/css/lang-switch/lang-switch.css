@@ -3,24 +3,18 @@
     display: inline-block;
     white-space: nowrap;
     position: relative;
+    top: 1px;
 }
     .lang-switch__item
     {
         display: inline-block;
         text-decoration: none;
         text-transform: uppercase;
-        font: .8em Arial, Helvetica, sans-serif;
+        font: .7em Arial, Helvetica, sans-serif;
         margin: 0 10px 0 0;
+        color: #fff;
     }
     .lang-switch__item:hover
-    {
-        color: #c00;
-    }
-    .lang-switch__item:visited
-    {
-        color: #551a8b;
-    }
-    .lang-switch__item:visited:hover
     {
         color: #c00;
     }

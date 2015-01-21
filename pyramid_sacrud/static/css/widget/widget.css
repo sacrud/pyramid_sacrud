@@ -1,6 +1,19 @@
-.widget {
+.widget
+{
+    width: 25%;
     margin: 0 0 20px 0;
     background: #fff;
+    float: left;
+}
+.widget-separator
+{
+    width: 20px;
+    display: none;
+
+}
+.widget-separator:last-child
+{
+    display: none;
 }
 .widget-content
 {
