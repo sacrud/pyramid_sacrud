@@ -24,4 +24,5 @@ def sa_home(request):
     tables = OrderedDict(get_settings_param(request, 'pyramid_sacrud.models'))
     dashboard_row_len = get_settings_param(request,
                                            'pyramid_sacrud.dashboard_row_len')
-    return {'dashboard_row_len': dashboard_row_len or 3, 'tables': tables}
+    return {'dashboard_row_len': int(dashboard_row_len or 3),
+            'tables': tables}

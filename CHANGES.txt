@@ -1,9 +1,0 @@
-0.0.2 (2014-11-07)
-==================
-
-- Add locale directory to MANIFEST.in
-
-0.0.1 (2014-11-06)
-==================
-
-- First release
