@@ -15,15 +15,14 @@
 	{
 
 	}
-		.dashboard-row
+		.dashboard-column
 		{
-			width: 50%;
-			display: table;
-			table-layout: fixed;
-			border-collapse: separate;
-			border-spacing: 0;
-			empty-cells: show;
-			box-sizing: border-box;
-			border: solid 1px red;
+			width: 25%;
 			float: left;
+			padding: 0 20px 0 0;
+			box-sizing: border-box;
+		}
+		.dashboard-column:last-child
+		{
+			padding: 0;
 		}

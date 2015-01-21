@@ -1,19 +1,8 @@
 .widget
 {
-    width: 25%;
     margin: 0 0 20px 0;
     background: #fff;
-    float: left;
-}
-.widget-separator
-{
-    width: 20px;
-    display: none;
-
-}
-.widget-separator:last-child
-{
-    display: none;
+    box-shadow: 0 0 5px #ccc;
 }
 .widget-content
 {
@@ -39,9 +28,9 @@
 
     .widget-row__item
     {
-        font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-        line-height: 14pt;
+        font: 0.85em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
         display: table-row;
+        padding: 0 0.2em;
     }
         .widget-row__item-c1
         {

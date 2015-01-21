@@ -18,9 +18,10 @@
 	}
 		.sacrud-grid-content__left-inner
 		{
-			padding: 0 220px 0 0;
-			overflow: auto;
+/*			margin: 0 220px 0 0;*/
 			min-height: 200px;
+			position: relative;
+			overflow: auto;
 		}
 	.sacrud-grid-content__right
 	{
