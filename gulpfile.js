@@ -41,4 +41,4 @@ gulp.task('watch', function () {
     });
 });
 
-gulp.task('default', ['css', 'browserify']);
+gulp.task('default', ['browserify']);

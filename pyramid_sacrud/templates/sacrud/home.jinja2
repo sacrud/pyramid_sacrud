@@ -6,23 +6,23 @@
         <div class="dashboard__inner clear-fix">
             {% for widget, tables in tables.items() %}
                 {% if loop.index%dashboard_row_len-1 == 0 %}
-                    <hr />
                     <div class="dashboard_row">
                 {% endif %}
-                    <div class="widget-title">
-                        {{ _(widget or None) }}
-                        <span class="widget-title_state_switch k-icon k-i-arrowhead-n">
-                        </span>
-                    </div>
-                    <div class="widget-content">
-                        {% for table in tables %}
-                            <div class="widget-row">
-                                {% set tname = table.__tablename__ %}
-                                <div class="widget-row__item">
-                                    <a href="{{ request.route_url('sa_list', table=tname) }}" class="widget-row__item-link" id="id_{{ tname }}" >{{ _(table.verbose_name or tname) }}</a>
+                    <div class="widget">
+                        <div class="widget-title">
+                            {{ _(widget or None) }}
+                            <span class="widget-title_state_switch">&nbsp;</span>
+                        </div>
+                        <div class="widget-content">
+                            {% for table in tables %}
+                                <div class="widget-row">
+                                    {% set tname = table.__tablename__ %}
+                                    <div class="widget-row__item">
+                                        <a href="{{ request.route_url('sa_list', table=tname) }}" class="widget-row__item-link" id="id_{{ tname }}" >{{ _(table.verbose_name or tname) }}</a>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 {% if loop.index == 0 %}
                     </div>
