@@ -40,7 +40,8 @@
     "vinyl-source-stream": "^1.0.0",
     "main-bower-files": "~2.5.0",
     "gulp-filter": "~2.0.0",
-    "vinyl-map": "~1.0.1"
+    "vinyl-map": "~1.0.1",
+    "gulp-clean": "~0.3.1"
   },
   "scripts": {
     "test": "mocha pyramid_sacrud/static/js/test/ --growl --bail --timeout 99999"

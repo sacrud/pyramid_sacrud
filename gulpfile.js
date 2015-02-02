@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
+    clean = require('gulp-clean'),
     concat = require('gulp-concat'),
     filter = require('gulp-filter'),
     minifyCSS = require('gulp-minify-css'),
@@ -36,6 +37,12 @@ var components = glob.sync('./bower_components/*').map(function(componentDir) {
     });
 
 components.forEach(function(name) {
+
+    gulp.task(name+'-clean', function(done) {
+        // gulp.src(js_path + '/lib/' + name + '/').pipe(clean());
+        gulp.src(css_path + '/lib/' + name + '/').pipe(clean()).on('end', done);
+    });
+
     // copy css files from bower component to static dir in project
     gulp.task(name+'-css', function(done) {
         gulp.src(mainBowerFiles('**/' + name + '/**'))
@@ -55,14 +62,14 @@ components.forEach(function(name) {
     });
 
     // build component by name
-    gulp.task(name+'-build', [name+'-css', name+'-js']);
+    gulp.task(name+'-build', [name+'-clean', name+'-css', name+'-js']);
 });
 
 // build all components
 gulp.task('build-components', components.map(function(name){ return name+'-build'; }));
 
 
-gulp.task('css', ['pickadate-css'], function() {
+gulp.task('css', ['pickadate-clean', 'pickadate-css'], function() {
     var path = glob.sync('./*/static/css/'),
         concatFiles = getFiles(path ,'css');
 
