@@ -41,3 +41,7 @@ _pyramid_sacrud_example
 # Tox
 .tox
 __pycache__
+
+# Static
+static/css/lib
+static/js/lib
