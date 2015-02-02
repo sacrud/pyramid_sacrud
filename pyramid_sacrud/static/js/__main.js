@@ -17,7 +17,7 @@ $(function() {
 },{"./app/common/popup.js":10,"./app/common/selectable.js":11,"./app/options.js":12,"jquery":4,"jquery-maskedinput":2,"jquery-ui":3,"jqueryui-timepicker-addon":5,"modernizr":6,"pickadate":7,"pickatime":9}],2:[function(require,module,exports){
 (function (global){
 
-; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
+; require("/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, define, require) {
 /*
 	Masked Input plugin for jQuery
@@ -360,10 +360,10 @@ $.fn.extend({
 }).call(global, module, undefined, undefined);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4}],3:[function(require,module,exports){
+},{"/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js":4}],3:[function(require,module,exports){
 (function (global){
 
-; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
+; require("/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, define, require) {
 /*! jQuery UI - v1.10.4 - 2014-04-02
 * http://jqueryui.com
@@ -15377,7 +15377,7 @@ $.widget( "ui.tooltip", {
 }).call(global, module, undefined, undefined);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4}],4:[function(require,module,exports){
+},{"/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js":4}],4:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
@@ -24579,7 +24579,7 @@ return jQuery;
 },{}],5:[function(require,module,exports){
 (function (global){
 
-; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery-ui\\ui\\jquery-ui.js");
+; require("/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery-ui/ui/jquery-ui.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, define, require) {
 /*! jQuery Timepicker Addon - v1.4.6 - 2014-08-09
 * http://trentrichardson.com/examples/timepicker
@@ -26788,10 +26788,10 @@ return jQuery;
 }).call(global, module, undefined, undefined);
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery-ui\\ui\\jquery-ui.js":3}],6:[function(require,module,exports){
+},{"/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery-ui/ui/jquery-ui.js":3}],6:[function(require,module,exports){
 (function (global){
 
-; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
+; require("/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
  * Modernizr v2.8.3
@@ -28205,11 +28205,11 @@ window.Modernizr = (function( window, document, undefined ) {
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4}],7:[function(require,module,exports){
+},{"/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js":4}],7:[function(require,module,exports){
 (function (global){
 
-; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\pickadate\\lib\\compressed\\picker.js");
-require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
+; require("/home/nikita/projects/itcase/pyramid_sacrud/bower_components/pickadate/lib/compressed/picker.js");
+require("/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
  * Date picker for pickadate.js v3.5.4
@@ -28221,10 +28221,10 @@ require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jqu
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4,"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\pickadate\\lib\\compressed\\picker.js":8}],8:[function(require,module,exports){
+},{"/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js":4,"/home/nikita/projects/itcase/pyramid_sacrud/bower_components/pickadate/lib/compressed/picker.js":8}],8:[function(require,module,exports){
 (function (global){
 
-; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
+; require("/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
  * pickadate.js v3.5.4, 2014/09/11
@@ -28238,11 +28238,11 @@ require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jqu
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4}],9:[function(require,module,exports){
+},{"/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js":4}],9:[function(require,module,exports){
 (function (global){
 
-; require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\pickadate\\lib\\compressed\\picker.js");
-require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js");
+; require("/home/nikita/projects/itcase/pyramid_sacrud/bower_components/pickadate/lib/compressed/picker.js");
+require("/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js");
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*!
  * Time picker for pickadate.js v3.5.4
@@ -28254,7 +28254,7 @@ require("F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jqu
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\jquery\\dist\\jquery.js":4,"F:\\ITCase\\sacrud\\pyramid_sacrud\\bower_components\\pickadate\\lib\\compressed\\picker.js":8}],10:[function(require,module,exports){
+},{"/home/nikita/projects/itcase/pyramid_sacrud/bower_components/jquery/dist/jquery.js":4,"/home/nikita/projects/itcase/pyramid_sacrud/bower_components/pickadate/lib/compressed/picker.js":8}],10:[function(require,module,exports){
 
 var Popup = function (el, options) {
     if (!(this instanceof Popup)) {

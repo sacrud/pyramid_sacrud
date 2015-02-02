@@ -37,7 +37,10 @@
     "minimatch": "^2.0.1",
     "selenium-webdriver": "^2.44.0",
     "underscore": "^1.7.0",
-    "vinyl-source-stream": "^1.0.0"
+    "vinyl-source-stream": "^1.0.0",
+    "main-bower-files": "~2.5.0",
+    "gulp-filter": "~2.0.0",
+    "vinyl-map": "~1.0.1"
   },
   "scripts": {
     "test": "mocha pyramid_sacrud/static/js/test/ --growl --bail --timeout 99999"
@@ -88,11 +91,17 @@
     },
     "pickadate": {
       "exports": "pickadate",
-      "depends": ["Picker", "jquery"]
+      "depends": [
+        "Picker",
+        "jquery"
+      ]
     },
     "pickatime": {
       "exports": "pickatime",
-      "depends": ["Picker", "jquery"]
+      "depends": [
+        "Picker",
+        "jquery"
+      ]
     }
   }
 }
