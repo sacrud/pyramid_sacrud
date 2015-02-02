@@ -43,5 +43,5 @@ _pyramid_sacrud_example
 __pycache__
 
 # Static
-static/css/lib
-static/js/lib
+pyramid_sacrud/static/css/lib/
+pyramid_sacrud/static/js/lib/
