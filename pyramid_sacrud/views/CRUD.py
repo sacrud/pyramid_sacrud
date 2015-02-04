@@ -10,6 +10,7 @@
 Views for Pyramid frontend
 """
 import json
+import logging
 
 import deform
 import transaction
@@ -20,13 +21,11 @@ from pyramid.view import view_config
 from sqlalchemy.orm.exc import NoResultFound
 
 from sacrud import action
-from sacrud.common import get_flat_columns, get_obj, pk_list_to_dict, pk_to_list
+from sacrud.common import get_obj, pk_list_to_dict, pk_to_list
 from sacrud_deform import SacrudForm
 
 from ..breadcrumbs import breadcrumbs
-from ..common import (get_table, get_table_verbose_name, request_to_sacrud,
-                      sacrud_env)
-from ..common.custom import Widget
+from ..common import (get_table, get_table_verbose_name, sacrud_env)
 from ..common.paginator import get_paginator
 from ..exceptions import SacrudMessagedException
 from ..includes.localization import _ps
@@ -34,21 +33,7 @@ from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
                         PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_UPDATE)
 
 
-class EventsCRUD(object):
-
-    def event_add(self, obj, values):
-        self.widget_postprocessing(obj, values)
-
-    def widget_postprocessing(self, obj, values):
-        columns = get_flat_columns(self.table)
-        session = self.request.dbsession
-        for column in columns:
-            if not isinstance(column, Widget):
-                continue
-            column.postprocessing(obj, session, values)
-
-
-class BaseCRUD(object):
+class CRUD(object):
 
     def __init__(self, request):
         self.pk = None
@@ -69,10 +54,6 @@ class BaseCRUD(object):
     def flash_message(self, message, status="success"):
         if hasattr(self.request, 'session'):
             self.request.session.flash([message, status])
-
-
-class CRUD(BaseCRUD, EventsCRUD):
-    pass
 
 
 class Add(CRUD):
@@ -113,21 +94,26 @@ class Add(CRUD):
         if 'form.submitted' in self.request.params:
             controls = self.request.POST.items()
             try:
-                form.validate(controls)
+                valid = form.validate(controls).values()
             except deform.ValidationFailure as e:
                 return get_responce(e)
-            values = request_to_sacrud(self.request)
-            resp.request = values
+
+            if valid == [{}]:
+                # if not peppercon format
+                resp.request = dict(controls)
+            else:
+                resp.request = {k: v for d in valid for k, v in d.items()}
+
+            obj_as_dict = resp.add(commit=False)
             try:
-                obj_as_dict = resp.add(commit=False)
                 obj = obj_as_dict['obj']
-                self.event_add(obj, values)
                 dbsession.flush()
             except SacrudMessagedException as e:
                 self.flash_message(e.message, status=e.status)
                 return get_responce(form)
             except Exception as e:
                 transaction.abort()
+                logging.exception("Something awful happened!")
                 raise e
             transaction.commit()
             if self.pk:

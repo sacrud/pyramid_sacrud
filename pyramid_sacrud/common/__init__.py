@@ -9,7 +9,6 @@
 """
 Any helpers for Pyramid
 """
-from peppercorn import parse
 import itertools
 import sqlalchemy
 from sacrud.common import get_attrname_by_colname
@@ -148,26 +147,3 @@ def update_difference_object(obj, key, value):
         obj.update({key: value})
     else:
         setattr(obj, key, value)
-
-
-def request_to_sacrud(data):
-    if hasattr(data, 'POST'):
-        fields = data.POST.items()
-        data = parse(fields)
-    _r = {}
-
-    def request_to_flat(request):
-        for key, value in request.items():
-            if type(value) is dict:
-                if 'upload' in value:
-                    upload = value['upload']
-                    if hasattr(upload, 'file'):
-                        if upload.file:
-                            _r[key] = upload
-                else:
-                    request_to_flat(value)
-                continue
-            _r[key] = value
-
-    request_to_flat(data)
-    return _r

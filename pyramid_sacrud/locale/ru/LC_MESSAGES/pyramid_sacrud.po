@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pyramid_sacrud 0.0.1a1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-11 17:29+0500\n"
+"POT-Creation-Date: 2015-02-04 15:18+0500\n"
 "PO-Revision-Date: 2014-10-21 20:58+0600\n"
 "Last-Translator: uralbash <root@uralbash.ru>\n"
 "Language-Team: Russian\n"
@@ -20,40 +20,40 @@ msgstr ""
 "Generated-By: Babel 1.3\n"
 
 #: pyramid_sacrud/breadcrumbs.py:32
-#: pyramid_sacrud/templates/sacrud/home.jinja2:7
+#: pyramid_sacrud/templates/sacrud/home.jinja2:5
 msgid "Dashboard"
 msgstr "Панель управления"
 
-#: pyramid_sacrud/templates/sacrud/create.jinja2:29
+#: pyramid_sacrud/templates/sacrud/create.jinja2:28
 #: pyramid_sacrud/templates/sacrud/list.jinja2:5
 msgid "close"
 msgstr "закрыть"
 
-#: pyramid_sacrud/templates/sacrud/create.jinja2:33
+#: pyramid_sacrud/templates/sacrud/create.jinja2:32
 #: pyramid_sacrud/templates/sacrud/list.jinja2:7
 msgid "Are you sure you want to delete an object?"
 msgstr "Вы уверенны что хотите удалить этот объект?"
 
-#: pyramid_sacrud/templates/sacrud/create.jinja2:36
+#: pyramid_sacrud/templates/sacrud/create.jinja2:35
 #: pyramid_sacrud/templates/sacrud/list.jinja2:10
 msgid "Confirm"
 msgstr "Подтвердить"
 
-#: pyramid_sacrud/templates/sacrud/create.jinja2:39
+#: pyramid_sacrud/templates/sacrud/create.jinja2:38
 #: pyramid_sacrud/templates/sacrud/list.jinja2:13
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:31
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:30
 #: pyramid_sacrud/templates/sacrud/forms/create.jinja2:51
 msgid "Cancel"
 msgstr "Отмена"
 
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:23
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:22
 #: pyramid_sacrud/templates/sacrud/forms/create.jinja2:43
 msgid "Save"
 msgstr "Сохранить"
 
-#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:27
+#: pyramid_sacrud/templates/sacrud/forms/create.jinja2:26
 #: pyramid_sacrud/templates/sacrud/forms/create.jinja2:47
-#: pyramid_sacrud/templates/sacrud/forms/list.jinja2:12
+#: pyramid_sacrud/templates/sacrud/forms/list.jinja2:11
 msgid "Delete"
 msgstr "Удалить"
 
@@ -61,19 +61,19 @@ msgstr "Удалить"
 msgid "Add a new"
 msgstr "Добавить"
 
-#: pyramid_sacrud/views/CRUD.py:82
-msgid "You delete the following objects:"
-msgstr "Вы удалили следующие объекты:"
-
-#: pyramid_sacrud/views/CRUD.py:144
+#: pyramid_sacrud/views/CRUD.py:119
 msgid "You updated object of ${name}"
 msgstr "Вы обновили объект ${name}"
 
-#: pyramid_sacrud/views/CRUD.py:147
+#: pyramid_sacrud/views/CRUD.py:123
 msgid "You created new object of ${name}"
-msgstr "Вы создали новый объект ${name}"
+msgstr "Вы создали объект ${name}"
 
-#: pyramid_sacrud/views/CRUD.py:165
+#: pyramid_sacrud/views/CRUD.py:150
+msgid "You delete the following objects:"
+msgstr "Вы удалили следующие объекты:"
+
+#: pyramid_sacrud/views/CRUD.py:183
 msgid "You have removed object of ${name}"
 msgstr "Вы удалили объект ${name}"
 

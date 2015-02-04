@@ -1,5 +1,4 @@
-peppercorn
-pyramid_jinja2>=2.3.3
 pyramid
+pyramid_jinja2>=2.3.3
 sacrud_deform>=0.0.5
 paginate_sqlalchemy
