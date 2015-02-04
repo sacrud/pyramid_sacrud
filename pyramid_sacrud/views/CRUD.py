@@ -104,8 +104,8 @@ class Add(CRUD):
             else:
                 resp.request = {k: v for d in valid for k, v in d.items()}
 
-            obj_as_dict = resp.add(commit=False)
             try:
+                obj_as_dict = resp.add(commit=False)
                 obj = obj_as_dict['obj']
                 dbsession.flush()
             except SacrudMessagedException as e:
