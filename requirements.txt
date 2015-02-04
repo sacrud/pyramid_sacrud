@@ -1,4 +1,4 @@
 pyramid
 pyramid_jinja2>=2.3.3
-sacrud_deform>=0.0.5
+sacrud_deform>=0.0.6
 paginate_sqlalchemy
