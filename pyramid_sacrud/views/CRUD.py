@@ -154,7 +154,13 @@ class List(CRUD):
                     obj_list.append(obj['name'])
                 except NoResultFound:
                     raise HTTPNotFound
-            self.flash_message(_ps("You delete the following objects:"))
+                except SacrudMessagedException as e:
+                    self.flash_message(e.message, status=e.status)
+                except Exception as e:
+                    transaction.abort()
+                    logging.exception("Something awful happened!")
+                    raise e
+                self.flash_message(_ps("You delete the following objects:"))
             self.flash_message("<br/>".join(map(escape, obj_list)))
 
     @sacrud_env

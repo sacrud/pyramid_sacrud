@@ -90,7 +90,7 @@
             </form>
             {% if 'row' in sa_crud %}
                 <div class="sacrud-grid-content__paginator">
-                    {% if paginator.items.__len__() > 1 and paginator.page_count > 1 %}
+                    {% if paginator.items.__len__() >= 1 and paginator.page_count > 1 %}
                         {% include "sacrud/paginator.jinja2" %}
                     {% endif %}
                 </div>
