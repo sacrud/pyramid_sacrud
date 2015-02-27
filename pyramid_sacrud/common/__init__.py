@@ -10,8 +10,17 @@
 Any helpers for Pyramid
 """
 import itertools
+
+import colander
 import sqlalchemy
+
 from sacrud.common import get_attrname_by_colname
+
+
+def preprocessing_value(value):
+    if value is colander.null:
+        return None
+    return value
 
 
 def import_from_string(path):
@@ -80,7 +89,7 @@ def _silent_none(value):
     return value
 
 
-def set_jinja2_silent_none(config):
+def set_jinja2_silent_none(config):  # pragma: no cover
     """ if variable is None print '' instead of 'None'
     """
     config.commit()

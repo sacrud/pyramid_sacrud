@@ -13,6 +13,7 @@ import json
 import logging
 
 import deform
+import peppercorn
 import transaction
 from paginate_sqlalchemy import SqlalchemyOrmPage
 from pyramid.compat import escape
@@ -25,7 +26,8 @@ from sacrud.common import get_obj, pk_list_to_dict, pk_to_list
 from sacrud_deform import SacrudForm
 
 from ..breadcrumbs import breadcrumbs
-from ..common import (get_table, get_table_verbose_name, sacrud_env)
+from ..common import (get_table, get_table_verbose_name, preprocessing_value,
+                      sacrud_env)
 from ..common.paginator import get_paginator
 from ..exceptions import SacrudMessagedException
 from ..includes.localization import _ps
@@ -93,16 +95,18 @@ class Add(CRUD):
 
         if 'form.submitted' in self.request.params:
             controls = self.request.POST.items()
-            try:
-                valid = form.validate(controls).values()
-            except deform.ValidationFailure as e:
-                return get_responce(e)
-
-            if valid == [{}]:
-                # if not peppercon format
-                resp.request = dict(controls)
+            pstruct = peppercorn.parse(controls)
+            if '__formid__' in pstruct:
+                try:
+                    deserialized = form.validate(controls).values()
+                except deform.ValidationFailure as e:
+                    return get_responce(e)
+                resp.request = {k: preprocessing_value(v)
+                                for d in deserialized
+                                for k, v in d.items()}
             else:
-                resp.request = {k: v for d in valid for k, v in d.items()}
+                # if not peppercon format
+                resp.request = pstruct
 
             try:
                 obj_as_dict = resp.add(commit=False)

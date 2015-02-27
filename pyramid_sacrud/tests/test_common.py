@@ -11,11 +11,14 @@ Test common module of pyramoid_sacrud
 """
 import unittest
 
+import colander
 from pyramid import testing
 
 from pyramid_sacrud.breadcrumbs import breadcrumbs, get_crumb
 from pyramid_sacrud.common import (get_obj_from_settings, get_table,
-                                   import_from_string, update_difference_object)
+                                   get_table_verbose_name, import_from_string,
+                                   preprocessing_value,
+                                   update_difference_object)
 
 from .models.auth import User
 from .test_views import _TransactionalFixture
@@ -57,6 +60,13 @@ class BreadCrumbsTest(unittest.TestCase):
 
 class CommonTest(_TransactionalFixture):
 
+    def test_preprocessing_value(self):
+        self.assertEqual(None,
+                         preprocessing_value(colander.null))
+        value = {'foo': 'bar'}
+        self.assertEqual(value,
+                         preprocessing_value(value))
+
     def test_get_obj_from_settings(self):
         request = testing.DummyRequest()
         config = testing.setUp(request=request)
@@ -74,11 +84,16 @@ class CommonTest(_TransactionalFixture):
         self.assertEqual(obj, None)
 
     def test_import_from_string(self):
-        self.assertEqual(User,
-                         import_from_string('pyramid_sacrud.tests.models.auth:User'))
+        self.assertEqual(
+            User,
+            import_from_string('pyramid_sacrud.tests.models.auth:User'))
+        self.assertEqual(
+            User,
+            import_from_string(User))
 
     def test_update_difference_object(self):
-        class Foo: pass
+        class Foo:
+            pass
         obj = Foo()
         update_difference_object(obj, "foo", "bar")
         self.assertEqual(obj.foo, "bar")
@@ -94,3 +109,16 @@ class CommonTest(_TransactionalFixture):
         self.assertEqual(user, User)
         foo = get_table('foo', request)
         self.assertEqual(foo, None)
+
+    def test_get_table_verbose_name(self):
+        class Foo(object):
+            name = 'foo'
+
+        class Bar(object):
+            __tablename__ = 'bar'
+
+        class Baz(object):
+            verbose_name = 'baz'
+        self.assertEqual('foo', get_table_verbose_name(Foo))
+        self.assertEqual('bar', get_table_verbose_name(Bar))
+        self.assertEqual('baz', get_table_verbose_name(Baz))
