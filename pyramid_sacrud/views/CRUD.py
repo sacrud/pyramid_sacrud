@@ -123,11 +123,11 @@ class Add(CRUD):
             if self.pk:
                 self.flash_message(
                     _ps(u"You updated object of ${name}",
-                        mapping={'name': escape(obj_as_dict['name'])}))
+                        mapping={'name': escape(obj_as_dict['name'] or '')}))
             else:
                 self.flash_message(
                     _ps("You created new object of ${name}",
-                        mapping={'name': escape(obj_as_dict['name'])}))
+                        mapping={'name': escape(obj_as_dict['name'] or '')}))
             return HTTPFound(location=self.request.route_url('sa_list',
                                                              table=self.tname))
         sa_crud = resp.add()
@@ -161,7 +161,8 @@ class List(CRUD):
                     logging.exception("Something awful happened!")
                     raise e
                 self.flash_message(_ps("You delete the following objects:"))
-            self.flash_message("<br/>".join(map(escape, obj_list)))
+            self.flash_message("<br/>".join(
+                [escape(x or '') for x in obj_list]))
 
     @sacrud_env
     @view_config(route_name='sa_list', renderer='/sacrud/list.jinja2',
@@ -193,6 +194,6 @@ class Delete(CRUD):
         except (NoResultFound, KeyError):
             raise HTTPNotFound
         self.flash_message(_ps("You have removed object of ${name}",
-                               mapping={'name': escape(obj['name'])}))
+                               mapping={'name': escape(obj['name'] or '')}))
         return HTTPFound(location=self.request.route_url('sa_list',
                                                          table=self.tname))

@@ -28,4 +28,5 @@ TEST_DATABASE_CONNECTION_STRING = 'sqlite:///%s' % DATABASE_FILE
 engine = create_engine(TEST_DATABASE_CONNECTION_STRING)
 
 # create a configured "Session" class
-Session = scoped_session(sessionmaker(bind=engine), scopefunc=get_current_request)
+Session = scoped_session(sessionmaker(bind=engine),
+                         scopefunc=get_current_request)

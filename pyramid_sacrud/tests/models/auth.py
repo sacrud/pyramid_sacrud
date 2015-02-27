@@ -29,6 +29,9 @@ class Groups(Base):
     name = Column(String)
     users = relationship("User", secondary=association_table)
 
+    def __repr__(self):
+        return self.name
+
 
 class User(Base):
 

@@ -11,7 +11,7 @@ main function for functional test module
 """
 from pyramid.config import Configurator
 
-from .models.auth import Profile, User
+from .models.auth import Profile, User, Groups
 
 
 def main(global_config, **settings):
@@ -25,6 +25,6 @@ def main(global_config, **settings):
     settings = config.registry.settings
     settings['pyramid_sacrud.models'] = (
         ('', [User]),
-        ('Auth models', [User, Profile])
+        ('Auth models', [User, Profile, Groups])
     )
     return config.make_wsgi_app()

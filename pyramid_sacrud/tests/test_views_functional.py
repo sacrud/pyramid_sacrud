@@ -14,7 +14,7 @@ from webtest import TestApp
 
 from ._mock_main import main
 from .models import Session, TEST_DATABASE_CONNECTION_STRING
-from .models.auth import User
+from .models.auth import User, Groups
 from .test_views import _TransactionalFixture
 
 
@@ -54,16 +54,19 @@ class CreateFuncTests(PyramidApp):
         user = Session.query(User).order_by(User.id.desc()).first()
         self.assertEqual(user.name, 'foo bar baz')
 
-    """ fix validation in sacrud_deform
-    def test_sa_create_post_bad_data(self):
+    def test_sa_create_update_none_repr_obj(self):
         self._create_tables()
-        self.testapp.post('/admin/user/create/',
-                          {'form.submitted': '1',
-                           'sex': 'foo'},
+        self.testapp.post('/admin/group/create/',
+                          {'form.submitted': '1'},
                           status=302)
-        user = Session.query(User).order_by(User.id.desc()).first()
-        self.assertEqual(user, None)
-    """
+        group = Session.query(Groups).order_by(Groups.id.desc()).count()
+        self.assertLess(0, group)
+
+        self.testapp.post('/admin/group/update/id/1',
+                          {'form.submitted': '1',
+                           'id': 2},
+                          status=302)
+        self.assertLess(0, group)
 
 
 class ReadFuncTests(PyramidApp):
