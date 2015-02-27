@@ -98,7 +98,7 @@ class Add(CRUD):
             pstruct = peppercorn.parse(controls)
             if '__formid__' in pstruct:
                 try:
-                    deserialized = form.validate(controls).values()
+                    deserialized = form.validate_pstruct(pstruct).values()
                 except deform.ValidationFailure as e:
                     return get_responce(e)
                 resp.request = {k: preprocessing_value(v)
