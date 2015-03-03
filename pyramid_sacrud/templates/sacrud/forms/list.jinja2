@@ -11,7 +11,7 @@
                     <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
                 </div>
             </div>
-            {% if sa_crud['table'].sacrud_search_col %}
+            {% if table.sacrud_search_col %}
                 <div class="toolbar-search">
                     <div class="toolbar-search__inner">
                         <form class="search" action="">
@@ -51,7 +51,7 @@
                         </thead>
                         <tbody class="sacrud-grid-content-grid__body">
                             {% for row in paginator %}
-                                <tr id="{{ sa_crud['table'].__tablename__ }}_{{ pk_to_list(row) }}"
+                                <tr id="{{ table.__tablename__ }}_{{ pk_to_list(row) }}"
                                     class="sacrud-grid-content-grid__body-row">
                                     <td class="sacrud-grid-content-grid__body-item">
                                         <input class="sacrud-grid-content-grid__body-item-checkbox"
