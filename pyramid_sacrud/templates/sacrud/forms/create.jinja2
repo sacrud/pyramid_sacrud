@@ -1,58 +1,51 @@
-{% set obj=sa_crud['obj'] %}
-{% set obj_cls=sa_crud['table'] %}
-{% set visible_columns=sa_crud['col'] %}
+{% set visible_columns=columns %}
 
-{# generate form action in view #}
 <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"
-    {% if sa_crud %}
-        {% if not sa_crud['pk'] or not obj %}
-            action="{{ request.route_url('sa_create', table=obj_cls.__tablename__) }}"
-        {% else %}
-            action="{{ request.route_url('sa_update', table=obj_cls.__tablename__, pk=pk_to_list(obj)) }}"
-        {% endif %}
+    {% if not pk or not obj %}
+        action="{{ request.route_url('sa_create', table=table.__tablename__) }}"
+    {% else %}
+        action="{{ request.route_url('sa_update', table=table.__tablename__, pk=pk_to_list(obj)) }}"
     {% endif %}>
 
-    {% if sa_crud %}
-        <div class="sacrud-grid">
-            <div class="sacrud-grid__title">{{ _(obj_cls.verbose_name or obj_cls.__tablename__) }}</div>
-            <div class="sacrud-grid__toolbar">
-                <div class="toolbar clear-fix">
-                    <div class="toolbar-button">
-                        <div class="toolbar-button__item toolbar-button__item_type_confirm">
-                             <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
-                        </div>
-                        {% if obj %}
-                            <div class="toolbar-button__item toolbar-button__item_type_delete">
-                                <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
-                            </div>
-                        {% endif %}
-                        <div class="toolbar-button__item toolbar-button__item_type_cancel">
-                            <a href="{{ request.route_url('sa_list', table=obj_cls.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
-                        </div>
+    <div class="sacrud-grid">
+        <div class="sacrud-grid__title">{{ _(table.verbose_name or table.__tablename__) }}</div>
+        <div class="sacrud-grid__toolbar">
+            <div class="toolbar clear-fix">
+                <div class="toolbar-button">
+                    <div class="toolbar-button__item toolbar-button__item_type_confirm">
+                         <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
                     </div>
-                </div>
-            </div>
-
-            <div class="sacrud-deform">{{ form|safe }}</div>
-
-
-            <div class="sacrud-grid__toolbar">
-                <div class="toolbar clear-fix">
-                    <div class="toolbar-button">
-                        <div class="toolbar-button__item toolbar-button__item_type_confirm">
-                             <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
+                    {% if obj %}
+                        <div class="toolbar-button__item toolbar-button__item_type_delete">
+                            <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
                         </div>
-                        {% if obj %}
-                            <div class="toolbar-button__item toolbar-button__item_type_delete">
-                                <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
-                            </div>
-                        {% endif %}
-                        <div class="toolbar-button__item toolbar-button__item_type_cancel">
-                            <a href="{{ request.route_url('sa_list', table=obj_cls.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
-                        </div>
+                    {% endif %}
+                    <div class="toolbar-button__item toolbar-button__item_type_cancel">
+                        <a href="{{ request.route_url('sa_list', table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
                     </div>
                 </div>
             </div>
         </div>
-    {% endif %}
+
+        <div class="sacrud-deform">{{ form|safe }}</div>
+
+
+        <div class="sacrud-grid__toolbar">
+            <div class="toolbar clear-fix">
+                <div class="toolbar-button">
+                    <div class="toolbar-button__item toolbar-button__item_type_confirm">
+                         <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
+                    </div>
+                    {% if obj %}
+                        <div class="toolbar-button__item toolbar-button__item_type_delete">
+                            <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
+                        </div>
+                    {% endif %}
+                    <div class="toolbar-button__item toolbar-button__item_type_cancel">
+                        <a href="{{ request.route_url('sa_list', table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>

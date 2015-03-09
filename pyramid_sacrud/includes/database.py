@@ -10,13 +10,15 @@
 Database settings
 """
 import sqlalchemy
-import sqlalchemy.orm as orm
+from sqlalchemy.orm import scoped_session, sessionmaker
 from zope.sqlalchemy import ZopeTransactionExtension
+
+from sacrud import crud_sessionmaker
 
 
 def includeme(config):
     engine = sqlalchemy.engine_from_config(config.registry.settings)
-    DBSession = orm.scoped_session(
-        orm.sessionmaker(extension=ZopeTransactionExtension()))
+    DBSession = crud_sessionmaker(scoped_session(
+        sessionmaker(extension=ZopeTransactionExtension())))
     DBSession.configure(bind=engine)
     config.set_request_property(lambda x: DBSession, 'dbsession', reify=True)

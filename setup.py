@@ -15,6 +15,7 @@ setup(
     url='http://github.com/ITCase/pyramid_sacrud/',
     author='Svintsov Dmitry',
     author_email='sacrud@uralbash.ru',
+
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,

@@ -16,11 +16,10 @@
 {% endblock sa_popup_content %}
 
 {% block sa_body %}
-    {% set table=sa_crud['table'] %}
     {% if hasattr(table, 'sacrud_list_col') %}
         {% set visible_columns=table.sacrud_list_col %}
     {% else %}
-        {% set visible_columns=sa_crud['col'] %}
+        {% set visible_columns=columns %}
     {% endif %}
 
     <div class="page">

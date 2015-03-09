@@ -14,7 +14,7 @@ import itertools
 import colander
 import sqlalchemy
 
-from sacrud.common import get_attrname_by_colname
+from sacrud.common import get_attrname_by_colname, get_columns
 
 
 def preprocessing_value(value):
@@ -118,12 +118,16 @@ def sacrud_env(fun):
                       'hasattr': hasattr,
                       'sqlalchemy': sqlalchemy}
 
-    def wrapped(*args, **kwargs):
-        response = fun(*args, **kwargs)
+    def wrapped(self, *args, **kwargs):
+        response = fun(self, *args, **kwargs)
         if hasattr(response, 'update'):
-            DBSession = {'session': args[0].request.dbsession}
             response.update(jinja2_globals)
-            response.update(DBSession)
+            SessionAttributes = {
+                'session': self.request.dbsession,
+                'table': self.table,
+                'columns': get_columns(self.table)
+            }
+            response.update(SessionAttributes)
         return response
     return wrapped
 

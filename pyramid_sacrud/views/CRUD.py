@@ -21,7 +21,6 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.view import view_config
 from sqlalchemy.orm.exc import NoResultFound
 
-from sacrud import action
 from sacrud.common import get_obj, pk_list_to_dict, pk_to_list
 from sacrud_deform import SacrudForm
 
@@ -42,6 +41,7 @@ class CRUD(object):
         self.request = request
         self.tname = request.matchdict['table']
         self.table = get_table(self.tname, self.request)
+        self.crud = self.request.dbsession.sacrud(self.table, commit=False)
         self.params = request.params
         if hasattr(self.params, 'dict_of_lists'):
             self.params = self.params.dict_of_lists()
@@ -77,19 +77,14 @@ class Add(CRUD):
             obj = get_obj(dbsession, self.table, self.pk)
         except (NoResultFound, KeyError):
             raise HTTPNotFound
-        resp = action.CRUD(dbsession, self.table, self.pk)
         form = SacrudForm(obj=obj, dbsession=dbsession,
                           request=self.request, table=self.table).build()
 
-        def get_responce(form, sa_crud=None):
+        def get_responce(form):
 
-            if not sa_crud:
-                sa_crud = {'obj': obj,
-                           'pk': self.pk,
-                           'table': self.table,
-                           }
             return dict(form=form.render(),
-                        sa_crud=sa_crud,
+                        pk=self.pk,
+                        obj=obj,
                         breadcrumbs=bc,
                         pk_to_list=pk_to_list)
 
@@ -101,16 +96,18 @@ class Add(CRUD):
                     deserialized = form.validate_pstruct(pstruct).values()
                 except deform.ValidationFailure as e:
                     return get_responce(e)
-                resp.request = {k: preprocessing_value(v)
-                                for d in deserialized
-                                for k, v in d.items()}
+                data = {k: preprocessing_value(v)
+                        for d in deserialized
+                        for k, v in d.items()}
             else:
                 # if not peppercon format
-                resp.request = pstruct
-
+                data = pstruct
             try:
-                obj_as_dict = resp.add(commit=False)
-                obj = obj_as_dict['obj']
+                if self.pk:
+                    obj = self.crud.update(self.pk, data)
+                else:
+                    obj = self.crud.create(data)
+                name = obj.__repr__()
                 dbsession.flush()
             except SacrudMessagedException as e:
                 self.flash_message(e.message, status=e.status)
@@ -123,15 +120,14 @@ class Add(CRUD):
             if self.pk:
                 self.flash_message(
                     _ps(u"You updated object of ${name}",
-                        mapping={'name': escape(obj_as_dict['name'] or '')}))
+                        mapping={'name': escape(name or '')}))
             else:
                 self.flash_message(
                     _ps("You created new object of ${name}",
-                        mapping={'name': escape(obj_as_dict['name'] or '')}))
+                        mapping={'name': escape(name or '')}))
             return HTTPFound(location=self.request.route_url('sa_list',
                                                              table=self.tname))
-        sa_crud = resp.add()
-        return get_responce(form, sa_crud)
+        return get_responce(form)
 
 
 class List(CRUD):
@@ -149,10 +145,9 @@ class List(CRUD):
                 pk_list = json.loads(item)
                 pk = pk_list_to_dict(pk_list)
                 try:
-                    obj = action.CRUD(self.request.dbsession,
-                                      self.table, pk=pk).delete(commit=False)
+                    obj = self.crud.delete(pk)
                     obj_list.append(obj['name'])
-                except NoResultFound:
+                except (NoResultFound, KeyError):
                     raise HTTPNotFound
                 except SacrudMessagedException as e:
                     self.flash_message(e.message, status=e.status)
@@ -160,23 +155,28 @@ class List(CRUD):
                     transaction.abort()
                     logging.exception("Something awful happened!")
                     raise e
-                self.flash_message(_ps("You delete the following objects:"))
+            transaction.commit()
+            self.flash_message(_ps("You delete the following objects:"))
             self.flash_message("<br/>".join(
                 [escape(x or '') for x in obj_list]))
+            return HTTPFound(location=self.request.route_url('sa_list',
+                                                             table=self.tname))
 
     @sacrud_env
     @view_config(route_name='sa_list', renderer='/sacrud/list.jinja2',
                  permission=PYRAMID_SACRUD_LIST)
     def sa_list(self):
-        self.make_selected_action()
+        delete_action = self.make_selected_action()
+        if delete_action:
+            return delete_action
         items_per_page = getattr(self.table, 'items_per_page', 10)
-        resp = action.CRUD(self.request.dbsession, self.table).rows_list()
+        rows = self.crud.read()
         try:
             paginator_attr = get_paginator(self.request, items_per_page - 1)
         except ValueError:
             raise HTTPNotFound
-        paginator = SqlalchemyOrmPage(resp['row'], **paginator_attr)
-        return {'sa_crud': resp,
+        paginator = SqlalchemyOrmPage(rows, **paginator_attr)
+        return {'rows': rows,
                 'paginator': paginator,
                 'pk_to_list': pk_to_list,
                 'breadcrumbs': breadcrumbs(self.tname,
@@ -189,8 +189,8 @@ class Delete(CRUD):
     @view_config(route_name='sa_delete', permission=PYRAMID_SACRUD_DELETE)
     def sa_delete(self):
         try:
-            obj = action.CRUD(self.request.dbsession,
-                              self.table, pk=self.pk).delete()
+            obj = self.crud.delete(self.pk)
+            transaction.commit()
         except (NoResultFound, KeyError):
             raise HTTPNotFound
         self.flash_message(_ps("You have removed object of ${name}",

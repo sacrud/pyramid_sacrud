@@ -47,6 +47,6 @@ script:
   - nosetests --with-coverage --cover-package pyramid_sacrud --cover-erase --with-doctest
 
 after_success:
+  - coveralls
   - chmod 755 ./travis_build_pse.sh
   - ./travis_build_pse.sh
-  - coveralls

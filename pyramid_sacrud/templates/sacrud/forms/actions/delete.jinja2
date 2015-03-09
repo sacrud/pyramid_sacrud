@@ -1,5 +1,5 @@
 <form class="sacrud-grid-content__button"
-	  action="{{ request.route_url('sa_delete', table=sa_crud['table'].__tablename__, id=row[sa_crud['pk']]) }}"
-	  method="POST">
+    action="{{ request.route_url('sa_delete', table=table.__tablename__,
+                                 id=row[sa_crud['pk']]) }}" method="POST">
 	<button class="k-button" id="button_delete" value="delete">Delete</button>
 </form>

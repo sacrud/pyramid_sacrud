@@ -33,7 +33,7 @@
         <div class="sacrud-grid-content__left">
             <form id="sacrud-form" class="sacrud-grid-content__left-inner" method="post" action="">
                 <table class="sacrud-grid-content-grid" id="sa_index">
-                    {% if sa_crud %}
+                    {% if paginator.items.__len__() > 0 %}
                         <thead class="sacrud-grid-content-grid__header">
                             <tr class="sacrud-grid-content-grid__header-row">
                                 <th class="sacrud-grid-content-grid__header-item">
@@ -88,7 +88,7 @@
                 </table>
                 <input class="selected-action" type="hidden" value="0" name="selected_action" />
             </form>
-            {% if 'row' in sa_crud %}
+            {% if rows %}
                 <div class="sacrud-grid-content__paginator">
                     {% if paginator.items.__len__() >= 1 and paginator.page_count > 1 %}
                         {% include "sacrud/paginator.jinja2" %}
