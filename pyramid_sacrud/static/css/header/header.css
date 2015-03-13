@@ -12,6 +12,7 @@
 		margin: 0 auto;
 		max-width: 1160px;
 		min-width: 950px;
+		background: #333;
 	}
 		.header__inner-menu
 		{
