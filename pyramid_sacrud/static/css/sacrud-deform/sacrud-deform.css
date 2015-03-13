@@ -71,9 +71,10 @@
 					}
 					.sacrud-deform .help-block
 					{
-						padding: 0.5em 0 0 200px;
-						margin: 0;
+						margin: 0.5em 0 0 200px;
+						padding: 0.2em 0.5em 0.2em 0;
 						color: #777;
+						position: relative;
 						font: italic 0.75em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 					}
 input.form-control
@@ -143,4 +144,11 @@ select.form-control:focus
 {
 	border: solid 1px #4183c4;
 	transition: all 200ms linear;
+}
+
+
+p.help-block[id*="error"]
+{
+	color: red !important;
+	font-style: normal;
 }
