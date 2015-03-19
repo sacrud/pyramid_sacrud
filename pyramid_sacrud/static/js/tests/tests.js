@@ -1,5 +1,7 @@
 var webdriver = require('selenium-webdriver');
-var driver = new webdriver.Builder().withCapabilities({'browserName': 'phantomjs'}).build();
+var driver = new webdriver.Builder().withCapabilities(
+        {'browserName': 'phantomjs'}
+    ).build();
 
 var chai = require('chai'),
     expect = chai.expect;
@@ -7,6 +9,7 @@ var chai = require('chai'),
 var options = require('../app/options.js');
 var elements = {};
 
+var URL = 'http://127.0.0.1:6543/';
 
 describe('SACRUD tests', function() {
 
@@ -22,7 +25,7 @@ describe('SACRUD tests', function() {
     }
 
     before(function(done) {
-        driver.get('http://127.0.0.1:8000/login/').then(function(){ done(); });
+        driver.get(URL+'login/').then(function(){ done(); });
     });
 
     describe('Login', function() {
@@ -45,7 +48,7 @@ describe('SACRUD tests', function() {
         // var jsdom = require("jsdom").jsdom;
 
         before(function(done) {
-            driver.get('http://127.0.0.1:8000/admin/test_bool/').then(function(){ done(); });  //test_bool  test_all_types
+            driver.get(URL+'admin/users/').then(function(){ done(); });  //test_bool  test_all_types
             // driver.getPageSource().then(function(page_html) {
             //     // var dom_window = jsdom(page_html).parentWindow;
             //     // document = dom_window.document;

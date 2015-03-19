@@ -41,7 +41,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
-    "test": "mocha pyramid_sacrud/static/js/test/ --growl --bail --timeout 99999"
+    "test": "mocha --timeout 99999 pyramid_sacrud/static/js/tests/tests.js -R tap"
   },
   "browserify": {
     "transform": [

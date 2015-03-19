@@ -1,0 +1,20 @@
+framework:
+    - mocha+chai
+src_files:
+    - pyramid_sacrud/static/js/tests/**/*.js
+ignore_src_files:
+    - pyramid_sacrud/static/js/tests/fixtures/**/*.js
+    - pyramid_sacrud/static/js/tests/space test/*.js
+launchers:
+    Mocha+Phantom:
+        command: mocha --timeout 99999 pyramid_sacrud/static/js/tests/tests.js -R tap
+        protocol: tap
+launch_in_dev:
+    - Mocha+PhantomJS
+launch_in_ci:
+    - IE
+    - Firefox
+    - Chrome
+    - Safari
+    - PhantomJS
+    - Mocha
