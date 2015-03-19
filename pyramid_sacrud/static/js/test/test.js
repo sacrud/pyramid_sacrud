@@ -1,5 +1,5 @@
 var webdriver = require('selenium-webdriver');
-var driver = new webdriver.Builder().withCapabilities({'browserName': 'phantomjs'}).build();
+var driver = new webdriver.Builder().withCapabilities(webdriver.Capabilities.phantomjs()).build();
 
 var chai = require('chai'),
     expect = chai.expect;
@@ -45,7 +45,7 @@ describe('SACRUD tests', function() {
         // var jsdom = require("jsdom").jsdom;
 
         before(function(done) {
-            driver.get('http://127.0.0.1:8000/admin/test_bool/').then(function(){ done(); });  //test_bool  test_all_types
+            driver.get('http://127.0.0.1:8000/admin/users/').then(function(){ done(); });  //test_bool  test_all_types
             // driver.getPageSource().then(function(page_html) {
             //     // var dom_window = jsdom(page_html).parentWindow;
             //     // document = dom_window.document;
@@ -55,6 +55,32 @@ describe('SACRUD tests', function() {
         });
 
         it('Should find elements for popup in DOM', function(done) {
+            console.log('-- BEGIN --');
+            console.log(Object.getOwnPropertyNames(driver));
+            console.log(Object.getPrototypeOf(driver));
+            console.log(driver.manage().logs().getAvailableLogTypes());
+            console.log();
+
+
+            driver.manage().logs().get("har").then(function(lgs) {
+                console.log('===============');
+                // console.log(arguments);
+                var entries = JSON.parse(lgs[0].message).log.entries;
+                for (var i in entries) {
+                    console.log(entries[i].response.status);
+                    console.log(entries[i].response.statusText);
+                    console.log();
+                }
+                console.log();
+            });
+
+            driver.manage().logs().get("browser").then(function(lgs) {
+                console.log('................');
+                // console.log(arguments);
+                console.log(lgs);
+                console.log();
+            });
+
             check_element_existence('div_popup', options.popup);
             check_element_existence('div_delete_button', options.div_delete_button);
             check_element_existence('popup_close_button', options.popup_close_button);
@@ -132,7 +158,7 @@ describe('SACRUD tests', function() {
             it('Popup should be invisible, after clicking on disabled "Delete" button', function(done) {
                 elements['div_delete_button'].click();
                 webdriver.until.elementIsVisible(elements['div_popup']).fn().then(function(visible) {
-                    expect(visible, options.popup + ' must be visible').to.be.false();
+                    expect(visible, options.popup + ' must be invisible').to.be.false();
                     done();
                 });
             });
