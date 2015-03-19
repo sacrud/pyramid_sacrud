@@ -23,6 +23,7 @@
     "node": ">= 0.8.0"
   },
   "devDependencies": {
+    "browser-sync": "^2.3.1",
     "browserify": "^9.0.3",
     "browserify-shim": "^3.8.3",
     "gulp": "^3.8.11",
@@ -52,7 +53,6 @@
     "jquery-ui": "./bower_components/jquery-ui/ui/minified/jquery-ui.min.js",
     "jquery-maskedinput": "./bower_components/jquery-maskedinput/dist/jquery.maskedinput.js",
     "jqueryui-timepicker-addon": "./bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js",
-    "speakingurl": "./bower_components/speakingurl/speakingurl.min.js",
     "picker": "./bower_components/pickadate/lib/compressed/picker.js",
     "pickadate": "./bower_components/pickadate/lib/compressed/picker.date.js",
     "pickatime": "./bower_components/pickadate/lib/compressed/picker.time.js"
@@ -68,20 +68,23 @@
     "jqueryui-timepicker-addon": {
       "depends": "jquery-ui"
     },
-    "speakingurl": {
-      "depends": "jquery"
-    },
     "picker": {
       "exports": "picker",
       "depends": "jquery"
     },
     "pickadate": {
       "exports": "pickadate",
-      "depends": [ "picker", "jquery" ]
+      "depends": [
+        "picker",
+        "jquery"
+      ]
     },
     "pickatime": {
       "exports": "pickatime",
-      "depends": [ "picker", "jquery" ]
+      "depends": [
+        "picker",
+        "jquery"
+      ]
     }
   }
 }

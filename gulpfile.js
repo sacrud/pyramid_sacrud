@@ -9,10 +9,18 @@ var autoprefixer = require('gulp-autoprefixer'),
     watch = require('gulp-watch');
 
 var browserify = require('browserify'),
+    browserSync = require('browser-sync'),
     buffer = require('vinyl-buffer'),
     map = require('vinyl-map'),
     mainBowerFiles = require('main-bower-files'),
     source = require('vinyl-source-stream');
+
+gulp.task('browser-sync', function() {
+    browserSync({
+        proxy: "127.0.0.1:6543",
+        logLevel: "silent",
+    });
+});
 
 gulp.task('bower', function() {
     // gulp.src(mainBowerFiles({filter: (/.*\.js$/i)}), { base: 'bower_components' })
@@ -33,7 +41,8 @@ gulp.task('browserify', function() {
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./pyramid_sacrud/static/js/'))
-        .pipe(map(function(code, filename) { gutil.log('Browserify ' + gutil.colors.green(filename)); }));
+        .pipe(map(function(code, filename) { gutil.log('Browserify ' + gutil.colors.green(filename)); }))
+        .pipe(browserSync.reload({ stream:true }));
 });
 
 gulp.task('css', function() {
@@ -55,17 +64,17 @@ gulp.task('css', function() {
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./pyramid_sacrud/static/css/'))
         .pipe(map(function(code, filename) { gutil.log('CSS ' + gutil.colors.green(filename)); }))
-        .on('error', gutil.log);
-
+        .on('error', gutil.log)
+        .pipe(browserSync.reload({ stream:true }));
 });
 
-
 gulp.task('watch', function() {
-    watch(['./pyramid_sacrud/static/css/*.css', './pyramid_sacrud/static/css/**/*.css',
-           '!./pyramid_sacrud/static/css/__sacrud.css'], batch(function () {
+    watch(['./pyramid_sacrud/static/css/*.css',
+           './pyramid_sacrud/static/css/**/*.css',
+           '!./pyramid_sacrud/static/css/__pyramid_sacrud.css'], batch(function () {
         gulp.start('css');
         cb();
     }));
 });
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['watch', 'browser-sync']);
