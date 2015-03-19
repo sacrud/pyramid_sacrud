@@ -1,5 +1,3 @@
-// var $ = require('jquery');
-
 module.exports = function() {
     function check_checkbox (checkbox) {
         if (checkbox.prop('checked')) {
