@@ -1,4 +1,3 @@
-
 var Popup = function (el, options) {
     if (!(this instanceof Popup)) {
         return new Popup(el, options);

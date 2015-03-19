@@ -78,7 +78,7 @@ class Add(CRUD):
         except (NoResultFound, KeyError):
             raise HTTPNotFound
         form = SacrudForm(obj=obj, dbsession=dbsession,
-                          request=self.request, table=self.table).build()
+                          request=self.request, table=self.table)()
 
         def get_responce(form):
 
@@ -102,6 +102,7 @@ class Add(CRUD):
             else:
                 # if not peppercon format
                 data = pstruct
+
             try:
                 if self.pk:
                     obj = self.crud.update(self.pk, data)
@@ -117,6 +118,7 @@ class Add(CRUD):
                 logging.exception("Something awful happened!")
                 raise e
             transaction.commit()
+
             if self.pk:
                 self.flash_message(
                     _ps(u"You updated object of ${name}",

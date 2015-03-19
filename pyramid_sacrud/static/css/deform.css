@@ -41,7 +41,6 @@
 					transition: background-color 500ms ease-out 3ms;
 					zoom: 1;
 				}
-				.
 				.sacrud-deform .form-group:after
 				{
 					display: block;
@@ -60,7 +59,7 @@
 						font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 						color: #444;
 						float: left;
-						padding: 0.2em 0 0 0;
+						padding: 0.4em 0 0 0;
 					}
 					.sacrud-deform .required:after
 					{
@@ -77,6 +76,8 @@
 						position: relative;
 						font: italic 0.75em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 					}
+
+
 input.form-control
 {
 	background: #fff;
@@ -88,7 +89,7 @@ input.form-control
 	font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 	color: #333333;
 	position: relative;
-	padding: 0.3em 1% 0.2em 0.3em;
+	padding: 0.3em 1% 0.3em 0.3em;
 	outline-width: 0;
 	transition: all 200ms linear;
 	display: inline-block;
@@ -110,7 +111,7 @@ textarea.sacrud_deform
 	font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 	color: #333333;
 	position: relative;
-	padding: 0.3em 1% 0.2em 0.3em;
+	padding: 0.3em 1% 0.3em 0.3em;
 	outline-width: 0;
 	transition: all 200ms linear;
 	display: inline-block;
@@ -134,7 +135,7 @@ select.form-control
 	font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
 	color: #333333;
 	position: relative;
-	padding: 0.3em 1% 0.2em 0.3em;
+	padding: 0.3em 1% 0.3em 0.3em;
 	outline-width: 0;
 	transition: all 200ms linear;
 	display: inline-block;
@@ -151,4 +152,35 @@ p.help-block[id*="error"]
 {
 	color: red !important;
 	font-style: normal;
+}
+
+input.picker__input {
+	max-width: 110px;
+	min-width: 10px;
+	text-align: center;
+	padding-left: 0;
+}
+.sacrud-deform .row
+{
+	vertical-align: top;
+}
+.sacrud-deform .row .input-group {
+	display: inline-block;
+}
+.sacrud-deform .row .col-xs-6 {
+	padding: 0 20px 0 0;
+}
+.sacrud-deform .row .input-group .input-group-addon
+{
+	font: .9em 'Segoe UI_','Open Sans',Verdana,Arial,Helvetica,sans-serif;
+	color: #444;
+}
+.sacrud-deform .picker
+{
+	max-width: 466px;
+}
+.sacrud-deform .picker__select--year,
+.sacrud-deform .picker__select--month
+{
+	height: auto !important;
 }

@@ -1,6 +1,6 @@
 {
   "name": "pyramid_sacrud",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "homepage": "https://github.com/ITCase/pyramid_sacrud",
   "authors": [
     "ITCase <info@itcase.pro>"
@@ -15,23 +15,18 @@
     "jquery-ui": "~1.10.4",
     "jquery-maskedinput": "~1.3.1",
     "jqueryui-timepicker-addon": "~1.4.5",
-    "chosen": "~1.1.0",
-    "modernizr": "~2.8.3",
-    "pickadate": "~3.5.3"
+    "pickadate": "~3.5.3",
+    "normalize.css": "~3.0.2"
   },
   "overrides": {
-    "jquery": {
-      "main": "null"
-    },
-    "jquery-ui": {
-      "main": "null"
-    },
     "pickadate": {
       "main": [
-        "lib/themes/classic.css",
-        "lib/themes/classic.date.css",
-        "lib/themes/classic.time.css",
-        "lib/themes/rtl.css"
+        "lib/compressed/picker.js",
+        "lib/compressed/picker.date.js",
+        "lib/compressed/picker.time.js",
+        "lib/compressed/themes/classic.css",
+        "lib/compressed/themes/classic.date.css",
+        "lib/compressed/themes/classic.time.css"
       ]
     }
   }

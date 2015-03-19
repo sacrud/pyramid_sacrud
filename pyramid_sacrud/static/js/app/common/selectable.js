@@ -1,4 +1,3 @@
-
 var rows_state_unselecting, current_rows, first_selected_row, global_options;
 
 var SelectableTable = function (el, options) {

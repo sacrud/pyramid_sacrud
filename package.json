@@ -2,7 +2,7 @@
   "name": "pyramid_sacrud",
   "title": "Pyramid CRUD interface",
   "description": "Pyramid CRUD interface based on sacrud and SQLAlchemy.",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "homepage": "https://github.com/ITCase/pyramid_sacrud",
   "author": {
     "name": "ITCase",
@@ -23,16 +23,22 @@
     "node": ">= 0.8.0"
   },
   "devDependencies": {
-    "gulp": "^3.8.10",
+    "browser-sync": "^2.3.1",
+    "browserify": "^9.0.3",
+    "browserify-shim": "^3.8.3",
+    "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.1.0",
-    "gulp-batch": "~1.0.4",
-    "gulp-concat": "^2.4.3",
-    "gulp-minify-css": "^0.4.2",
+    "gulp-batch": "~1.0.5",
+    "gulp-concat": "^2.5.2",
+    "gulp-minify-css": "^1.0.0",
     "gulp-newer": "^0.5.0",
-    "gulp-sourcemaps": "^1.3.0",
-    "gulp-util": "^3.0.2",
-    "gulp-watch": "^4.0.2",
-    "vinyl-map": "^1.0.1"
+    "gulp-sourcemaps": "^1.5.0",
+    "gulp-util": "^3.0.4",
+    "gulp-watch": "^4.1.1",
+    "main-bower-files": "^2.6.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-map": "^1.0.1",
+    "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
     "test": "mocha pyramid_sacrud/static/js/test/ --growl --bail --timeout 99999"
@@ -43,55 +49,40 @@
     ]
   },
   "browser": {
-    "jquery": "./bower_components/jquery/dist/jquery.js",
-    "jquery-ui": "./bower_components/jquery-ui/ui/jquery-ui.js",
+    "jquery": "./bower_components/jquery/dist/jquery.min.js",
+    "jquery-ui": "./bower_components/jquery-ui/ui/minified/jquery-ui.min.js",
     "jquery-maskedinput": "./bower_components/jquery-maskedinput/dist/jquery.maskedinput.js",
     "jqueryui-timepicker-addon": "./bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js",
-    "speakingurl": "./bower_components/speakingurl/speakingurl.min.js",
-    "modernizr": "./bower_components/modernizr/modernizr.js",
-    "Picker": "./bower_components/pickadate/lib/compressed/picker.js",
+    "picker": "./bower_components/pickadate/lib/compressed/picker.js",
     "pickadate": "./bower_components/pickadate/lib/compressed/picker.date.js",
     "pickatime": "./bower_components/pickadate/lib/compressed/picker.time.js"
   },
   "browserify-shim": {
-    "jquery": {
-      "exports": "$"
-    },
+    "jquery": "$",
     "jquery-ui": {
-      "exports": null,
       "depends": "jquery"
     },
     "jquery-maskedinput": {
-      "exports": null,
       "depends": "jquery"
     },
     "jqueryui-timepicker-addon": {
-      "exports": null,
       "depends": "jquery-ui"
     },
-    "speakingurl": {
-      "exports": null,
-      "depends": "jquery"
-    },
-    "modernizr": {
-      "exports": "modernizr",
-      "depends": "jquery"
-    },
-    "Picker": {
-      "exports": "Picker",
+    "picker": {
+      "exports": "picker",
       "depends": "jquery"
     },
     "pickadate": {
       "exports": "pickadate",
       "depends": [
-        "Picker",
+        "picker",
         "jquery"
       ]
     },
     "pickatime": {
       "exports": "pickatime",
       "depends": [
-        "Picker",
+        "picker",
         "jquery"
       ]
     }
