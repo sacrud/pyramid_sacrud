@@ -1,7 +1,10 @@
 var webdriver = require('selenium-webdriver');
-var driver = new webdriver.Builder().withCapabilities(webdriver.Capabilities.phantomjs()).build();
-var chai = require('chai'),
-    expect = chai.expect;
+var driver = new webdriver.Builder()
+    .withCapabilities(webdriver.Capabilities.phantomjs())
+    .build();
+
+var chai = require('chai');
+var expect = require('chai').expect;
 
 var options = require('../app/options.js');
 var elements = {};
@@ -15,7 +18,7 @@ describe('SACRUD tests', function() {
             err_msg = 'Element "'+css_arg+'" is not found';
         }
         driver.isElementPresent(webdriver.By.css(css_arg)).then(function(exists) {
-            expect(exists, err_msg).to.be.true();
+            expect(exists, err_msg).to.be.true;
             elements[name] = driver.findElement(webdriver.By.css(css_arg));
             if (done !== undefined) { done(); }
         });
@@ -35,51 +38,38 @@ describe('SACRUD tests', function() {
         });
     });
 
-    // it('Should correctly handle found elements', function(done) {
-    //     var SelectableTable = require("../app/common/selectable.js").SelectableTable;
-    //     SelectableTable.prototype._bindSelectable = function() {};
-    // });
-
     describe('Popup', function() {
-
-        // var jsdom = require("jsdom").jsdom;
 
         before(function(done) {
             driver.get(URL+'admin/users/').then(function(){ done(); });  //test_bool  test_all_types
-            // driver.getPageSource().then(function(page_html) {
-            //     // var dom_window = jsdom(page_html).parentWindow;
-            //     // document = dom_window.document;
-            //     // $ = require('../bower_components/jquery/dist/jquery.js')(dom_window);
-            //     done();
-            // });
         });
 
         it('Should find elements for popup in DOM', function(done) {
-            console.log('-- BEGIN --');
-            console.log(Object.getOwnPropertyNames(driver));
-            console.log(Object.getPrototypeOf(driver));
-            console.log(driver.manage().logs().getAvailableLogTypes());
-            console.log();
+            // console.log('-- BEGIN --');
+            // console.log(Object.getOwnPropertyNames(driver));
+            // console.log(Object.getPrototypeOf(driver));
+            // console.log(driver.manage().logs().getAvailableLogTypes());
+            // console.log();
 
 
-            driver.manage().logs().get("har").then(function(lgs) {
-                console.log('===============');
-                // console.log(arguments);
-                var entries = JSON.parse(lgs[0].message).log.entries;
-                for (var i in entries) {
-                    console.log(entries[i].response.status);
-                    console.log(entries[i].response.statusText);
-                    console.log();
-                }
-                console.log();
-            });
+            // driver.manage().logs().get("har").then(function(lgs) {
+            //     console.log('===============');
+            //     // console.log(arguments);
+            //     var entries = JSON.parse(lgs[0].message).log.entries;
+            //     for (var i in entries) {
+            //         console.log(entries[i].response.status);
+            //         console.log(entries[i].response.statusText);
+            //         console.log();
+            //     }
+            //     console.log();
+            // });
 
-            driver.manage().logs().get("browser").then(function(lgs) {
-                console.log('................');
-                // console.log(arguments);
-                console.log(lgs);
-                console.log();
-            });
+            // driver.manage().logs().get("browser").then(function(lgs) {
+            //     console.log('................');
+            //     // console.log(arguments);
+            //     console.log(lgs);
+            //     console.log();
+            // });
 
             check_element_existence('div_popup', options.popup);
             check_element_existence('div_delete_button', options.div_delete_button);
@@ -90,7 +80,7 @@ describe('SACRUD tests', function() {
 
         it('Popup should be invisible, after opening page', function(done) {
             webdriver.until.elementIsVisible(elements['div_popup']).fn().then(function(visible) {
-                expect(visible, options.popup + ' must be invisible').to.be.false();
+                expect(visible, options.popup + ' must be invisible').to.be.false;
                 done();
             });
         });
@@ -120,7 +110,7 @@ describe('SACRUD tests', function() {
             it('Popup should be visible, after clicking on active "Delete" button', function(done) {
                 elements['div_delete_button'].click();
                 webdriver.until.elementIsVisible(elements['div_popup']).fn().then(function(visible) {
-                    expect(visible, options.popup + ' must be visible').to.be.true();
+                    expect(visible, options.popup + ' must be visible').to.be.true;
                     done();
                 });
             });
@@ -128,7 +118,7 @@ describe('SACRUD tests', function() {
             it('Popup should be invisible, after clicking on "Cancel" button', function(done) {
                 elements['popup_cancel_button'].click();
                 webdriver.until.elementIsVisible(elements['div_popup']).fn().then(function(visible) {
-                    expect(visible, options.popup + ' must be invisible').to.be.false();
+                    expect(visible, options.popup + ' must be invisible').to.be.false;
                     done();
                 });
             });
@@ -139,7 +129,7 @@ describe('SACRUD tests', function() {
                 // elements['popup_close_button'].click(); // driver.executeScript("arguments[0].click();", elements['popup_close_button']);
                 driver.executeScript('$("'+options.popup_close_button+'").click();');
                 webdriver.until.elementIsVisible(elements['div_popup']).fn().then(function(visible) {
-                    expect(visible, options.popup + ' must be invisible').to.be.false();
+                    expect(visible, options.popup + ' must be invisible').to.be.false;
                     done();
                 });
             });
@@ -158,7 +148,7 @@ describe('SACRUD tests', function() {
             it('Popup should be invisible, after clicking on disabled "Delete" button', function(done) {
                 elements['div_delete_button'].click();
                 webdriver.until.elementIsVisible(elements['div_popup']).fn().then(function(visible) {
-                    expect(visible, options.popup + ' must be invisible').to.be.false();
+                    expect(visible, options.popup + ' must be invisible').to.be.false;
                     done();
                 });
             });
@@ -206,7 +196,7 @@ describe('SACRUD tests', function() {
             check_element_existence('all_checkboxes_button', options.all_checkboxes_button);
 
             driver.isElementPresent(webdriver.By.tagName('tbody')).then(function(exists) {
-                expect(exists, 'Not found table body on page').to.be.true();
+                expect(exists, 'Not found table body on page').to.be.true;
                 driver.findElement(webdriver.By.tagName('tbody')).findElements(webdriver.By.tagName('tr')).then(function(element_list) {
                     expect(element_list, 'Not found rows in table').to.not.have.length(0);
                     elements['rows_list'] = element_list;

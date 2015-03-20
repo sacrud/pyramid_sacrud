@@ -43,7 +43,7 @@
     "phantomjs": "~1.9.16"
   },
   "scripts": {
-    "test": "mocha -b --timeout 99999 pyramid_sacrud/static/js/tests/tests.js"
+    "test": "mocha -b --timeout 99999 --watch pyramid_sacrud/static/js/tests/"
   },
   "browserify": {
     "transform": [
