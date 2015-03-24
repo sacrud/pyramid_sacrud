@@ -26,6 +26,8 @@
     "browser-sync": "^2.3.1",
     "browserify": "^9.0.3",
     "browserify-shim": "^3.8.3",
+    "chai": "^2.1.2",
+    "cheerio": "^0.19.0",
     "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.1.0",
     "gulp-batch": "~1.0.5",
@@ -36,14 +38,15 @@
     "gulp-util": "^3.0.4",
     "gulp-watch": "^4.1.1",
     "main-bower-files": "^2.6.2",
+    "mocha": "^2.2.1",
+    "phantomjs": "^1.9.16",
+    "selenium-webdriver": "2.44",
     "vinyl-buffer": "^1.0.0",
     "vinyl-map": "^1.0.1",
-    "vinyl-source-stream": "^1.1.0",
-    "mocha": "~2.2.1",
-    "phantomjs": "~1.9.16"
+    "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
-    "test": "mocha -b --timeout 99999 --watch pyramid_sacrud/static/js/tests/"
+    "test": "mocha -b --timeout 999999 pyramid_sacrud/static/js/tests/"
   },
   "browserify": {
     "transform": [

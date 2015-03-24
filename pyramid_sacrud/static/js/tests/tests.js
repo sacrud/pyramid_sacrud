@@ -9,9 +9,11 @@ var expect = require('chai').expect;
 var options = require('../app/options.js');
 var elements = {};
 
-var URL = 'http://127.0.0.1:6543/';
+var URL = 'http://127.0.0.1:6543/',
+    LOGIN = 'admin',
+    PASSWORD = '123';
 
-describe('SACRUD tests', function() {
+describe('SACRUD Popup', function() {
 
     function check_element_existence (name, css_arg, err_msg, done) {
         if (err_msg === undefined) {
@@ -45,32 +47,6 @@ describe('SACRUD tests', function() {
         });
 
         it('Should find elements for popup in DOM', function(done) {
-            // console.log('-- BEGIN --');
-            // console.log(Object.getOwnPropertyNames(driver));
-            // console.log(Object.getPrototypeOf(driver));
-            // console.log(driver.manage().logs().getAvailableLogTypes());
-            // console.log();
-
-
-            // driver.manage().logs().get("har").then(function(lgs) {
-            //     console.log('===============');
-            //     // console.log(arguments);
-            //     var entries = JSON.parse(lgs[0].message).log.entries;
-            //     for (var i in entries) {
-            //         console.log(entries[i].response.status);
-            //         console.log(entries[i].response.statusText);
-            //         console.log();
-            //     }
-            //     console.log();
-            // });
-
-            // driver.manage().logs().get("browser").then(function(lgs) {
-            //     console.log('................');
-            //     // console.log(arguments);
-            //     console.log(lgs);
-            //     console.log();
-            // });
-
             check_element_existence('div_popup', options.popup);
             check_element_existence('div_delete_button', options.div_delete_button);
             check_element_existence('popup_close_button', options.popup_close_button);
@@ -85,11 +61,11 @@ describe('SACRUD tests', function() {
             });
         });
 
-
         describe('Grid', function() {
             it('"Delete" button state should be disabled by default', function(done) {
                 elements['div_delete_button'].getAttribute('class').then(function(class_value) {
-                    expect(class_value).to.contain(options.state_disable_class, '"Delete" button must contain class "'+options.state_disable_class+'" if nothing is selected');
+                    expect(class_value).to.contain(options.state_disable_class,
+                        '"Delete" button must contain class "'+options.state_disable_class+'" if nothing is selected');
                     done();
                 });
             });
@@ -102,7 +78,7 @@ describe('SACRUD tests', function() {
                     });
                 });
                 elements['div_delete_button'].getAttribute('class').then(function(class_value) {
-                    expect(class_value).to.not.contain(options.state_disable_class, 'The "Delete" button should be active, after selecting item');
+                    expect(class_value).to.not.contain(options.state_disable_class, '"Delete" button should be active, after selecting item');
                     done();
                 });
             });
@@ -137,7 +113,7 @@ describe('SACRUD tests', function() {
             it('"Delete" button state should be disabled(change class), after uncheck item', function(done) {
                 elements['table_checkbox'].click();
                 elements['table_checkbox'].getAttribute('checked').then(function(checked) {
-                    expect(checked).to.be.null();
+                    expect(checked).to.be.null;
                 });
                 elements['div_delete_button'].getAttribute('class').then(function(class_value) {
                     expect(class_value).to.contain(options.state_disable_class, 'The "Delete" button should be active, after selecting item');
@@ -152,39 +128,6 @@ describe('SACRUD tests', function() {
                     done();
                 });
             });
-
-
-            // it('Should correctly handle found elements', function(done) {
-            //     var Popup = require("../app/common/popup.js").Popup,
-            //         popup_obj = new Popup(options.popup, options);
-            //     var SelectableTable = require("../app/common/selectable.js").SelectableTable;
-            //     SelectableTable.prototype._bindSelectable = function() {};
-            //     var selectable_table_obj = new SelectableTable('table > tbody', options);
-            //     driver.findElements(webdriver.By.css(options.table_checkboxes)).then(function(element_list) {
-            //         console.log('-----');
-            //         console.log(element_list.length);
-            //         expect(element_list).to.not.have.length(0);
-            //         console.log(element_list[0]);
-            //         element_list[0].getAttribute('class').then(function(class_value) {
-            //             console.log('.......');
-            //             console.log(class_value);
-            //             done();
-            //         });
-            //     });
-            //     webdriver.until.elementIsVisible(div_popup).fn().then(function(val) {
-            //         driver.executeScript('arguments[0].style.display="block";', div_popup);
-            //     });
-            //     console.log('--- jquery popup ---');
-            //     $(options.popup).click();
-            //     console.log($(options.popup).length);
-            //     console.log($(options.popup).hasClass('popup'));
-            //     $('.sacrud-grid-content-grid__body-item-checkbox').attr('checked', true);
-            //     console.log($('.sacrud-grid-content-grid__body-item-checkbox').attr('checked'));
-            // });
-            // it('Go to SACRUD!', function(){
-                // var goButton = driver.findElement(webdriver.By.name('goToSACRUD'));
-                //     goButton.click();
-            // });
         });
     });
 
