@@ -21,4 +21,4 @@ def includeme(config):
     DBSession = crud_sessionmaker(scoped_session(
         sessionmaker(extension=ZopeTransactionExtension())))
     DBSession.configure(bind=engine)
-    config.set_request_property(lambda x: DBSession, 'dbsession', reify=True)
+    config.add_request_method(lambda x: DBSession, 'dbsession', reify=True, property=True)
