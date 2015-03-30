@@ -32,7 +32,6 @@ class TransactionalTest(AppTest):
 
     def tearDown(self):
         Session.remove()
-
         self.transaction.rollback()
         self.connection.close()
         self.session.close()
