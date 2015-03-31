@@ -4,9 +4,7 @@
     {% include 'sacrud/forms/create.jinja2' %}
 {% endblock %}
 
-{% block sa_head_extra_css %}
-    <link href="{{ request.static_url('pyramid_sacrud:static/css/chosen/chosen.min.css') }}" rel="stylesheet" type="text/css">
-{% endblock sa_head_extra_css %}
+{% block sa_head_extra_css %}{% endblock sa_head_extra_css %}
 
 {% block sa_head_js %}
     {{ super() }}
