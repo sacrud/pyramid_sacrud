@@ -56,6 +56,7 @@ class InitTests(_TransactionalFixture):
         request = testing.DummyRequest()
         request.matchdict["pk"] = ("foo", "bar", "baz")  # bad pk's
         request.matchdict["table"] = "user"
+        request.dbsession = self.session
         with self.assertRaises(HTTPNotFound) as cm:
             CRUD(request)
         the_exception = str(cm.exception)
@@ -65,6 +66,7 @@ class InitTests(_TransactionalFixture):
         request = testing.DummyRequest()
         request.matchdict["pk"] = ("foo", "bar")
         request.matchdict["table"] = "user666"
+        request.dbsession = self.session
         with self.assertRaises(HTTPNotFound) as cm:
             CRUD(request)
         the_exception = str(cm.exception)
@@ -106,7 +108,7 @@ class ListTests(_TransactionalFixture):
                            {'visible': True, 'name': 'user',
                             'param': {'name': 'user'}, 'view': 'sa_list'}]
                           )
-        self.assertEquals(responce['sa_crud']['table'], User)
+        self.assertEquals(responce['table'], User)
 
     @raises(HTTPNotFound)
     def test_not_exist_table(self):
@@ -135,14 +137,14 @@ class CreateTests(_TransactionalFixture):
         self._init_pyramid_sacrud_settings(request)
         responce = Add(request).sa_add()
         self.assertEqual(responce['breadcrumbs'],
-                         [{'visible': True, 'name': u'Dashboard', 'param': {'name': 'user'},
-                           'view': 'sa_home'},
-                          {'visible': True, 'name': 'user', 'param': {'name': 'user'},
-                           'view': 'sa_list'},
-                          {'visible': False, 'name': 'create', 'param': {'name': 'user'},
-                           'view': 'sa_list'}]
+                         [{'visible': True, 'name': u'Dashboard',
+                           'param': {'name': 'user'}, 'view': 'sa_home'},
+                          {'visible': True, 'name': 'user',
+                           'param': {'name': 'user'}, 'view': 'sa_list'},
+                          {'visible': False, 'name': 'create',
+                           'param': {'name': 'user'}, 'view': 'sa_list'}]
                          )
-        self.assertEqual(responce['sa_crud']['table'], User)
+        self.assertEqual(responce['table'], User)
 
 
 class UpdateTests(_TransactionalFixture):
@@ -165,14 +167,14 @@ class UpdateTests(_TransactionalFixture):
         self._init_pyramid_sacrud_settings(request)
         responce = Add(request).sa_add()
         self.assertEqual(responce['breadcrumbs'],
-                         [{'visible': True, 'name': u'Dashboard', 'param': {'name': 'user'},
-                           'view': 'sa_home'},
-                          {'visible': True, 'name': 'user', 'param': {'name': 'user'},
-                           'view': 'sa_list'},
-                          {'visible': False, 'name': ' id=1', 'param': {'name': 'user'},
-                           'view': 'sa_list'}]
+                         [{'visible': True, 'name': u'Dashboard',
+                           'param': {'name': 'user'}, 'view': 'sa_home'},
+                          {'visible': True, 'name': 'user',
+                           'param': {'name': 'user'}, 'view': 'sa_list'},
+                          {'visible': False, 'name': ' id=1',
+                           'param': {'name': 'user'}, 'view': 'sa_list'}]
                          )
-        self.assertEqual(responce['sa_crud']['table'], User)
+        self.assertEqual(responce['table'], User)
 
 
 class DeleteTests(_TransactionalFixture):

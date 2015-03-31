@@ -150,7 +150,7 @@ class DeleteFuncTests(PyramidApp):
         self.testapp.post('/admin/user/',
                           {'selected_action': 'delete',
                            'selected_item': items_list},
-                          status=200)
+                          status=302)
         transaction.commit()
         count = Session.query(User).filter(
             User.id.in_(deleted_ids)).count()

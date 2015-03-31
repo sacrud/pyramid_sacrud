@@ -16,6 +16,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+from sacrud import CRUDSession
+
 Base = declarative_base()
 
 DIRNAME = os.path.dirname(__file__)
@@ -28,5 +30,5 @@ TEST_DATABASE_CONNECTION_STRING = 'sqlite:///%s' % DATABASE_FILE
 engine = create_engine(TEST_DATABASE_CONNECTION_STRING)
 
 # create a configured "Session" class
-Session = scoped_session(sessionmaker(bind=engine),
+Session = scoped_session(sessionmaker(bind=engine, class_=CRUDSession),
                          scopefunc=get_current_request)
