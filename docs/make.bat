@@ -239,4 +239,12 @@ if "%1" == "pseudoxml" (
 	goto end
 )
 
+if "%1" == "livehtml" (
+	sphinx-autobuild -b html %ALLSPHINXOPTS% %BUILDDIR%/html -i IGNORE
+	if errorlevel 1 exit /b 1
+	echo.
+	echo.Build finished.
+	goto end
+)
+
 :end
