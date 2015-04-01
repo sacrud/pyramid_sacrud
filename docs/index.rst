@@ -11,10 +11,10 @@ Overview
 
 .. image:: _static/img/index.png
     :alt: SACRUD main page
-    :align: right
+    :align: center
     :width: 500px
 
-.. include:: includes/include_owerview.rst
+.. include:: includes/include_overview.rst
 
 Usage
 -----
