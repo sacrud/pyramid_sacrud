@@ -1,8 +1,3 @@
-Backend contrubute
-==================
-
-Same as `contributor's section of the documentation <http://docs.pylonsproject.org/en/latest/#contributing>`_ of Pyramid project.
-
 Frontend contribute
 ===================
 
@@ -19,12 +14,10 @@ For working with CSS and JavaScript you need install Node.js_, NPM_, Bower_, Bro
     If you don’t have Node.js and NPM installed, get it first.
 
 
-Install components
-------------------
+Getting Started
+---------------
 
-**package.json** for NPM, **gulpfile.js** for Gulp and **bower.json** for Bower in the `pyramid_sacrud/static/` folder.
-
-Installing Browserify, Gulp and other dependencies:
+Installing Node.js dependencies:
 
 .. code:: bash
 
@@ -34,15 +27,15 @@ Install Bower:
 
 .. code:: bash
 
-    npm install -g bower
-      
-Install packages with Bower install:
+    npm install --global bower
+
+Install packages with Bower:
 
 .. code:: bash
 
     bower install
 
-Packages installs to `pyramid_sacrud/static/js/bower_components/`
+Packages will be install to `pyramid_sacrud/bower_components/`
 
 
 
@@ -50,18 +43,18 @@ CSS
 ---
 
 СSS files are on `pyramid_sacrud/static/css/`.
-    
-Before changing css files you need to run "watch" task with gulp: 
+
+Before changing css files you need to run "watch" task with gulp:
 
 .. code:: bash
 
     gulp watch
 
-When you change any css file gulp concatenates all in **__main.css** on `pyramid_sacrud/static/css/`.
+When you change any **css** file gulp concatenates all in **__pyramid_sacrud.css** in `pyramid_sacrud/static/css/`.
 
 
-JavaScript coder
-----------------
+JavaScript
+----------
 
 Getting Started
 ~~~~~~~~~~~~~~~
@@ -70,13 +63,13 @@ File for browserify build is **main.js** on `pyramid_sacrud/static/js/`.
 
 Project modules are on `pyramid_sacrud/static/js/app/`.
 
-Before changing js modules you need to run "watch" task with gulp: 
+Before changing **js** modules you need to run "watch" task with gulp:
 
 .. code:: bash
 
     gulp watch
-    
-When you change any js file, browserify build **__main.js** on `pyramid_sacrud/static/js/`.
+
+When you change any js file, browserify build **__pyramid_sacrud.js** on `pyramid_sacrud/static/js/`.
 
 
 Project modules
@@ -95,7 +88,7 @@ Create a new Popup:
 
     var Popup = require('popup.js');
     var popup = new Popup(el, options);
-    
+
 .. epigraph::
     Arguments:
         * el - JQuery selector (set in options.popup).
@@ -112,7 +105,7 @@ Create a new SelectableTable:
 
     var SelectableTable = require('selectable.js');
     var selectable_table = new SelectableTable(el, options);
-    
+
 .. epigraph::
 
     Arguments:
@@ -146,7 +139,7 @@ Using modules
 To use module, you need to define it in **main.js** via require() function:
 
 .. code-block:: javascript
-    
+
     require('jquery');
 
 After that, they will be available for entire project.
@@ -158,10 +151,10 @@ After that, they will be available for entire project.
 To define a module, just create a JavaScript file, and write something like this:
 
 .. code-block:: javascript
-    
-    module.exports = function some_func(args) { 
+
+    module.exports = function some_func(args) {
         // anything do
-    };    
+    };
 
 Add it in **main.js** via require() function and call, to use in site:
 
@@ -173,8 +166,22 @@ Add it in **main.js** via require() function and call, to use in site:
 
 Testing
 ~~~~~~~
-The tests are written using Mocha framework.
-For their work, you need install Mocha_, Chai_ and Selenium-webdriver_.
+Getting Started
+---------------
+
+Install Testing tools:
+
+.. code:: bash
+
+    npm install
+
+or install package manual
+
+.. code:: bash
+
+    npm install mocha chai selenium-webdriver cheerio --save-dev
+
+The tests are written using Mocha framework, you need install Mocha_, Chai_ and Selenium-webdriver_.
 
 .. _Mocha: http://mochajs.org/
 .. _Chai: http://chaijs.com/
@@ -187,15 +194,10 @@ For their work, you need install Mocha_, Chai_ and Selenium-webdriver_.
     .. _pyramid_sacrud_example: https://github.com/ITCase/pyramid_sacrud_example
     .. _docs: http://pyramid-sacrud-example.readthedocs.org/en/latest/index.html
 
-.. note::
-    
-    Install Mocha in global(with -g) on Windows.
+.. important::
 
-.. code:: bash
+    Install Mocha in global(npm install mocha --global) on Windows.
 
-    npm install mocha
-    npm install chai
-    npm install selenium-webdriver
 
 
 All tests are in the directory `pyramid_sacrud/static/js/test/`
@@ -205,7 +207,7 @@ To run tests for javascript, you need to use **npm test** command from category 
 .. code:: bash
 
     npm test
-    
+
 
 Documentation contribute
 ------------------------

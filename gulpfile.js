@@ -36,7 +36,7 @@ gulp.task('bower', function() {
 gulp.task('browserify', function() {
     browserify('./pyramid_sacrud/static/js/main.js')
         .bundle()
-        .pipe(source('__main.js'))
+        .pipe(source('__pyramid_sacrud.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(sourcemaps.write('./'))

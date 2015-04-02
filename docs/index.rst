@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Overview
---------
+========
 
 .. image:: _static/img/index.png
     :alt: SACRUD main page
@@ -14,27 +14,27 @@ Overview
 .. include:: includes/include_overview.rst
 
 Usage
------
+=====
 
 .. toctree::
-   :maxdepth: 3
+  :maxdepth: 3
 
-   pages/install
-   pages/configuration
-   pages/localization
-   pages/permissions
-   pages/api
-
-.. include:: includes/include_contribute.rst
+  pages/install
+  pages/configuration
+  pages/localization
+  pages/permissions
+  pages/api
 
 Contribute
 ==========
 
 .. toctree::
-   :maxdepth: 3
+  :maxdepth: 3
 
-   pages/contribute
+  pages/contribute-backend.rst
+  pages/contribute-frontend.rst
 
+.. include:: includes/include_contribute.rst
 .. include:: includes/include_license.rst
 
 Indices and tables
