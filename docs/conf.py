@@ -76,7 +76,7 @@ intersphinx_mapping = {
 }
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_themes/templates']
+#templates_path = ['_themes/templates']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -148,7 +148,7 @@ html_theme = 'itcase'
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {'collapsiblesidebar': True}
+#html_theme_options = {'collapsiblesidebar': True}
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = ['_themes']
@@ -158,7 +158,7 @@ html_theme_path = ['_themes']
 #html_title = None
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-#html_short_title = None
+html_short_title = 'SACRUD'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
@@ -172,7 +172,7 @@ html_theme_path = ['_themes']
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static', '_themes/static']
+#html_static_path = ['_static', '_themes/static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -189,14 +189,14 @@ html_static_path = ['_static', '_themes/static']
 
 # Custom sidebar templates, maps document names to template names.
 html_sidebars = {
-    'index': 'indexsidebar.html',
+    #'index': 'indexsidebar.html',
 }
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
 html_additional_pages = {
-    'download': 'download.html',
-    'index': 'indexcontent.html',
+    #'download': 'download.html',
+    #'index': 'indexcontent.html',
 }
 
 # If false, no module index is generated.
@@ -314,7 +314,7 @@ texinfo_documents = [
 epub_title = u'sacrud'
 epub_author = u'Author'
 epub_publisher = u'Author'
-epub_copyright = u'2014, Author'
+epub_copyright = u'2015, Author'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.
