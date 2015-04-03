@@ -15,40 +15,41 @@
 import sys
 import os
 
+
 # Add and use Pylons theme
-if 'sphinx-build' in ' '.join(sys.argv) and 'nt' not in os.name:
-    from subprocess import call, Popen, PIPE
+# if 'sphinx-build' in ' '.join(sys.argv) and 'nt' not in os.name:
+from subprocess import call, Popen, PIPE
 
-    p = Popen('which git', shell=True, stdout=PIPE)
-    git = p.stdout.read().strip()
-    cwd = os.getcwd()
-    _themes = os.path.join(cwd, '_themes')
+p = Popen('which git', shell=True, stdout=PIPE)
+git = p.stdout.read().strip()
+# cwd = os.getcwd()
+# _themes = os.path.join(cwd, '_themes')
 
-    call([git, 'clone', 'git://github.com/ITCase/pyramid_sacrud_example.git',
-          '_pyramid_sacrud_example'])
+call([git, 'clone', 'git://github.com/ITCase/pyramid_sacrud_example.git',
+      '_pyramid_sacrud_example'])
 
-    call([git, 'clone', 'git://github.com/ITCase/itcase_sphinx_theme.git',
-          '_themes'])
-    # if not os.path.isdir(_themes):
-    #     call([git, 'clone', 'git://github.com/ITCase/itcase_sphinx_theme.git',
-    #           '_themes'])
-    # else:
-    #     os.chdir(_themes)
-    #     call([git, 'checkout', 'master'])
-    #     call([git, 'pull'])
-    #     os.chdir(cwd)
+call([git, 'clone', 'git://github.com/ITCase/itcase_sphinx_theme.git',
+      '_themes'])
+# if not os.path.isdir(_themes):
+#     call([git, 'clone', 'git://github.com/ITCase/itcase_sphinx_theme.git',
+#           '_themes'])
+# else:
+#     os.chdir(_themes)
+#     call([git, 'checkout', 'master'])
+#     call([git, 'pull'])
+#     os.chdir(cwd)
 
-    sys.path.append(os.path.abspath('_themes'))
+sys.path.append(os.path.abspath('_themes'))
 
-    parent = os.path.dirname(os.path.dirname(__file__))
-    sys.path.append(os.path.abspath(parent))
-    wd = os.getcwd()
-    os.chdir(parent)
-    os.chdir(wd)
+parent = os.path.dirname(os.path.dirname(__file__))
+sys.path.append(os.path.abspath(parent))
+wd = os.getcwd()
+os.chdir(parent)
+os.chdir(wd)
 
-    for item in os.listdir(parent):
-        if item.endswith('.egg'):
-            sys.path.append(os.path.join(parent, item))
+for item in os.listdir(parent):
+    if item.endswith('.egg'):
+        sys.path.append(os.path.join(parent, item))
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
