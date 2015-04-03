@@ -8,7 +8,7 @@ Documentation `<http://pyramid-sacrud.readthedocs.org/en/latest/>`_
 Overview
 --------
 
-.. include:: ../includes/include_owerview.rst
+.. include:: ../includes/include_overview.rst
 And see...
 
 |sacrud_index|

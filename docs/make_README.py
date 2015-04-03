@@ -4,7 +4,7 @@ from shutil import copyfile
 
 src = "pages/readme.rst"
 src_path = os.path.dirname(os.path.realpath(src))
-dst = "../README.rst"
+dst = os.path.join('..', 'README.rst')
 copyfile(src, dst)
 
 
