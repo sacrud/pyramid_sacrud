@@ -22,3 +22,5 @@ compile_catalog:
 	python setup.py compile_catalog
 
 locale: extract_messages update_catalog compile_catalog
+
+
