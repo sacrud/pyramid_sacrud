@@ -27,7 +27,7 @@ if 'sphinx-build' in ' '.join(sys.argv) and 'nt' not in os.name:
     call([git, 'clone', 'git://github.com/ITCase/pyramid_sacrud_example.git',
           '_pyramid_sacrud_example'])
 
-    if not os.path.isdir(_themes):
+    if 'SACRUD_DEVELOP' not in os.environ:
         call([git, 'clone', 'git://github.com/ITCase/itcase_sphinx_theme.git',
               '_themes'])
     else:
