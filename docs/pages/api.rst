@@ -25,11 +25,6 @@ Common
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: pyramid_sacrud.common.custom
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 .. automodule:: pyramid_sacrud.common.paginator
     :members:
     :undoc-members:

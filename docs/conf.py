@@ -27,14 +27,16 @@ if 'sphinx-build' in ' '.join(sys.argv) and 'nt' not in os.name:
     call([git, 'clone', 'git://github.com/ITCase/pyramid_sacrud_example.git',
           '_pyramid_sacrud_example'])
 
-    if not os.path.isdir(_themes):
-        call([git, 'clone', 'git://github.com/ITCase/itcase_sphinx_theme.git',
-              '_themes'])
-    else:
-        os.chdir(_themes)
-        call([git, 'checkout', 'master'])
-        call([git, 'pull'])
-        os.chdir(cwd)
+    call([git, 'clone', 'git://github.com/ITCase/itcase_sphinx_theme.git',
+          '_themes'])
+    # if not os.path.isdir(_themes):
+    #     call([git, 'clone', 'git://github.com/ITCase/itcase_sphinx_theme.git',
+    #           '_themes'])
+    # else:
+    #     os.chdir(_themes)
+    #     call([git, 'checkout', 'master'])
+    #     call([git, 'pull'])
+    #     os.chdir(cwd)
 
     sys.path.append(os.path.abspath('_themes'))
 
