@@ -180,24 +180,3 @@ readme:
 	python make_README.py
 
 readme_html: html readme
-
-DOCS_DIR=ghdocs
-
-ghdocs:
-	rm -rf $(DOCS_DIR)
-	$(MAKE) clean
-	$(MAKE) html
-	cp -r $(BUILDDIR)/html $(DOCS_DIR)
-	mv $(DOCS_DIR)/_static $(DOCS_DIR)/static
-	mv $(DOCS_DIR)/_sources $(DOCS_DIR)/sources
-	perl -pi -e "s/_sources/sources/g;" $(DOCS_DIR)/*.html
-	perl -pi -e "s/_static/static/g;" $(DOCS_DIR)/*.html
-	git add .
-	git commit -a -m "Updates $(project)."
-	git checkout gh-pages
-	cp -rf $(DOCS_DIR)/* .
-	git add .
-	git commit -a -m 'Updates $(project) documentation.'
-	git checkout master
-	rm -rf $(DOCS_DIR)
-	#  git push origin gh-pages
