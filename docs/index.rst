@@ -9,7 +9,6 @@ Overview
 .. image:: _static/img/index.png
     :alt: SACRUD main page
     :align: center
-    :width: 500px
 
 .. include:: includes/include_overview.rst
 
@@ -33,6 +32,8 @@ Contribute
 
   pages/contribute-backend.rst
   pages/contribute-frontend.rst
+  pages/contribute-documentation.rst
+  pages/contribute-localization.rst
 
 .. include:: includes/include_contribute.rst
 .. include:: includes/include_license.rst

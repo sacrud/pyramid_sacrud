@@ -4,7 +4,7 @@ Application Configuration for Pyramid
 Initialize
 ----------
 
-:mod:`pyramid_sacrud` use Jinja2 template renderer
+:mod:`pyramid_sacrud` use **Jinja2** template renderer
 
 .. code-block:: python
     :linenos:

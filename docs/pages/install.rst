@@ -1,7 +1,7 @@
 Installing
 ==========
 
-github
+GitHub
 ------
 
 .. code-block:: bash
@@ -15,7 +15,7 @@ PyPi
 
     pip install pyramid_sacrud
 
-source
+Source
 ------
 
 .. code-block:: bash
@@ -23,7 +23,7 @@ source
     git clone git+http://github.com/ITCase/pyramid_sacrud.git
     python setup.py install
 
-contribute
+Contribute
 ----------
 
 .. code-block:: bash

@@ -7,6 +7,7 @@ For working with CSS and JavaScript you need install Node.js_, NPM_, Bower_, Bro
 .. _NPM: https://www.npmjs.org/
 .. _Bower: http://bower.io/
 .. _Browserify: http://browserify.org/
+.. _Browserify-Shim: https://github.com/thlorenz/browserify-shim
 .. _Gulp: http://gulpjs.com/
 
 .. note::
@@ -35,22 +36,33 @@ Install packages with Bower:
 
     bower install
 
-Packages will be install to `pyramid_sacrud/bower_components/`
+Packages will be install to **pyramid_sacrud/bower_components/**
 
 
 
 CSS
 ---
 
-СSS files are on `pyramid_sacrud/static/css/`.
+СSS files are located in **pyramid_sacrud/static/css/**.
 
-Before changing css files you need to run "watch" task with gulp:
+Before changing css files you may run **gulp watch** task:
 
 .. code:: bash
 
     gulp watch
 
-When you change any **css** file gulp concatenates all in **__pyramid_sacrud.css** in `pyramid_sacrud/static/css/`.
+or you can change css and then and run **gulp css** task:
+
+.. code:: bash
+
+    gulp css
+
+.. note::
+
+    For more information about **gulp css** task see **gulpfile.js**
+
+
+When you change any **css** file gulp concatenates all files in folder and create **__pyramid_sacrud.css** file in `pyramid_sacrud/static/css/`.
 
 
 JavaScript
@@ -59,49 +71,87 @@ JavaScript
 Getting Started
 ~~~~~~~~~~~~~~~
 
-File for browserify build is **main.js** on `pyramid_sacrud/static/js/`.
+**pyramid_sacrud** use **Browserify**, file for browserify build is **main.js** in **pyramid_sacrud/static/js/**.
 
-Project modules are on `pyramid_sacrud/static/js/app/`.
+.. code:: bash
 
-Before changing **js** modules you need to run "watch" task with gulp:
+    pyramid_sacrud/pyramid_sacrud/static/js
+    |
+    |   main.js
+    |   __pyramid_sacrud.js
+    |   __pyramid_sacrud.js.map
+    |
+    +---app
+    |   |   options.js
+    |   |
+    |   /---common
+    |           checkbox.js
+    |           popup.js
+    |           selectable.js
+    |
+    /---tests
+            link-check.js
+            login-logout.js
+            tests.js
+
+
+Before changing **js** modules you may run **gulp watch** task:
 
 .. code:: bash
 
     gulp watch
 
-When you change any js file, browserify build **__pyramid_sacrud.js** on `pyramid_sacrud/static/js/`.
+or you can change js and then and run **gulp browserify** task:
+
+.. code:: bash
+
+    gulp browserify
+
+
+When you change any js file, browserify build **__pyramid_sacrud.js** in **pyramid_sacrud/static/js/**.
+
+.. note::
+
+    For more information about **gulp browserify** task see **gulpfile.js**
+
+.. tip::
+
+    For more information about browserify visit Browserify_
 
 
 Project modules
 ~~~~~~~~~~~~~~~
+
 Options
-.......
+"""""""
 JQuery selectors list.
 
 Popup
-.....
+"""""
 Popup object is needed for works with pop-up window.
 
 Create a new Popup:
 
 .. code-block:: javascript
+    :linenos:
 
     var Popup = require('popup.js');
     var popup = new Popup(el, options);
 
 .. epigraph::
+
     Arguments:
         * el - JQuery selector (set in options.popup).
         * options - Options object.
 
 SelectableTable
-...............
-
+"""""""""""""""
 SelectableTable object is needed for works with table. Using JQuery-UI Selectable widget.
 
 Create a new SelectableTable:
 
 .. code-block:: javascript
+    :linenos:
 
     var SelectableTable = require('selectable.js');
     var selectable_table = new SelectableTable(el, options);
@@ -115,30 +165,33 @@ Create a new SelectableTable:
 
 Install modules
 ~~~~~~~~~~~~~~~
-All modules are installed using the bower. After installing, you need set path to new module in package.json in "browser" and specify "exports" and "depends"(if need) in "browserify-shim" settings:
+All modules are installed by using **bower**. After installing, you need set path to module in package.json in "browser" and specify "exports" and "depends"(if need) in "browserify-shim" settings, default **package.json** file looks like:
 
 .. code-block:: json
+    :linenos:
 
     "browser": {
-        "jquery": "path_to_module/jquery.js",
-        "jquery-ui": "path_to_module/jquery-ui.js"
+        "jquery": "./bower_components/jquery/dist/jquery.min.js",
+        "jquery-ui": "./bower_components/jquery-ui/ui/minified/jquery-ui.min.js"
     },
     "browserify-shim": {
-        "jquery": {
-            "exports": "$"
-        },
+        "jquery": "$",
         "jquery-ui": {
-          "exports": null,
-          "depends": "jquery"
-        }
+            "depends": "jquery"
+        },
     }
+
+.. tip::
+
+    For more information about browserify visit Browserify-Shim_
 
 
 Using modules
 ~~~~~~~~~~~~~
-To use module, you need to define it in **main.js** via require() function:
+To use module, you need to define it in **main.js** via **require()* function:
 
 .. code-block:: javascript
+    :linenos:
 
     require('jquery');
 
@@ -148,26 +201,26 @@ After that, they will be available for entire project.
 Сreate a new module
 ~~~~~~~~~~~~~~~~~~~
 
-To define a module, just create a JavaScript file, and write something like this:
+To define a module, just create a JavaScript file **my_module.js**, in **pyramid_sacrud/static/js/** and write something like this:
 
 .. code-block:: javascript
+    :linenos:
 
     module.exports = function some_func(args) {
-        // anything do
+        console.log(args)
     };
 
-Add it in **main.js** via require() function and call, to use in site:
+Add it in **main.js** via **require()** function and call, to use in site:
 
 .. code-block:: javascript
+    :linenos:
 
     var myModule = require('my_module');
-    myModule(some_args);
+    myModule(args);
 
 
 Testing
-~~~~~~~
-Getting Started
----------------
+-------
 
 Install Testing tools:
 
@@ -175,107 +228,43 @@ Install Testing tools:
 
     npm install
 
-or install package manual
+or install package manually
 
 .. code:: bash
 
-    npm install mocha chai selenium-webdriver cheerio --save-dev
+    npm install mocha chai selenium-webdriver cheerio phantomjs --save-dev
 
-The tests are written using Mocha framework, you need install Mocha_, Chai_ and Selenium-webdriver_.
+Tests are written using Mocha framework, you need install Mocha_, Chai_, Selenium-webdriver_, Cheerio_ and Phantomjs_.
 
 .. _Mocha: http://mochajs.org/
 .. _Chai: http://chaijs.com/
 .. _Selenium-webdriver: https://www.npmjs.org/package/selenium-webdriver/
+.. _Cheerio: https://github.com/cheeriojs/cheerio
+.. _Phantomjs: http://phantomjs.org/
+
 
 .. note::
 
-    Also, you need a project running on the localhost with 8000 port. For example, you may use pyramid_sacrud_example_ (docs_)
+    Also, you need a project running on the **localhost:8000** port. For example, you may use pyramid_sacrud_example_ (docs_)
 
     .. _pyramid_sacrud_example: https://github.com/ITCase/pyramid_sacrud_example
     .. _docs: http://pyramid-sacrud-example.readthedocs.org/en/latest/index.html
 
 .. important::
 
-    Install Mocha in global(npm install mocha --global) on Windows.
+    Install Mocha in global (npm install mocha --global) for Windows.
 
 
+All tests found in directory **pyramid_sacrud/static/js/test/**
 
-All tests are in the directory `pyramid_sacrud/static/js/test/`
-
-To run tests for javascript, you need to use **npm test** command from category containing package.json:
+To run tests for javascript, use **npm test** command from category containing package.json:
 
 .. code:: bash
 
     npm test
 
-
-Documentation contribute
-------------------------
-
-For generate README.rst run:
+or run
 
 .. code:: bash
 
-    make readme
-
-This hook make single \*.rst file replacing ".. include::" directive on plain text.
-It is necessary for github and PyPi main page because he does not know how to include.
-
-.. literalinclude:: ../make_README.py
-   :linenos:
-   :language: py
-
-If you want generate html and README.rst run:
-
-.. code:: bash
-
-    make readme_html
-
-or
-
-.. code:: bash
-
-    make readme html
-
-Localization contribute
------------------------
-
-See basic settings in `setup.cfg`
-(More information see `there <http://babel.edgewall.org/wiki/Documentation/setup.html>`_)
-
-extract_messages:
-
-.. code:: bash
-
-	python setup.py extract_messages
-
-update_catalog:
-
-.. code:: bash
-
-	python setup.py update_catalog
-
-compile_catalog:
-
-.. code:: bash
-
-	python setup.py compile_catalog
-
-Or just run it through `make`
-
-.. code:: bash
-
-    make locale
-
-For translate use `_ps` function:
-
-.. literalinclude:: ../../pyramid_sacrud/includes/localization/__init__.py
-   :linenos:
-   :language: py
-
-In templates:
-
-.. code-block:: html
-
-    <div class="dashboard-title">{{ _ps('Dashboard') }}</div>
-    {{ _ps(_(crumb.name)) }}
+    mocha -b --timeout 999999 pyramid_sacrud/static/js/tests/
