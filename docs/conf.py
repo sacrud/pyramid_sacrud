@@ -27,7 +27,7 @@ if 'sphinx-build' in ' '.join(sys.argv) and 'nt' not in os.name:
     call([git, 'clone', 'git://github.com/ITCase/pyramid_sacrud_example.git',
           '_pyramid_sacrud_example'])
 
-    if 'SACRUD_DEVELOP' not in os.environ:
+    if not os.path.isdir(_themes):
         call([git, 'clone', 'git://github.com/ITCase/itcase_sphinx_theme.git',
               '_themes'])
     else:
@@ -143,7 +143,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'itcase'
+html_theme = 'itcase2'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
