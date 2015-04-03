@@ -11,6 +11,7 @@ input::-webkit-inner-spin-button
 {
   zoom: 1;
 }
+
 .clear-fix:after
 {
   display: block;
