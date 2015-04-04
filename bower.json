@@ -21,9 +21,6 @@
   "overrides": {
     "pickadate": {
       "main": [
-        "lib/compressed/picker.js",
-        "lib/compressed/picker.date.js",
-        "lib/compressed/picker.time.js",
         "lib/compressed/themes/classic.css",
         "lib/compressed/themes/classic.date.css",
         "lib/compressed/themes/classic.time.css"

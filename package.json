@@ -54,14 +54,15 @@
       "browserify-shim"
     ]
   },
+  "main": "/pyramid_sacrud/static/js/main.js",
   "browser": {
     "jquery": "./bower_components/jquery/dist/jquery.min.js",
     "jquery-ui": "./bower_components/jquery-ui/ui/minified/jquery-ui.min.js",
     "jquery-maskedinput": "./bower_components/jquery-maskedinput/dist/jquery.maskedinput.js",
     "jqueryui-timepicker-addon": "./bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js",
-    "picker": "./bower_components/pickadate/lib/compressed/picker.js",
-    "pickadate": "./bower_components/pickadate/lib/compressed/picker.date.js",
-    "pickatime": "./bower_components/pickadate/lib/compressed/picker.time.js"
+    "picker": "./bower_components/pickadate/lib/picker.js",
+    "pickadate": "./bower_components/pickadate/lib/picker.date.js",
+    "pickatime": "./bower_components/pickadate/lib/picker.time.js"
   },
   "browserify-shim": {
     "jquery": "$",

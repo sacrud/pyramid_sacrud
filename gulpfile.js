@@ -17,10 +17,10 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('bower', function() {
-    // gulp.src(mainBowerFiles({filter: (/.*\.js$/i)}), { base: 'bower_components' })
-    //     .pipe(gulp.dest('./pyramid_sacrud/static/js/__bower_components/'))
-    //     .pipe(map(function(code, filename) { plugins.util.log('Bower JS ' + plugins.util.colors.green(filename));
-    // }))
+    gulp.src(mainBowerFiles({filter: (/.*\.js$/i)}), { base: 'bower_components' })
+        .pipe(gulp.dest('./pyramid_sacrud/static/js/__bower_components/'))
+        .pipe(map(function(code, filename) { plugins.util.log('Bower JS ' + plugins.util.colors.green(filename));
+    }))
     gulp.src(mainBowerFiles({filter: (/.*\.css$/i)}), { base: 'bower_components' })
         .pipe(gulp.dest('./pyramid_sacrud/static/css/__bower_components/'))
         .pipe(map(function(code, filename) { plugins.util.log('Bower CSS ' + plugins.util.colors.green(filename));
@@ -28,8 +28,13 @@ gulp.task('bower', function() {
 });
 
 gulp.task('browserify', function() {
-    browserify('./pyramid_sacrud/static/js/main.js')
-        .bundle()
+
+    var b = browserify({
+        entries: './pyramid_sacrud/static/js/main.js',
+        debug: true
+    });
+
+    b.bundle()
         .pipe(source('__pyramid_sacrud.js'))
         .pipe(buffer())
         .pipe(plugins.sourcemaps.init({loadMaps: true}))
@@ -62,12 +67,29 @@ gulp.task('css', function() {
         .pipe(browserSync.reload({ stream:true }));
 });
 
+gulp.task('html', function() {
+    gulp.src('./pyramid_sacrud/templates/**/*.jinja2')
+        .pipe(browserSync.reload({ stream:true }));
+});
+
 gulp.task('watch', function() {
     plugins.watch(['./pyramid_sacrud/static/css/*.css',
                    './pyramid_sacrud/static/css/**/*.css',
                    '!./pyramid_sacrud/static/css/__pyramid_sacrud.css'],
-                   { verbose: true }, plugins.batch(function () {
+                   { verbose: true }, plugins.batch(function (cb) {
         gulp.start('css');
+        cb();
+    }));
+    plugins.watch(['./pyramid_sacrud/static/js/*.js',
+                   './pyramid_sacrud/static/js/**/*.js',
+                   '!pyramid_sacrud/static/js/__pyramid_sacrud.js'],
+                   { verbose: true }, plugins.batch(function (cb) {
+        gulp.start('browserify');
+        cb();
+    }));
+    plugins.watch('./pyramid_sacrud/templates/**/*.jinja2',
+                   { verbose: true }, plugins.batch(function (cb) {
+        gulp.start('html');
         cb();
     }));
 });
