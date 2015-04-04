@@ -66,7 +66,6 @@
                                                 {% if col.__class__.__name__ in ['Column', 'InstrumentedAttribute'] %}
                                                     {% set col_value=row.__getattribute__(get_attrname_by_colname(row, col.name)) %}
                                                 {% endif %}
-
                                                 {% if col.info['sacrud_list_template'] %}
                                                     {% include col.info['sacrud_list_template'] %}
                                                 {% elif col.info['sacrud_list_content'] %}
