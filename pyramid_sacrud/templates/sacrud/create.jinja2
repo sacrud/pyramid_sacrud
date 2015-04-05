@@ -1,27 +1,10 @@
 {% extends "sacrud/redefineme.jinja2" %}
 
-{% block sa_body %}
-    {% include 'sacrud/forms/create.jinja2' %}
-{% endblock %}
-
-{% block sa_head_extra_css %}{% endblock sa_head_extra_css %}
-
-{% block sa_head_js %}
-    {{ super() }}
-    <!-- Deform -->
+{% block extra_head %}
     <script type="text/javascript" src="{{ request.static_url('deform:static/scripts/deform.js') }}"></script>
-    <script type="text/javascript">
-        $.mask.definitions['h'] = "[A-Fa-f0-9]";
-    </script>
-
-    <!-- Special list for some fields -->
-    {% for lib in js_list %}
-        <script type="text/javascript" src="{{ request.static_url(lib) }}"></script>
-    {% endfor %}
-
 {% endblock %}
 
-{% block sa_popup_content %}
+{% block popup_content %}
     <div class="popup-inner__content-link">
         <a href="#" class="popup-inner__content-link-text">{{ _ps('close') }}</a>
     </div>
@@ -39,4 +22,8 @@
         </div>
     {% endif %}
     <div class="popup-inner__content-elfinder"></div>
-{% endblock sa_popup_content %}
+{% endblock %}
+
+{% block body %}
+    {% include 'sacrud/forms/create.jinja2' %}
+{% endblock %}

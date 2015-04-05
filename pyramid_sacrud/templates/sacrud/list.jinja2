@@ -1,6 +1,6 @@
 {% extends "sacrud/redefineme.jinja2" %}
 
-{% block sa_popup_content %}
+{% block popup_content %}
     <div class="popup-inner__content-link">
         <a href="" class="popup-inner__content-link-text">{{ _ps('close') }}</a>
     </div>
@@ -13,9 +13,9 @@
             <span class="popup-button__item-name">{{ _ps('Cancel') }}</span>
         </div>
     </div>
-{% endblock sa_popup_content %}
+{% endblock %}
 
-{% block sa_body %}
+{% block body %}
     {% if hasattr(table, 'sacrud_list_col') %}
         {% set visible_columns=table.sacrud_list_col %}
     {% else %}
