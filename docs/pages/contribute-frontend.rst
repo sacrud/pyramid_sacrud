@@ -167,7 +167,7 @@ Install modules
 ~~~~~~~~~~~~~~~
 All modules are installed by using **bower**. After installing, you need set path to module in package.json in "browser" and specify "exports" and "depends"(if need) in "browserify-shim" settings, default **package.json** file looks like:
 
-.. code-block:: json
+.. code-block:: js
     :linenos:
 
     "browser": {
@@ -188,7 +188,7 @@ All modules are installed by using **bower**. After installing, you need set pat
 
 Using modules
 ~~~~~~~~~~~~~
-To use module, you need to define it in **main.js** via **require()* function:
+To use module, you need to define it in **main.js** via **require()** function:
 
 .. code-block:: javascript
     :linenos:

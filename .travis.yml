@@ -33,6 +33,7 @@ env:
 
 install:
   - pip install nose coverage coveralls tox webtest
+  - pip install flake8 rstcheck
   - pip install -r requirements.txt
   - pip install pyramid_beaker
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git
@@ -45,3 +46,4 @@ after_success:
   - coveralls
   - chmod 755 ./travis_build_pse.sh
   - ./travis_build_pse.sh
+  - ./test.sh
