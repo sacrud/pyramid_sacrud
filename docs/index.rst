@@ -32,7 +32,6 @@ Contribute
 
   pages/contribute-backend.rst
   pages/contribute-frontend.rst
-  pages/contribute-documentation.rst
   pages/contribute-localization.rst
 
 .. include:: includes/include_contribute.rst
