@@ -109,17 +109,16 @@ Add css class for column
 
 .. code-block:: python
     :linenos:
-    :emphasize-lines: 7
+    :emphasize-lines: 1,8
+
+    tinymce_widget = deform.widget.TextAreaWidget(css_class='tinymce content')
+
 
     class TestCustomizing(Base):
         __tablename__ = "test_customizing"
 
         id = Column(Integer, primary_key=True)
-        description = Column(Text,
-            info={'colanderalchemy': {
-                    'widget': deform.widget.TextAreaWidget(css_class='tinymce content')}})
-        )
-    ...
+        description = Column(Text, info={'colanderalchemy': {'widget': tinymce_widget}})
 
 Adds css class for column
 
@@ -196,7 +195,11 @@ Composite fields and column as custom function
 
 .. code-block:: python
 
-    from pyramid_sacrud.common.custom import WidgetRowLambda
+   class WidgetRowLambda(object):
+       name = "Name"
+       info = {
+           "sacrud_list_content": lambda x: ' '.join([x.surname, x.name, x.middlename])
+       }
 
 Column as lambda function of row
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -219,9 +222,7 @@ Column as lambda function of row
         name_cze = Column(String, info={"verbose_name": u'název', })
 
         sacrud_list_col = [
-            WidgetRowLambda(name=_('Name'),
-                            function=lambda x: x.surname + ' ' + x.name +
-                            ' ' + x.middlename)
+            WidgetRowLambda(),
             name_ru, name_cze]
 
 
