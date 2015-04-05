@@ -18,7 +18,7 @@ import os
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
-if on_rtd:
+if on_rtd and os.path.exists('_themes'):
     shutil.rmtree('_themes')
 
 # Add and use Pylons theme
