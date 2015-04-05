@@ -81,17 +81,11 @@
     },
     "pickadate": {
       "exports": "pickadate",
-      "depends": [
-        "picker",
-        "jquery"
-      ]
+      "depends": [ "picker", "jquery" ]
     },
     "pickatime": {
       "exports": "pickatime",
-      "depends": [
-        "picker",
-        "jquery"
-      ]
+      "depends": [ "picker", "jquery" ]
     }
   }
 }
