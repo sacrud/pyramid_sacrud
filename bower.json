@@ -19,6 +19,9 @@
     "normalize.css": "~3.0.2"
   },
   "overrides": {
+    "jqueryui-timepicker-addon": {
+      "main": "dist/jquery-ui-timepicker-addon.min.css"
+    },
     "pickadate": {
       "main": [
         "lib/compressed/themes/classic.css",

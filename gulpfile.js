@@ -17,11 +17,11 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('bower', function() {
-    gulp.src(mainBowerFiles({filter: (/.*\.js$/i)}), { base: 'bower_components' })
+    return gulp.src(mainBowerFiles({filter: (/.*\.js$/i)}), { base: 'bower_components' })
         .pipe(gulp.dest('./pyramid_sacrud/static/js/__bower_components/'))
         .pipe(map(function(code, filename) { plugins.util.log('Bower JS ' + plugins.util.colors.green(filename));
     }))
-    gulp.src(mainBowerFiles({filter: (/.*\.css$/i)}), { base: 'bower_components' })
+    return gulp.src(mainBowerFiles({filter: (/.*\.css$/i)}), { base: 'bower_components' })
         .pipe(gulp.dest('./pyramid_sacrud/static/css/__bower_components/'))
         .pipe(map(function(code, filename) { plugins.util.log('Bower CSS ' + plugins.util.colors.green(filename));
     }))
@@ -29,12 +29,11 @@ gulp.task('bower', function() {
 
 gulp.task('browserify', function() {
 
-    var b = browserify({
-        entries: './pyramid_sacrud/static/js/main.js',
-        debug: true
-    });
+    var b = browserify({ entries: './pyramid_sacrud/static/js/main.js' });
 
-    b.bundle()
+    //b.transform('browserify-shim', { global: true });
+
+    return b.bundle()
         .pipe(source('__pyramid_sacrud.js'))
         .pipe(buffer())
         .pipe(plugins.sourcemaps.init({loadMaps: true}))
@@ -48,7 +47,7 @@ gulp.task('css', function() {
     path = ['./pyramid_sacrud/static/css/*.css',
             './pyramid_sacrud/static/css/**/*.css',
             '!./pyramid_sacrud/static/css/__pyramid_sacrud.css'];
-    gulp.src(path)
+    return gulp.src(path)
         .pipe(plugins.newer('./pyramid_sacrud/static/css/__pyramid_sacrud.css'))
         .pipe(plugins.sourcemaps.init())
         .pipe(plugins.autoprefixer({
@@ -68,9 +67,10 @@ gulp.task('css', function() {
 });
 
 gulp.task('html', function() {
-    gulp.src('./pyramid_sacrud/templates/**/*.jinja2')
+    return gulp.src('./pyramid_sacrud/templates/**/*.jinja2')
         .pipe(browserSync.reload({ stream:true }));
 });
+
 
 gulp.task('watch', function() {
     plugins.watch(['./pyramid_sacrud/static/css/*.css',
@@ -94,20 +94,5 @@ gulp.task('watch', function() {
     }));
 });
 
-
-// gulp.task('build', function() {
-//     gulp.src(['./pyramid_sacrud/static/css/__pyramid_sacrud.css', './pyramid_sacrud/static/js/__pyramid_sacrud.js'])
-//         .pipe(plugins.rev())
-//         .pipe(gulp.dest('./pyramid_sacrud/static/__build/'))
-//         .pipe(map(function(code, filename) { plugins.util.log('Build Files ' + plugins.util.colors.green(filename)); }))
-//         .pipe(plugins.rev.manifest('rev-manifest.json'))
-//         .pipe(gulp.dest('./pyramid_sacrud/static/__build/'))
-//         .pipe(map(function(code, filename) { plugins.util.log('Create Manifest ' + plugins.util.colors.green(filename)); }));
-
-//     gulp.src('./pyramid_sacrud/templates/sacrud/base.jinja2')
-//         .pipe(plugins.inject(
-//             gulp.src(['./pyramid_sacrud/static/__build/*.js', './pyramid_sacrud/static/__build/*.css'], {read: false})))
-//         .pipe(gulp.dest('./src'));
-// });
 
 gulp.task('default', ['watch', 'browser-sync']);
