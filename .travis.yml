@@ -32,8 +32,8 @@ env:
 
 
 install:
-  - pip install nose coverage coveralls tox webtest
-  - pip install flake8 rstcheck
+  - pip install nose coverage coveralls tox webtest flake8
+  - pip install git+git://github.com/myint/rstcheck.git
   - pip install -r requirements.txt
   - pip install pyramid_beaker
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git
