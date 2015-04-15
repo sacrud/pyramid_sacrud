@@ -7,7 +7,7 @@
             {% for col in range(dashboard_row_len) %}
                 <div class="dashboard-column">
                     {% if col <= tables.__len__() %}
-                        {% for widget, tables in tables.items()[col::dashboard_row_len] %}
+                        {% for widget, tables in (tables.items()|list)[col::dashboard_row_len] %}
                             <div class="widget">
                                 <div class="widget-title">
                                     {{ _(widget or None) }}
