@@ -98,3 +98,8 @@ The project is licensed under the MIT license.
    :target: https://pypi.python.org/pypi/pyramid_sacrud/
 
 .. _sacrud: https://github.com/ITCase/sacrud/
+
+
+.. image:: https://badges.gitter.im/Join%20Chat.svg
+   :alt: Join the chat at https://gitter.im/ITCase/pyramid_sacrud
+   :target: https://gitter.im/ITCase/pyramid_sacrud?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
