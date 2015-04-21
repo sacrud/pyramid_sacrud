@@ -1,10 +1,5 @@
 'use strict';
 
-require('jquery');
-require('jquery-ui');
-require('jqueryui-timepicker-addon');
-require('jquery-maskedinput');
-
 require('picker');
 require('pickadate');
 require('pickatime');

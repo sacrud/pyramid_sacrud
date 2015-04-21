@@ -66,25 +66,22 @@
   "browserify-shim": {
     "jquery": "$",
     "jquery-ui": {
-      "depends": "jquery"
+      "exports": null
     },
     "jquery-maskedinput": {
-      "depends": "jquery"
+      "exports": null
     },
     "jqueryui-timepicker-addon": {
-      "depends": "jquery-ui"
+      "exports": null
     },
     "picker": {
-      "exports": "picker",
-      "depends": "jquery"
+      "exports": "picker"
     },
     "pickadate": {
-      "exports": "pickadate",
-      "depends": [ "picker", "jquery" ]
+      "exports": "pickadate"
     },
     "pickatime": {
-      "exports": "pickatime",
-      "depends": [ "picker", "jquery" ]
+      "exports": "pickatime"
     }
   }
 }
