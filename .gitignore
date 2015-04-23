@@ -30,7 +30,6 @@ cover
 dist
 .coverage
 *.egg-info
-example
 htmlcov
 .ropeproject
 *.pyc

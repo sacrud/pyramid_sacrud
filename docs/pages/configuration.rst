@@ -310,7 +310,7 @@ Just create template file in your project template directory
 Dashboard config
 ----------------
 
-Example from `<https://github.com/ITCase/pyramid_sacrud_example>`_
+Example from `<https://github.com/ITCase/ps_example>`_
 
 Configure your project:
 
