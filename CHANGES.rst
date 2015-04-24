@@ -1,3 +1,11 @@
+0.0.7 (2015-04-24)
+==================
+
+Bug Fixes
+---------
+
+- fix for ItemsView not being subscriptable in py3 (#82)
+
 0.0.6 (2015-04-05)
 ==================
 
