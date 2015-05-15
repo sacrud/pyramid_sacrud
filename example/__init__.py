@@ -13,6 +13,9 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(30))
 
+    def __repr__(self):
+        return self.name
+
 
 class Manufacturer(Base):
     __tablename__ = 'manufacturers'
@@ -42,13 +45,14 @@ def database_settings(config):
     config.registry.settings['sqlalchemy.url'] = db_url =\
         "sqlite:///example.db"
     engine = create_engine(db_url)
-    Car.__table__.create(engine)
-    User.__table__.create(engine)
-    Manufacturer.__table__.create(engine)
+    Base.metadata.bind = engine
+    Base.metadata.create_all()
 
 
 if __name__ == '__main__':
-    config = Configurator()
+    from pyramid.session import SignedCookieSessionFactory
+    my_session_factory = SignedCookieSessionFactory('itsaseekreet')
+    config = Configurator(session_factory=my_session_factory)
     config.include(database_settings)
     config.include(sacrud_settings)
     app = config.make_wsgi_app()
