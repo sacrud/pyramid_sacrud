@@ -11,8 +11,8 @@ Overview
 pyramid_sacrud - Pyramid CRUD interface based on sacrud_ and SQLAlchemy.
 
 `pyramid_sacrud` will solve your problem of CRUD interface for Pyramid.
-Unlike classical CRUD interface, ``pyramid_sacrud`` allows override and flexibly customize interface.
-(that is closer to `django.contrib.admin`)
+Unlike classical CRUD interface, ``pyramid_sacrud`` allows override and
+flexibly customize interface. (that is closer to `django.contrib.admin`)
 
 Look how easy it is to use with Pyramid:
 
@@ -27,7 +27,8 @@ Look how easy it is to use with Pyramid:
 
 go to http://localhost:6543/sacrud/
 
-Online example can be found here `pyramid_sacrud_example <http://pyramid-sacrud-example.readthedocs.org/en/latest/demo.html#online-on-runnable-com>`_
+Online example can be found here `pyramid_sacrud_example
+<http://pyramid-sacrud-example.readthedocs.org/en/latest/demo.html#online-on-runnable-com>`_
 
 
 And see...
@@ -70,14 +71,12 @@ Contribute
 Support and Development
 =======================
 
-To report bugs, use the `issue tracker <https://github.com/ITCase/pyramid_sacrud/issues>`_
-or `waffle board <https://waffle.io/ITCase/pyramid_sacrud>`_.
+To report bugs, use the `issue tracker
+<https://github.com/ITCase/pyramid_sacrud/issues>`_ or `waffle board
+<https://waffle.io/ITCase/pyramid_sacrud>`_.
 
 We welcome any contribution: suggestions, ideas, commits with new futures,
 bug fixes, refactoring, docs, tests, translations etc
-
-If you know Flask framework, it would be nice create connector
-of sacrud_ like this.
 
 If you have question, contact me sacrud@uralbash.ru or IRC channel #sacrud
 
