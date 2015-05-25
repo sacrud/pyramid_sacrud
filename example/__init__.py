@@ -1,6 +1,5 @@
-from wsgiref.simple_server import make_server
-
 from pyramid.config import Configurator
+from pyramid.session import SignedCookieSessionFactory
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import backref, relationship
@@ -49,12 +48,25 @@ def database_settings(config):
     Base.metadata.create_all()
 
 
-if __name__ == '__main__':
-    from pyramid.session import SignedCookieSessionFactory
+def main(global_settings, **settings):
     my_session_factory = SignedCookieSessionFactory('itsaseekreet')
-    config = Configurator(session_factory=my_session_factory)
+
+    config = Configurator(
+        settings=settings,
+        session_factory=my_session_factory,
+    )
+
     config.include(database_settings)
     config.include(sacrud_settings)
-    app = config.make_wsgi_app()
-    server = make_server('0.0.0.0', 6543, app)
+    return config.make_wsgi_app()
+
+
+if __name__ == '__main__':
+    settings = {
+        'auth.secret': 'seekrit',
+    }
+    app = main({}, **settings)
+
+    from wsgiref.simple_server import make_server
+    server = make_server('0.0.0.0', 5000, app)
     server.serve_forever()
