@@ -20,7 +20,8 @@ class AppTest(unittest.TestCase):
 
 
 class TransactionalTest(AppTest):
-    """Run tests against a relational database within a transactional boundary.
+    """
+    Run tests against a relational database within a transactional boundary.
     """
 
     def setUp(self):

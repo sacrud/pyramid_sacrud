@@ -18,7 +18,7 @@ from . import TransactionalTest
 from ..views import sa_home
 from ..views.CRUD import CRUD, Add, List, Delete
 from .models import engine, Session, Base
-from .models.auth import Groups, User
+from .models.auth import Groups, User, Profile  # noqa
 
 
 class _TransactionalFixture(TransactionalTest):
@@ -131,6 +131,7 @@ class CreateTests(_TransactionalFixture):
         self.assertRaises(HTTPNotFound, Add(request).sa_add)
 
     def test_create_user_form(self):
+        self._create_tables()
         request = testing.DummyRequest()
         request.dbsession = self.session
         request.matchdict['table'] = 'user'
