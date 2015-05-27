@@ -21,6 +21,9 @@ class Manufacturer(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(30))
 
+    def __repr__(self):
+        return self.name
+
 
 class Car(Base):
     __tablename__ = 'cars'
@@ -29,6 +32,9 @@ class Car(Base):
     manufacturer_id = Column(Integer, ForeignKey('manufacturers.id'))
     manufacturer = relationship('Manufacturer',
                                 backref=backref('cars', lazy='dynamic'))
+
+    def __repr__(self):
+        return self.name
 
 
 def sacrud_settings(config):
