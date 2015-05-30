@@ -2,9 +2,9 @@
 
 <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"
     {% if not pk or not obj %}
-        action="{{ request.route_url('sa_create', table=table.__tablename__) }}"
+        action="{{ request.route_url(PYRAMID_SACRUD_CREATE, table=table.__tablename__) }}"
     {% else %}
-        action="{{ request.route_url('sa_update', table=table.__tablename__, pk=pk_to_list(obj)) }}"
+        action="{{ request.route_url(PYRAMID_SACRUD_UPDATE, table=table.__tablename__, pk=pk_to_list(obj)) }}"
     {% endif %}>
 
     <div class="sacrud-grid">
@@ -21,7 +21,7 @@
                         </div>
                     {% endif %}
                     <div class="toolbar-button__item toolbar-button__item_type_cancel">
-                        <a href="{{ request.route_url('sa_list', table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
+                        <a href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                         </div>
                     {% endif %}
                     <div class="toolbar-button__item toolbar-button__item_type_cancel">
-                        <a href="{{ request.route_url('sa_list', table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
+                        <a href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
                     </div>
                 </div>
             </div>

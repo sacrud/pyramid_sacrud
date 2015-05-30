@@ -17,7 +17,7 @@
                                         <div class="widget-row">
                                             {% set tname = table.__tablename__ %}
                                             <div class="widget-row__item">
-                                                <a href="{{ request.route_url('sa_list', table=tname) }}" class="widget-row__item-link" id="id_{{ tname }}" >{{ _(table.verbose_name or tname) }}</a>
+                                                <a href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=tname) }}" class="widget-row__item-link" id="id_{{ tname }}" >{{ _(table.verbose_name or tname) }}</a>
                                             </div>
                                         </div>
                                     {% endfor %}

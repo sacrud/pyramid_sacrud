@@ -10,12 +10,15 @@
 Routes for pyramid_sacrud
 """
 from ..common import pkg_prefix
+from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
+                        PYRAMID_SACRUD_HOME, PYRAMID_SACRUD_LIST,
+                        PYRAMID_SACRUD_UPDATE)
 
 
 def includeme(config):
     prefix = pkg_prefix(config)
-    config.add_route('sa_home',   prefix + '/')
-    config.add_route('sa_list',   prefix + '{table}/')
-    config.add_route('sa_create', prefix + '{table}/create/')
-    config.add_route('sa_update', prefix + '{table}/update/*pk')
-    config.add_route('sa_delete', prefix + '{table}/delete/*pk')
+    config.add_route(PYRAMID_SACRUD_HOME,   prefix + '/')
+    config.add_route(PYRAMID_SACRUD_LIST,   prefix + '{table}/')
+    config.add_route(PYRAMID_SACRUD_CREATE, prefix + '{table}/create/')
+    config.add_route(PYRAMID_SACRUD_UPDATE, prefix + '{table}/update/*pk')
+    config.add_route(PYRAMID_SACRUD_DELETE, prefix + '{table}/delete/*pk')

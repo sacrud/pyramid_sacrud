@@ -10,11 +10,12 @@
 Functional tests for views
 """
 import transaction
+from sqlalchemy.exc import IntegrityError
 from webtest import TestApp
 
 from ._mock_main import main
-from .models import Session, TEST_DATABASE_CONNECTION_STRING
-from .models.auth import User, Groups
+from .models import TEST_DATABASE_CONNECTION_STRING, Session
+from .models.auth import Groups, User
 from .test_views import _TransactionalFixture
 
 
@@ -67,6 +68,20 @@ class CreateFuncTests(PyramidApp):
                            'id': 2},
                           status=302)
         self.assertLess(0, group)
+
+    def test_sa_create_an_existing_obj(self):
+        self._create_tables()
+        self.testapp.post('/admin/group/create/',
+                          {'id': 1, 'form.submitted': '1'},
+                          status=302)
+        group = Session.query(Groups).order_by(Groups.id.desc()).count()
+        self.assertLess(0, group)
+        self.assertRaises(
+            IntegrityError, self.testapp.post,
+            '/admin/group/create/',
+            {'id': 1, 'form.submitted': '1'},
+            status=302
+        )
 
 
 class ReadFuncTests(PyramidApp):

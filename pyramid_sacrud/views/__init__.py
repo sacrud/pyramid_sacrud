@@ -10,19 +10,33 @@
 Views for Pyramid frontend
 """
 from collections import OrderedDict
+
+from pyramid.events import BeforeRender, subscriber
 from pyramid.view import view_config
 
 from ..common import get_settings_param
-from ..security import PYRAMID_SACRUD_HOME
+from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
+                        PYRAMID_SACRUD_HOME, PYRAMID_SACRUD_LIST,
+                        PYRAMID_SACRUD_UPDATE)
+
+
+@subscriber(BeforeRender)
+def add_global(event):
+    event['PYRAMID_SACRUD_HOME'] = PYRAMID_SACRUD_HOME
+    event['PYRAMID_SACRUD_LIST'] = PYRAMID_SACRUD_LIST
+    event['PYRAMID_SACRUD_CREATE'] = PYRAMID_SACRUD_CREATE
+    event['PYRAMID_SACRUD_DELETE'] = PYRAMID_SACRUD_DELETE
+    event['PYRAMID_SACRUD_UPDATE'] = PYRAMID_SACRUD_UPDATE
 
 
 @view_config(
-    route_name='sa_home',
     renderer='/sacrud/home.jinja2',
+    route_name=PYRAMID_SACRUD_HOME,
     permission=PYRAMID_SACRUD_HOME)
 def sa_home(request):
-    tables = OrderedDict(get_settings_param(request, 'pyramid_sacrud.models'))
-    dashboard_row_len = get_settings_param(request,
-                                           'pyramid_sacrud.dashboard_row_len')
+    tables = OrderedDict(get_settings_param(
+        request, 'pyramid_sacrud.models'))
+    dashboard_row_len = get_settings_param(
+        request, 'pyramid_sacrud.dashboard_row_len')
     return {'dashboard_row_len': int(dashboard_row_len or 3),
             'tables': tables}

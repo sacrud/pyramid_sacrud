@@ -19,6 +19,9 @@ from pyramid_sacrud.common import (get_obj_from_settings, get_table,
                                    get_table_verbose_name, import_from_string,
                                    preprocessing_value,
                                    update_difference_object)
+from pyramid_sacrud.security import (PYRAMID_SACRUD_CREATE,
+                                     PYRAMID_SACRUD_HOME, PYRAMID_SACRUD_LIST,
+                                     PYRAMID_SACRUD_UPDATE)
 
 from .models.auth import User
 from .test_views import _TransactionalFixture
@@ -49,35 +52,41 @@ class SilentNoneTest(unittest.TestCase):
 class BreadCrumbsTest(unittest.TestCase):
 
     def test_get_crumb(self):
-        crumb = get_crumb('Dashboard', True, 'sa_home', {'name': 'foo'})
+        crumb = get_crumb(
+            'Dashboard', True, PYRAMID_SACRUD_HOME, {'name': 'foo'})
         self.assertEqual(crumb, {'visible': True, 'name': 'Dashboard',
                                  'param': {'name': 'foo'},
-                                 'view': 'sa_home'})
+                                 'view': PYRAMID_SACRUD_HOME})
 
     def test_breadcrumbs(self):
-        bc = breadcrumbs('foo', 'ffoo', 'sa_list')
-        self.assertEqual(bc,
-                         [{'visible': True, 'name': u'Dashboard',
-                           'param': {'name': 'foo'},
-                           'view': 'sa_home'},
-                          {'visible': True, 'name': 'ffoo',
-                           'param': {'name': 'foo'}, 'view': 'sa_list'}])
+        bc = breadcrumbs('foo', 'ffoo', PYRAMID_SACRUD_LIST)
+        self.assertEqual(
+            bc,
+            [{'visible': True, 'name': u'Dashboard',
+              'param': {'name': 'foo'},
+              'view': PYRAMID_SACRUD_HOME},
+             {'visible': True, 'name': 'ffoo',
+              'param': {'name': 'foo'}, 'view': PYRAMID_SACRUD_LIST}])
 
-        bc = breadcrumbs('foo', 'barr', 'sa_create')
-        self.assertEqual(bc, [{'visible': True, 'name': 'Dashboard',
-                               'param': {'name': 'foo'}, 'view': 'sa_home'},
-                              {'visible': True, 'name': 'barr',
-                               'param': {'name': 'foo'}, 'view': 'sa_list'},
-                              {'visible': False, 'name': 'create',
-                               'param': {'name': 'foo'}, 'view': 'sa_list'}])
+        bc = breadcrumbs('foo', 'barr', PYRAMID_SACRUD_CREATE)
+        self.assertEqual(
+            bc,
+            [{'visible': True, 'name': 'Dashboard',
+              'param': {'name': 'foo'}, 'view': PYRAMID_SACRUD_HOME},
+             {'visible': True, 'name': 'barr',
+              'param': {'name': 'foo'}, 'view': PYRAMID_SACRUD_LIST},
+             {'visible': False, 'name': 'create',
+              'param': {'name': 'foo'}, 'view': PYRAMID_SACRUD_LIST}])
 
-        bc = breadcrumbs('foo', 'bazz', 'sa_read')
-        self.assertEqual(bc, [{'visible': True, 'name': 'Dashboard',
-                               'param': {'name': 'foo'}, 'view': 'sa_home'},
-                              {'visible': True, 'name': 'bazz',
-                               'param': {'name': 'foo'}, 'view': 'sa_list'},
-                              {'visible': False, 'name': None,
-                               'param': {'name': 'foo'}, 'view': 'sa_list'}])
+        bc = breadcrumbs('foo', 'bazz', PYRAMID_SACRUD_UPDATE)
+        self.assertEqual(
+            bc,
+            [{'visible': True, 'name': 'Dashboard',
+              'param': {'name': 'foo'}, 'view': PYRAMID_SACRUD_HOME},
+             {'visible': True, 'name': 'bazz',
+              'param': {'name': 'foo'}, 'view': PYRAMID_SACRUD_LIST},
+             {'visible': False, 'name': None,
+              'param': {'name': 'foo'}, 'view': PYRAMID_SACRUD_LIST}])
 
 
 class CommonTest(_TransactionalFixture):

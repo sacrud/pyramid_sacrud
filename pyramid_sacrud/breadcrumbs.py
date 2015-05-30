@@ -10,6 +10,8 @@
 Breadcrumbs for sacrud pyramid extension.
 """
 from .includes.localization import _ps
+from .security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_HOME,
+                       PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_UPDATE)
 
 
 def get_crumb(name, visible, view, params):
@@ -29,14 +31,14 @@ def get_crumb(name, visible, view, params):
 
 def breadcrumbs(name, verbose, view, id=None):
     bc = {}
-    bc['sa_list'] = [get_crumb(_ps('Dashboard'), True,
-                               'sa_home', {'name': name}),
-                     get_crumb(verbose, True, 'sa_list', {'name': name})]
+    bc[PYRAMID_SACRUD_LIST] = [
+        get_crumb(_ps('Dashboard'), True, PYRAMID_SACRUD_HOME, {'name': name}),
+        get_crumb(verbose, True, PYRAMID_SACRUD_LIST, {'name': name})]
 
-    bc['sa_create'] = bc['sa_list'] +\
-        [get_crumb('create', False, 'sa_list', {'name': name})]
+    bc[PYRAMID_SACRUD_CREATE] = bc[PYRAMID_SACRUD_LIST] +\
+        [get_crumb('create', False, PYRAMID_SACRUD_LIST, {'name': name})]
 
-    bc['sa_read'] = bc['sa_update'] = bc['sa_list'] +\
-        [get_crumb(id, False, 'sa_list', {'name': name})]
+    bc[PYRAMID_SACRUD_UPDATE] = bc[PYRAMID_SACRUD_LIST] +\
+        [get_crumb(id, False, PYRAMID_SACRUD_LIST, {'name': name})]
 
     return bc[view]

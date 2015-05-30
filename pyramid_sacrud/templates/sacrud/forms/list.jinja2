@@ -6,7 +6,7 @@
     <div class="sacrud-grid__toolbar">
         <div class="toolbar clear-fix">
             <div class="toolbar-button">
-                {% include "sacrud/forms/actions/add.jinja2" %}
+                {% include "sacrud/actions/create.jinja2" %}
                 <div class="toolbar-button__item toolbar-button__item_type_delete">
                     <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
                 </div>
@@ -58,7 +58,7 @@
                                                type="checkbox" name="selected_item" value="{{ pk_to_list(row, True) }}" />
                                     </td>
                                     <td class="sacrud-grid-content-grid__body-item">
-                                        {% include 'sacrud/forms/actions.jinja2' with context %}
+                                        {% include 'sacrud/actions/update.jinja2' with context %}
                                     </td>
                                     {% for col in visible_columns %}
                                         <td class="sacrud-grid-content-grid__body-item">

@@ -9,16 +9,22 @@
 """
 Tests of viwes
 """
-from nose.tools import raises
 from collections import OrderedDict
+from mock import Mock
+
+from nose.tools import raises
 from pyramid import testing
 from pyramid.httpexceptions import HTTPNotFound
 
+from pyramid_sacrud.security import (PYRAMID_SACRUD_CREATE,
+                                     PYRAMID_SACRUD_HOME, PYRAMID_SACRUD_LIST,
+                                     PYRAMID_SACRUD_UPDATE)
+
 from . import TransactionalTest
 from ..views import sa_home
-from ..views.CRUD import CRUD, Add, List, Delete
-from .models import engine, Session, Base
-from .models.auth import Groups, User, Profile  # noqa
+from ..views.CRUD import CRUD, Add, Delete, List
+from .models import Base, Session, engine
+from .models.auth import Groups, Profile, User  # noqa
 
 
 class _TransactionalFixture(TransactionalTest):
@@ -102,12 +108,13 @@ class ListTests(_TransactionalFixture):
         request.matchdict['table'] = 'user'
         self._init_pyramid_sacrud_settings(request)
         responce = List(request).sa_list()
-        self.assertEquals(responce['breadcrumbs'],
-                          [{'visible': True, 'name': u'Dashboard',
-                            'param': {'name': 'user'}, 'view': 'sa_home'},
-                           {'visible': True, 'name': 'user',
-                            'param': {'name': 'user'}, 'view': 'sa_list'}]
-                          )
+        self.assertEquals(
+            responce['breadcrumbs'],
+            [{'visible': True, 'name': u'Dashboard',
+              'param': {'name': 'user'}, 'view': PYRAMID_SACRUD_HOME},
+             {'visible': True, 'name': 'user',
+              'param': {'name': 'user'}, 'view': PYRAMID_SACRUD_LIST}]
+        )
         self.assertEquals(responce['table'], User)
 
     @raises(HTTPNotFound)
@@ -135,16 +142,19 @@ class CreateTests(_TransactionalFixture):
         request = testing.DummyRequest()
         request.dbsession = self.session
         request.matchdict['table'] = 'user'
+        request.matched_route = Mock()
+        request.matched_route.name = PYRAMID_SACRUD_CREATE
         self._init_pyramid_sacrud_settings(request)
         responce = Add(request).sa_add()
-        self.assertEqual(responce['breadcrumbs'],
-                         [{'visible': True, 'name': u'Dashboard',
-                           'param': {'name': 'user'}, 'view': 'sa_home'},
-                          {'visible': True, 'name': 'user',
-                           'param': {'name': 'user'}, 'view': 'sa_list'},
-                          {'visible': False, 'name': 'create',
-                           'param': {'name': 'user'}, 'view': 'sa_list'}]
-                         )
+        self.assertEqual(
+            responce['breadcrumbs'],
+            [{'visible': True, 'name': u'Dashboard',
+              'param': {'name': 'user'}, 'view': PYRAMID_SACRUD_HOME},
+             {'visible': True, 'name': 'user',
+              'param': {'name': 'user'}, 'view': PYRAMID_SACRUD_LIST},
+             {'visible': False, 'name': 'create',
+              'param': {'name': 'user'}, 'view': PYRAMID_SACRUD_LIST}]
+        )
         self.assertEqual(responce['table'], User)
 
 
@@ -166,15 +176,18 @@ class UpdateTests(_TransactionalFixture):
         request.matchdict['table'] = 'user'
         request.matchdict['pk'] = ('id', '1')
         self._init_pyramid_sacrud_settings(request)
+        request.matched_route = Mock()
+        request.matched_route.name = PYRAMID_SACRUD_UPDATE
         responce = Add(request).sa_add()
-        self.assertEqual(responce['breadcrumbs'],
-                         [{'visible': True, 'name': u'Dashboard',
-                           'param': {'name': 'user'}, 'view': 'sa_home'},
-                          {'visible': True, 'name': 'user',
-                           'param': {'name': 'user'}, 'view': 'sa_list'},
-                          {'visible': False, 'name': ' id=1',
-                           'param': {'name': 'user'}, 'view': 'sa_list'}]
-                         )
+        self.assertEqual(
+            responce['breadcrumbs'],
+            [{'visible': True, 'name': u'Dashboard',
+              'param': {'name': 'user'}, 'view': PYRAMID_SACRUD_HOME},
+             {'visible': True, 'name': 'user',
+              'param': {'name': 'user'}, 'view': PYRAMID_SACRUD_LIST},
+             {'visible': False, 'name': ' id=1',
+              'param': {'name': 'user'}, 'view': PYRAMID_SACRUD_LIST}]
+        )
         self.assertEqual(responce['table'], User)
 
 

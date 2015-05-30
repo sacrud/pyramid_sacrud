@@ -61,17 +61,18 @@ class CRUD(object):
 class Add(CRUD):
 
     @sacrud_env
-    @view_config(route_name='sa_update', renderer='/sacrud/create.jinja2',
-                 permission=PYRAMID_SACRUD_UPDATE)
-    @view_config(route_name='sa_create', renderer='/sacrud/create.jinja2',
-                 permission=PYRAMID_SACRUD_CREATE)
+    @view_config(
+        renderer='/sacrud/create.jinja2',
+        route_name=PYRAMID_SACRUD_UPDATE,
+        permission=PYRAMID_SACRUD_UPDATE)
+    @view_config(
+        renderer='/sacrud/create.jinja2',
+        route_name=PYRAMID_SACRUD_CREATE,
+        permission=PYRAMID_SACRUD_CREATE)
     def sa_add(self):
-        bc = breadcrumbs(self.tname,
-                         get_table_verbose_name(self.table), 'sa_create')
-        if self.pk:
-            bc = breadcrumbs(self.tname,
-                             get_table_verbose_name(self.table),
-                             'sa_update', id=self.pk)
+        action = self.request.matched_route.name
+        bc = breadcrumbs(self.tname, get_table_verbose_name(self.table),
+                         action, self.pk)
         dbsession = self.request.dbsession
         try:
             obj = get_obj(dbsession, self.table, self.pk)
@@ -104,7 +105,7 @@ class Add(CRUD):
                 data = pstruct
 
             try:
-                if self.pk:
+                if action == PYRAMID_SACRUD_UPDATE:
                     obj = self.crud.update(self.pk, data)
                 else:
                     obj = self.crud.create(data)
@@ -127,8 +128,9 @@ class Add(CRUD):
                 self.flash_message(
                     _ps("You created new object of ${name}",
                         mapping={'name': escape(name or '')}))
-            return HTTPFound(location=self.request.route_url('sa_list',
-                                                             table=self.tname))
+            return HTTPFound(
+                location=self.request.route_url(PYRAMID_SACRUD_LIST,
+                                                table=self.tname))
         return get_responce(form)
 
 
@@ -161,12 +163,15 @@ class List(CRUD):
             self.flash_message(_ps("You delete the following objects:"))
             self.flash_message("<br/>".join(
                 [escape(x or '') for x in obj_list]))
-            return HTTPFound(location=self.request.route_url('sa_list',
-                                                             table=self.tname))
+            return HTTPFound(
+                location=self.request.route_url(PYRAMID_SACRUD_LIST,
+                                                table=self.tname))
 
     @sacrud_env
-    @view_config(route_name='sa_list', renderer='/sacrud/list.jinja2',
-                 permission=PYRAMID_SACRUD_LIST)
+    @view_config(
+        renderer='/sacrud/list.jinja2',
+        route_name=PYRAMID_SACRUD_LIST,
+        permission=PYRAMID_SACRUD_LIST)
     def sa_list(self):
         delete_action = self.make_selected_action()
         if delete_action:
@@ -181,14 +186,17 @@ class List(CRUD):
         return {'rows': rows,
                 'paginator': paginator,
                 'pk_to_list': pk_to_list,
-                'breadcrumbs': breadcrumbs(self.tname,
-                                           get_table_verbose_name(self.table),
-                                           'sa_list')}
+                'breadcrumbs': breadcrumbs(
+                    self.tname,
+                    get_table_verbose_name(self.table),
+                    PYRAMID_SACRUD_LIST)}
 
 
 class Delete(CRUD):
 
-    @view_config(route_name='sa_delete', permission=PYRAMID_SACRUD_DELETE)
+    @view_config(
+        route_name=PYRAMID_SACRUD_DELETE,
+        permission=PYRAMID_SACRUD_DELETE)
     def sa_delete(self):
         try:
             obj = self.crud.delete(self.pk)
@@ -197,5 +205,6 @@ class Delete(CRUD):
             raise HTTPNotFound
         self.flash_message(_ps("You have removed object of ${name}",
                                mapping={'name': escape(obj['name'] or '')}))
-        return HTTPFound(location=self.request.route_url('sa_list',
-                                                         table=self.tname))
+        return HTTPFound(
+            location=self.request.route_url(PYRAMID_SACRUD_LIST,
+                                            table=self.tname))
