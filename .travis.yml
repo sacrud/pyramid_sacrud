@@ -41,6 +41,7 @@ install:
 script:
   - python setup.py nosetests
   - if [ -z "$NO_RSTLINT" ]; then ./test.sh; fi
+  - npm test
 
 after_success:
   - coveralls

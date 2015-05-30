@@ -47,14 +47,13 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
-    "test": "mocha -b --timeout 999999 pyramid_sacrud/static/js/tests/"
+    "test": "mocha -b --timeout 15000 pyramid_sacrud/static/js/tests/"
   },
 
   "main": " pyramid_sacrud/static/js/mainjs",
   "browser": {
     "jquery": "./bower_components/jquery/dist/jquery.min.js",
     "jquery-ui": "./bower_components/jquery-ui/ui/minified/jquery-ui.min.js",
-    "jquery-maskedinput": "./bower_components/jquery-maskedinput/dist/jquery.maskedinput.js",
     "jqueryui-timepicker-addon": "./bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.js",
     "picker": "./bower_components/pickadate/lib/picker.js",
     "pickadate": "./bower_components/pickadate/lib/picker.date.js",
@@ -66,9 +65,6 @@
   "browserify-shim": {
     "jquery": "$",
     "jquery-ui": {
-      "exports": null
-    },
-    "jquery-maskedinput": {
       "exports": null
     },
     "jqueryui-timepicker-addon": {
