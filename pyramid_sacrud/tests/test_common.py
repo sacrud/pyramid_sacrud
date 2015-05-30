@@ -127,10 +127,20 @@ class CommonTest(_TransactionalFixture):
     def test_get_table(self):
         request = testing.DummyRequest()
         self._init_pyramid_sacrud_settings(request)
+
         user = get_table('UsEr', request)
         self.assertEqual(user, User)
+
         foo = get_table('foo', request)
         self.assertEqual(foo, None)
+
+        request.registry.settings['pyramid_sacrud.models'] = (
+            ('Permissions', [User])
+        )
+        user = get_table('useR', request)
+        self.assertEqual(user, User)
+        user = get_table('User', request)
+        self.assertEqual(user, User)
 
     def test_get_table_verbose_name(self):
         class Foo(object):

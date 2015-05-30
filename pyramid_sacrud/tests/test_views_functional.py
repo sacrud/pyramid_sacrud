@@ -157,4 +157,4 @@ class DeleteFuncTests(PyramidApp):
         self.assertEqual(count, 0)
         count = Session.query(User).filter(
             User.id.in_(ids)).count()
-        self.assertEqual(count, len(ids)-len(deleted_ids))
+        self.assertEqual(count, len(ids) - len(deleted_ids))
