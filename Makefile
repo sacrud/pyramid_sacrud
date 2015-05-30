@@ -23,4 +23,6 @@ compile_catalog:
 
 locale: extract_messages update_catalog compile_catalog
 
-
+clean-pyc:
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +

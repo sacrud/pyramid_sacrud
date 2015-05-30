@@ -6,6 +6,7 @@
 #
 # Distributed under terms of the MIT license.
 
+sudo: false
 language: python
 
 notifications:
@@ -20,30 +21,26 @@ notifications:
 
 python:
   - "2.7"
+  - "3.3"
+  - "3.4"
+  - "pypy"
 
-env:
-  - TOXENV=py27
-  - TOXENV=py33
-  - TOXENV=py34
-
-env:
-  global:
-    - secure: fezifIUTMdw5C+2oD8DnKqc1c1+iXY7XpO5XVn05wXExv0KWQs4NKBxiNO3d/IHgwR1421KXqCDh6U2Vc/OqGWGX9ZgUltjAOmOpoZN4HJt5S4DuWzYpdHwS4WfiMdx8XsWBbWz48CQxy3Jb5dTVZ4tQH1W1Cinc0pN3HBIGG4c=
-
+matrix:
+  include:
+    - python: "pypy3"
+      env: NO_RSTLINT=1
 
 install:
-  - pip install nose coverage coveralls tox webtest flake8
-  - pip install git+git://github.com/myint/rstcheck.git
+
   - pip install -r requirements.txt
-  - pip install pyramid_beaker
+  - pip install -r requirements-test.txt
+
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud.git
 
 script:
-  - nosetests --with-coverage --cover-package pyramid_sacrud --cover-erase --with-doctest
+  - python setup.py nosetests
+  - if [ -z "$NO_RSTLINT" ]; then ./test.sh; fi
 
 after_success:
   - coveralls
-  - chmod 755 ./travis_build_pse.sh
-  - ./travis_build_pse.sh
-  - ./test.sh

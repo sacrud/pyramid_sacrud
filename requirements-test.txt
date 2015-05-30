@@ -1,0 +1,6 @@
+nose
+coverage
+coveralls
+webtest
+flake8
+git+git://github.com/myint/rstcheck.git

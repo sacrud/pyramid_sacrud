@@ -24,6 +24,28 @@ from .models.auth import User
 from .test_views import _TransactionalFixture
 
 
+class SilentNoneTest(unittest.TestCase):
+    # TODO:
+    # >>> _silent_none(0)
+    # 0
+    # >>> _silent_none('foo')
+    # 'foo'
+    # >>> _silent_none(None)
+    # ''
+    # >>> _silent_none('None')
+    # ''
+    # >>> _silent_none(False)
+    # ''
+    # >>> class Foo(object):
+    # ...   def __bool__(self):
+    # ...     return False
+    # >>> _silent_none(Foo)
+    # <class 'pyramid_sacrud.common.Foo'>
+    # >>> _silent_none(u'ПревеД!')
+    # u'\\xd0\\x9f\\xd1\\x80\\xd0\\xb5\\xd0\\xb2\\xd0\\xb5\\xd0\\x94!'
+    pass
+
+
 class BreadCrumbsTest(unittest.TestCase):
 
     def test_get_crumb(self):
