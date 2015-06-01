@@ -1,7 +1,8 @@
 Frontend contribute
 ===================
 
-For working with CSS and JavaScript you need install Node.js_, NPM_, Bower_, Browserify_ and Gulp_.
+For working with CSS and JavaScript you need install Node.js_, NPM_, Bower_,
+Browserify_ and Gulp_.
 
 .. _Node.js: http://nodejs.org/
 .. _NPM: https://www.npmjs.org/
@@ -13,10 +14,6 @@ For working with CSS and JavaScript you need install Node.js_, NPM_, Bower_, Bro
 .. note::
 
     If you don’t have Node.js and NPM installed, get it first.
-
-
-Getting Started
----------------
 
 Installing Node.js dependencies:
 
@@ -37,8 +34,6 @@ Install packages with Bower:
     bower install
 
 Packages will be install to **pyramid_sacrud/bower_components/**
-
-
 
 CSS
 ---
@@ -61,17 +56,14 @@ or you can change css and then and run **gulp css** task:
 
     For more information about **gulp css** task see **gulpfile.js**
 
-
-When you change any **css** file gulp concatenates all files in folder and create **__pyramid_sacrud.css** file in `pyramid_sacrud/static/css/`.
-
+When you change any **css** file gulp concatenates all files in folder and
+create **__pyramid_sacrud.css** file in `pyramid_sacrud/static/css/`.
 
 JavaScript
 ----------
 
-Getting Started
-~~~~~~~~~~~~~~~
-
-**pyramid_sacrud** use **Browserify**, file for browserify build is **main.js** in **pyramid_sacrud/static/js/**.
+**pyramid_sacrud** use **Browserify**, file for browserify build is **main.js**
+in **pyramid_sacrud/static/js/**.
 
 .. code:: bash
 
@@ -118,7 +110,6 @@ When you change any js file, browserify build **__pyramid_sacrud.js** in **pyram
 
     For more information about browserify visit Browserify_
 
-
 Project modules
 ~~~~~~~~~~~~~~~
 
@@ -136,12 +127,11 @@ Create a new Popup:
     :linenos:
 
     var Popup = require('popup.js');
-    var popup = new Popup(el, options);
+    var popup = new Popup(options);
 
 .. epigraph::
 
     Arguments:
-        * el - JQuery selector (set in options.popup).
         * options - Options object.
 
 SelectableTable
@@ -162,10 +152,12 @@ Create a new SelectableTable:
         * el - JQuery selector (set in options.popup).
         * options - Options object.
 
-
 Install modules
 ~~~~~~~~~~~~~~~
-All modules are installed by using **bower**. After installing, you need set path to module in package.json in "browser" and specify "exports" and "depends"(if need) in "browserify-shim" settings, default **package.json** file looks like:
+All modules are installed by using **bower**. After installing, you need set
+path to module in package.json in "browser" and specify "exports" and
+"depends"(if need) in "browserify-shim" settings, default **package.json** file
+looks like:
 
 .. code-block:: js
     :linenos:
@@ -185,6 +177,14 @@ All modules are installed by using **bower**. After installing, you need set pat
 
     For more information about browserify visit Browserify-Shim_
 
+For update each dependency in package.json, just use `npm-check-updates
+<https://www.npmjs.org/package/npm-check-updates>`_.
+
+.. code-block:: bash
+
+   $ npm install -g npm-check-updates
+   $ npm-check-updates -u
+   $ npm install
 
 Using modules
 ~~~~~~~~~~~~~
@@ -196,7 +196,6 @@ To use module, you need to define it in **main.js** via **require()** function:
     require('jquery');
 
 After that, they will be available for entire project.
-
 
 Сreate a new module
 ~~~~~~~~~~~~~~~~~~~
@@ -218,7 +217,6 @@ Add it in **main.js** via **require()** function and call, to use in site:
     var myModule = require('my_module');
     myModule(args);
 
-
 Testing
 -------
 
@@ -232,23 +230,19 @@ or install package manually
 
 .. code:: bash
 
-    npm install mocha chai selenium-webdriver cheerio phantomjs --save-dev
+    npm install mocha chai cheerio phantomjs --save-dev
 
-Tests are written using Mocha framework, you need install Mocha_, Chai_, Selenium-webdriver_, Cheerio_ and Phantomjs_.
+Tests are written using Mocha framework, you need install Mocha_, Chai_, Cheerio_ and Phantomjs_.
 
 .. _Mocha: http://mochajs.org/
 .. _Chai: http://chaijs.com/
-.. _Selenium-webdriver: https://www.npmjs.org/package/selenium-webdriver/
 .. _Cheerio: https://github.com/cheeriojs/cheerio
 .. _Phantomjs: http://phantomjs.org/
 
-
 .. note::
 
-    Also, you need a project running on the **localhost:8000** port. For example, you may use pyramid_sacrud_example_ (docs_)
-
-    .. _pyramid_sacrud_example: https://github.com/ITCase/pyramid_sacrud_example
-    .. _docs: http://pyramid-sacrud-example.readthedocs.org/en/latest/index.html
+    Also, you need a project running on the **localhost:6543** port. See
+    `example <https://github.com/ITCase/pyramid_sacrud/tree/master/example>`_ project.
 
 .. important::
 
@@ -267,4 +261,4 @@ or run
 
 .. code:: bash
 
-    mocha -b --timeout 999999 pyramid_sacrud/static/js/tests/
+    mocha -b --timeout 5000 pyramid_sacrud/static/js/tests/

@@ -22,6 +22,7 @@ phantomjsdriver.log
 bower_components
 
 # JavaScript
+*.map
 node_modules
 
 # Python

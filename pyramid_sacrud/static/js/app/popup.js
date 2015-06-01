@@ -1,4 +1,7 @@
 var Popup = function (options) {
+  if (!(this instanceof Popup)) {
+    return new Popup(options);
+  }
   this.el = $(options.popup);
   this.options = options;
   this._bindEvents();
@@ -29,17 +32,13 @@ Popup.prototype.hidePopup = function (evnt) {
   if ($(evnt.currentTarget).attr('href') !== undefined) {
     evnt.preventDefault();
   }
-  // this.hidePopupContent();
 };
-
-// Popup.prototype.showDeletePopupContent = function (evnt) {};
-// Popup.prototype.hidePopupContent = function (evnt) {};
 
 Popup.prototype.checkButton = function (evnt) {
   var status = $(evnt.currentTarget).data('status');
   if ((status === undefined) || (status == 'cancel')) {
     this.hidePopup(evnt);
-  } else if ($(this.options.sacrud_form).length) {  // if (typeof options != "undefined")
+  } else if ($(this.options.sacrud_form).length) {
     this._formSubmit($(this.options.sacrud_form), status);
   }
 };
@@ -52,8 +51,4 @@ Popup.prototype._formSubmit = function (form, status) {
 };
 
 // Main entry point
-module.exports = function popup(el, options) {
-  return new Popup(el, options);
-};
-
 module.exports.Popup = Popup;

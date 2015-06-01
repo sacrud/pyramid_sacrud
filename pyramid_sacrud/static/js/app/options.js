@@ -5,6 +5,7 @@ module.exports = {
     'popup_main_button': 'div.popup-button__item',
     'div_delete_button': 'div.toolbar-button__item_type_delete',
     'sacrud_form': 'form#sacrud-form',
+
     // Selectable
     'tr_selected_class': 'sacrud-grid-content-grid__body-row_state_active',
     'state_disable_class': 'toolbar-button__item_state_disable',
