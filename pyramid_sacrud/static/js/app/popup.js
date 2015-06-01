@@ -1,8 +1,5 @@
-var Popup = function (el, options) {
-  if (!(this instanceof Popup)) {
-    return new Popup(el, options);
-  }
-  this.el = $(el);
+var Popup = function (options) {
+  this.el = $(options.popup);
   this.options = options;
   this._bindEvents();
 };
@@ -13,10 +10,6 @@ Popup.prototype._bindEvents = function() {
   $(document).on('click', this.options.popup_close_button, this.hidePopup.bind(this));
   $(document).on('click', this.options.popup_main_button, this.checkButton.bind(this));
 };
-
-// $(document).on('click', 'div.popup', function function_name (argument) {
-//     console.log('yippee-ki-yay motherf*cker');
-// });
 
 Popup.prototype.blockDisabledButton = function (evnt) {
   evnt.stopImmediatePropagation();
