@@ -11,17 +11,33 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "html5-boilerplate": "~5.2.0",
     "jquery": "~2.1.1",
     "jquery-ui": "~1.10.4",
-    "pickadate": "~3.5.3",
-    "normalize.css": "~3.0.2"
+    "normalize.css": "~3.0.2",
+    "pickadate": "~3.5.3"
   },
   "overrides": {
+    "html5-boilerplate": {
+      "main": "dist/css/main.css"
+    },
+    "jquery": {
+      "main": [
+        "dist/jquery.min.js",
+        "dist/jquery.min.map"
+      ]
+    },
+    "jquery-ui": {
+      "main": "ui/minified/jquery-ui.min.js"
+    },
     "pickadate": {
       "main": [
         "lib/compressed/themes/classic.css",
         "lib/compressed/themes/classic.date.css",
-        "lib/compressed/themes/classic.time.css"
+        "lib/compressed/themes/classic.time.css",
+        "lib/compressed/picker.js",
+        "lib/compressed/picker.date.js",
+        "lib/compressed/picker.time.js"
       ]
     }
   }
