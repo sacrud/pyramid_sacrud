@@ -22,7 +22,6 @@ Popup.prototype.showDeletePopup = function (evnt) {
   this.el.css("display", "table");
   $('.popup-inner__content-delete').show();
   $('.popup-inner__content-elfinder').hide();
-  // this.showDeletePopupContent();
 };
 
 Popup.prototype.hidePopup = function (evnt) {
