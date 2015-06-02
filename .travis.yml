@@ -33,8 +33,10 @@ matrix:
 install:
 
   # Python
+  - python setup.py develop
   - pip install -r requirements.txt
   - pip install -r requirements-test.txt
+  - pip install -r example/requirements.txt
 
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud.git
@@ -42,12 +44,23 @@ install:
   # JavaScript
   - npm install chai
   - npm install mocha
-  - npm install selenium-webdriver
+  - npm install -g phantomjs
 
 script:
+  # Nosetests
   - python setup.py nosetests
+
+  # Styles check
   - if [ -z "$NO_RSTLINT" ]; then ./test.sh; fi
+
+  # Javascript
   - npm test
+
+  # BDD
+  - cd example
+  - python pyramid_sacrud_example.py&
+  - cd ..
+  - behave
 
 after_success:
   - coveralls

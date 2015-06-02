@@ -46,10 +46,9 @@ def sacrud_settings(config):
 
 
 def database_settings(config):
-    from sqlalchemy import create_engine
-    config.registry.settings['sqlalchemy.url'] = db_url =\
-        "sqlite:///example.db"
-    engine = create_engine(db_url)
+    from sqlalchemy import engine_from_config
+    settings = config.registry.settings
+    engine = engine_from_config(settings, 'sqlalchemy.')
     Base.metadata.bind = engine
     Base.metadata.drop_all()
     Base.metadata.create_all()
@@ -91,9 +90,12 @@ def main(global_settings, **settings):
 
 
 if __name__ == '__main__':
-    settings = {}
+    settings = {
+        'sqlalchemy.url': 'sqlite:///example.sqlite',
+        'fixtures': True
+    }
     app = main({}, **settings)
 
     from wsgiref.simple_server import make_server
-    server = make_server('0.0.0.0', 5000, app)
+    server = make_server('0.0.0.0', 6543, app)
     server.serve_forever()
