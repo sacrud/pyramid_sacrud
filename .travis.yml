@@ -23,10 +23,11 @@ python:
   - "2.7"
   - "3.3"
   - "3.4"
-  - "pypy"
 
 matrix:
   include:
+    - python: "pypy"
+      env: NO_BDD=1
     - python: "pypy3"
       env: NO_RSTLINT=1 NO_BDD=1
 
@@ -48,9 +49,6 @@ install:
   # JavaScript
   - npm install chai
   - npm install mocha
-
-addons:
-  firefox: "36.0"
 
 script:
   # Nosetests
