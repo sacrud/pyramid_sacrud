@@ -1,10 +1,8 @@
-Feature: List of table entries
+Feature: CRUD actions
     (CREATE) I want to be able to create a new user
     (READ)   and view this user
     (UPDATE) and when update user name
     (DELETE) and when delete user
-
-    And now I want to test JavaScript
 
     Scenario: create a new user
         Given Create user form

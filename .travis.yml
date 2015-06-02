@@ -44,7 +44,9 @@ install:
   # JavaScript
   - npm install chai
   - npm install mocha
-  - npm install -g phantomjs
+
+addons:
+  firefox: "36.0"
 
 script:
   # Nosetests
