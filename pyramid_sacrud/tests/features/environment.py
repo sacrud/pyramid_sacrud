@@ -1,6 +1,5 @@
 import imp
 
-from pyramid.paster import get_appsettings
 from selenium import webdriver
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker

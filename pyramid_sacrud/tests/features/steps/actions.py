@@ -6,14 +6,14 @@ def step_impl(context):
     context.driver.get(context.URL + 'user/create/')
 
 
-@given(u'Update user form {name}')
+@given(u'Update user form {name}')  # noqa
 def step_impl(context, name):
     user = context.dbsession.query(
         context.models['user']).filter_by(name=name).one()
     context.driver.get(context.URL + 'user/update/id/{}'.format(user.id))
 
 
-@when(u'Change user name to {name}')
+@when(u'Change user name to {name}')  # noqa
 def step_impl(context, name):
     name_field = context.driver.find_element_by_xpath(
         ".//*[starts-with(@id, 'deformField') and @name='name']"
@@ -27,7 +27,7 @@ def step_impl(context, name):
         context.models['user']).filter_by(name=name).one()
 
 
-@when(u'Delete user {name}')
+@when(u'Delete user {name}')  # noqa
 def step_impl(context, name):
     user = context.dbsession.query(
         context.models['user']).filter_by(name=name).one()
@@ -35,14 +35,14 @@ def step_impl(context, name):
     context.driver.get(context.URL + 'user/delete/id/{}'.format(user.id))
 
 
-@then(u'I should find user in user table')
+@then(u'I should find user in user table')  # noqa
 def step_impl(context):
     user = context.user
     context.driver.get(context.URL + 'user/update/id/{}'.format(user.id))
     assert user.name in context.driver.page_source
 
 
-@then(u"I don't want find user in user table")
+@then(u"I don't want find user in user table")  # noqa
 def step_impl(context):
     user_id = context.user_id
     user = context.dbsession.query(
