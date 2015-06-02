@@ -28,7 +28,7 @@ python:
 matrix:
   include:
     - python: "pypy3"
-      env: NO_RSTLINT=1
+      env: NO_RSTLINT=1 NO_BDD=1
 
 install:
 
@@ -60,7 +60,7 @@ script:
   - cd example
   - python pyramid_sacrud_example.py&
   - cd ..
-  - behave
+  - if [ -z "$NO_BDD" ]; then behave; fi
 
 after_success:
   - coveralls
