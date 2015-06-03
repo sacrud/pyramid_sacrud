@@ -64,7 +64,7 @@ script:
   - cd example
   - python pyramid_sacrud_example.py&
   - cd ..
-  - if [ -z "$NO_BDD" ]; then behave; fi
+  - if [ -z "$NO_BDD" ]; then behave --no-capture; fi
 
 after_success:
   - coveralls

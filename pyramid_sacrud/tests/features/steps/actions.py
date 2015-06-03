@@ -39,6 +39,7 @@ def step_impl(context, name):
 def step_impl(context):
     user = context.user
     context.driver.get(context.URL + 'user/update/id/{}'.format(user.id))
+
     assert user.name in context.driver.page_source
 
 
