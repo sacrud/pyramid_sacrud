@@ -103,8 +103,6 @@ SelectableTable.prototype._selecting = function (event, ui) {
 SelectableTable.prototype._selected = function (event, ui) {
   $(ui.selected).addClass(global_options.tr_selected_class);
   $(ui.selected).find(global_options.table_checkboxes).prop('checked', true).change();
-  // console.log(ui.selected);
-  // console.log($(this).data('uiSelectable').selectees.filter('.ui-selected'));
 };
 
 SelectableTable.prototype._unselected = function (event, ui) {
