@@ -20,12 +20,13 @@ notifications:
     on_failure: always
 
 python:
-  - "2.7"
   - "3.3"
   - "3.4"
 
 matrix:
   include:
+    - python: "2.7"
+      env: LINK_CHECK=1
     - python: "pypy"
       env: NO_BDD=1
     - python: "pypy3"
@@ -46,6 +47,8 @@ install:
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud.git
 
+  - if [ -n "$LINKCHECK" ];then pip install linkchecker; fi
+
   # JavaScript
   - npm install chai
   - npm install mocha
@@ -65,6 +68,9 @@ script:
   - python pyramid_sacrud_example.py&
   - cd ..
   - if [ -z "$NO_BDD" ];then behave; fi
+
+  # Link checker
+  - if [ -n "$LINK_CHECK" ];then linkchecker http://localhost:6543/admin/ --ignore-url="unquote\(%*" --no-status; fi
 
 after_success:
   - coveralls
