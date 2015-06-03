@@ -17,8 +17,8 @@ from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
 
 def includeme(config):
     prefix = pkg_prefix(config)
-    config.add_route(PYRAMID_SACRUD_HOME,   prefix)
-    config.add_route(PYRAMID_SACRUD_LIST,   prefix + '{table}/')
+    config.add_route(PYRAMID_SACRUD_HOME, prefix)
+    config.add_route(PYRAMID_SACRUD_LIST, prefix + '{table}/')
     config.add_route(PYRAMID_SACRUD_CREATE, prefix + '{table}/create/')
     config.add_route(PYRAMID_SACRUD_UPDATE, prefix + '{table}/update/*pk')
     config.add_route(PYRAMID_SACRUD_DELETE, prefix + '{table}/delete/*pk')

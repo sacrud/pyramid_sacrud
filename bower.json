@@ -28,7 +28,12 @@
       ]
     },
     "jquery-ui": {
-      "main": "ui/minified/jquery-ui.min.js"
+      "main": [
+        "ui/minified/jquery.ui.core.min.js",
+        "ui/minified/jquery.ui.widget.min.js",
+        "ui/minified/jquery.ui.mouse.min.js",
+        "ui/minified/jquery.ui.selectable.min.js"
+      ]
     },
     "pickadate": {
       "main": [

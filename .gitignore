@@ -16,6 +16,10 @@ selenium-server-standalone-2.44.0.jar
 phantomjsdriver.log
 *.sublime*
 *.sublime-*
+*.log
+
+# SQLite
+*.sqlite
 
 
 # Bower

@@ -1,3 +1,2 @@
 pyramid
-pyramid_sacrud
-wsgiref
+waitress

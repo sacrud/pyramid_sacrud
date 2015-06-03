@@ -6,7 +6,6 @@
 #
 # Distributed under terms of the MIT license.
 
-sudo: false
 language: python
 
 notifications:
@@ -23,18 +22,37 @@ python:
   - "2.7"
   - "3.3"
   - "3.4"
-  - "pypy"
 
 matrix:
   include:
+    - python: "pypy"
+      env: NO_BDD=1
     - python: "pypy3"
-      env: NO_RSTLINT=1
+      env: NO_RSTLINT=1 NO_BDD=1
+
+before_install:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+  # Chrome
+  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+  - sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+  - sudo apt-get update
+  - sudo apt-get install google-chrome-stable
+
+  # ChromeDriver
+  - sudo apt-get install unzip;
+  - wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/2.15/chromedriver_linux64.zip
+  - sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/;
+  - sudo chmod +x /usr/local/bin/chromedriver
 
 install:
 
   # Python
+  - python setup.py develop
   - pip install -r requirements.txt
   - pip install -r requirements-test.txt
+  - pip install -r example/requirements.txt
 
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud.git
@@ -42,12 +60,23 @@ install:
   # JavaScript
   - npm install chai
   - npm install mocha
-  - npm install selenium-webdriver
 
 script:
+  # Nosetests
   - python setup.py nosetests
+
+  # Styles check
   - if [ -z "$NO_RSTLINT" ]; then ./test.sh; fi
+
+  # Javascript
   - npm test
+
+  # BDD
+  - cd example
+  - python pyramid_sacrud_example.py&
+  - cd ..
+  - if [ -z "$NO_BDD" ];then behave; fi
+  - if [ -z "$NO_BDD" ];then behave -D browser=chrome; fi
 
 after_success:
   - coveralls

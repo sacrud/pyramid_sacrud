@@ -103,10 +103,12 @@ gulp.task('browserify', function() {
         }))
       .pipe(browserSync.reload({ stream:true }));
   }
-  bundle(browserify({entries: './pyramid_sacrud/static/js/' +
-                     BROWSERIFY_LIBS}), TARGET_JS_LIB_FILE);
-  bundle(browserify({entries: './pyramid_sacrud/static/js/' +
-                     BROWSERIFY_FILE }), TARGET_JS_FILE);
+  bundle(browserify(
+    { entries: './pyramid_sacrud/static/js/' + BROWSERIFY_LIBS }),
+      TARGET_JS_LIB_FILE);
+  bundle(browserify(
+    { entries: './pyramid_sacrud/static/js/' + BROWSERIFY_FILE }),
+      TARGET_JS_FILE);
 });
 
 
@@ -175,4 +177,4 @@ gulp.task('watch', function() {
 
 gulp.task('default', ['browser-sync', 'watch']);
 gulp.task('bower', ['bower-js', 'bower-css', 'bower-img']);
-gulp.task('build', ['bower', 'css', 'js']);
+gulp.task('build', ['bower', 'css', 'browserify']);
