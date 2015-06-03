@@ -47,7 +47,7 @@ install:
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git
   - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud.git
 
-  - if [ -n "$LINKCHECK" ];then pip install linkchecker; fi
+  - if [ -n "$LINK_CHECK" ];then pip install linkchecker; fi
 
   # JavaScript
   - npm install chai
