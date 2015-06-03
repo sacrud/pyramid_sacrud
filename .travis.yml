@@ -27,8 +27,9 @@ python:
 matrix:
   include:
     - python: "pypy"
+      env: NO_BDD=1
     - python: "pypy3"
-      env: NO_RSTLINT=1
+      env: NO_RSTLINT=1 NO_BDD=1
 
 before_install:
   - export DISPLAY=:99.0
