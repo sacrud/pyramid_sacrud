@@ -3,7 +3,6 @@ import imp
 from selenium import webdriver
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from selenium.common.exceptions import WebDriverException
 
 imp.load_source('pyramid_sacrud_example', 'example/pyramid_sacrud_example.py')
 from pyramid_sacrud_example import User
@@ -18,8 +17,9 @@ def before_all(context):
         try:
             context.driver = webdriver.Chrome(
                 executable_path='/usr/lib/chromium-browser/chromedriver')
-        except WebDriverException:
-            context.driver = webdriver.Chrome()
+        except Exception:
+            context.driver = webdriver.Chrome(
+                executable_path='/usr/local/bin/chromedriver')
 
     # SQLAlchemy connection
     context.engine = create_engine('sqlite:///example/example.sqlite')

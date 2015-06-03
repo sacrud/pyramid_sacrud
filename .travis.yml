@@ -33,11 +33,18 @@ matrix:
 before_install:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+
   # Chrome
   - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
   - sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
   - sudo apt-get update
   - sudo apt-get install google-chrome-stable
+
+  # ChromeDriver
+  - sudo apt-get install unzip;
+  - wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/2.15/chromedriver_linux64.zip
+  - sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/;
+  - sudo chmod +x /usr/local/bin/chromedriver
 
 install:
 
