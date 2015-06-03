@@ -1,4 +1,6 @@
-from behave import then, when, given
+import time
+
+from behave import given, then, when
 
 
 @given(u'Create user form')
@@ -38,8 +40,8 @@ def step_impl(context, name):
 @then(u'I should find user in user table')  # noqa
 def step_impl(context):
     user = context.user
+    time.sleep(2)
     context.driver.get(context.URL + 'user/update/id/{}'.format(user.id))
-
     assert user.name in context.driver.page_source
 
 
