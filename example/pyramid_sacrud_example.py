@@ -96,6 +96,5 @@ if __name__ == '__main__':
     }
     app = main({}, **settings)
 
-    from wsgiref.simple_server import make_server
-    server = make_server('0.0.0.0', 6543, app)
-    server.serve_forever()
+    from waitress import serve
+    serve(app, host='0.0.0.0', port=6543)
