@@ -19,7 +19,11 @@ def before_all(context):
                 executable_path='/usr/lib/chromium-browser/chromedriver')
         except Exception:
             context.driver = webdriver.Chrome(
-                executable_path='/usr/local/bin/chromedriver')
+                executable_path='/usr/local/bin/chromedriver',
+                desired_capabilities={
+                    "browserName": "google-chrome",
+                }
+            )
 
     # SQLAlchemy connection
     context.engine = create_engine('sqlite:///example/example.sqlite')
