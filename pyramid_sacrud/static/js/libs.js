@@ -1,7 +1,6 @@
 'use strict';
 
-require('jquery');
-require('jquery.ui.core');
-require('jquery.ui.widget');
-require('jquery.ui.mouse');
-require('jquery.ui.selectable');
+require('./vendor/jquery.min');
+require('./vendor/picker');
+require('./vendor/picker.date');
+require('./vendor/picker.time');

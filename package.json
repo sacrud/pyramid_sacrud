@@ -58,14 +58,7 @@
 
   "main": "./pyramid_sacrud/static/js/main.js",
   "browser": {
-    "jquery": "./pyramid_sacrud/static/js/vendor/jquery.min.js",
-    "jquery.ui.core": "./pyramid_sacrud/static/js/vendor/jquery.ui.core.min.js",
-    "jquery.ui.widget": "./pyramid_sacrud/static/js/vendor/jquery.ui.mouse.min.js",
-    "jquery.ui.mouse": "./pyramid_sacrud/static/js/vendor/jquery.ui.selectable.min.js",
-    "jquery.ui.selectable": "./pyramid_sacrud/static/js/vendor/jquery.ui.widget.min.js",
-    "picker": "./pyramid_sacrud/static/js/vendor/picker.js",
-    "pickadate": "./pyramid_sacrud/static/js/vendor/picker.date.js",
-    "pickatime": "./pyramid_sacrud/static/js/vendor/picker.time.js"
+    "jquery": "./pyramid_sacrud/static/js/vendor/jquery.min.js"
   },
   "browserify": {
     "transform": [ "browserify-shim" ]

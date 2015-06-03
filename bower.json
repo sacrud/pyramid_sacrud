@@ -32,7 +32,10 @@
         "ui/minified/jquery.ui.core.min.js",
         "ui/minified/jquery.ui.widget.min.js",
         "ui/minified/jquery.ui.mouse.min.js",
-        "ui/minified/jquery.ui.selectable.min.js"
+        "ui/minified/jquery.ui.selectable.min.js",
+        "ui/minified/jquery.ui.effect.min.js",
+        "ui/minified/jquery.ui.effect.min.js",
+        "themes/base/jquery.ui.selectable.css"
       ]
     },
     "pickadate": {
