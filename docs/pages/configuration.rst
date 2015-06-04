@@ -306,27 +306,3 @@ Just create template file in your project template directory
     myapp/
     └── templates
         └── sacrud
-
-Dashboard config
-----------------
-
-Example from `<https://github.com/ITCase/ps_example>`_
-
-Configure your project:
-
-.. literalinclude:: ../_pyramid_sacrud_example/pyramid_sacrud_example/includes/admin/__init__.py
-   :linenos:
-   :language: py
-
-Dict of models example for :mod:`pyramid_sacrud`:
-
-.. literalinclude:: ../_pyramid_sacrud_example/pyramid_sacrud_example/includes/admin/config.py
-   :linenos:
-   :emphasize-lines: 31-
-   :language: py
-
-Result:
-
-.. image:: ../_static/img/dashboard.png
-    :alt: Widgets dashboard
-    :width: 900px

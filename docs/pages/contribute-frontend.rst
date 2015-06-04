@@ -230,9 +230,9 @@ or install package manually
 
 .. code:: bash
 
-    npm install mocha chai cheerio phantomjs --save-dev
+    npm install mocha chai --save-dev
 
-Tests are written using Mocha framework, you need install Mocha_, Chai_, Cheerio_ and Phantomjs_.
+Tests are written using Mocha framework, you need install Mocha_ and Chai_.
 
 .. _Mocha: http://mochajs.org/
 .. _Chai: http://chaijs.com/

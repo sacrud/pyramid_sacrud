@@ -1,5 +1,15 @@
-0.0.8 (2015-??-??)
+0.0.8 (2015-06-04)
 ==================
+
+- added BDD tests (#88, #89, #90)
+- added example (see https://github.com/ITCase/pyramid_sacrud/tree/master/example)
+
+Bug Fixes
+---------
+
+- fix settings['pyramid_sacrud.models'] with list of one list
+- fix error 404 with static files
+- clean javascript requires
 
 0.0.7 (2015-04-24)
 ==================
@@ -8,11 +18,12 @@ Bug Fixes
 ---------
 
 - fix for ItemsView not being subscriptable in py3 (#82)
+- fix for ItemsView not being subscriptable in py3 (#82)
 
 0.0.6 (2015-04-05)
 ==================
 
-- add CHANGES.txt
+- added CHANGES.txt
 
 Bug Fixes
 ---------

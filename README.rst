@@ -27,9 +27,7 @@ Look how easy it is to use with Pyramid:
 
 go to http://localhost:6543/sacrud/
 
-Online example can be found here `pyramid_sacrud_example
-<http://pyramid-sacrud-example.readthedocs.org/en/latest/demo.html#online-on-runnable-com>`_
-
+Example can be found here https://github.com/ITCase/pyramid_sacrud/tree/master/example 
 
 And see...
 
