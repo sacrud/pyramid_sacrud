@@ -5,7 +5,7 @@ Feature: CRUD actions
     (DELETE) and when delete user
 
     Scenario: create a new user
-        Given Create user form
+        Given create user URL
         When Change user name to Mr.Vasya
         Then I should find user in user table
 

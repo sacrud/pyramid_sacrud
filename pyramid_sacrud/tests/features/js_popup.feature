@@ -3,11 +3,11 @@ Feature: Popup window for delete button
     And now I want to test JavaScript
 
     Scenario: Check popup in list of users when page is firt time load
-        Given list of user entries
+        Given list user URL
         Then I should see unactive delete button
 
     Scenario: Check popup when select 1 row
-        Given list of user entries
+        Given list user URL
         When select 1 item
         Then I should see active delete button
         When Click delete button
@@ -24,7 +24,7 @@ Feature: Popup window for delete button
         And I should see unactive delete button
 
     Scenario: Check cancel button in delete popup window on list user
-        Given list of user entries
+        Given list user URL
         When select 1 item
         Then I should see active delete button
 

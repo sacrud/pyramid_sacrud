@@ -3,7 +3,7 @@ Feature: List of table entries
     And now I want to test JavaScript
 
     Scenario: check selected all items
-        Given list of user entries
+        Given list user URL
         Then I should see checkbox is unselected
         When select all item
         Then I should see checkbox is selected
@@ -39,7 +39,7 @@ Feature: List of table entries
         Then I should see selected selected_all_item
 
     Scenario: check delete button status
-        Given list of user entries
+        Given list user URL
 
         # select all items
         Then I should see checkbox is unselected
@@ -74,7 +74,7 @@ Feature: List of table entries
             | 3  | unselected  |
 
     Scenario: check delete button popup
-        Given list of user entries
+        Given list user URL
         When select all item
         Then I should see active delete button
         When click delete button
