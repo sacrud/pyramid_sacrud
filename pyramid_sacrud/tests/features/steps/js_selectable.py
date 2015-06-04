@@ -8,11 +8,6 @@ def step_impl(context):
     context.driver.get(context.URL + 'user/')
 
 
-@when(u'f5')  # noqa
-def step_impl(context):
-    context.driver.refresh()
-
-
 @when(u'select {id} item')  # noqa
 def step_impl(context, id):
     if id == 'all':
@@ -62,15 +57,21 @@ def step_impl(context):
         'toolbar-button__item-name').click()
 
 
+@when(u'click cancel button')  # noqa
+def step_impl(context):
+    context.driver.find_element_by_xpath(
+        ".//div[@data-status='cancel']").click()
+
+
 @then(u'I should see {status} delete button')  # noqa
 def step_impl(context, status):
     delete_button = context.driver\
         .find_element_by_class_name('toolbar-button__item-name')
     parent = delete_button.find_element_by_xpath('..')
     unactive_css_class = 'toolbar-button__item_state_disable'
-    if status is 'unactive':
+    if status == 'unactive':
         assert unactive_css_class in parent.get_attribute('class')
-    elif status is 'active':
+    elif status == 'active':
         assert unactive_css_class not in parent.get_attribute('class')
     else:
         assert Exception('Bad status name')

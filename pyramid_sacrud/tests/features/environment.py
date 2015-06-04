@@ -15,7 +15,8 @@ def before_all(context):
         context.driver = webdriver.Firefox()
     elif browser == "chrome":
         context.driver = webdriver.Chrome(
-            executable_path='/usr/lib/chromium-browser/chromedriver')
+            executable_path='/usr/lib/chromium-browser/chromedriver'
+        )
 
     # SQLAlchemy connection
     context.engine = create_engine('sqlite:///example/example.sqlite')

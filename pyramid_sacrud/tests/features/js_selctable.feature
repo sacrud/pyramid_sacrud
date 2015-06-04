@@ -68,9 +68,10 @@ Feature: List of table entries
         Then I should see active delete button
         When select 3 item
         Then I should see active delete button
-        Then I should see checkbox is unselected
-            | id | value     |
-            | 3  | selected  |
+        # When sleep 55
+        Then I should see checkbox is selected
+            | id | value       |
+            | 3  | unselected  |
 
     Scenario: check delete button popup
         Given list of user entries
