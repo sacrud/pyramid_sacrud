@@ -1,1 +1,1 @@
-itcase_sphinx_theme>=0.0.9
+itcase_sphinx_theme>=0.1.0
