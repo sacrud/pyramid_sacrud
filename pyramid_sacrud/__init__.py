@@ -10,6 +10,9 @@
 Includeme of SACRUD
 """
 
+CONFIG_MODELS = 'pyramid_sacrud.models'
+CONFIG_DASHBOARD_ROW_LEN = 'pyramid_sacrud.dashboard_row_len'
+
 
 def includeme(config):
     config.include('.includes')

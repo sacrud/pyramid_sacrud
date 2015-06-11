@@ -13,15 +13,14 @@ import unittest
 
 import colander
 from pyramid import testing
-
 from pyramid_sacrud.breadcrumbs import breadcrumbs, get_crumb
-from pyramid_sacrud.common import (get_obj_from_settings, get_table,
+from pyramid_sacrud.common import (get_settings_param, get_table,
                                    get_table_verbose_name, import_from_string,
-                                   preprocessing_value,
-                                   update_difference_object)
-from pyramid_sacrud.security import (PYRAMID_SACRUD_CREATE,
-                                     PYRAMID_SACRUD_HOME, PYRAMID_SACRUD_LIST,
-                                     PYRAMID_SACRUD_UPDATE)
+                                   preprocessing_value)
+from pyramid_sacrud.security import (
+    PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_HOME,
+    PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_UPDATE
+)
 
 from .models.auth import User
 from .test_views import _TransactionalFixture
@@ -103,15 +102,15 @@ class CommonTest(_TransactionalFixture):
         config = testing.setUp(request=request)
         config.registry.settings['foo.User'] =\
             'pyramid_sacrud.tests.models.auth:User'
-        obj = get_obj_from_settings(request, 'foo.User')
+        obj = get_settings_param(request, 'foo.User')
         self.assertEqual(obj, User)
 
         config.registry.settings['foo.User'] = User
-        obj = get_obj_from_settings(request, 'foo.User')
+        obj = get_settings_param(request, 'foo.User')
         self.assertEqual(obj, User)
 
         config.registry.settings['foo.User'] = 'bad string'
-        obj = get_obj_from_settings(request, 'foo.User')
+        obj = get_settings_param(request, 'foo.User')
         self.assertEqual(obj, None)
 
     def test_import_from_string(self):
@@ -121,17 +120,6 @@ class CommonTest(_TransactionalFixture):
         self.assertEqual(
             User,
             import_from_string(User))
-
-    def test_update_difference_object(self):
-        class Foo:
-            pass
-        obj = Foo()
-        update_difference_object(obj, "foo", "bar")
-        self.assertEqual(obj.foo, "bar")
-
-        obj = {}
-        update_difference_object(obj, "foo", "bar")
-        self.assertEqual(obj["foo"], "bar")
 
     def test_get_table(self):
         request = testing.DummyRequest()

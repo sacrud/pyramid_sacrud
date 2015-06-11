@@ -10,11 +10,13 @@
 Any helpers for Pyramid
 """
 import itertools
+from collections import OrderedDict
 
 import colander
 import sqlalchemy
-
 from sacrud.common import get_attrname_by_colname, get_columns
+
+from .. import CONFIG_MODELS
 
 
 def preprocessing_value(value):
@@ -78,19 +80,28 @@ def set_jinja2_silent_none(config):  # pragma: no cover
     jinja2_env.finalize = _silent_none
 
 
-def get_settings_param(request, name):
-    settings = request.registry.settings
-    return settings.get(name, {})
+def get_settings_param(settings, name):
+    if not isinstance(settings, dict):
+        settings = settings.registry.settings
+    param = settings.get(name)
+    if isinstance(param, str):
+        return import_from_string(param)
+    return param
 
 
-def get_obj_from_settings(request, name):
-    settings = request
-    if not isinstance(request, dict):
-        settings = request.registry.settings
-    position_model = settings.get(name)
-    if isinstance(position_model, str):
-        return import_from_string(position_model)
-    return position_model
+def get_models_from_settings(settings):
+    models = get_settings_param(settings, CONFIG_MODELS)
+    if not models:
+        return OrderedDict()
+    try:
+        for key, value in models:
+            break
+    except ValueError:
+        models = (models, )
+    return OrderedDict(
+        [(key, value) if hasattr(value, '__iter__') else (key, [value, ])
+         for key, value in models]
+    )
 
 
 def sacrud_env(fun):
@@ -116,8 +127,7 @@ def sacrud_env(fun):
 def get_table(tname, request):
     """ Return table by table name from pyramid_sacrud.models in settings.
     """
-    pyramid_sacrud_models = get_settings_param(request,
-                                               'pyramid_sacrud.models')
+    pyramid_sacrud_models = get_models_from_settings(request)
     try:
         models = dict(pyramid_sacrud_models)
     except ValueError:
@@ -139,10 +149,3 @@ def get_table_verbose_name(table):
     elif hasattr(table, '__tablename__'):
         return table.__tablename__
     return table.name
-
-
-def update_difference_object(obj, key, value):
-    if isinstance(obj, dict):
-        obj.update({key: value})
-    else:
-        setattr(obj, key, value)

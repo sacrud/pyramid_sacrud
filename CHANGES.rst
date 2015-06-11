@@ -1,3 +1,8 @@
+0.0.9 (2015-06-11)
+==================
+
+- fix settings['pyramid_sacrud.models'] with one table in list
+
 0.0.8 (2015-06-04)
 ==================
 
