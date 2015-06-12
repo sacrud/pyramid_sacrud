@@ -18,11 +18,11 @@ import transaction
 from paginate_sqlalchemy import SqlalchemyOrmPage
 from pyramid.compat import escape
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from pyramid.renderers import render_to_response
 from pyramid.view import view_config
-from sqlalchemy.orm.exc import NoResultFound
-
 from sacrud.common import get_obj, pk_list_to_dict, pk_to_list
 from sacrud_deform import SacrudForm
+from sqlalchemy.orm.exc import NoResultFound
 
 from ..breadcrumbs import breadcrumbs
 from ..common import (get_table, get_table_verbose_name, preprocessing_value,
@@ -32,6 +32,10 @@ from ..exceptions import SacrudMessagedException
 from ..includes.localization import _ps
 from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
                         PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_UPDATE)
+
+
+SACRUD_LIST_TEMPLATE = 'sacrud_list_template'
+SACRUD_EDIT_TEMPLATE = 'sacrud_edit_template'
 
 
 class CRUD(object):
@@ -57,6 +61,14 @@ class CRUD(object):
         if hasattr(self.request, 'session'):
             self.request.session.flash([message, status])
 
+    def get_response(self, options, template_attr):
+        if hasattr(self.table, template_attr):
+            return render_to_response(
+                getattr(self.table, template_attr),
+                sacrud_env(lambda x: options)(self),
+                self.request)
+        return options
+
 
 class Add(CRUD):
 
@@ -81,8 +93,7 @@ class Add(CRUD):
         form = SacrudForm(obj=obj, dbsession=dbsession,
                           request=self.request, table=self.table)()
 
-        def get_responce(form):
-
+        def options_for_response(form):
             return dict(form=form.render(),
                         pk=self.pk,
                         obj=obj,
@@ -96,7 +107,7 @@ class Add(CRUD):
                 try:
                     deserialized = form.validate_pstruct(pstruct).values()
                 except deform.ValidationFailure as e:
-                    return get_responce(e)
+                    return options_for_response(e)
                 data = {k: preprocessing_value(v)
                         for d in deserialized
                         for k, v in d.items()}
@@ -107,31 +118,30 @@ class Add(CRUD):
             try:
                 if action == PYRAMID_SACRUD_UPDATE:
                     obj = self.crud.update(self.pk, data)
+                    flash_action = 'updated'
                 else:
                     obj = self.crud.create(data)
+                    flash_action = 'created'
                 name = obj.__repr__()
                 dbsession.flush()
             except SacrudMessagedException as e:
                 self.flash_message(e.message, status=e.status)
-                return get_responce(form)
+                return self.get_response(options_for_response(form),
+                                         SACRUD_EDIT_TEMPLATE)
             except Exception as e:
                 transaction.abort()
                 logging.exception("Something awful happened!")
                 raise e
             transaction.commit()
-
-            if self.pk:
-                self.flash_message(
-                    _ps(u"You updated object of ${name}",
-                        mapping={'name': escape(name or '')}))
-            else:
-                self.flash_message(
-                    _ps("You created new object of ${name}",
-                        mapping={'name': escape(name or '')}))
+            self.flash_message(_ps(
+                u"You ${action} object of ${name}",
+                mapping={'action': flash_action, 'name': escape(name or '')}
+            ))
             return HTTPFound(
                 location=self.request.route_url(PYRAMID_SACRUD_LIST,
                                                 table=self.tname))
-        return get_responce(form)
+        return self.get_response(options_for_response(form),
+                                 SACRUD_EDIT_TEMPLATE)
 
 
 class List(CRUD):
@@ -183,13 +193,14 @@ class List(CRUD):
         except ValueError:
             raise HTTPNotFound
         paginator = SqlalchemyOrmPage(rows, **paginator_attr)
-        return {'rows': rows,
-                'paginator': paginator,
-                'pk_to_list': pk_to_list,
-                'breadcrumbs': breadcrumbs(
-                    self.tname,
-                    get_table_verbose_name(self.table),
-                    PYRAMID_SACRUD_LIST)}
+        options = {'rows': rows,
+                   'paginator': paginator,
+                   'pk_to_list': pk_to_list,
+                   'breadcrumbs': breadcrumbs(
+                       self.tname,
+                       get_table_verbose_name(self.table),
+                       PYRAMID_SACRUD_LIST)}
+        return self.get_response(options, SACRUD_LIST_TEMPLATE)
 
 
 class Delete(CRUD):

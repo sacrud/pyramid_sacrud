@@ -21,7 +21,6 @@
     {% else %}
         {% set visible_columns=columns %}
     {% endif %}
-
     <div class="page">
         {% if table.sacrud_list_template %}
             {% include table.sacrud_list_template with context %}
@@ -30,3 +29,5 @@
         {% endif %}
     </div>
 {% endblock %}
+
+

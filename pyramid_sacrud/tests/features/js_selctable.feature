@@ -2,6 +2,17 @@ Feature: List of table entries
 
     And now I want to test JavaScript
 
+    Scenario: check grid columns
+        Given list user URL
+        Then I should see xpath
+            """
+            .//*[@class='sacrud-grid-content-grid__header-item-link' and contains(text(), 'name')]
+            """
+        Then I should see xpath
+            """
+            .//*[@class='sacrud-grid-content-grid__header-item-link' and contains(text(), 'id')]
+            """
+
     Scenario: check selected all items
         Given list user URL
         Then I should see checkbox is unselected
