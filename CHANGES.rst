@@ -1,3 +1,9 @@
+0.1.0 (2015-06-12)
+==================
+
+- Now, ``sacrud_list_template`` and ``sacrud_edit_template`` options overrides
+  the template (not include like before).
+
 0.0.9 (2015-06-11)
 ==================
 

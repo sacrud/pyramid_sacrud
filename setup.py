@@ -11,7 +11,7 @@ def read(name):
 
 setup(
     name='pyramid_sacrud',
-    version="0.1.0.dev1",
+    version="0.1.0",
     url='http://github.com/ITCase/pyramid_sacrud/',
     author='Svintsov Dmitry',
     author_email='sacrud@uralbash.ru',
