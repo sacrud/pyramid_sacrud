@@ -24,6 +24,8 @@ from sacrud.common import get_obj, pk_list_to_dict, pk_to_list
 from sacrud_deform import SacrudForm
 from sqlalchemy.orm.exc import NoResultFound
 
+from . import (CREATE_TEMPLATE, LIST_TEMPLATE, SACRUD_EDIT_TEMPLATE,
+               SACRUD_LIST_TEMPLATE, UPDATE_TEMPLATE)
 from ..breadcrumbs import breadcrumbs
 from ..common import (get_table, get_table_verbose_name, preprocessing_value,
                       sacrud_env)
@@ -32,10 +34,6 @@ from ..exceptions import SacrudMessagedException
 from ..includes.localization import _ps
 from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
                         PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_UPDATE)
-
-
-SACRUD_LIST_TEMPLATE = 'sacrud_list_template'
-SACRUD_EDIT_TEMPLATE = 'sacrud_edit_template'
 
 
 class CRUD(object):
@@ -74,11 +72,11 @@ class Add(CRUD):
 
     @sacrud_env
     @view_config(
-        renderer='/sacrud/create.jinja2',
+        renderer=UPDATE_TEMPLATE,
         route_name=PYRAMID_SACRUD_UPDATE,
         permission=PYRAMID_SACRUD_UPDATE)
     @view_config(
-        renderer='/sacrud/create.jinja2',
+        renderer=CREATE_TEMPLATE,
         route_name=PYRAMID_SACRUD_CREATE,
         permission=PYRAMID_SACRUD_CREATE)
     def sa_add(self):
@@ -179,7 +177,7 @@ class List(CRUD):
 
     @sacrud_env
     @view_config(
-        renderer='/sacrud/list.jinja2',
+        renderer=LIST_TEMPLATE,
         route_name=PYRAMID_SACRUD_LIST,
         permission=PYRAMID_SACRUD_LIST)
     def sa_list(self):

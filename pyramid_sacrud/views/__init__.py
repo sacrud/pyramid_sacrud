@@ -18,6 +18,14 @@ from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
                         PYRAMID_SACRUD_HOME, PYRAMID_SACRUD_LIST,
                         PYRAMID_SACRUD_UPDATE)
 
+HOME_TEMPLATE = '/sacrud/home.jinja2'
+CREATE_TEMPLATE = '/sacrud/create.jinja2'
+UPDATE_TEMPLATE = CREATE_TEMPLATE
+LIST_TEMPLATE = '/sacrud/list.jinja2'
+
+SACRUD_LIST_TEMPLATE = 'sacrud_list_template'
+SACRUD_EDIT_TEMPLATE = 'sacrud_edit_template'
+
 
 @subscriber(BeforeRender)
 def add_global(event):
@@ -29,7 +37,7 @@ def add_global(event):
 
 
 @view_config(
-    renderer='/sacrud/home.jinja2',
+    renderer=HOME_TEMPLATE,
     route_name=PYRAMID_SACRUD_HOME,
     permission=PYRAMID_SACRUD_HOME)
 def sa_home(request):
