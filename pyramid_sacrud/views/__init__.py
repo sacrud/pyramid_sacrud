@@ -28,7 +28,7 @@ SACRUD_EDIT_TEMPLATE = 'sacrud_edit_template'
 
 
 @subscriber(BeforeRender)
-def add_global(event):
+def add_global_params(event):
     event['PYRAMID_SACRUD_HOME'] = PYRAMID_SACRUD_HOME
     event['PYRAMID_SACRUD_LIST'] = PYRAMID_SACRUD_LIST
     event['PYRAMID_SACRUD_CREATE'] = PYRAMID_SACRUD_CREATE

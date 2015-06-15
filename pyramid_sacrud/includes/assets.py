@@ -11,7 +11,7 @@ Assets
 from ..common import _silent_none
 
 
-def add_jinja2_silent_none(config):  # pragma: no cover
+def add_jinja2_silent_none(config):
     config.commit()
     jinja2_env = config.get_jinja2_environment()
     jinja2_env.finalize = _silent_none
