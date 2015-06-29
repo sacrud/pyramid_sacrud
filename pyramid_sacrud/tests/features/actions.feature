@@ -10,9 +10,22 @@ Feature: CRUD actions
         Then I should find user in user table
 
     Scenario: update user
-        Given Update user form Mr.Vasya
+        Given User Mr.Vasya form
         When Change user name to Mr.Petya
         Then I should find user in user table
+
+    Scenario: update goods
+        Given update 1 goods URL
+        When Change visible to toggle
+        When Submitt
+        Given update 1 goods URL
+        Then visible == True
+        Then archive == False
+        When Change visible to toggle
+        When Submitt
+        Given update 1 goods URL
+        Then visible == False
+        Then archive == False
 
     Scenario: delete user
         When Delete user Mr.Petya

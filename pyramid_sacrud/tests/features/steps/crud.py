@@ -20,7 +20,7 @@ def step_impl(context, table):
         context.URL + '{}/'.format(table, id))
 
 
-@given(u'Update user form {name}')  # noqa
+@given(u'User {name} form')  # noqa
 def step_impl(context, name):
     user = context.dbsession.query(
         context.models['user']).filter_by(name=name).one()
@@ -39,6 +39,39 @@ def step_impl(context, name):
     ).click()
     context.user = context.dbsession.query(
         context.models['user']).filter_by(name=name).one()
+
+
+@when(u'Change {name} to {value}')  # noqa
+def step_impl(context, name, value):
+    field = context.driver.find_element_by_xpath(
+        ".//*[starts-with(@id, 'deformField') and @name='{}']".format(name)
+    )
+    if value.lower() == 'toggle':
+        field.click()
+    else:
+        field.clear()
+        field.send_keys(value)
+
+
+@then(u'{field} == {value}')  # noqa
+def step_impl(context, field, value):
+    field = context.driver.find_element_by_xpath(
+        ".//*[starts-with(@id, 'deformField') and @name='{}']".format(field)
+    )
+    field_value = field.get_attribute('value')
+    if value.lower() == 'true':
+        assert field.is_selected()
+    elif value.lower() == 'false':
+        assert not field.is_selected()
+    else:
+        assert value == field_value
+
+
+@when('Submitt')  # noqa
+def step_impl(context):
+    context.driver.find_element_by_xpath(
+        "//*[@name = 'form.submitted']"
+    ).click()
 
 
 @when(u'Delete user {name}')  # noqa

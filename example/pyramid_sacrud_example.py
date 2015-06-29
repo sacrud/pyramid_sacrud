@@ -1,6 +1,6 @@
 from pyramid.config import Configurator
 from pyramid.session import SignedCookieSessionFactory
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, scoped_session, sessionmaker
 
@@ -32,6 +32,9 @@ class Good(Base):
     name = Column(String(30))
     group_id = Column(Integer, ForeignKey('groups.id'))
     group = relationship('Group', backref='goods')
+
+    visible = Column(Boolean)
+    archive = Column(Boolean)
 
     def __repr__(self):
         return self.name
