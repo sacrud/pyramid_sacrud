@@ -33,7 +33,7 @@ class Good(Base):
     group_id = Column(Integer, ForeignKey('groups.id'))
     group = relationship('Group', backref='goods')
 
-    visible = Column(Boolean)
+    visible = Column(Boolean, default=False)
     archive = Column(Boolean)
 
     def __repr__(self):
