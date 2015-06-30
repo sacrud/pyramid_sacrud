@@ -152,25 +152,23 @@ class List(CRUD):
         except AttributeError:
             items_list = self.request.POST.get('selected_item')
         if selected_action == 'delete':
-            obj_list = []
-            for item in items_list:
-                pk_list = json.loads(item)
-                pk = pk_list_to_dict(pk_list)
-                try:
-                    obj = self.crud.delete(pk)
-                    obj_list.append(obj['name'])
-                except (NoResultFound, KeyError):
-                    raise HTTPNotFound
-                except SacrudMessagedException as e:
-                    self.flash_message(e.message, status=e.status)
-                except Exception as e:
-                    transaction.abort()
-                    logging.exception("Something awful happened!")
-                    raise e
+            primary_keys = [pk_list_to_dict(json.loads(item))
+                            for item in items_list]
+            objects = self.crud.read(*primary_keys)
+            try:
+                objects.delete()
+            except (NoResultFound, KeyError):
+                raise HTTPNotFound
+            except SacrudMessagedException as e:
+                self.flash_message(e.message, status=e.status)
+            except Exception as e:
+                transaction.abort()
+                logging.exception("Something awful happened!")
+                raise e
             transaction.commit()
             self.flash_message(_ps("You delete the following objects:"))
             self.flash_message("<br/>".join(
-                [escape(x or '') for x in obj_list]))
+                [escape(x or '') for x in objects]))
             return HTTPFound(
                 location=self.request.route_url(PYRAMID_SACRUD_LIST,
                                                 table=self.tname))
