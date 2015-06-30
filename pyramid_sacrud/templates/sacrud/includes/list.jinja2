@@ -90,27 +90,10 @@
             {% if rows %}
                 <div class="sacrud-grid-content__paginator">
                     {% if paginator.items.__len__() >= 1 and paginator.page_count > 1 %}
-                        {% include "sacrud/paginator.jinja2" %}
+                        {% include "sacrud/includes/paginator.jinja2" %}
                     {% endif %}
                 </div>
             {% endif %}
         </div>
-        <!--div class="sacrud-grid-content__right">
-            <div class="sacrud-grid-content-filter">
-                <div class="sacrud-grid-content-filter__group">
-                    <a href="#" class="sacrud-grid-content-filter__group-title">Group title</a>
-                    <a href="#" class="sacrud-grid-content-filter__group-item sacrud-grid-content-filter__group-item_state_active">Group title item 1</a>
-                    <a href="#" class="sacrud-grid-content-filter__group-item">Group title item 2</a>
-                    <a href="#" class="sacrud-grid-content-filter__group-item">Group title item 3</a>
-                </div>
-
-                <div class="sacrud-grid-content-filter__group">
-                    <a href="#" class="sacrud-grid-content-filter__group-title">Group title 2</a>
-                    <a href="#" class="sacrud-grid-content-filter__group-item">Group title item 1</a>
-                    <a href="#" class="sacrud-grid-content-filter__group-item">Group title item 2</a>
-                    <a href="#" class="sacrud-grid-content-filter__group-item">Group title item 3</a>
-                </div>
-            </div>
-        </div-->
     </div>
 </div>

@@ -1,0 +1,20 @@
+<div class="popup-inner__content-link">
+    <a href="#" class="popup-inner__content-link-text">{{ _ps('close') }}</a>
+</div>
+<div class="popup-inner__content-delete">
+    <div class="popup-inner__content-title">{{ _ps('Are you sure you want to delete an object?') }}</div>
+    <div class="popup-button">
+        <div class="popup-button__item" data-status="delete">
+            {% if obj %}
+              <a href="{{ request.route_url(PYRAMID_SACRUD_DELETE, table=table.__tablename__, pk=pk_to_list(obj)) }}"
+                class="popup-button__item-link">{{ _ps('Confirm') }}
+              </a>
+            {% else %}
+              <span class="popup-button__item-name">{{ _ps('Confirm') }}</span>
+            {% endif %}
+        </div>
+        <div class="popup-button__item" data-status="cancel">
+            <span class="popup-button__item-name">{{ _ps('Cancel') }}</span>
+        </div>
+    </div>
+</div>
