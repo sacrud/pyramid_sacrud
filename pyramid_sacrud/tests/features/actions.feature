@@ -19,11 +19,13 @@ Feature: CRUD actions
         When Change visible to toggle
         When Submitt
         Given update 1 goods URL
+        When sleep 2
         Then visible == True
         Then archive == False
         When Change visible to toggle
         When Submitt
         Given update 1 goods URL
+        When sleep 2
         Then visible == False
         Then archive == False
 
