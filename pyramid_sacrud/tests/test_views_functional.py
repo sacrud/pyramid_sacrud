@@ -15,7 +15,7 @@ from webtest import TestApp
 
 from ._mock_main import main
 from .models import TEST_DATABASE_CONNECTION_STRING, Session
-from .models.auth import Groups, User
+from .models.auth import Groups, User, Tree
 from .test_views import _TransactionalFixture
 
 
@@ -162,7 +162,7 @@ class DeleteFuncTests(PyramidApp):
         self._user_fixture(ids=ids)
         deleted_ids = range(11, 25)
         items_list = [u'["id", %s]' % id for id in deleted_ids]
-        self.testapp.post('/admin/user/',
+        self.testapp.post('/admin/user/action/',
                           {'selected_action': 'delete',
                            'selected_item': items_list},
                           status=302)
@@ -173,3 +173,28 @@ class DeleteFuncTests(PyramidApp):
         count = Session.query(User).filter(
             User.id.in_(ids)).count()
         self.assertEqual(count, len(ids) - len(deleted_ids))
+
+    def test_sa_list_delete_cascade_actions(self):
+        self._create_tables()
+        Session.add(Tree(id=1))
+        Session.add(Tree(id=2, parent_id=1))
+        Session.add(Tree(id=3, parent_id=2))
+        Session.add(Tree(id=4, parent_id=1))
+        Session.add(Tree(id=5))
+        Session.commit()
+        transaction.commit()
+
+        deleted_ids = (1, 3, 4)
+        items_list = [u'["id", %s]' % id for id in deleted_ids]
+        self.testapp.post('/admin/tree/action/',
+                          {'selected_action': 'delete',
+                           'selected_item': items_list},
+                          status=302)
+        Session.commit()
+        transaction.commit()
+        objects = [x.id for x in Session.query(Tree).all()]
+        self.assertNotIn(1, objects)
+        self.assertIn(2, objects)
+        self.assertNotIn(3, objects)
+        self.assertNotIn(4, objects)
+        self.assertIn(5, objects)

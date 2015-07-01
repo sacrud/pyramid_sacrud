@@ -12,7 +12,7 @@ Routes for pyramid_sacrud
 from ..common import pkg_prefix
 from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
                         PYRAMID_SACRUD_HOME, PYRAMID_SACRUD_LIST,
-                        PYRAMID_SACRUD_UPDATE)
+                        PYRAMID_SACRUD_MASS_ACTION, PYRAMID_SACRUD_UPDATE)
 
 
 def includeme(config):
@@ -22,3 +22,4 @@ def includeme(config):
     config.add_route(PYRAMID_SACRUD_CREATE, prefix + '{table}/create/')
     config.add_route(PYRAMID_SACRUD_UPDATE, prefix + '{table}/update/*pk')
     config.add_route(PYRAMID_SACRUD_DELETE, prefix + '{table}/delete/*pk')
+    config.add_route(PYRAMID_SACRUD_MASS_ACTION, prefix + '{table}/action/')

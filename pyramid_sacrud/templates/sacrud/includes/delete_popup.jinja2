@@ -6,8 +6,11 @@
     <div class="popup-button">
         <div class="popup-button__item" data-status="delete">
             {% if obj %}
-              <a href="{{ request.route_url(PYRAMID_SACRUD_DELETE, table=table.__tablename__, pk=pk_to_list(obj)) }}"
-                class="popup-button__item-link">{{ _ps('Confirm') }}
+              <a href="{{ request.route_url(PYRAMID_SACRUD_DELETE,
+                                            table=table.__tablename__,
+                                            pk=pk_to_list(obj)) }}"
+                 class="popup-button__item-link">
+                 {{ _ps('Confirm') }}
               </a>
             {% else %}
               <span class="popup-button__item-name">{{ _ps('Confirm') }}</span>

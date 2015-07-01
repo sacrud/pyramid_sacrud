@@ -19,10 +19,11 @@ from paginate_sqlalchemy import SqlalchemyOrmPage
 from pyramid.compat import escape
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from pyramid.renderers import render_to_response
-from pyramid.view import view_config
+from pyramid.view import view_config, view_defaults
+from sqlalchemy.orm.exc import NoResultFound
+
 from sacrud.common import get_obj, pk_list_to_dict, pk_to_list
 from sacrud_deform import SacrudForm
-from sqlalchemy.orm.exc import NoResultFound
 
 from . import (CREATE_TEMPLATE, LIST_TEMPLATE, SACRUD_EDIT_TEMPLATE,
                SACRUD_LIST_TEMPLATE, UPDATE_TEMPLATE)
@@ -33,7 +34,8 @@ from ..common.paginator import get_paginator
 from ..exceptions import SacrudMessagedException
 from ..includes.localization import _ps
 from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
-                        PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_UPDATE)
+                        PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_MASS_ACTION,
+                        PYRAMID_SACRUD_MASS_DELETE, PYRAMID_SACRUD_UPDATE)
 
 
 class CRUD(object):
@@ -72,10 +74,12 @@ class Add(CRUD):
 
     @sacrud_env
     @view_config(
+        request_method=('GET', 'POST'),
         renderer=UPDATE_TEMPLATE,
         route_name=PYRAMID_SACRUD_UPDATE,
         permission=PYRAMID_SACRUD_UPDATE)
     @view_config(
+        request_method=('GET', 'POST'),
         renderer=CREATE_TEMPLATE,
         route_name=PYRAMID_SACRUD_CREATE,
         permission=PYRAMID_SACRUD_CREATE)
@@ -101,6 +105,7 @@ class Add(CRUD):
         if 'form.submitted' in self.request.params:
             controls = self.request.POST.items()
             pstruct = peppercorn.parse(controls)
+
             if '__formid__' in pstruct:
                 try:
                     deserialized = form.validate_pstruct(pstruct).values()
@@ -144,44 +149,13 @@ class Add(CRUD):
 
 class List(CRUD):
 
-    def make_selected_action(self):
-        selected_action = self.request.POST.get('selected_action')
-        items_list = None
-        try:
-            items_list = self.request.POST.getall('selected_item')
-        except AttributeError:
-            items_list = self.request.POST.get('selected_item')
-        if selected_action == 'delete':
-            primary_keys = [pk_list_to_dict(json.loads(item))
-                            for item in items_list]
-            objects = self.crud.read(*primary_keys)
-            try:
-                objects.delete()
-            except (NoResultFound, KeyError):
-                raise HTTPNotFound
-            except SacrudMessagedException as e:
-                self.flash_message(e.message, status=e.status)
-            except Exception as e:
-                transaction.abort()
-                logging.exception("Something awful happened!")
-                raise e
-            transaction.commit()
-            self.flash_message(_ps("You delete the following objects:"))
-            self.flash_message("<br/>".join(
-                [escape(x or '') for x in objects]))
-            return HTTPFound(
-                location=self.request.route_url(PYRAMID_SACRUD_LIST,
-                                                table=self.tname))
-
     @sacrud_env
     @view_config(
+        request_method='GET',
         renderer=LIST_TEMPLATE,
         route_name=PYRAMID_SACRUD_LIST,
         permission=PYRAMID_SACRUD_LIST)
     def sa_list(self):
-        delete_action = self.make_selected_action()
-        if delete_action:
-            return delete_action
         items_per_page = getattr(self.table, 'items_per_page', 10)
         rows = self.crud.read()
         try:
@@ -202,6 +176,7 @@ class List(CRUD):
 class Delete(CRUD):
 
     @view_config(
+        request_method='GET',
         route_name=PYRAMID_SACRUD_DELETE,
         permission=PYRAMID_SACRUD_DELETE)
     def sa_delete(self):
@@ -212,6 +187,43 @@ class Delete(CRUD):
             raise HTTPNotFound
         self.flash_message(_ps("You have removed object of ${name}",
                                mapping={'name': escape(obj['name'] or '')}))
+        return HTTPFound(
+            location=self.request.route_url(PYRAMID_SACRUD_LIST,
+                                            table=self.tname))
+
+
+@view_defaults(
+    request_method='POST',
+    route_name=PYRAMID_SACRUD_MASS_ACTION
+)
+class Action(CRUD):
+
+    @view_config(
+        request_param='selected_action=delete',
+        permission=PYRAMID_SACRUD_MASS_DELETE)
+    def mass_delete(self):
+        items_list = self.request.POST.getall('selected_item')
+        primary_keys = [pk_list_to_dict(json.loads(item))
+                        for item in items_list]
+        objects = self.crud.read(*primary_keys)
+        try:
+            if hasattr(objects, 'delete'):
+                object_names = [escape(str(x) or '') for x in objects]
+                objects.delete()
+            else:
+                object_names = [escape(str(objects or '')), ]
+                self.request.dbsession.delete(objects)
+        except (NoResultFound, KeyError):
+            raise HTTPNotFound
+        except SacrudMessagedException as e:
+            self.flash_message(e.message, status=e.status)
+        except Exception as e:
+            transaction.abort()
+            logging.exception("Something awful happened!")
+            raise e
+        transaction.commit()
+        self.flash_message(_ps("You delete the following objects:"))
+        self.flash_message("<br/>".join(object_names))
         return HTTPFound(
             location=self.request.route_url(PYRAMID_SACRUD_LIST,
                                             table=self.tname))

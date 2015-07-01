@@ -23,8 +23,16 @@ association_table = Table('association', Base.metadata,
                           )
 
 
+class Tree(Base):
+    __tablename__ = 'tree'
+
+    id = Column(Integer, primary_key=True)
+    parent_id = Column(Integer, ForeignKey("tree.id", ondelete="CASCADE"))
+
+
 class Groups(Base):
     __tablename__ = 'group'
+
     id = Column(Integer, primary_key=True)
     name = Column(String)
     users = relationship("User", secondary=association_table)

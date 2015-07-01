@@ -31,7 +31,9 @@
     </div>
     <div class="sacrud-grid-content">
         <div class="sacrud-grid-content__left">
-            <form id="sacrud-form" class="sacrud-grid-content__left-inner" method="post" action="">
+            <form id="sacrud-form" class="sacrud-grid-content__left-inner" method="post"
+                  action="{{ request.route_url(PYRAMID_SACRUD_MASS_ACTION,
+                                               table=table.__tablename__) }}">
                 <table class="sacrud-grid-content-grid" id="sa_index">
                     {% if paginator.items.__len__() > 0 %}
                         <thead class="sacrud-grid-content-grid__header">
@@ -81,7 +83,7 @@
                         </tbody>
                     {% else %}
                         <tr>
-                            <td>There are no open objects</td>
+                            <td>There are no objects</td>
                         </tr>
                     {% endif %}
                 </table>

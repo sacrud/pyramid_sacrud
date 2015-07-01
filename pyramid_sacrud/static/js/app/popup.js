@@ -1,3 +1,5 @@
+'use strict';
+
 var Popup = function (options) {
   if (!(this instanceof Popup)) {
     return new Popup(options);
@@ -14,31 +16,30 @@ Popup.prototype._bindEvents = function() {
   $(document).on('click', this.options.popup_main_button, this.checkButton.bind(this));
 };
 
-Popup.prototype.blockDisabledButton = function (evnt) {
-  evnt.stopImmediatePropagation();
+Popup.prototype.blockDisabledButton = function (event) {
+  event.stopImmediatePropagation();
 };
 
-Popup.prototype.showDeletePopup = function (evnt) {
+Popup.prototype.showDeletePopup = function (event) {
   this.el.css("display", "table");
   $('.popup-inner__content-delete').show();
-  $('.popup-inner__content-elfinder').hide();
 };
 
-Popup.prototype.hidePopup = function (evnt) {
+Popup.prototype.hidePopup = function (event) {
   this.el.hide();
   $('.popup-inner__content-delete').hide();
-  $('.popup-inner__content-elfinder').hide();
-  if ($(evnt.currentTarget).attr('href') !== undefined) {
-    evnt.preventDefault();
+  if ($(event.currentTarget).attr('href') !== undefined) {
+    event.preventDefault();
   }
 };
 
-Popup.prototype.checkButton = function (evnt) {
-  var status = $(evnt.currentTarget).data('status');
+Popup.prototype.checkButton = function (event) {
+  var status = $(event.currentTarget).data('status');
+  var form = $(this.options.sacrud_form)
   if ((status === undefined) || (status == 'cancel')) {
-    this.hidePopup(evnt);
-  } else if ($(this.options.sacrud_form).length) {
-    this._formSubmit($(this.options.sacrud_form), status);
+    this.hidePopup(event);
+  } else if (form.length) {
+    this._formSubmit(form, status);
   }
 };
 

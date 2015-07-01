@@ -16,6 +16,7 @@ from .. import CONFIG_DASHBOARD_ROW_LEN
 from ..common import get_models_from_settings, get_settings_param
 from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
                         PYRAMID_SACRUD_HOME, PYRAMID_SACRUD_LIST,
+                        PYRAMID_SACRUD_MASS_ACTION, PYRAMID_SACRUD_MASS_DELETE,
                         PYRAMID_SACRUD_UPDATE)
 
 HOME_TEMPLATE = '/sacrud/home.jinja2'
@@ -34,6 +35,8 @@ def add_global_params(event):
     event['PYRAMID_SACRUD_CREATE'] = PYRAMID_SACRUD_CREATE
     event['PYRAMID_SACRUD_DELETE'] = PYRAMID_SACRUD_DELETE
     event['PYRAMID_SACRUD_UPDATE'] = PYRAMID_SACRUD_UPDATE
+    event['PYRAMID_SACRUD_MASS_DELETE'] = PYRAMID_SACRUD_MASS_DELETE
+    event['PYRAMID_SACRUD_MASS_ACTION'] = PYRAMID_SACRUD_MASS_ACTION
 
 
 @view_config(

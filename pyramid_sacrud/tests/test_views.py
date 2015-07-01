@@ -24,7 +24,7 @@ from . import TransactionalTest
 from ..views import sa_home
 from ..views.CRUD import CRUD, Add, Delete, List
 from .models import Base, Session, engine
-from .models.auth import Groups, Profile, User  # noqa
+from .models.auth import Groups, Profile, User, Tree  # noqa
 
 
 class _TransactionalFixture(TransactionalTest):
