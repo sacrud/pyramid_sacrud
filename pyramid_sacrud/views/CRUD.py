@@ -208,10 +208,10 @@ class Action(CRUD):
         objects = self.crud.read(*primary_keys)
         try:
             if hasattr(objects, 'delete'):
-                object_names = [escape(str(x) or '') for x in objects]
+                object_names = [escape(x.__repr__() or '') for x in objects]
                 objects.delete()
             else:
-                object_names = [escape(str(objects or '')), ]
+                object_names = [escape(objects.__repr__() or ''), ]
                 self.request.dbsession.delete(objects)
         except (NoResultFound, KeyError):
             raise HTTPNotFound
