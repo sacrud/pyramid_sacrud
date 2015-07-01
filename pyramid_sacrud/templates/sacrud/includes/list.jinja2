@@ -11,22 +11,6 @@
                     <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
                 </div>
             </div>
-            {% if table.sacrud_search_col %}
-                <div class="toolbar-search">
-                    <div class="toolbar-search__inner">
-                        <form class="search" action="">
-                            <div class="search__input no-js">
-                                <ins class="search__input-box">
-                                    <input id="site_search" name="search" class="search__input-box-text" value="" placeholder="search" autocomplete="off">
-                                    <span class="search__input-icon">&nbsp;</span>
-                                </ins>
-                                <input type="hidden" name="{{ param }}" value="{{ param_value }}"/>
-                                <button class="search__input-button" type="submit">find</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            {% endif %}
         </div>
     </div>
     <div class="sacrud-grid-content">
