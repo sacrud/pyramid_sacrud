@@ -8,6 +8,7 @@ Feature: Popup window for delete button
 
     Scenario: Check popup when select 1 row
         Given list user URL
+        When sleep 4
         When select 1 item
         Then I should see active delete button
         When Click delete button
@@ -25,6 +26,7 @@ Feature: Popup window for delete button
 
     Scenario: Check cancel button in delete popup window on list user
         Given list user URL
+        When sleep 4
         When select 1 item
         Then I should see active delete button
 
@@ -37,6 +39,7 @@ Feature: Popup window for delete button
 
     Scenario: Check cancel button in delete popup window on update form
         Given update 2 user URL
+        When sleep 4
         Then I should see active delete button
 
         When Click delete button
@@ -48,10 +51,12 @@ Feature: Popup window for delete button
 
     Scenario: Check delete popup window in update form of user when page is firt time load
         Given Update 2 user URL
+        When sleep 4
         Then I should see active delete button
 
     Scenario: Check delete popup window in update form
         Given Update 2 user URL
+        When sleep 4
         Then I should see active delete button
         When Click delete button
         Then I should see active delete popup window
