@@ -3,7 +3,7 @@
 {% block body %}
     <div class="dashboard">
         <div class="dashboard-title">{{ _ps('Dashboard') }}</div>
-        <div class="dashboard-inner clear-fix">
+        <div class="dashboard-inner clearfix">
             {% for col in range(dashboard_row_len) %}
                 <div class="dashboard-column">
                     {% if col <= tables.__len__() %}

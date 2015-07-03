@@ -1,31 +1,30 @@
 .sacrud-grid-content
 {
-	width: 100%;
-	padding: 0;
-	zoom: 1;
+  width: 100%;
+  padding: 0;
+  zoom: 1;
 }
 .sacrud-grid-content:after
 {
-	display: block;
-	clear: both;
-	content: '';
+  display: block;
+  clear: both;
+  content: '';
 }
-	.sacrud-grid-content__left
-	{
-		width: 100%;
-		float: left;
-		position: relative;
-	}
-		.sacrud-grid-content__left-inner
-		{
-			/*margin: 0 220px 0 0;*/
-			position: relative;
-			overflow: auto;
-		}
-	.sacrud-grid-content__right
-	{
-		width: 200px;
-		float: right;
-		margin-left: -205px;
-		position: relative;
-	}
+  .sacrud-grid-content__left
+  {
+    width: 100%;
+    float: left;
+    position: relative;
+  }
+    .sacrud-grid-content__left-inner
+    {
+      position: relative;
+      overflow: auto;
+    }
+  .sacrud-grid-content__right
+  {
+    width: 200px;
+    float: right;
+    margin-left: -205px;
+    position: relative;
+  }

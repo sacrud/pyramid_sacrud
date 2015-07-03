@@ -1,78 +1,72 @@
 .widget
 {
-    margin: 0 0 20px 0;
-    background: #fff;
-    box-shadow: 0 0 5px #ccc;
+  margin: 0 0 20px 0;
+  background: #fff;
+  box-shadow: 0 0 5px #ccc;
 }
 .widget-content
 {
-    border: 1px #eaeaea solid;
-    border-top: none;
-}
-.widget-tree
-{
-    padding: 1em 0 1em 20px;
+  border: 1px #eaeaea solid;
+  border-top: none;
 }
 .widget-row
 {
-    border-top: 1px #eaeaea solid;
-    vertical-align: top;
-    width: 100%;
-    display: table;
+  border-top: 1px #eaeaea solid;
+  vertical-align: top;
+  width: 100%;
+  display: table;
 }
 .widget-row:hover
 {
   background: #F4F9FE;
   color: #fff;
 }
-
-    .widget-row__item
+  .widget-row__item
+  {
+    font: 0.85em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    display: table-row;
+    padding: 0 0.2em;
+  }
+    .widget-row__item-c1
     {
-        font: 0.85em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
-        display: table-row;
-        padding: 0 0.2em;
+      width: 150px;
+      display: table-cell;
+      vertical-align: top;
     }
-        .widget-row__item-c1
+    .widget-row__item-c2
+    {
+      display: table-cell;
+    }
+        .widget-row__item-name
         {
-          width: 150px;
-          display: table-cell;
-          vertical-align: top;
+          padding: 5px 0 0 0;
         }
-        .widget-row__item-c2
+        .widget-row__item-link
         {
-          display: table-cell;
+          color: #000;
+          display: inline-block;
+          padding: 8px;
         }
-            .widget-row__item-name
-            {
-                padding: 5px 0 0 0;
-            }
-            .widget-row__item-link
-            {
-                color: #000;
-                display: inline-block;
-                padding: 8px;
-            }
-            .widget-row__item-inner
-            {
-                width: 80%;
-                display: inline-block;
-                padding: 8px;
-            }
+        .widget-row__item-inner
+        {
+          width: 80%;
+          display: inline-block;
+          padding: 8px;
+        }
 
 .widget_state_placeholder
-  {
+{
   opacity: 0.4;
   border: 1px dashed #a6a6a6;
 }
 .widget_area_hint
-  {
+{
   border: dashed 1px #a6a6a6;
   min-height: 100px;
 }
   .widget_placeholder
   {
-  margin: 0 0 20px 0;
-  background: #fff;
-  opacity: 0.5;
-
+    margin: 0 0 20px 0;
+    background: #fff;
+    opacity: 0.5;
   }

@@ -1,5 +1,6 @@
-<form class="sacrud-grid-content__button"
-    action="{{ request.route_url(PYRAMID_SACRUD_DELETE, table=table.__tablename__,
-                                 id=row[sa_crud['pk']]) }}" method="POST">
-	<button class="k-button" id="button_delete" value="delete">Delete</button>
+<form class="sacrud-grid-content__button" method="POST"
+      action="{{ request.route_url(PYRAMID_SACRUD_DELETE,
+                 table=table.__tablename__,
+                 id=row[sa_crud['pk']]) }}">
+    <button class="k-button" id="button_delete" value="delete">Delete</button>
 </form>

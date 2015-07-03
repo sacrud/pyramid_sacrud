@@ -1,0 +1,26 @@
+.widget-panel
+{
+  padding: 0.5em 0.8em 0.4em 0.8em;
+  background: #fafafa;
+}
+  .widget-panel__item
+  {
+    position: relative;
+    cursor: pointer;
+  }
+    .widget-panel__item-checkbox
+    {
+      position: absolute;
+      top: 0.1em;
+      left: 0;
+    }
+    .widget-panel__item-checkbox:focus
+    {
+      outline: 0;
+    }
+    .widget-panel__item-text
+    {
+      font: 0.95em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+      color: #000;
+      padding: 0 0 0 1.2em;
+    }

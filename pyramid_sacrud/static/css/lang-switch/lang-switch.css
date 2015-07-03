@@ -1,28 +1,28 @@
 .lang-switch
 {
-    display: inline-block;
-    white-space: nowrap;
-    position: relative;
-    top: 1px;
+  display: inline-block;
+  white-space: nowrap;
+  position: relative;
+  top: 1px;
 }
-    .lang-switch__item
-    {
-        display: inline-block;
-        text-decoration: none;
-        text-transform: uppercase;
-        font: .7em Arial, Helvetica, sans-serif;
-        margin: 0 10px 0 0;
-        color: #fff;
-    }
-    .lang-switch__item:hover
-    {
-        color: #c00;
-    }
-    .lang-switch__item:focus
-    {
-        outline: 0;
-    }
-    .lang-switch__item_state_current .lang-switch__item
-    {
-        color: #777;
-    }
+  .lang-switch__item
+  {
+    display: inline-block;
+    text-decoration: none;
+    text-transform: uppercase;
+    font: .7em Arial, Helvetica, sans-serif;
+    margin: 0 10px 0 0;
+    color: #fff;
+  }
+  .lang-switch__item:hover
+  {
+    color: #c00;
+  }
+  .lang-switch__item:focus
+  {
+    outline: 0;
+  }
+  .lang-switch__item_state_current .lang-switch__item
+  {
+    color: #777;
+  }

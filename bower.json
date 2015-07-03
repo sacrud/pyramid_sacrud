@@ -11,6 +11,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "font-awesome": "~4.3.0",
     "html5-boilerplate": "~5.2.0",
     "jquery": "~2.1.1",
     "jquery-ui": "~1.10.4",
@@ -18,6 +19,17 @@
     "pickadate": "~3.5.3"
   },
   "overrides": {
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.min.css",
+        "fonts/fontawesome-webfont.eot",
+        "fonts/fontawesome-webfont.otf",
+        "fonts/fontawesome-webfont.svg",
+        "fonts/fontawesome-webfont.ttf",
+        "fonts/fontawesome-webfont.woff",
+        "fonts/fontawesome-webfont.woff2"
+      ]
+    },
     "html5-boilerplate": {
       "main": "dist/css/main.css"
     },

@@ -36,7 +36,7 @@
 
     {% block menu %}
         <div class="header">
-            <div class="header__inner clear-fix">
+            <div class="header__inner clearfix">
                 <div class="logo">
                     <div class="logo__text">
                         <a href="{{ request.route_url(PYRAMID_SACRUD_HOME) }}" class="logo__text-link">SACRUD</a>
@@ -63,7 +63,7 @@
                                              {{ request.route_path(crumb.view, table=crumb.param['name']) }}
                                          {% endif %}"
                                    class="nav__link">{{ _ps(_(crumb.name)) }}</a>
-                                <ins class="nav__separator">&nbsp;</ins>
+                                <ins class="nav__separator"><i class="fa fa-chevron-right">&nbsp;</i></ins>
                             {% else %}
                                 <span class="nav__item_state_current">{{ _ps(_(crumb.name)) }}</span>
                             {% endif %}

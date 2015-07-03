@@ -1,31 +1,32 @@
 .dashboard
 {
-	margin: 0 0 20px 0;
+  margin: 0 0 20px 0;
 }
-	.dashboard-title
-	{
-		font-family: 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif;
-		font-weight: 300;
-		color: #000000;
-		font-size: 1.6em;
-		text-transform: uppercase;
-		padding: 0 0 0.5em 0;
-	}
-	.dashboard-inner
-	{
- 		width: 100%;
-        display: table;
-        border-collapse: separate;
-        border-spacing: 0;
-        empty-cells: show;
-	}
-		.dashboard-column
-		{
-			display: table-cell;
-			padding: 0 20px 0 0;
-			box-sizing: border-box;
-		}
-		.dashboard-column:last-child
-		{
-			padding: 0;
-		}
+  .dashboard-title
+  {
+    font: 300 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+    color: #000000;
+    font-size: 1.6em;
+    text-transform: uppercase;
+    padding: 0 0 0.5em 0;
+  }
+  .dashboard-inner
+  {
+    width: 100%;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0;
+    empty-cells: show;
+  }
+    .dashboard-column
+    {
+      width: 34%;
+      display: table-cell;
+      padding: 0 20px 0 0;
+      box-sizing: border-box;
+    }
+    .dashboard-column:last-child
+    {
+      width: 33%;
+      padding: 0;
+    }
