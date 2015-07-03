@@ -14,7 +14,7 @@ from collections import OrderedDict
 
 import colander
 import sqlalchemy
-from sacrud.common import get_attrname_by_colname, get_columns
+from sacrud.common import get_attrname_by_colname, get_columns, pk_to_list
 
 from .. import CONFIG_MODELS
 
@@ -117,7 +117,8 @@ def sacrud_env(fun):
             SessionAttributes = {
                 'session': self.request.dbsession,
                 'table': self.table,
-                'columns': get_columns(self.table)
+                'columns': get_columns(self.table),
+                'pk_to_list': pk_to_list
             }
             response.update(SessionAttributes)
         return response

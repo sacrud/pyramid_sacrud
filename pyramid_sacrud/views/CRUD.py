@@ -7,7 +7,7 @@
 # Distributed under terms of the MIT license.
 
 """
-Views for Pyramid frontend
+Views for CRUD actions
 """
 import json
 import logging
@@ -22,7 +22,7 @@ from pyramid.renderers import render_to_response
 from pyramid.view import view_config, view_defaults
 from sqlalchemy.orm.exc import NoResultFound
 
-from sacrud.common import get_obj, pk_list_to_dict, pk_to_list
+from sacrud.common import get_obj, pk_list_to_dict
 from sacrud_deform import SacrudForm
 
 from . import (CREATE_TEMPLATE, LIST_TEMPLATE, SACRUD_EDIT_TEMPLATE,
@@ -96,11 +96,9 @@ class Add(CRUD):
                           request=self.request, table=self.table)()
 
         def options_for_response(form):
-            return dict(form=form.render(),
-                        pk=self.pk,
-                        obj=obj,
-                        breadcrumbs=bc,
-                        pk_to_list=pk_to_list)
+            return dict(
+                form=form.render(), pk=self.pk, obj=obj, breadcrumbs=bc
+            )
 
         if 'form.submitted' in self.request.params:
             controls = self.request.POST.items()
@@ -165,7 +163,6 @@ class List(CRUD):
         paginator = SqlalchemyOrmPage(rows, **paginator_attr)
         options = {'rows': rows,
                    'paginator': paginator,
-                   'pk_to_list': pk_to_list,
                    'breadcrumbs': breadcrumbs(
                        self.tname,
                        get_table_verbose_name(self.table),
