@@ -2,16 +2,19 @@
 {
   position: relative;
   vertical-align: top;
-  padding: 0 0 0.5em 0;
-  font: 1.2em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  padding: 0.4em 0.5em 0.5em 0;
+  font: 0.9em 'Segoe UI_', 'Open Sans', Verdana, Arial, Helvetica, sans-serif;
+  border-bottom: 1px solid #eee;
+  border-radius: 0.2em;
+  text-transform: uppercase;
 }
   .nav__link
   {
-    color: #333333;
+    color: #4183c4;
   }
   .nav__link:hover
   {
-    color: #4183c4;
+    color: #000;
   }
   .nav__link:first-child
   {

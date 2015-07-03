@@ -3,6 +3,7 @@
   width: 100%;
   padding: 0;
   zoom: 1;
+  box-shadow: 0 0 1px #ccc;
 }
 .sacrud-grid-content:after
 {

@@ -133,7 +133,7 @@ gulp.task('browserify', function() {
         plugins.uglify()))
       .pipe(plugins.if(options.env === 'development',
         plugins.sourcemaps.write('./')))
-      .pipe(gulp.dest('./'))
+      .pipe(gulp.dest(JS_PATH))
       .pipe(map(function(code, filename) {
         plugins.util.log('Browserify ' +
         plugins.util.colors.green(filename));
