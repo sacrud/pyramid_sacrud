@@ -95,6 +95,7 @@ def main(global_settings, **settings):
 if __name__ == '__main__':
     settings = {
         'sqlalchemy.url': 'sqlite:///example.sqlite',
+        'fixtures': True,
     }
     app = main({}, **settings)
 
