@@ -1,13 +1,4 @@
 nose
 mock
 coverage
-coveralls
 webtest
-
-# Syntax chack
-flake8
-git+git://github.com/myint/rstcheck.git
-
-# BDD
-behave
-selenium

@@ -40,14 +40,11 @@ install:
 
   # Python
   - python setup.py develop
-  - pip install -r requirements.txt
-  - pip install -r requirements-test.txt
   - pip install -r example/requirements.txt
 
-  - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud_deform.git
-  - pip install --upgrade --force-reinstall  git+git://github.com/ITCase/sacrud.git
-
   - if [ -n "$LINK_CHECK" ];then pip install linkchecker; fi
+  - pip install flake8 rstcheck
+  - pip install behave selenium
 
   # JavaScript
   - npm install chai
@@ -73,4 +70,5 @@ script:
   - if [ -n "$LINK_CHECK" ];then linkchecker http://localhost:6543/admin/ --ignore-url="unquote\(%*" --no-status; fi
 
 after_success:
+  - pip install coveralls
   - coveralls
