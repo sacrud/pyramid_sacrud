@@ -1,5 +1,7 @@
 {% extends "sacrud/redefineme.jinja2" %}
 
+{% block title %} - list of {{ table.__tablename__ }}{% endblock %}
+
 {% block popup_content %}
     {% include 'sacrud/includes/delete_popup.jinja2' %}
 {% endblock %}
