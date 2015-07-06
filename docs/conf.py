@@ -6,16 +6,14 @@ import itcase_sphinx_theme
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinx.ext.autodoc',
-              'sphinx.ext.doctest',
-              'sphinx.ext.intersphinx',
-              'sphinx.ext.todo',
-              'sphinx.ext.coverage',
-              'sphinx.ext.pngmath',
-              'sphinx.ext.viewcode', ]
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.viewcode'
+]
 
 intersphinx_mapping = {
-    'sacrud': ('http://sacrud.readthedocs.org/en/latest/', None),
+    'http://sacrud.readthedocs.org/en/master': None,
 }
 
 # The suffix of source filenames.
@@ -50,7 +48,7 @@ html_theme = 'itcase'
 html_theme_path = [itcase_sphinx_theme.get_html_themes_path()]
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-html_short_title = 'SACRUD'
+html_short_title = 'PYRAMID_SACRUD'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -58,4 +56,11 @@ html_short_title = 'SACRUD'
 html_static_path = ['_static']
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'sacruddoc'
+htmlhelp_basename = 'pyramid_sacruddoc'
+
+html_theme_options = {
+    'travis_button': True,
+    'github_button': True,
+    'github_user': 'ITCase',
+    'github_repo': 'pyramid_sacrud',
+}
