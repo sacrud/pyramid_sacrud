@@ -11,7 +11,7 @@ def read(name):
 
 setup(
     name='pyramid_sacrud',
-    version="0.1.1.dev1",
+    version="0.1.1",
     url='http://github.com/ITCase/pyramid_sacrud/',
     author='Svintsov Dmitry',
     author_email='sacrud@uralbash.ru',
@@ -22,7 +22,7 @@ setup(
     test_suite="nose.collector",
     license="MIT",
     description='Pyramid SQLAlchemy CRUD.',
-    long_description=read('README.rst'),
+    long_description=read('README.rst') + read('CHANGES.rst'),
     install_requires=read('requirements.txt'),
     tests_require=read('requirements.txt') + read('requirements-test.txt'),
     classifiers=[

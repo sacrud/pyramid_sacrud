@@ -1,3 +1,14 @@
+0.1.1 (2015-06-12)
+==================
+
+Bug Fixes
+---------
+
+- Fix mass delete action with tree structure
+- Move mass actions in separate view ``pyramid_sacrud.views.CRUD.Action``
+- Fix non unicode flash message
+- Add title to templates
+
 0.1.0 (2015-06-12)
 ==================
 

@@ -6,5 +6,6 @@ recursive-include pyramid_sacrud/static/js *.js
 recursive-include pyramid_sacrud/locale *
 include requirements.txt
 include README.rst
+include CHANGES.rst
 include message-extraction.ini
 include pyramid_sacrud/static/js/main.js
