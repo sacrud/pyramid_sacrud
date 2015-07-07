@@ -188,7 +188,7 @@ It agregate and composite columns in detail view.
 Models attributes as property
 -----------------------------
 
-Use :py:class:`sacrud.common.TableProperty` decorator.
+Use :class:`sacrud.common.TableProperty` decorator.
 
 Composite fields and column as custom function
 ----------------------------------------------
@@ -312,7 +312,7 @@ You can also change the template for just one model or your own for each model.
 
 .. code-block:: python
     :linenos:
-    :emphasize-lines: 7-8
+    :emphasize-lines: 8-9
 
     class Tree(Base):
         __tablename__ = 'tree'
