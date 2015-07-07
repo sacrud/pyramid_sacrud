@@ -5,6 +5,7 @@ recursive-include pyramid_sacrud/static/img *.ico *.png *.css *.gif *.jpg *.pt *
 recursive-include pyramid_sacrud/static/js *.js
 recursive-include pyramid_sacrud/locale *
 include requirements.txt
+include requirements-test.txt
 include README.rst
 include CHANGES.rst
 include message-extraction.ini
