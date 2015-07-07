@@ -9,3 +9,5 @@ require('./vendor/jquery.ui.effect.min');
 var options = require('./app/options.js');
 var popup = require('./app/popup.js').Popup(options);
 var selectable = require('./app/selectable.js').SelectableTable('table > tbody', options);
+
+global.window.popup = popup;

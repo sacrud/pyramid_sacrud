@@ -200,6 +200,7 @@ module.exports = function selectable_table(el, options) {
 module.exports.SelectableTable = SelectableTable;
 
 },{}],4:[function(require,module,exports){
+(function (global){
 'use strict';
 
 require('./vendor/jquery.ui.core.min');
@@ -212,6 +213,8 @@ var options = require('./app/options.js');
 var popup = require('./app/popup.js').Popup(options);
 var selectable = require('./app/selectable.js').SelectableTable('table > tbody', options);
 
+global.window.popup = popup;
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./app/options.js":1,"./app/popup.js":2,"./app/selectable.js":3,"./vendor/jquery.ui.core.min":5,"./vendor/jquery.ui.effect.min":6,"./vendor/jquery.ui.mouse.min":7,"./vendor/jquery.ui.selectable.min":8,"./vendor/jquery.ui.widget.min":9}],5:[function(require,module,exports){
 /*! jQuery UI - v1.10.4 - 2014-02-16
 * http://jqueryui.com
