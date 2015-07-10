@@ -10,21 +10,26 @@
 Tests of viwes
 """
 from collections import OrderedDict
-from mock import Mock
-
 from nose.tools import raises
+
 from pyramid import testing
 from pyramid.httpexceptions import HTTPNotFound
-
-from pyramid_sacrud.security import (PYRAMID_SACRUD_CREATE,
-                                     PYRAMID_SACRUD_HOME, PYRAMID_SACRUD_LIST,
-                                     PYRAMID_SACRUD_UPDATE)
+from pyramid_sacrud.security import (
+    PYRAMID_SACRUD_CREATE,
+    PYRAMID_SACRUD_HOME,
+    PYRAMID_SACRUD_LIST,
+    PYRAMID_SACRUD_UPDATE
+)
 
 from . import TransactionalTest
 from ..views import sa_home
-from ..views.CRUD import CRUD, Add, Delete, List
-from .models import Base, Session, engine
-from .models.auth import Groups, Profile, User, Tree  # noqa
+from ..views.CRUD import Add, CRUD, Delete, List
+from .models import Base, engine, Session
+from .models.auth import Groups, Profile, Tree, User  # noqa
+
+
+class Mock(object):
+    pass
 
 
 class _TransactionalFixture(TransactionalTest):
