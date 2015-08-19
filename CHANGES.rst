@@ -1,3 +1,8 @@
+0.1.2 (2015-08-19)
+==================
+
+- remove crud_sessionmaker and use CRUD action directly  
+
 0.1.1 (2015-06-12)
 ==================
 
