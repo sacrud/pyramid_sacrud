@@ -15,27 +15,41 @@ import logging
 import deform
 import peppercorn
 import transaction
-from paginate_sqlalchemy import SqlalchemyOrmPage
-from pyramid.compat import escape
-from pyramid.httpexceptions import HTTPFound, HTTPNotFound
-from pyramid.renderers import render_to_response
 from pyramid.view import view_config, view_defaults
-from sqlalchemy.orm.exc import NoResultFound
-
+from sacrud.action import CRUD as sacrud_crud
 from sacrud.common import get_obj, pk_list_to_dict
 from sacrud_deform import SacrudForm
+from pyramid.compat import escape
+from pyramid.renderers import render_to_response
+from sqlalchemy.orm.exc import NoResultFound
+from paginate_sqlalchemy import SqlalchemyOrmPage
+from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
-from . import (CREATE_TEMPLATE, LIST_TEMPLATE, SACRUD_EDIT_TEMPLATE,
-               SACRUD_LIST_TEMPLATE, UPDATE_TEMPLATE)
-from ..breadcrumbs import breadcrumbs
-from ..common import (get_table, get_table_verbose_name, preprocessing_value,
-                      sacrud_env)
-from ..common.paginator import get_paginator
+from . import (
+    LIST_TEMPLATE,
+    CREATE_TEMPLATE,
+    UPDATE_TEMPLATE,
+    SACRUD_EDIT_TEMPLATE,
+    SACRUD_LIST_TEMPLATE
+)
+from ..common import (
+    get_table,
+    sacrud_env,
+    preprocessing_value,
+    get_table_verbose_name
+)
+from ..security import (
+    PYRAMID_SACRUD_LIST,
+    PYRAMID_SACRUD_CREATE,
+    PYRAMID_SACRUD_DELETE,
+    PYRAMID_SACRUD_UPDATE,
+    PYRAMID_SACRUD_MASS_ACTION,
+    PYRAMID_SACRUD_MASS_DELETE
+)
 from ..exceptions import SacrudMessagedException
+from ..breadcrumbs import breadcrumbs
+from ..common.paginator import get_paginator
 from ..includes.localization import _ps
-from ..security import (PYRAMID_SACRUD_CREATE, PYRAMID_SACRUD_DELETE,
-                        PYRAMID_SACRUD_LIST, PYRAMID_SACRUD_MASS_ACTION,
-                        PYRAMID_SACRUD_MASS_DELETE, PYRAMID_SACRUD_UPDATE)
 
 
 class CRUD(object):
@@ -45,7 +59,9 @@ class CRUD(object):
         self.request = request
         self.tname = request.matchdict['table']
         self.table = get_table(self.tname, self.request)
-        self.crud = self.request.dbsession.sacrud(self.table, commit=False)
+        self.crud = sacrud_crud(
+            self.request.dbsession, self.table, commit=False
+        )
         self.params = request.params
         if hasattr(self.params, 'dict_of_lists'):
             self.params = self.params.dict_of_lists()
