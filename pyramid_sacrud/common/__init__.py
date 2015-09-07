@@ -21,7 +21,7 @@ from .. import CONFIG_MODELS
 
 def preprocessing_value(value):
     if value is colander.null:
-        return None
+        return ""
     return value
 
 

@@ -91,11 +91,15 @@ class BreadCrumbsTest(unittest.TestCase):
 class CommonTest(_TransactionalFixture):
 
     def test_preprocessing_value(self):
-        self.assertEqual(None,
-                         preprocessing_value(colander.null))
+        self.assertEqual(
+            "",
+            preprocessing_value(colander.null)
+        )
         value = {'foo': 'bar'}
-        self.assertEqual(value,
-                         preprocessing_value(value))
+        self.assertEqual(
+            value,
+            preprocessing_value(value)
+        )
 
     def test_get_obj_from_settings(self):
         request = testing.DummyRequest()
