@@ -1,3 +1,9 @@
+0.1.3 (2015-09-08)
+==================
+
+- fix fonts in MANIFEST.in
+- fix update action, when value changed to empty
+
 0.1.2 (2015-08-19)
 ==================
 
