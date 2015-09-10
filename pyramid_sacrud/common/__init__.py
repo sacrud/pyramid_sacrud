@@ -99,7 +99,9 @@ def get_models_from_settings(settings):
     except ValueError:
         models = (models, )
     return OrderedDict(
-        [(key, value) if hasattr(value, '__iter__') else (key, [value, ])
+        [(key, value)
+         if hasattr(value, '__iter__') or not value
+         else (key, [value, ])
          for key, value in models]
     )
 
@@ -136,9 +138,12 @@ def get_table(tname, request):
     finally:
         models = models.values()
 
-    tables = itertools.chain(*models)
-    tables = [table for table in tables
-              if (table.__tablename__).lower() == tname.lower()]
+    tables = itertools.chain(*[model for model in models if model])
+    tables = [
+        table for table in tables
+        if (table.__tablename__).lower() == tname.lower()
+        and table
+    ]
     if not tables:
         return None
     return tables[0]

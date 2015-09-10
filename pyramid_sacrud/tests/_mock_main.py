@@ -25,6 +25,7 @@ def main(global_config, **settings):
     settings = config.registry.settings
     settings['pyramid_sacrud.models'] = (
         ('', [User, Tree]),
+        (None, None),
         ('Auth models', [User, Profile, Groups])
     )
     return config.make_wsgi_app()
