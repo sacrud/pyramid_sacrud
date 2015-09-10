@@ -78,7 +78,8 @@ class CRUD(object):
             self.request.session.flash([message, status])
 
     def get_response(self, options, template_attr):
-        if hasattr(self.table, template_attr):
+        if hasattr(self.table, template_attr) and\
+                getattr(self.table, template_attr):
             return render_to_response(
                 getattr(self.table, template_attr),
                 sacrud_env(lambda x: options)(self),
