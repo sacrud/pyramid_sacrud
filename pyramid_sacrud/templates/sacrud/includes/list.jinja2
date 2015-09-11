@@ -55,7 +55,11 @@
                                                 {% if col.info['sacrud_list_template'] %}
                                                     {% include col.info['sacrud_list_template'] %}
                                                 {% elif col.info['sacrud_list_content'] %}
-                                                    {{ col.info['sacrud_list_content'](row) }}
+                                                    {% if col.safe %}
+                                                        {{ col.info['sacrud_list_content'](row)|safe }}
+                                                    {% else %}
+                                                        {{ col.info['sacrud_list_content'](row) }}
+                                                    {% endif %}
                                                 {% else %}
                                                     {{ col_value|string|truncate(200) }}
                                                 {% endif %}

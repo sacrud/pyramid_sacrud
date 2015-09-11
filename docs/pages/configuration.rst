@@ -201,6 +201,31 @@ Composite fields and column as custom function
            "sacrud_list_content": lambda x: ' '.join([x.surname, x.name, x.middlename])
        }
 
+Not escape string:
+
+.. code-block:: python
+   :emphasize-lines: 3
+
+   class WidgetSafeHtml(object):
+       name = "Name"
+       safe = True
+       info = {
+           "sacrud_list_content": lambda x: x.html
+       }
+
+Example with relationship:
+
+.. code-block:: python
+
+   class WidgetRelationship(object):
+
+       def __init__(self, relationship):
+           self.name = relationship.key
+           self.info = {
+               "sacrud_list_content": lambda x: getattr(x, self.name)
+           }
+
+
 Column as lambda function of row
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
