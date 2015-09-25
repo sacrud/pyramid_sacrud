@@ -1,8 +1,13 @@
+from sqlalchemy import Column, String, Boolean, Integer, ForeignKey
 from pyramid.config import Configurator
+from sqlalchemy.orm import relationship, sessionmaker, scoped_session
 from pyramid.session import SignedCookieSessionFactory
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from pyramid.security import Allow, forget, remember
+from pyramid.authorization import ACLAuthorizationPolicy
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.httpexceptions import HTTPFound
+from pyramid_sacrud.security import permissions, PYRAMID_SACRUD_HOME
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, scoped_session, sessionmaker
 
 Base = declarative_base()
 DBSession = scoped_session(sessionmaker())
@@ -77,16 +82,49 @@ def add_fixtures():
     DBSession.commit()
 
 
+class Root(object):
+    __acl__ = [(Allow, 'admin', perm) for perm in permissions]
+
+    def __init__(self, request):
+        self.request = request
+
+
+def login(request):
+    headers = remember(request, 'admin')
+    return HTTPFound(location=request.route_url(PYRAMID_SACRUD_HOME),
+                     headers=headers)
+
+
+def logout(request):
+    headers = forget(request)
+    return HTTPFound(location=request.route_url(PYRAMID_SACRUD_HOME),
+                     headers=headers)
+
+
 def main(global_settings, **settings):
     my_session_factory = SignedCookieSessionFactory('itsaseekreet')
-
     config = Configurator(
         settings=settings,
         session_factory=my_session_factory,
     )
+    if 'auth' in settings:
+        authn_policy = AuthTktAuthenticationPolicy(
+            'sosecret',
+            callback=lambda u, r: ['admin', ],
+        )
+        config.set_authentication_policy(authn_policy)
+        config.set_authorization_policy(ACLAuthorizationPolicy())
+        config.set_root_factory(Root)
+
+        config.add_route('login', '/login')
+        config.add_route('logout', '/logout')
+        config.add_view(login, route_name='login')
+        config.add_view(logout, route_name='logout')
 
     config.include(database_settings)
     config.include(sacrud_settings)
+
+
     if 'fixtures' in settings:
         add_fixtures()
     return config.make_wsgi_app()

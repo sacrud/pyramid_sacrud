@@ -15,3 +15,13 @@ or
    $ pserve development.ini --reload
 
 and goto http://localhost:6543/admin/
+
+Auth example
+------------
+
+.. code-block:: bash
+
+   $ pserve development_auth.ini --reload
+
+and goto http://localhost:6543/admin/
+and then http://localhost:6543/login
