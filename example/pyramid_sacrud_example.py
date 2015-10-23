@@ -124,7 +124,6 @@ def main(global_settings, **settings):
     config.include(database_settings)
     config.include(sacrud_settings)
 
-
     if 'fixtures' in settings:
         add_fixtures()
     return config.make_wsgi_app()
@@ -137,6 +136,10 @@ if __name__ == '__main__':
     }
     app = main({}, **settings)
 
-    from wsgiref.simple_server import make_server
-    server = make_server('0.0.0.0', 6543, app)
-    server.serve_forever()
+    try:
+        from waitress import serve
+        serve(app, host='0.0.0.0', port=6543)
+    except ImportError:
+        from wsgiref.simple_server import make_server
+        server = make_server('0.0.0.0', 6543, app)
+        server.serve_forever()
