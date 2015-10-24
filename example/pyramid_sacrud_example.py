@@ -1,3 +1,4 @@
+import deform
 from sqlalchemy import Column, String, Boolean, Integer, ForeignKey
 from pyramid.config import Configurator
 from sqlalchemy.orm import relationship, sessionmaker, scoped_session
@@ -13,10 +14,33 @@ Base = declarative_base()
 DBSession = scoped_session(sessionmaker())
 
 
+class Store(dict):
+    def preview_url(self, name):
+        return ""
+
+tmpstore = Store()
+
+foto_widget = deform.widget.FileUploadWidget(
+    tmpstore, css_class="fotoOfUser",
+)
+
+from saexttype import FileStore
+
+
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     name = Column(String(30))
+    foto = Column(
+        FileStore(path='/static', abspath='/tmp'),
+        # String,
+        info={
+            'colanderalchemy': {
+                'typ': deform.FileData(),
+                'widget': foto_widget
+            }
+        }
+    )
 
     def __repr__(self):
         return self.name
