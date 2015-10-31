@@ -30,9 +30,7 @@ Contribute
 .. toctree::
   :maxdepth: 3
 
-  pages/contribute-backend.rst
-  pages/contribute-frontend.rst
-  pages/contribute-localization.rst
+  pages/contribute/index.rst
 
 .. include:: includes/include_contribute.rst
 .. include:: includes/include_license.rst

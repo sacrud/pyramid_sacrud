@@ -12,7 +12,6 @@ Views for CRUD actions
 import json
 import logging
 
-import deform
 import peppercorn
 import transaction
 from pyramid.view import view_config, view_defaults
@@ -89,6 +88,23 @@ class CRUD(object):
 
 class Add(CRUD):
 
+    def __init__(self, request):
+        super(Add, self).__init__(request)
+        try:
+            self.obj = get_obj(self.request.dbsession, self.table, self.pk)
+        except (NoResultFound, KeyError):
+            raise HTTPNotFound
+        self.action = self.request.matched_route.name
+
+    def options_for_response(self, form):
+        bc = breadcrumbs(self.tname, get_table_verbose_name(self.table),
+                         self.action, self.pk)
+        return dict(form=form, pk=self.pk, obj=self.obj, breadcrumbs=bc)
+
+    def response(self, form):
+        return self.get_response(self.options_for_response(form),
+                                 SACRUD_EDIT_TEMPLATE)
+
     @sacrud_env
     @view_config(
         request_method=('GET', 'POST'),
@@ -101,55 +117,42 @@ class Add(CRUD):
         route_name=PYRAMID_SACRUD_CREATE,
         permission=PYRAMID_SACRUD_CREATE)
     def sa_add(self):
-        action = self.request.matched_route.name
-        bc = breadcrumbs(self.tname, get_table_verbose_name(self.table),
-                         action, self.pk)
-        dbsession = self.request.dbsession
-        try:
-            obj = get_obj(dbsession, self.table, self.pk)
-        except (NoResultFound, KeyError):
-            raise HTTPNotFound
-        form = SacrudForm(obj=obj, dbsession=dbsession,
-                          request=self.request, table=self.table)()
-
-        def options_for_response(form):
-            return dict(
-                form=form.render(), pk=self.pk, obj=obj, breadcrumbs=bc
-            )
+        form = SacrudForm(
+            obj=self.obj,
+            table=self.table,
+            request=self.request,
+            dbsession=self.request.dbsession,
+        )()
 
         if 'form.submitted' in self.request.params:
-            controls = self.request.POST.items()
-            pstruct = peppercorn.parse(controls)
-
-            if '__formid__' in pstruct:
-                try:
-                    deserialized = form.validate_pstruct(pstruct).values()
-                except deform.ValidationFailure as e:
-                    return options_for_response(e)
-                data = {k: preprocessing_value(v)
-                        for d in deserialized
-                        for k, v in d.items()}
-            else:
-                # if not peppercon format
-                data = pstruct
+            if self.request.POST:
+                form.set_data(self.request.POST)
+            if not form.validate():
+                return self.response(form)
+            def convert(pstruct, result={}):
+                for key, value in pstruct.items():
+                    if hasattr(value, 'get'):
+                        convert(value, result)
+                    result[key] = preprocessing_value(value)
+                return result
+            data = convert(peppercorn.parse(self.request.POST.items()))
 
             try:
-                if action == PYRAMID_SACRUD_UPDATE:
-                    obj = self.crud.update(self.pk, data)
+                if self.action == PYRAMID_SACRUD_UPDATE:
+                    self.obj = self.crud.update(self.pk, data)
                     flash_action = 'updated'
                 else:
-                    obj = self.crud.create(data)
+                    self.obj = self.crud.create(data)
                     flash_action = 'created'
-                name = obj.__repr__()
-                dbsession.flush()
+                name = self.obj.__repr__()
+                self.request.dbsession.flush()
             except SacrudMessagedException as e:
                 self.flash_message(e.message, status=e.status)
-                return self.get_response(options_for_response(form),
-                                         SACRUD_EDIT_TEMPLATE)
-            except Exception as e:
-                transaction.abort()
-                logging.exception("Something awful happened!")
-                raise e
+                return self.response(form)
+            # except Exception as e:
+            #     transaction.abort()
+            #     logging.exception("Something awful happened!")
+            #     raise e
             transaction.commit()
             self.flash_message(_ps(
                 u"You ${action} object of ${name}",
@@ -158,8 +161,7 @@ class Add(CRUD):
             return HTTPFound(
                 location=self.request.route_url(PYRAMID_SACRUD_LIST,
                                                 table=self.tname))
-        return self.get_response(options_for_response(form),
-                                 SACRUD_EDIT_TEMPLATE)
+        return self.response(form)
 
 
 class List(CRUD):

@@ -1,0 +1,25 @@
+{% macro render_widget(widget, top_level=False) -%}
+  {{ widget.marker_start }}
+  {% for error in widget.errors %}
+    <div class="text-danger">{{ error }}</div>
+  {% endfor %}
+  {% if widget.children %}
+    <fieldset class="panel panel-default">
+      {% if widget.label %}<legend>{{ widget.label }}</legend>{% endif %}
+      <div class="panel-body">
+        {% for subwidget in widget.children %}
+          {{ render_widget(subwidget) }}
+        {% endfor %}
+      </div>
+    </fieldset>
+  {% else %}
+    <div class="form-group">
+      <label>{{ widget.label }} {% if widget.required %}*{% endif %} </label>
+      {% set class_ = widget.kwargs.get('class_', "form-control") %}
+      {% set kwargs = widget.kwargs %}
+      {# {% do widget.kwargs.update({"class_": class_}) %} #}
+      {{ widget(*widget.args, **widget.kwargs) }}
+    </div>
+  {% endif %}
+  {{ widget.marker_end }}
+{%- endmacro %}

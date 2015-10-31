@@ -2,10 +2,6 @@
 
 {% block title %} - {{ request.matched_route.name.split('_')[-1] }} {{ table.__tablename__ }}{% endblock %}
 
-{% block extra_head %}
-    <script type="text/javascript" src="{{ request.static_url('deform:static/scripts/deform.js') }}"></script>
-{% endblock %}
-
 {% block popup_content %}
     {% include 'sacrud/includes/delete_popup.jinja2' %}
 {% endblock %}

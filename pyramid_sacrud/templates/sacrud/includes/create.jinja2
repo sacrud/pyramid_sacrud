@@ -1,50 +1,77 @@
+{% from 'macros.jinja2' import render_widget %}
 {% set visible_columns=columns %}
 
 <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"
-    {% if not pk or not obj %}
-        action="{{ request.route_url(PYRAMID_SACRUD_CREATE, table=table.__tablename__) }}"
-    {% else %}
-        action="{{ request.route_url(PYRAMID_SACRUD_UPDATE, table=table.__tablename__, pk=pk_to_list(obj)) }}"
-    {% endif %}>
+  {% if not pk or not obj %}
+    action="{{ request.route_url(PYRAMID_SACRUD_CREATE, table=table.__tablename__) }}"
+  {% else %}
+    action="{{ request.route_url(PYRAMID_SACRUD_UPDATE, table=table.__tablename__, pk=pk_to_list(obj)) }}"
+  {% endif %}>
 
-    <div class="sacrud-grid">
-        <div class="sacrud-grid__title">{{ _(table.verbose_name or table.__tablename__) }}</div>
-        <div class="sacrud-grid__toolbar">
-            <div class="toolbar clearfix">
-                <div class="toolbar-button">
-                    <div class="toolbar-button__item toolbar-button__item_type_confirm">
-                         <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
-                    </div>
-                    {% if obj %}
-                        <div class="toolbar-button__item toolbar-button__item_type_delete">
-                            <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
-                        </div>
-                    {% endif %}
-                    <div class="toolbar-button__item toolbar-button__item_type_cancel">
-                        <a href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
-                    </div>
-                </div>
+  <div class="sacrud-grid">
+    <div class="sacrud-grid__title">{{ _(table.verbose_name or table.__tablename__) }}</div>
+    <div class="sacrud-grid__toolbar">
+      <div class="toolbar clearfix">
+        <div class="toolbar-button">
+          <div class="toolbar-button__item toolbar-button__item_type_confirm">
+            <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
+          </div>
+          {% if obj %}
+            <div class="toolbar-button__item toolbar-button__item_type_delete">
+              <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
             </div>
+          {% endif %}
+          <div class="toolbar-button__item toolbar-button__item_type_cancel">
+            <a href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
+          </div>
         </div>
-
-        <div class="sacrud-deform">{{ form|safe }}</div>
-
-        <div class="sacrud-grid__toolbar">
-            <div class="toolbar clearfix">
-                <div class="toolbar-button">
-                    <div class="toolbar-button__item toolbar-button__item_type_confirm">
-                         <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
-                    </div>
-                    {% if obj %}
-                        <div class="toolbar-button__item toolbar-button__item_type_delete">
-                            <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
-                        </div>
-                    {% endif %}
-                    <div class="toolbar-button__item toolbar-button__item_type_cancel">
-                        <a href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+
+    <div class="sacrud-deform">
+      {% if form.valid %}
+        <p class="alert alert-success">Form VALIID</p>
+      {% elif form.valid is none %}
+        <p class="alert alert-info">Form not validated</p>
+      {% else %}
+        <p class="alert alert-danger">Form INVALIID</p>
+      {% endif %}
+      {{ render_widget(form.widget) }}
+      <pre>
+        {{ form.widget.coerced_data|pprint }}
+      </pre>
+
+      <style type="text/css">
+form > .panel{
+  border: 0px;
+}
+legend{
+  font-size: 12px;
+  display: inline-block;
+  width: auto;
+  padding: 0px 10px;
+  margin-left: 10px;
+  border: 1px solid #e5e5e5;
+}
+      </style>
+    </div>
+
+    <div class="sacrud-grid__toolbar">
+      <div class="toolbar clearfix">
+        <div class="toolbar-button">
+          <div class="toolbar-button__item toolbar-button__item_type_confirm">
+            <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
+          </div>
+          {% if obj %}
+            <div class="toolbar-button__item toolbar-button__item_type_delete">
+              <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
+            </div>
+          {% endif %}
+          <div class="toolbar-button__item toolbar-button__item_type_cancel">
+            <a href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </form>
