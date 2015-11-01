@@ -1,7 +1,5 @@
-<div class="toolbar-button__item toolbar-button__item_type_confirm">
-    <a href="{{ request.route_url(PYRAMID_SACRUD_CREATE, table=table.__tablename__) }}"
-        class="toolbar-button__item-link">
-        {{ _ps('Add a new') }} "{{ _(table.verbose_name or table.__tablename__) }}"
-    </a>
-</div>
-
+<a class="btn"
+  href="{{ request.route_url(PYRAMID_SACRUD_CREATE, table=table.__tablename__) }}">
+  <i class="material-icons left">add_circle_outline</i>
+  {{ _ps('Create') }}
+</a>

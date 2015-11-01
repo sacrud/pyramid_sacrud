@@ -1,10 +1,3 @@
-<div class="paginator">
-    <div class="paginator-inner">
-        <ins class="paginator__title">Pages:</ins>
-        {{ paginator.pager(
-            link_attr={'class': 'paginator__item'},
-            curpage_attr={'class': 'paginator__item paginator__item_state_current'},
-            dotdot_attr={'class': 'paginator__dotdot'})|safe
-        }}
-    </div>
-</div>
+<ul class="pagination">
+  {{ paginator.pager(link_tag=paginator.kwargs['link_tag'])|safe}}
+</ul>

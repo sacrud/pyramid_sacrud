@@ -1,24 +1,20 @@
 {% extends "sacrud/redefineme.jinja2" %}
 
-{% block title %} - list of {{ table.__tablename__ }}{% endblock %}
+{% block title %} - list of {{ _(table.verbose_name or table.__tablename__) }}{% endblock %}
 
 {% block popup_content %}
-    {% include 'sacrud/includes/delete_popup.jinja2' %}
+    {# {% include 'sacrud/includes/delete_popup.jinja2' %} #}
 {% endblock %}
 
 {% block body %}
-    {% if hasattr(table, 'sacrud_list_col') %}
-        {% set visible_columns=table.sacrud_list_col %}
-    {% else %}
-        {% set visible_columns=columns %}
-    {% endif %}
-    <div class="page">
-        {% if table.sacrud_list_template %}
-            {% include table.sacrud_list_template with context %}
-        {% else %}
-            {% include '/sacrud/includes/list.jinja2' with context %}
-        {% endif %}
-    </div>
+  {% if hasattr(table, 'sacrud_list_col') %}
+    {% set visible_columns=table.sacrud_list_col %}
+  {% else %}
+    {% set visible_columns=columns %}
+  {% endif %}
+  {% if table.sacrud_list_template %}
+    {% include table.sacrud_list_template with context %}
+  {% else %}
+    {% include '/sacrud/includes/list.jinja2' with context %}
+  {% endif %}
 {% endblock %}
-
-

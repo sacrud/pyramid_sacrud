@@ -1,50 +1,39 @@
 {% set visible_columns=columns %}
+<script>
+  // $('select').material_select('destroy');
+
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+            
+</script>
 
 <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"
-    {% if not pk or not obj %}
-        action="{{ request.route_url(PYRAMID_SACRUD_CREATE, table=table.__tablename__) }}"
-    {% else %}
-        action="{{ request.route_url(PYRAMID_SACRUD_UPDATE, table=table.__tablename__, pk=pk_to_list(obj)) }}"
-    {% endif %}>
+  {% if not pk or not obj %}
+    action="{{ request.route_url(PYRAMID_SACRUD_CREATE, table=table.__tablename__) }}"
+  {% else %}
+    action="{{ request.route_url(PYRAMID_SACRUD_UPDATE, table=table.__tablename__, pk=pk_to_list(obj)) }}"
+  {% endif %}>
 
-    <div class="sacrud-grid">
-        <div class="sacrud-grid__title">{{ _(table.verbose_name or table.__tablename__) }}</div>
-        <div class="sacrud-grid__toolbar">
-            <div class="toolbar clearfix">
-                <div class="toolbar-button">
-                    <div class="toolbar-button__item toolbar-button__item_type_confirm">
-                         <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
-                    </div>
-                    {% if obj %}
-                        <div class="toolbar-button__item toolbar-button__item_type_delete">
-                            <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
-                        </div>
-                    {% endif %}
-                    <div class="toolbar-button__item toolbar-button__item_type_cancel">
-                        <a href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <h4>{{ _(table.verbose_name or table.__tablename__) }}</h4>
 
-        <div class="sacrud-deform">{{ form|safe }}</div>
-
-        <div class="sacrud-grid__toolbar">
-            <div class="toolbar clearfix">
-                <div class="toolbar-button">
-                    <div class="toolbar-button__item toolbar-button__item_type_confirm">
-                         <button type="submit" name="form.submitted" class="toolbar-button__item-button">{{ _ps('Save') }}</button>
-                    </div>
-                    {% if obj %}
-                        <div class="toolbar-button__item toolbar-button__item_type_delete">
-                            <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
-                        </div>
-                    {% endif %}
-                    <div class="toolbar-button__item toolbar-button__item_type_cancel">
-                        <a href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=table.__tablename__) }}" class="toolbar-button__item-link">{{ _ps('Cancel') }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  {% block add_buttons %}
+    <button class="btn waves-effect waves-light" type="submit" name="form.submitted">
+      <i class="material-icons left">add_circle_outline</i>
+      {{ _ps('Save') }}
+    </button>
+    {% if obj %}
+      <a class="waves-effect waves-light btn red">
+        <i class="material-icons left">remove_circle_outline</i>
+        {{ _ps('Delete') }}
+      </a>
+    {% endif %}
+    <a class="waves-effect waves-light btn grey lighten-3 black-text"
+      href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=table.__tablename__) }}">{{ _ps('Cancel') }}
+    </a>
+  {% endblock %}
+  <div class="section">
+    {{ form|safe }}
+  </div>
+  {{ self.add_buttons() }}
 </form>

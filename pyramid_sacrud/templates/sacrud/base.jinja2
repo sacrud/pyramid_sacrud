@@ -1,109 +1,134 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>SACRUD{% block title %}{% endblock %}</title>
+{% block meta %}
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+{% endblock %}
+<title>SACRUD{% block title %}{% endblock %}</title>
 
-    <link href="{{ request.static_url('pyramid_sacrud:static/favicon.ico') }}" rel="shortcut icon" type="image/x-icon" />
+{% block css %}
+  <link href="{{ request.static_url('pyramid_sacrud:static/favicon.ico') }}" rel="shortcut icon" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+  <!-- <link href="{{ request.static_url('pyramid_sacrud:static/css/__pyramid_sacrud.css') }}" rel="stylesheet" /> -->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    .bold {
+      font-weight: 400 !important;
+    }
+  </style>
+{% endblock %}
 
-    {% block meta %}
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    {% endblock %}
-
-    <script src="{{ request.static_url('pyramid_sacrud:static/js/__pyramid_sacrud_libs.js') }}"></script>
-
-    {% block css %}
-        <link href="{{ request.static_url('pyramid_sacrud:static/css/__pyramid_sacrud.css') }}" rel="stylesheet" />
-    {% endblock %}
-    {% block extra_css %}{% endblock %}
-    {% block extra_head %}{% endblock %}
-
+{% block js %}
+  <script src="{{ request.static_url('pyramid_sacrud:static/js/__pyramid_sacrud_libs.js') }}"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+{% endblock %}
 </head>
 
 <body>
-    {% block popup %}
-        <div class="popup popup_type_message popup_type_message-delete">
-            <div class="popup-background">&nbsp;</div>
-            <div class="popup-inner">
-                <div class="popup-inner__ie">
-                    <div class="popup-inner__content">
-                        {% block popup_content %}{% endblock %}
-                    </div>
-                </div>
-            </div>
+{% block menu %}
+  <div>
+    <nav>
+      <div class="nav-wrapper blue-grey darken-1">
+        <a href="{{ request.route_url(PYRAMID_SACRUD_HOME) }}" class="brand-logo left">SACRUD</a>
+        {% block inner_menu %}
+        {% endblock %}
+      </div>
+    </nav>
+  {% endblock %}
+  <div class="container">
+
+    {#% block popup %}
+    <div class="popup popup_type_message popup_type_message-delete">
+      <div class="popup-background">&nbsp;</div>
+      <div class="popup-inner">
+        <div class="popup-inner__ie">
+          <div class="popup-inner__content">
+            {% block popup_content %}{% endblock %}
+          </div>
         </div>
-    {% endblock %}
-
-    {% block menu %}
-        <div class="header">
-            <div class="header__inner clearfix">
-                <div class="logo">
-                    <div class="logo__text">
-                        <a href="{{ request.route_url(PYRAMID_SACRUD_HOME) }}" class="logo__text-link">SACRUD</a>
-                    </div>
-                </div>
-                <div class="header__inner-menu">
-                    {% block inner_menu %}{% endblock %}
-                </div>
-                <div class="header__user">
-                    {% block auth %}{% endblock %}
-                </div>
-            </div>
-        </div>
-    {% endblock %}
-
-    <div class="wrapper">
-        <div class="wrapper__inner">
-            {% block breadcrumbs %}
-                {% if breadcrumbs %}
-                    <div class="nav">
-                        {% for crumb in breadcrumbs %}
-                            {% if not loop.last %}
-                                <a href="{% if crumb.visible %}
-                                             {{ request.route_path(crumb.view, table=crumb.param['name']) }}
-                                         {% endif %}"
-                                   class="nav__link">{{ _ps(_(crumb.name)) }}</a>
-                                <ins class="nav__separator"><i class="fa fa-chevron-right">&nbsp;</i></ins>
-                            {% else %}
-                                <span class="nav__item_state_current">{{ _ps(_(crumb.name)) }}</span>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                {% endif %}
-            {% endblock %}
-
-            {% block flash_message %}
-                {% if request.session %}
-                    {% if request.session.peek_flash() %}
-                        <div id="flash">
-                            {% set flash = request.session.pop_flash() %}
-                            {% for message in flash %}
-                              <div class="message message_type_{{ message[1] }}" id="flash">
-                                  <div class="message__text">{{ _ps(message[0])|safe }}</div>
-                              </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                {% endif %}
-            {% endblock %}
-
-            {% block body %}{% endblock %}
-
-            {% block footer %}
-                <div class="footer">
-                    <div class="footer-inner">
-                        &copy; 2013-<script>document.write(new Date().getFullYear())</script>, ITCase
-                        <a href="https://github.com/ITCase/pyramid_sacrud" class="footer-inner__link">pyramid_sacrud</a>
-                    </div>
-                </div>
-            {% endblock %}
-        </div>
+      </div>
     </div>
+    {% endblock %#}
 
-    {% block js %}
-        <script src="{{ request.static_url('pyramid_sacrud:static/js/__pyramid_sacrud.js') }}"></script>
+    {% block breadcrumbs %}
+      {% if breadcrumbs %}
+        <div class="section">
+          <div class="nav">
+            {% for crumb in breadcrumbs %}
+              {% if not loop.last %}
+                <a href="{% if crumb.visible %}
+                    {{ request.route_path(crumb.view, table=crumb.param['name']) }}
+                  {% endif %}"
+                  class="nav__link">{{ _ps(_(crumb.name)) }}</a>
+                <ins class="nav__separator"><i class="fa fa-chevron-right">&nbsp;</i></ins>
+              {% else %}
+                <span class="nav__item_state_current">{{ _ps(_(crumb.name)) }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
     {% endblock %}
 
-    {% block extra_js %}{% endblock %}
+    {#% block flash_message %}
+    {% if request.session %}
+      {% if request.session.peek_flash() %}
+        <div id="flash">
+          {% set flash = request.session.pop_flash() %}
+          {% for message in flash %}
+            <div class="message message_type_{{ message[1] }}" id="flash">
+              <div class="message__text">{{ _ps(message[0])|safe }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endif %}
+    {% endblock %#}
+
+    {% block body %}{% endblock %}
+  </div>
+  {% block footer %}
+    <footer class="page-footer blue-grey darken-1">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Help pyramid_sacrud Grow</h5>
+            <p class="grey-text text-lighten-4">
+            To report bugs, use the <a class="blue-grey-text text-lighten-4" href="https://github.com/ITCase/pyramid_sacrud/issues">issue tracker</a>.
+            <br/><br/>
+            We welcome any contribution: suggestions, ideas, commits with
+            new futures, bug fixes, refactoring, docs, tests,
+            translations etc
+            <br/><br/>
+            If you have question, contact me sacrud@uralbash.ru or IRC
+            channel #sacrud
+            </p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Connect</h5>
+            <ul>
+              <li>
+              <iframe src="https://ghbtns.com/github-btn.html?user=ITCase&repo=pyramid_sacrud&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+          &copy; 2013-<script>document.write(new Date().getFullYear())</script>, ITCase
+          <a class="grey-text text-lighten-4 right" href="https://github.com/ITCase/pyramid_sacrud" class="footer-inner__link">pyramid_sacrud</a>
+        </div>
+      </div>
+    </footer>
+  {% endblock %}
+</div>
+{% block extra_js %}
+  <script src="{{ request.static_url('pyramid_sacrud:static/js/__pyramid_sacrud.js') }}"></script>
+{% endblock %}
 </body>
 </html>
