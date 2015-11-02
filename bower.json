@@ -13,10 +13,7 @@
   "dependencies": {
     "font-awesome": "~4.3.0",
     "html5-boilerplate": "~5.2.0",
-    "jquery": "~2.1.1",
-    "jquery-ui": "~1.10.4",
-    "normalize.css": "~3.0.2",
-    "pickadate": "~3.5.3"
+    "jquery": "~2.1.1"
   },
   "overrides": {
     "font-awesome": {
@@ -37,27 +34,6 @@
       "main": [
         "dist/jquery.min.js",
         "dist/jquery.min.map"
-      ]
-    },
-    "jquery-ui": {
-      "main": [
-        "ui/minified/jquery.ui.core.min.js",
-        "ui/minified/jquery.ui.widget.min.js",
-        "ui/minified/jquery.ui.mouse.min.js",
-        "ui/minified/jquery.ui.selectable.min.js",
-        "ui/minified/jquery.ui.effect.min.js",
-        "ui/minified/jquery.ui.effect.min.js",
-        "themes/base/jquery.ui.selectable.css"
-      ]
-    },
-    "pickadate": {
-      "main": [
-        "lib/compressed/themes/classic.css",
-        "lib/compressed/themes/classic.date.css",
-        "lib/compressed/themes/classic.time.css",
-        "lib/compressed/picker.js",
-        "lib/compressed/picker.date.js",
-        "lib/compressed/picker.time.js"
       ]
     }
   }

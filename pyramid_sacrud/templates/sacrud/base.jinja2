@@ -12,19 +12,19 @@
 {% block css %}
   <link href="{{ request.static_url('pyramid_sacrud:static/favicon.ico') }}" rel="shortcut icon" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
-  <!-- <link href="{{ request.static_url('pyramid_sacrud:static/css/__pyramid_sacrud.css') }}" rel="stylesheet" /> -->
+  <link href="{{ request.static_url('pyramid_sacrud:static/css/__pyramid_sacrud.css') }}" rel="stylesheet" />
   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <style>
-    .bold {
-      font-weight: 400 !important;
-    }
-  </style>
 {% endblock %}
 
 {% block js %}
   <script src="{{ request.static_url('pyramid_sacrud:static/js/__pyramid_sacrud_libs.js') }}"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('select').material_select();
+    });
+  </script>
 {% endblock %}
 </head>
 
@@ -56,21 +56,18 @@
 
     {% block breadcrumbs %}
       {% if breadcrumbs %}
-        <div class="section">
-          <div class="nav">
+        <!-- <div class="section"> -->
+          <div class="breadcrumb">
             {% for crumb in breadcrumbs %}
               {% if not loop.last %}
-                <a href="{% if crumb.visible %}
+                <li><a href="{% if crumb.visible %}
                     {{ request.route_path(crumb.view, table=crumb.param['name']) }}
-                  {% endif %}"
-                  class="nav__link">{{ _ps(_(crumb.name)) }}</a>
-                <ins class="nav__separator"><i class="fa fa-chevron-right">&nbsp;</i></ins>
-              {% else %}
-                <span class="nav__item_state_current">{{ _ps(_(crumb.name)) }}</span>
+                  {% endif %}">{{ _ps(_(crumb.name)) }}</a></li>
+              {% else %}<li>{{ _ps(_(crumb.name)) }}</li>
               {% endif %}
             {% endfor %}
           </div>
-        </div>
+        <!-- </div> -->
       {% endif %}
     {% endblock %}
 

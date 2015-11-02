@@ -64,18 +64,6 @@
     "transform": [ "browserify-shim" ]
   },
   "browserify-shim": {
-    "jquery": "$",
-    "jquery-ui": {
-      "exports": null
-    },
-    "picker": {
-      "exports": "picker"
-    },
-    "pickadate": {
-      "exports": "pickadate"
-    },
-    "pickatime": {
-      "exports": "pickatime"
-    }
+    "jquery": "$"
   }
 }
