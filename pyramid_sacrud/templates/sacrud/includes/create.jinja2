@@ -25,7 +25,9 @@
     </a>
   {% endblock %}
   <div class="section">
-    {{ form|safe }}
+    <div class="hoverable z-depth-1">
+      {{ form|safe }}
+    </div>
   </div>
   {{ self.add_buttons() }}
 </form>

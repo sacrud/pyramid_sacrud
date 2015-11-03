@@ -1,6 +1,10 @@
 .bold {
   font-weight: 400 !important;
 }
+
+fieldset {
+  border: 0px !important;
+}
 .breadcrumb {
   padding-top: 15px;
 }
