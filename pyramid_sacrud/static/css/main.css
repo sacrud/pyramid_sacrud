@@ -5,3 +5,14 @@
 fieldset {
     border: 0px !important;
 }
+
+.panel-heading {
+    background-color: #2196f3;
+    color: white;
+    font-weight: 500 !important;
+    padding: 5px;
+}
+
+.panel-heading:empty {
+   display: none;
+}
