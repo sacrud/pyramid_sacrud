@@ -1,0 +1,46 @@
+$icons-font-path: "~material-design-icons/iconfont/";
+@import 'breadcrumbs/main';
+
+@font-face {
+      font-family: 'Material Icons';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Material Icons'), local('MaterialIcons-Regular'), url(#{$icons-font-path}/MaterialIcons-Regular.woff2) format('woff2');
+    }
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -moz-font-feature-settings: 'liga';
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.bold {
+    font-weight: 400 !important;
+}
+
+fieldset {
+    border: 0px !important;
+}
+
+select { width: 5em; height: 10em !important; }
+
+.panel-heading {
+    background-color: #2196f3;
+    color: white;
+    font-weight: 500 !important;
+    padding: 5px;
+}
+
+.panel-heading:empty {
+   display: none;
+}

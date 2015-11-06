@@ -11,20 +11,21 @@
 
 {% block css %}
   <link href="{{ request.static_url('pyramid_sacrud:static/favicon.ico') }}" rel="shortcut icon" type="image/x-icon" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
-  <link href="{{ request.static_url('pyramid_sacrud:static/css/__pyramid_sacrud.css') }}" rel="stylesheet" />
-  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{{ request.static_url('pyramid_sacrud:static/css/__main.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block js %}
-  <script src="{{ request.static_url('pyramid_sacrud:static/js/__pyramid_sacrud_libs.js') }}"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('select').material_select();
-    });
+  <!-- <script src="{{ request.static_url('pyramid_sacrud:static/js/__pyramid_sacrud_libs.js') }}"></script> -->
+  <script src="http://code.jquery.com/jquery-2.1.4.js">
   </script>
+  <script>
+  $(document).ready(function() {
+  $('select').material_select();
+});
+  </script>
+  <script src="https://raw.githubusercontent.com/Dogfalo/materialize/bee1b20c40b3833d25618b2d98723a7eed3571c2/dist/js/materialize.js"></script>
+
+  <!-- <script src="{{ request.static_url('pyramid_sacrud:static/js/assets/__main.js') }}"></script> -->
 {% endblock %}
 </head>
 
@@ -125,7 +126,7 @@
   {% endblock %}
 </div>
 {% block extra_js %}
-  <script src="{{ request.static_url('pyramid_sacrud:static/js/__pyramid_sacrud.js') }}"></script>
+  <!-- <script src="{{ request.static_url('pyramid_sacrud:static/js/__pyramid_sacrud.js') }}"></script> -->
 {% endblock %}
 </body>
 </html>

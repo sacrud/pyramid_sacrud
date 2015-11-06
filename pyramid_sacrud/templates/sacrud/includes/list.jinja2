@@ -1,6 +1,6 @@
 <h4>{{ _(table.verbose_name or table.__tablename__) }}</h4>
 {% include "sacrud/actions/create.jinja2" %}
-<a class="btn red waves-effect waves-light">
+<a class="waves-effect waves-light btn red">
   <i class="material-icons left">remove_circle_outline</i>
   {{ _ps('Delete') }}
 </a>
@@ -12,8 +12,8 @@
       <thead>
         <tr class="blue lighten-5">
           <th>
-            <input id="selected_all_item" type="checkbox" />
-            <label for="selected_all_item"></label>
+            <input id="select_all_item" type="checkbox" />
+            <label for="select_all_item"></label>
           </th>
           <th></th>
           {% for col in visible_columns %}
