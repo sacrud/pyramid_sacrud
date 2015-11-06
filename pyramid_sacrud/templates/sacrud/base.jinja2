@@ -15,17 +15,7 @@
 {% endblock %}
 
 {% block js %}
-  <!-- <script src="{{ request.static_url('pyramid_sacrud:static/js/__pyramid_sacrud_libs.js') }}"></script> -->
-  <script src="http://code.jquery.com/jquery-2.1.4.js">
-  </script>
-  <script>
-  $(document).ready(function() {
-  $('select').material_select();
-});
-  </script>
-  <script src="https://raw.githubusercontent.com/Dogfalo/materialize/bee1b20c40b3833d25618b2d98723a7eed3571c2/dist/js/materialize.js"></script>
-
-  <!-- <script src="{{ request.static_url('pyramid_sacrud:static/js/assets/__main.js') }}"></script> -->
+  <script src="{{ request.static_url('pyramid_sacrud:static/js/assets/__main.js') }}"></script>
 {% endblock %}
 </head>
 

@@ -52,12 +52,21 @@
 
 	var _settings = __webpack_require__(22);
 
-	var _settings2 = _interopRequireDefault(_settings);
+	$(function () {
+	  // add multiple select / deselect functionality
+	  $(_settings.select_all_checkbox).click(function () {
+	    $(_settings.table_checkboxes).attr('checked', undefined.checked);
+	  });
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	$(_settings2.default).change(function () {
-	  $("input:checkbox").prop('checked', $(undefined).prop("checked"));
+	  // if all checkbox are selected, check the selectall checkbox
+	  // and viceversa
+	  $(_settings.table_checkboxes).click(function () {
+	    if ($(_settings.table_checkboxes).length == $(_settings.table_checkboxes + ":checked").length) {
+	      $(_settings.select_all_checkbox).attr("checked", "checked");
+	    } else {
+	      $(_settings.select_all_checkbox).removeAttr("checked");
+	    }
+	  });
 	});
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
@@ -11822,8 +11831,8 @@
 	  value: true
 	});
 	var select_all_checkbox = exports.select_all_checkbox = 'input#select_all_item';
-	// 'table_checkboxes': 'input[name="selected_item"]',
-	// 'table_checkboxes_checked': 'input[name="selected_item"]:checked',
+	var table_checkboxes = exports.table_checkboxes = 'input[name="selected_item"]';
+	// extable_checkboxes_checked': 'input[name="selected_item"]:checked',
 	// 'table_checkboxes_not_checked': 'input[name="selected_item"]:not(:checked)',
 
 /***/ }

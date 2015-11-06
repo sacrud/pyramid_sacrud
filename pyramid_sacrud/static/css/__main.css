@@ -5738,7 +5738,10 @@ ul.tabs li.tab {
     -webkit-transition: all 0.7s ease-out;
     transition: all 0.7s ease-out;
     -webkit-transition-property: -webkit-transform, opacity;
+    -webkit-transition-property: opacity, -webkit-transform;
+    transition-property: opacity, -webkit-transform;
     transition-property: transform, opacity;
+    transition-property: transform, opacity, -webkit-transform;
     -webkit-transform: scale(0);
     -ms-transform: scale(0);
     transform: scale(0);
@@ -6338,7 +6341,7 @@ form p:last-child {
   border-radius: 15px;
   margin-right: 10px;
   -webkit-transition: background 0.3s ease;
-          transition: background 0.3s ease;
+  transition: background 0.3s ease;
   vertical-align: middle;
   margin: 0px 16px; }
 
@@ -6354,7 +6357,7 @@ form p:last-child {
   left: -5px;
   top: -3px;
   -webkit-transition: left 0.3s ease, background 0.3s ease, box-shadow 0.1s ease;
-          transition: left 0.3s ease, background 0.3s ease, box-shadow 0.1s ease; }
+  transition: left 0.3s ease, background 0.3s ease, box-shadow 0.1s ease; }
 
 input[type=checkbox]:checked:not(:disabled) ~ .lever:active:after {
   box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4), 0 0 0 15px rgba(38, 166, 154, 0.1); }
