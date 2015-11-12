@@ -32,50 +32,51 @@
   {% endblock %}
   <div class="container">
 
-    {#% block popup %}
-    <div class="popup popup_type_message popup_type_message-delete">
-      <div class="popup-background">&nbsp;</div>
-      <div class="popup-inner">
-        <div class="popup-inner__ie">
-          <div class="popup-inner__content">
-            {% block popup_content %}{% endblock %}
-          </div>
+    {% block popup %}
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          {% block popup_content %}{% endblock %}
+        </div>
+        <div class="modal-footer">
+          {% block popup_footer %}{% endblock %}
         </div>
       </div>
-    </div>
-    {% endblock %#}
+    {% endblock %}
 
     {% block breadcrumbs %}
       {% if breadcrumbs %}
-        <!-- <div class="section"> -->
-          <div class="breadcrumb">
-            {% for crumb in breadcrumbs %}
-              {% if not loop.last %}
-                <li><a href="{% if crumb.visible %}
-                    {{ request.route_path(crumb.view, table=crumb.param['name']) }}
-                  {% endif %}">{{ _ps(_(crumb.name)) }}</a></li>
-              {% else %}<li>{{ _ps(_(crumb.name)) }}</li>
-              {% endif %}
-            {% endfor %}
-          </div>
-        <!-- </div> -->
-      {% endif %}
-    {% endblock %}
-
-    {#% block flash_message %}
-    {% if request.session %}
-      {% if request.session.peek_flash() %}
-        <div id="flash">
-          {% set flash = request.session.pop_flash() %}
-          {% for message in flash %}
-            <div class="message message_type_{{ message[1] }}" id="flash">
-              <div class="message__text">{{ _ps(message[0])|safe }}</div>
-            </div>
+        <div class="breadcrumb">
+          {% for crumb in breadcrumbs %}
+            {% if not loop.last %}
+              <li><a href="{% if crumb.visible %}
+                  {{ request.route_path(crumb.view, table=crumb.param['name']) }}
+                {% endif %}">{{ _ps(_(crumb.name)) }}</a></li>
+            {% else %}<li>{{ _ps(_(crumb.name)) }}</li>
+            {% endif %}
           {% endfor %}
         </div>
       {% endif %}
-    {% endif %}
-    {% endblock %#}
+    {% endblock %}
+
+    {% block flash_message %}
+      {% if request.session %}
+        {% if request.session.peek_flash() %}
+          {% set flash = request.session.pop_flash() %}
+          {% for message in flash %}
+            <div class="chip white-text
+              {% if message[1] == "success" %}
+                green
+              {% elif message[1] == "error" %}
+                red
+              {% elif message[1] == "warning" %}
+                yellow
+              {% endif %}">{{ _ps(message[0])|safe }}
+              <i class="material-icons">close</i>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endif %}
+    {% endblock %}
 
     {% block body %}{% endblock %}
   </div>
@@ -90,10 +91,10 @@
             <br/><br/>
             We welcome any contribution: suggestions, ideas, commits with
             new futures, bug fixes, refactoring, docs, tests,
-            translations etc
+            translations etc.
             <br/><br/>
             If you have question, contact me sacrud@uralbash.ru or IRC
-            channel #sacrud
+            channels #pyramid or #sacrud
             </p>
           </div>
           <div class="col l4 offset-l2 s12">
@@ -101,6 +102,17 @@
             <ul>
               <li>
               <iframe src="https://ghbtns.com/github-btn.html?user=ITCase&repo=pyramid_sacrud&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+              </li>
+              <li>
+              <a href="https://www.gratipay.com/ITCase/">
+                <img alt="Donate to us!" src="https://img.shields.io/gratipay/ITCase.svg?style=social&label=Donate">
+              </a>
+              </li>
+              <li>
+              <a href="https://webchat.freenode.net/?channels=pyramid"><img src="https://img.shields.io/badge/irc-freenode-blue.svg?label=%23pyramid" alt="IRC Freenode #pyramid" /></a>
+              </li>
+              <li>
+              <a href="https://webchat.freenode.net/?channels=sacrud"><img src="https://img.shields.io/badge/irc-freenode-blue.svg?label=%23sacrud" alt="IRC Freenode #sacrud" /></a>
               </li>
             </ul>
           </div>
@@ -115,8 +127,6 @@
     </footer>
   {% endblock %}
 </div>
-{% block extra_js %}
-  <!-- <script src="{{ request.static_url('pyramid_sacrud:static/js/__pyramid_sacrud.js') }}"></script> -->
-{% endblock %}
+{% block extra_js %}{% endblock %}
 </body>
 </html>

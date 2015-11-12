@@ -34,6 +34,7 @@ Feature: Popup window for delete button
         Then I should see active delete popup window
 
         When Click cancel button
+        When sleep 1
         Then I should see unactive delete popup window
         Then I should see active delete button
 
@@ -46,6 +47,7 @@ Feature: Popup window for delete button
         Then I should see active delete popup window
 
         When Click cancel button
+        When sleep 1
         Then I should see unactive delete popup window
         Then I should see active delete button
 

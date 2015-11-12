@@ -1,7 +1,7 @@
 import '../../css/materialize.scss'
 import 'materialize-js';
-// import 'materialize-css';
 
-$(document).ready(function() {
+$(document).ready(() => {
   $('select').material_select();
+  $('.modal-trigger').leanModal();
 });

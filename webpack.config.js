@@ -3,28 +3,30 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var STATIC_PATH = path.join(__dirname, './pyramid_sacrud/static/');
-var JS_PATH = path.join(STATIC_PATH, 'js');
-var CSS_PATH = path.join(STATIC_PATH, 'css');
-var NODE_PATH = path.join(__dirname, 'node_modules')                                                  
+var JS_PATH = path.join('js');
+var CSS_PATH = path.join('css');
+var NODE_PATH = path.join(__dirname, 'node_modules')
 
 config = {
   debug: true,
+  devtool: 'source-map',
   context: STATIC_PATH,
   include: [path.resolve(JS_PATH)],
-  entry: path.join(JS_PATH, 'src', 'main.js'),
-  output: {filename: path.join(JS_PATH, 'assets', '__[name].js')},
-  resolveLoader: {                                                                                
-    root: NODE_PATH,                                                 
-  },   
+  entry: path.join(STATIC_PATH, JS_PATH, 'src', 'main.js'),
+  output: {
+    filename: path.join(JS_PATH, 'assets', '__[name].js'),
+    path: STATIC_PATH,
+    publicPath: "../"
+  },
+  resolveLoader: {
+    root: NODE_PATH,
+  },
   resolve: {
     unsafeCache: true,
     modulesDirectories: ['node_modules', 'bower_components'],
     alias: {
       'materialize-js': path.join(
         NODE_PATH, '/materialize-css/dist/js/materialize.min.js'
-      ),
-      'materialize-css': path.join(
-        NODE_PATH, '/materialize-css/dist/css/materialize.min.css'
       )
     }
   },
@@ -40,16 +42,16 @@ config = {
         loader: ExtractTextPlugin.extract('style', 'css')
       },
       {
-        test: /\.scss$/, 
+        test: /\.scss$/,
         loader: ExtractTextPlugin.extract(
-          'style', 'css!resolve-url!autoprefixer!sass'),
+          'style', 'css!autoprefixer!sass'),
         exclude: /(node_modules|bower_components)/
       },
       {
         test: /\.(woff|woff2|eot|ttf)$/,
         loader: 'file',
         query: {
-          name: path.join(STATIC_PATH, 'fonts', '/[name].[ext]')
+          name: path.join('fonts', '/[name].[ext]')
         }
       },
       {
@@ -57,19 +59,18 @@ config = {
         loader: 'file',
         query: {
           limit: 10000,
-          name: path.join(STATIC_PATH, 'img') + '/[name].[ext]'
+          name: path.join('img', '/[name].[ext]')
         }
       }
     ]
-  },
-  resolveUrlLoader: {
-    absolute: '/prefix'
   },
   plugins: [
     new ExtractTextPlugin(path.join(CSS_PATH, '__main.css')),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
+      "window.$": "jquery",
+      "window.jQuery": "jquery"
     })
   ]
 }

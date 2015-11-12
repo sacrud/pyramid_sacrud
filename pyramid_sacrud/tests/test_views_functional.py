@@ -163,7 +163,7 @@ class DeleteFuncTests(PyramidApp):
         deleted_ids = range(11, 25)
         items_list = [u'["id", %s]' % id for id in deleted_ids]
         self.testapp.post('/admin/user/action/',
-                          {'selected_action': 'delete',
+                          {'mass_action': 'delete',
                            'selected_item': items_list},
                           status=302)
         transaction.commit()
@@ -187,7 +187,7 @@ class DeleteFuncTests(PyramidApp):
         deleted_ids = (1, 3, 4)
         items_list = [u'["id", %s]' % id for id in deleted_ids]
         self.testapp.post('/admin/tree/action/',
-                          {'selected_action': 'delete',
+                          {'mass_action': 'delete',
                            'selected_item': items_list},
                           status=302)
         Session.commit()

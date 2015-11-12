@@ -22,4 +22,4 @@ def includeme(config):
     config.add_jinja2_search_path("pyramid_sacrud:templates")
     config.include('sacrud_deform')
     config.add_static_view('deform_static', 'deform:static')
-    config.add_static_view('sa_static', 'pyramid_sacrud:static')
+    config.add_static_view('static', 'pyramid_sacrud:static')

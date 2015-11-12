@@ -3,7 +3,13 @@
 {% block title %} - list of {{ _(table.verbose_name or table.__tablename__) }}{% endblock %}
 
 {% block popup_content %}
-    {# {% include 'sacrud/includes/delete_popup.jinja2' %} #}
+  <h4>{{ _ps('Are you sure you want to delete an object?') }}</h4>
+{% endblock %}
+{% block popup_footer %}
+  <a href="#!" id="delete-confirm" class="modal-action modal-close btn green">
+    {{ _ps('Confirm') }}
+  </a>
+  <a href="#!" class="cancel-button modal-action modal-close red btn">{{ _ps('Cancel') }}</a>
 {% endblock %}
 
 {% block body %}

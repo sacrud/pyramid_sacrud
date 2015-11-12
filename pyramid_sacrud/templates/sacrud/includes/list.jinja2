@@ -1,9 +1,10 @@
 <h4>{{ _(table.verbose_name or table.__tablename__) }}</h4>
 {% include "sacrud/actions/create.jinja2" %}
-<a class="waves-effect waves-light btn red">
+<a class="delete-button waves-effect waves-light btn red">
   <i class="material-icons left">remove_circle_outline</i>
   {{ _ps('Delete') }}
 </a>
+
 <div class="container"><br/></div>
 <form id="sacrud-form" method="post"
   action="{{ request.route_url(PYRAMID_SACRUD_MASS_ACTION, table=table.__tablename__) }}">
@@ -59,7 +60,7 @@
       </tr>
     {% endif %}
   </table>
-  <input class="selected-action" type="hidden" value="0" name="selected_action" />
+  <input id="mass-action" type="hidden" value="0" name="mass_action" />
 </form>
 {% if rows and paginator.items.__len__() >= 1 and paginator.page_count > 1 %}
   {% include "sacrud/includes/paginator.jinja2" %}
