@@ -45,11 +45,7 @@ install:
 
   - if [ -n "$LINK_CHECK" ];then pip install linkchecker; fi
   - pip install flake8 rstcheck
-  - pip install behave selenium
-
-  # JavaScript
-  - npm install chai
-  - npm install mocha
+  - pip install behave selenium waitress
 
 script:
   # Nosetests
@@ -58,14 +54,11 @@ script:
   # Styles check
   - if [ -z "$NO_RSTLINT" ]; then ./test.sh; fi
 
-  # Javascript
-  - npm test
-
   # BDD
   - cd example
   - python pyramid_sacrud_example.py&
   - cd ..
-  - if [ -z "$NO_BDD" ];then behave; fi
+  - if [ -z "$NO_BDD" ];then behave --no-capture; fi
 
   # Link checker
   - if [ -n "$LINK_CHECK" ];then linkchecker http://localhost:6543/admin/ --ignore-url="unquote\(%*" --no-status; fi
