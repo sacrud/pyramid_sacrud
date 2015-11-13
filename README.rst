@@ -8,11 +8,10 @@ Documentation `<http://pyramid-sacrud.readthedocs.org/en/latest/>`_
 Overview
 --------
 
-pyramid_sacrud - Pyramid CRUD interface based on sacrud_ and SQLAlchemy.
-
-`pyramid_sacrud` will solve your problem of CRUD interface for Pyramid.
-Unlike classical CRUD interface, ``pyramid_sacrud`` allows override and
-flexibly customize interface. (that is closer to `django.contrib.admin`)
+Pyramid CRUD interface based on sacrud_ and SQLAlchemy.
+Provides an administration web interface for Pyramid.
+Unlike classic CRUD, ``pyramid_sacrud`` allows overrides and flexibility to
+customize your interface, similar to ``django.contrib.admin``.
 
 Look how easy it is to use with Pyramid:
 
@@ -27,7 +26,7 @@ Look how easy it is to use with Pyramid:
 
 go to http://localhost:6543/sacrud/
 
-Example can be found here https://github.com/ITCase/pyramid_sacrud/tree/master/example 
+Example can be found here https://github.com/ITCase/pyramid_sacrud/tree/master/example
 
 And see...
 
