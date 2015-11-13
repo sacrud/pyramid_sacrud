@@ -1,3 +1,9 @@
+0.2.0 (2015-11-13)
+==================
+
+- new materialize-css design
+- webpack.js for build css and js
+
 0.1.3 (2015-09-08)
 ==================
 
