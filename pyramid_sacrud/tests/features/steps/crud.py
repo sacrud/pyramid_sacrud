@@ -47,7 +47,10 @@ def step_impl(context, name, value):
         ".//*[starts-with(@id, 'deformField') and @name='{}']".format(name)
     )
     if value.lower() == 'toggle':
-        field.click()
+        id = field.get_attribute("id")
+        context.driver.find_element_by_xpath(
+            ".//label[@for='{}' and not(@class)]".format(id)
+        ).click()
     else:
         field.clear()
         field.send_keys(value)

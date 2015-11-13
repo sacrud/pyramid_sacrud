@@ -4,6 +4,10 @@ Provides an administration web interface for Pyramid.
 Unlike classic CRUD, ``pyramid_sacrud`` allows overrides and flexibility to
 customize your interface, similar to ``django.contrib.admin``.
 
+.. raw:: html
+
+   <br clear="both"/>
+
 Look how easy it is to use with Pyramid:
 
 .. code-block:: python

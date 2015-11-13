@@ -213,7 +213,7 @@ class Delete(CRUD):
 class Action(CRUD):
 
     @view_config(
-        request_param='selected_action=delete',
+        request_param='mass_action=delete',
         permission=PYRAMID_SACRUD_MASS_DELETE)
     def mass_delete(self):
         items_list = self.request.POST.getall('selected_item')
@@ -237,7 +237,7 @@ class Action(CRUD):
             raise e
         transaction.commit()
         self.flash_message(_ps("You delete the following objects:"))
-        self.flash_message("<br/>".join(object_names))
+        [self.flash_message(obj) for obj in object_names]
         return HTTPFound(
             location=self.request.route_url(PYRAMID_SACRUD_LIST,
                                             table=self.tname))

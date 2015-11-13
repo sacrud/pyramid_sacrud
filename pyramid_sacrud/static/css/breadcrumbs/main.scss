@@ -1,0 +1,11 @@
+.breadcrumb {
+    padding-top: 15px;
+}
+
+.breadcrumb li {
+    text-transform: uppercase;
+    display: inline;
+}
+.breadcrumb li+li:before {
+    content:"» ";
+}

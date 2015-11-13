@@ -1,89 +1,67 @@
-<div class="sacrud-grid">
-    <div class="sacrud-grid__title">
-        {{ _(table.verbose_name or table.__tablename__) }}
-    </div>
-    <div class="sacrud-grid__action" id="sa_grid_action">&nbsp;</div>
-    <div class="sacrud-grid__toolbar">
-        <div class="toolbar clearfix">
-            <div class="toolbar-button">
-                {% include "sacrud/actions/create.jinja2" %}
-                <div class="toolbar-button__item toolbar-button__item_type_delete">
-                    <div class="toolbar-button__item-name">{{ _ps('Delete') }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="sacrud-grid-content">
-        <div class="sacrud-grid-content__left">
-            <form id="sacrud-form" class="sacrud-grid-content__left-inner" method="post"
-                  action="{{ request.route_url(PYRAMID_SACRUD_MASS_ACTION,
-                                               table=table.__tablename__) }}">
-                <table class="sacrud-grid-content-grid" id="sa_index">
-                    {% if paginator.items.__len__() > 0 %}
-                        <thead class="sacrud-grid-content-grid__header">
-                            <tr class="sacrud-grid-content-grid__header-row">
-                                <th class="sacrud-grid-content-grid__header-item">
-                                    <input id="selected_all_item" type="checkbox" />
-                                </th>
-                                <th class="sacrud-grid-content-grid__header-item"></th>
-                                {% for col in visible_columns %}
-                                    <th class="sacrud-grid-content-grid__header-item">
-                                        <a href="" class="sacrud-grid-content-grid__header-item-link">
-                                            {{ _(col.info.verbose_name or col.name or col.sacrud_name or None) }}
-                                        </a>
-                                    </th>
-                                {% endfor %}
-                            </tr>
-                        </thead>
-                        <tbody class="sacrud-grid-content-grid__body">
-                            {% for row in paginator %}
-                                <tr id="{{ table.__tablename__ }}_{{ pk_to_list(row) }}"
-                                    class="sacrud-grid-content-grid__body-row">
-                                    <td class="sacrud-grid-content-grid__body-item">
-                                        <input class="sacrud-grid-content-grid__body-item-checkbox"
-                                               type="checkbox" name="selected_item" value="{{ pk_to_list(row, True) }}" />
-                                    </td>
-                                    <td class="sacrud-grid-content-grid__body-item">
-                                        {% include 'sacrud/actions/update.jinja2' with context %}
-                                    </td>
-                                    {% for col in visible_columns %}
-                                        <td class="sacrud-grid-content-grid__body-item">
-                                            <div class="selectable_disabled" style="padding: 0 0.3em; display:inline-block;">
-                                                {% if col.__class__.__name__ in ['Column', 'InstrumentedAttribute'] %}
-                                                    {% set col_value=row.__getattribute__(get_attrname_by_colname(row, col.name)) %}
-                                                {% endif %}
-                                                {% if col.info['sacrud_list_template'] %}
-                                                    {% include col.info['sacrud_list_template'] %}
-                                                {% elif col.info['sacrud_list_content'] %}
-                                                    {% if col.safe %}
-                                                        {{ col.info['sacrud_list_content'](row)|safe }}
-                                                    {% else %}
-                                                        {{ col.info['sacrud_list_content'](row) }}
-                                                    {% endif %}
-                                                {% else %}
-                                                    {{ col_value|string|truncate(200) }}
-                                                {% endif %}
-                                            </div>
-                                        </td>
-                                    {% endfor %}
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    {% else %}
-                        <tr>
-                            <td>There are no objects</td>
-                        </tr>
-                    {% endif %}
-                </table>
-                <input class="selected-action" type="hidden" value="0" name="selected_action" />
-            </form>
-            {% if rows %}
-                <div class="sacrud-grid-content__paginator">
-                    {% if paginator.items.__len__() >= 1 and paginator.page_count > 1 %}
-                        {% include "sacrud/includes/paginator.jinja2" %}
-                    {% endif %}
-                </div>
-            {% endif %}
-        </div>
-    </div>
-</div>
+<h4>{{ _(table.verbose_name or table.__tablename__) }}</h4>
+{% include "sacrud/actions/create.jinja2" %}
+<a class="delete-button waves-effect waves-light btn red">
+  <i class="material-icons left">remove_circle_outline</i>
+  {{ _ps('Delete') }}
+</a>
+
+<div class="container"><br/></div>
+<form id="sacrud-form" method="post"
+  action="{{ request.route_url(PYRAMID_SACRUD_MASS_ACTION, table=table.__tablename__) }}">
+  <table class="bordered highlight hoverable z-depth-1">
+    {% if paginator.items.__len__() > 0 %}
+      <thead>
+        <tr class="blue lighten-5">
+          <th>
+            <input id="select_all_item" type="checkbox" />
+            <label for="select_all_item"></label>
+          </th>
+          <th></th>
+          {% for col in visible_columns %}
+            <th>
+              {{ _(col.info.verbose_name or col.name or col.sacrud_name or None) }}
+            </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+      {% for row in paginator %}
+        <tr id="{{ table.__tablename__ }}_{{ pk_to_list(row) }}">
+          <td width="1">
+            <input id="{{ pk_to_list(row, True) }}"
+            type="checkbox" name="selected_item" value="{{ pk_to_list(row, True) }}" />
+            <label for="{{ pk_to_list(row, True) }}"></label>
+          </td>
+          <td width="1">{% include 'sacrud/actions/update.jinja2' with context %}</td>
+          {% for col in visible_columns %}
+            <td>
+              {% if col.__class__.__name__ in ['Column', 'InstrumentedAttribute'] %}
+                {% set col_value=row.__getattribute__(get_attrname_by_colname(row, col.name)) %}
+              {% endif %}
+              {% if col.info['sacrud_list_template'] %}
+                {% include col.info['sacrud_list_template'] %}
+              {% elif col.info['sacrud_list_content'] %}
+                {% if col.safe %}
+                  {{ col.info['sacrud_list_content'](row)|safe }}
+                {% else %}
+                  {{ col.info['sacrud_list_content'](row) }}
+                {% endif %}
+              {% else %}
+                {{ col_value|string|truncate(200) }}
+              {% endif %}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    {% else %}
+      <tr>
+        <td>There are no objects</td>
+      </tr>
+    {% endif %}
+  </table>
+  <input id="mass-action" type="hidden" value="0" name="mass_action" />
+</form>
+{% if rows and paginator.items.__len__() >= 1 and paginator.page_count > 1 %}
+  {% include "sacrud/includes/paginator.jinja2" %}
+{% endif %}

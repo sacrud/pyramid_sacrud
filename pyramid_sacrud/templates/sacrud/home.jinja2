@@ -3,34 +3,36 @@
 {% block title %} - home{% endblock %}
 
 {% block body %}
-    <div class="dashboard">
-        <div class="dashboard-title">{{ _ps('Dashboard') }}</div>
-        <div class="dashboard-inner clearfix">
-            {% for col in range(dashboard_row_len) %}
-                <div class="dashboard-column">
-                    {% if col <= tables.__len__() %}
-                        {% for widget, tables in (tables.items()|list)[col::dashboard_row_len] %}
-                            {% if tables %}
-                                <div class="widget">
-                                    <div class="widget-title">
-                                        {{ _(widget or '') }}
-                                    </div>
-                                    <div class="widget-content">
-                                        {% for table in tables %}
-                                            <div class="widget-row">
-                                                {% set tname = table.__tablename__ %}
-                                                <div class="widget-row__item">
-                                                    <a href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=tname) }}" class="widget-row__item-link" id="id_{{ tname }}" >{{ _(table.verbose_name or tname) }}</a>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
+
+  <div class="divider"></div>
+  <div class="section">
+    <h5>{{ _ps('Dashboard') }}</h5>
+  </div>
+
+  <div class="row">
+    {% for col in range(dashboard_row_len) %}
+      <div class="col s{{ (12/dashboard_row_len)|int }}">
+        {% if col <= tables.__len__() %}
+          {% for widget, widget_resources in (tables.items()|list)[col::dashboard_row_len] %}
+            {% if widget_resources %}
+              <div class="card hoverable">
+                <div class="blue darken-2 center-align">
+                  <span class="card-title bold">
+                    {{ _(widget or '') }}
+                  </span>
                 </div>
-            {% endfor %}
-        </div>
-    </div>
+                <div class="collection" style="border:none;">
+                  {% for table in widget_resources %}
+                    {% set tname = table.__tablename__ %}
+                    <a class="collection-item black-text" href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=tname) }}" id="id_{{ tname }}">
+                      {{ _(table.verbose_name or tname) }}</a>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}

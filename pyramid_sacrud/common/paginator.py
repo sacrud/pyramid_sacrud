@@ -9,6 +9,17 @@
 """
 Webhelpers paginator
 """
+from paginate import Page, make_html_tag
+
+
+def paginate_link_tag(item):
+    """
+    Create an A-HREF tag that points to another page usable in paginate.
+    """
+    a_tag = Page.default_link_tag(item)
+    if item['type'] == 'current_page':
+        return make_html_tag('li', a_tag, **{'class': 'blue white-text'})
+    return make_html_tag('li', a_tag)
 
 
 def get_current_page(request):
@@ -16,7 +27,9 @@ def get_current_page(request):
 
 
 def get_paginator(request, items_per_page=10):
-    paginator = {"items_per_page": items_per_page,
-                 "page": get_current_page(request),
-                 "url_maker": lambda p: request.path_url + "?page=%s" % p}
-    return paginator
+    return {
+        "items_per_page": items_per_page,
+        "page": get_current_page(request),
+        "url_maker": lambda p: request.path_url + "?page=%s" % p,
+        "link_tag": paginate_link_tag
+    }
