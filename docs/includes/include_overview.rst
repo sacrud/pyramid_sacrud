@@ -6,6 +6,10 @@ Unlike classical CRUD interface, `pyramid_sacrud
 <https://github.com/ITCase/pyramid_sacrud>`_ allows override and flexibly
 customize interface. (that is closer to `django.contrib.admin`)
 
+.. raw:: html
+
+   <br clear="both"/>
+
 Look how easy it is to use with Pyramid:
 
 .. code-block:: python

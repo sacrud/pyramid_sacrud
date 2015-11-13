@@ -7,8 +7,9 @@ Overview
 ========
 
 .. image:: _static/img/index.png
-    :alt: SACRUD main page
-    :align: center
+   :width: 600px
+   :alt: SACRUD main page
+   :align: right
 
 .. include:: includes/include_overview.rst
 
