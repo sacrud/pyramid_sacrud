@@ -114,6 +114,7 @@ def sacrud_env(fun):
 
     def wrapped(self, *args, **kwargs):
         response = fun(self, *args, **kwargs)
+
         if hasattr(response, 'update'):
             response.update(jinja2_globals)
             SessionAttributes = {
@@ -141,8 +142,7 @@ def get_table(tname, request):
     tables = itertools.chain(*[model for model in models if model])
     tables = [
         table for table in tables
-        if (table.__tablename__).lower() == tname.lower()
-        and table
+        if (table.__tablename__).lower() == tname.lower() and table
     ]
     if not tables:
         return None

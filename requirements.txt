@@ -3,5 +3,5 @@ peppercorn
 transaction
 zope.sqlalchemy
 pyramid_jinja2>=2.3.3
-sacrud_deform>=0.1.0
+sacrud_deform>=0.1.1
 paginate_sqlalchemy

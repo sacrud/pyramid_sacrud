@@ -9,7 +9,7 @@ from sqlalchemy.orm import backref, relationship
 from sqlalchemy.schema import Column, ForeignKey
 from sqlalchemy.types import Boolean, Enum, Float, Integer, String, Text
 
-from sacrud.exttype import FileStore
+from saexttype import FileStore
 
 from ..models import Base
 
