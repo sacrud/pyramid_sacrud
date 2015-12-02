@@ -91,14 +91,36 @@ class BreadCrumbsTest(unittest.TestCase):
 class CommonTest(_TransactionalFixture):
 
     def test_preprocessing_value(self):
+        from sacrud_deform import SacrudForm
+        import sqlalchemy
+        from sqlalchemy.ext.declarative import declarative_base
+        from sqlalchemy import Column, Integer, String
+        Base = declarative_base()
+
+        class User(Base):
+            __tablename__ = 'users'
+            id = Column(Integer, primary_key=True)
+            foo = Column(String)
+            bar = Column(Integer)
+
+        form = SacrudForm(None, None, User, None)
+        form.make_appstruct()
         self.assertEqual(
             "",
-            preprocessing_value(colander.null)
+            preprocessing_value("foo", colander.null, form.schema)
+        )
+        self.assertEqual(
+            "",
+            preprocessing_value("foo", "", form.schema)
+        )
+        self.assertEqual(
+            type(sqlalchemy.sql.null()),
+            type(preprocessing_value("bar", "", form.schema))
         )
         value = {'foo': 'bar'}
         self.assertEqual(
             value,
-            preprocessing_value(value)
+            preprocessing_value("foo", value, form.schema)
         )
 
     def test_get_obj_from_settings(self):

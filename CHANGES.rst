@@ -2,6 +2,7 @@
 =====
 
 - set empty footer block in base template #109
+- fix empty nullable integer columns break #107
 
 0.2.0 (2015-11-13)
 ==================
