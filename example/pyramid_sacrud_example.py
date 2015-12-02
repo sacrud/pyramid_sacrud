@@ -1,6 +1,6 @@
-from sqlalchemy import Column, String, Boolean, Integer, ForeignKey
+from sqlalchemy import Column, String, Boolean, Integer, Unicode, ForeignKey
 from pyramid.config import Configurator
-from sqlalchemy.orm import relationship, sessionmaker, scoped_session
+from sqlalchemy.orm import backref, relationship, sessionmaker, scoped_session
 from pyramid.session import SignedCookieSessionFactory
 from pyramid.security import Allow, forget, remember
 from pyramid.authorization import ACLAuthorizationPolicy
@@ -46,11 +46,29 @@ class Good(Base):
         return self.name
 
 
+class Parent(Base):
+    __tablename__ = 'parents'
+
+    slug = Column(Unicode, primary_key=True)
+    name = Column(Unicode, nullable=False)
+
+
+class Child(Base):
+    __tablename__ = 'children'
+
+    provider_slug = Column(Unicode, ForeignKey('parents.slug'),
+                           primary_key=True)
+    slug = Column(Unicode, primary_key=True)
+
+    provider = relationship('Parent', backref=backref('children'))
+
+
 def sacrud_settings(config):
     config.include('pyramid_sacrud', route_prefix='admin')
     config.registry.settings['pyramid_sacrud.models'] = (
         ('Catalouge', [Group, Good]),
-        ('Auth system', [User])
+        ('Auth system', [User]),
+        ('foo', [Parent, Child])
     )
 
 
@@ -144,3 +162,4 @@ if __name__ == '__main__':
         from wsgiref.simple_server import make_server
         server = make_server('0.0.0.0', 6543, app)
         server.serve_forever()
+

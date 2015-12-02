@@ -27,7 +27,7 @@ def preprocessing_value(key, value, form):
                         column.typ,
                         (colander.Int, colander.Integer,
                          colander.Float, colander.Decimal)):
-                    value =  sqlalchemy.sql.null()
+                    value = sqlalchemy.sql.null()
                 elif value is colander.null:
                     value = ""
                 return value

@@ -126,7 +126,7 @@ class Add(CRUD):
                     deserialized = form.validate_pstruct(pstruct).values()
                 except deform.ValidationFailure as e:
                     return options_for_response(e)
-                data = {k: preprocessing_value(k, v, form)  #TODO: optimize it
+                data = {k: preprocessing_value(k, v, form)  # TODO: optimize it
                         for d in deserialized
                         for k, v in d.items()}
             else:
