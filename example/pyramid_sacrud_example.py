@@ -68,6 +68,7 @@ def sacrud_settings(config):
     config.registry.settings['pyramid_sacrud.models'] = (
         ('Catalouge', [Group, Good]),
         ('Auth system', [User]),
+        ('', []),
         ('foo', [Parent, Child])
     )
 
