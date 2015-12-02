@@ -1,3 +1,8 @@
+0.2.1
+=====
+
+- set empty footer block in base template #109
+
 0.2.0 (2015-11-13)
 ==================
 
@@ -13,7 +18,7 @@
 0.1.2 (2015-08-19)
 ==================
 
-- remove crud_sessionmaker and use CRUD action directly  
+- remove crud_sessionmaker and use CRUD action directly
 
 0.1.1 (2015-06-12)
 ==================

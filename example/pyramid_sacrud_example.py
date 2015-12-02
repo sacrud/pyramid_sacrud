@@ -16,6 +16,7 @@ DBSession = scoped_session(sessionmaker())
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
+    age = Column(Integer)
     name = Column(String(30))
 
     def __repr__(self):
