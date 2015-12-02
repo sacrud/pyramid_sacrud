@@ -19,10 +19,18 @@ from sacrud.common import get_attrname_by_colname, get_columns, pk_to_list
 from .. import CONFIG_MODELS
 
 
-def preprocessing_value(value):
-    if value is colander.null:
-        return ""
-    return value
+def preprocessing_value(key, value, form):
+    for groups in form.children:
+        for column in groups:
+            if column.name == key:
+                if not str(value).isdigit() and isinstance(
+                        column.typ,
+                        (colander.Int, colander.Integer,
+                         colander.Float, colander.Decimal)):
+                    value =  sqlalchemy.sql.null()
+                elif value is colander.null:
+                    value = ""
+                return value
 
 
 def import_from_string(path):
