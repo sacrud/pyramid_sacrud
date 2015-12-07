@@ -10,13 +10,12 @@
 Any helpers for Pyramid
 """
 import itertools
-from collections import OrderedDict
 
 import colander
 import sqlalchemy
 from sacrud.common import get_attrname_by_colname, get_columns, pk_to_list
 
-from .. import CONFIG_MODELS
+from . import CONFIG_MODELS
 
 
 def preprocessing_value(key, value, form):
@@ -97,23 +96,6 @@ def get_settings_param(settings, name):
     return param
 
 
-def get_models_from_settings(settings):
-    models = get_settings_param(settings, CONFIG_MODELS)
-    if not models:
-        return OrderedDict()
-    try:
-        for key, value in models:
-            break
-    except ValueError:
-        models = (models, )
-    return OrderedDict(
-        [(key, value)
-         if hasattr(value, '__iter__') or not value
-         else (key, [value, ])
-         for key, value in models]
-    )
-
-
 def sacrud_env(fun):
     jinja2_globals = {'str': str, 'getattr': getattr, 'isinstance': isinstance,
                       'get_attrname_by_colname': get_attrname_by_colname,
@@ -139,7 +121,7 @@ def sacrud_env(fun):
 def get_table(tname, request):
     """ Return table by table name from pyramid_sacrud.models in settings.
     """
-    pyramid_sacrud_models = get_models_from_settings(request)
+    pyramid_sacrud_models = request.registry.settings[CONFIG_MODELS]
     try:
         models = dict(pyramid_sacrud_models)
     except ValueError:

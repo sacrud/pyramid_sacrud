@@ -44,16 +44,30 @@
     {% endblock %}
 
     {% block breadcrumbs %}
-      {% if breadcrumbs %}
-        <div class="breadcrumb">
-          {% for crumb in breadcrumbs %}
-            {% if not loop.last %}
-              <li><a href="{% if crumb.visible %}
-                  {{ request.route_path(crumb.view, table=crumb.param['name']) }}
-                {% endif %}">{{ _ps(_(crumb.name)) }}</a></li>
-            {% else %}<li>{{ _ps(_(crumb.name)) }}</li>
-            {% endif %}
-          {% endfor %}
+      {% set breadcrumbs = lineage(context)|reverse %}
+      {% if  breadcrumbs|length > 1 %}
+        <div class="nav">
+          <div class="breadcrumb">
+            <li><a href="{{ request.route_path(PYRAMID_SACRUD_HOME) }}">
+              {{ _ps(_("Home")) }}
+            </a></li>
+            {% for crumb in breadcrumbs %}
+              {% set crumb_name = _ps(_(crumb.__name__)) %}
+              {% if not loop.last %}
+                <li>
+                {% if crumb.breadcrumb %}
+                  <a href="/{{ request.sacrud_prefix }}/{{ request.resource_path(crumb) }}">
+                    {{ crumb_name }}
+                  </a>
+                {% else %}
+                  {{ crumb_name }}
+                {% endif %}
+                </li>
+              {% else %}
+                <li>{{ crumb_name }}</li>
+              {% endif %}
+            {% endfor %}
+          </div>
         </div>
       {% endif %}
     {% endblock %}
@@ -80,7 +94,9 @@
 
     {% block body %}{% endblock %}
   </div>
-  {% block footer %}{% endblock %}
+  {% block footer %}
+    <div class="container"><br/><br/></div>
+  {% endblock %}
 </div>
 {% block extra_js %}{% endblock %}
 </body>

@@ -6,7 +6,7 @@ from pyramid.security import Allow, forget, remember
 from pyramid.authorization import ACLAuthorizationPolicy
 from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.httpexceptions import HTTPFound
-from pyramid_sacrud.security import permissions, PYRAMID_SACRUD_HOME
+from pyramid_sacrud import PYRAMID_SACRUD_HOME
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -17,7 +17,7 @@ class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     age = Column(Integer)
-    name = Column(String(30))
+    name = Column(String(30), primary_key=True)
 
     def __repr__(self):
         return self.name
@@ -63,13 +63,26 @@ class Child(Base):
     provider = relationship('Parent', backref=backref('children'))
 
 
+class GroupName(object):
+
+    def __init__(self, label, name):
+        self.name = name
+        self.label = label if label else name
+
+    def __repr__(self):
+        return self.name
+
+
 def sacrud_settings(config):
+    from ps_alchemy.resources import ListResource
     config.include('pyramid_sacrud', route_prefix='admin')
+    config.include('ps_alchemy')
+    # TODO: delete ListResource from settings
     config.registry.settings['pyramid_sacrud.models'] = (
-        ('Catalouge', [Group, Good]),
-        ('Auth system', [User]),
+        ('Catalouge', [ListResource(Group), ListResource(Good)]),
+        (GroupName('Auth system', 'auth'), [ListResource(User)]),
         ('', []),
-        ('foo', [Parent, Child])
+        ('foo', [ListResource(Parent), ListResource(Child)])
     )
 
 
@@ -83,8 +96,8 @@ def database_settings(config):
 
 
 def add_fixtures():
-    for user_name in ('admin', 'moderator', 'user1', 'user2'):
-        DBSession.add(User(name=user_name))
+    for id, user_name in enumerate(('admin', 'moderator', 'user1', 'user2')):
+        DBSession.add(User(name=user_name, id=id))
     for group_name in ('Electronics', 'Fashion', 'Home & Garden', 'Motors'):
         group = Group(name=group_name)
         DBSession.add(group)
@@ -103,7 +116,7 @@ def add_fixtures():
 
 
 class Root(object):
-    __acl__ = [(Allow, 'admin', perm) for perm in permissions]
+    __acl__ = [(Allow, 'admin', PYRAMID_SACRUD_HOME), ]
 
     def __init__(self, request):
         self.request = request
@@ -163,4 +176,3 @@ if __name__ == '__main__':
         from wsgiref.simple_server import make_server
         server = make_server('0.0.0.0', 6543, app)
         server.serve_forever()
-

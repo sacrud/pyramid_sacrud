@@ -12,20 +12,22 @@
   <div class="row">
     {% for col in range(dashboard_row_len) %}
       <div class="col s{{ (12/dashboard_row_len)|int }}">
-        {% if col <= tables.__len__() %}
-          {% for widget, widget_resources in (tables.items()|list)[col::dashboard_row_len] %}
+        {% if col <= resources.__len__() %}
+          {% for widget, widget_resources in resources[col::dashboard_row_len] %}
             {% if widget_resources %}
               <div class="card hoverable">
                 <div class="blue darken-2 center-align">
                   <span class="card-title bold">
-                    {{ _(widget or '') }}
+                    {{ _(widget.label or widget or '') }}
                   </span>
                 </div>
                 <div class="collection" style="border:none;">
-                  {% for table in widget_resources %}
-                    {% set tname = table.__tablename__ %}
-                    <a class="collection-item black-text" href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=tname) }}" id="id_{{ tname }}">
-                      {{ _(table.verbose_name or tname) }}</a>
+                  {% for resource in widget_resources %}
+                    {% set tname = resource.table.__tablename__ %}
+                    <a class="collection-item black-text"
+                      href="{{ request.resource_path(resource) }}"
+                      id="id_{{ tname }}">
+                      {{ _(resource.table.verbose_name or tname) }}</a>
                   {% endfor %}
                 </div>
               </div>

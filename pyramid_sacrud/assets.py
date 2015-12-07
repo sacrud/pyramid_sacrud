@@ -8,7 +8,7 @@
 """
 Assets
 """
-from ..common import _silent_none
+from .common import _silent_none
 
 
 def add_jinja2_silent_none(config):
@@ -19,7 +19,5 @@ def add_jinja2_silent_none(config):
 
 def includeme(config):
     config.include('pyramid_jinja2')
-    config.add_jinja2_search_path("pyramid_sacrud:templates")
-    config.include('sacrud_deform')
-    config.add_static_view('deform_static', 'deform:static')
+    config.add_jinja2_search_path('pyramid_sacrud:templates')
     config.add_static_view('static', 'pyramid_sacrud:static')
