@@ -1,4 +1,5 @@
 import {
+  grid_view,
   delete_button,
   select_all_item,
   table_checkboxes,
@@ -9,11 +10,10 @@ $(() => {
   /*
    * Run only on list of rows in table view.
    */
-  if(!$(select_all_item).length) {
-    return;
+  if($(grid_view).length) {
+    selectCheckboxes();
+    deleteButtonHandler();
   }
-  selectCheckboxes();
-  deleteButtonHandler();
 });
 
 class DeleteButton {

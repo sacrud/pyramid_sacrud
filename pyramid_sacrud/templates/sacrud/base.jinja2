@@ -47,7 +47,7 @@
       {% set breadcrumbs = lineage(context)|reverse %}
       {% if  breadcrumbs|length > 1 %}
         <div class="nav">
-          <div class="breadcrumb">
+          <div class="breadcrumb grey-text">
             <li><a href="{{ request.route_path(PYRAMID_SACRUD_HOME) }}">
               {{ _ps(_("Home")) }}
             </a></li>

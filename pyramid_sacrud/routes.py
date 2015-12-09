@@ -59,6 +59,6 @@ def includeme(config):
     config.add_route(PYRAMID_SACRUD_HOME, prefix)
     config.add_route(PYRAMID_SACRUD_VIEW, '/*traverse', factory=admin_factory)
     config.add_request_method(
-        lambda x: config.route_prefix, 'sacrud_prefix',
+        lambda x: prefix or config.route_prefix, 'sacrud_prefix',
         reify=True, property=True
     )

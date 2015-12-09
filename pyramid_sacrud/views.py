@@ -32,7 +32,7 @@ def add_global_params(event):
     renderer=HOME_VIEW_TEMPLATE,
     route_name=PYRAMID_SACRUD_HOME,
     permission=PYRAMID_SACRUD_HOME)
-def sa_home(request):
+def home_view(request):
     resources = request.registry.settings[CONFIG_MODELS]
     dashboard_row_len = get_settings_param(request, CONFIG_DASHBOARD_ROW_LEN)
     return {'dashboard_row_len': int(dashboard_row_len or 3),
