@@ -19,7 +19,6 @@ from . import (
     PYRAMID_SACRUD_HOME,
     CONFIG_DASHBOARD_ROW_LEN
 )
-from .common import get_settings_param
 
 
 @subscriber(BeforeRender)
@@ -33,7 +32,7 @@ def add_global_params(event):
     route_name=PYRAMID_SACRUD_HOME,
     permission=PYRAMID_SACRUD_HOME)
 def home_view(request):
-    resources = request.registry.settings[CONFIG_MODELS]
-    dashboard_row_len = get_settings_param(request, CONFIG_DASHBOARD_ROW_LEN)
-    return {'dashboard_row_len': int(dashboard_row_len or 3),
-            'resources': resources}
+    settings = request.registry.settings
+    dashboard_row_len = int(settings.get(CONFIG_DASHBOARD_ROW_LEN, 3))
+    return {'dashboard_row_len': dashboard_row_len,
+            'resources': settings[CONFIG_MODELS]}

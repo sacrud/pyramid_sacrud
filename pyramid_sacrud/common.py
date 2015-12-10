@@ -9,13 +9,8 @@
 """
 Any helpers for Pyramid
 """
-import itertools
-
 import colander
 import sqlalchemy
-from sacrud.common import get_attrname_by_colname, get_columns, pk_to_list
-
-from . import CONFIG_MODELS
 
 
 def preprocessing_value(key, value, form):
@@ -30,16 +25,6 @@ def preprocessing_value(key, value, form):
                 elif value is colander.null:
                     value = ""
                 return value
-
-
-def import_from_string(path):
-    if not isinstance(path, str):
-        return path
-    parts = path.split(':')
-    if not len(parts) > 1:
-        return None
-    temp = __import__(parts[0], globals(), locals(), [parts[1], ], 0)
-    return getattr(temp, parts[1], None)
 
 
 def pkg_prefix(config):
@@ -85,63 +70,3 @@ def set_jinja2_silent_none(config):  # pragma: no cover
     config.commit()
     jinja2_env = config.get_jinja2_environment()
     jinja2_env.finalize = _silent_none
-
-
-def get_settings_param(settings, name):
-    if not isinstance(settings, dict):
-        settings = settings.registry.settings
-    param = settings.get(name)
-    if isinstance(param, str):
-        return import_from_string(param)
-    return param
-
-
-def sacrud_env(fun):
-    jinja2_globals = {'str': str, 'getattr': getattr, 'isinstance': isinstance,
-                      'get_attrname_by_colname': get_attrname_by_colname,
-                      'hasattr': hasattr,
-                      'sqlalchemy': sqlalchemy}
-
-    def wrapped(self, *args, **kwargs):
-        response = fun(self, *args, **kwargs)
-
-        if hasattr(response, 'update'):
-            response.update(jinja2_globals)
-            SessionAttributes = {
-                'session': self.request.dbsession,
-                'table': self.table,
-                'columns': get_columns(self.table),
-                'pk_to_list': pk_to_list
-            }
-            response.update(SessionAttributes)
-        return response
-    return wrapped
-
-
-def get_table(tname, request):
-    """ Return table by table name from pyramid_sacrud.models in settings.
-    """
-    pyramid_sacrud_models = request.registry.settings[CONFIG_MODELS]
-    try:
-        models = dict(pyramid_sacrud_models)
-    except ValueError:
-        models = dict((pyramid_sacrud_models, ))
-    finally:
-        models = models.values()
-
-    tables = itertools.chain(*[model for model in models if model])
-    tables = [
-        table for table in tables
-        if (table.__tablename__).lower() == tname.lower() and table
-    ]
-    if not tables:
-        return None
-    return tables[0]
-
-
-def get_table_verbose_name(table):
-    if hasattr(table, 'verbose_name'):
-        return table.verbose_name
-    elif hasattr(table, '__tablename__'):
-        return table.__tablename__
-    return table.name

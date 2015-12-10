@@ -74,8 +74,8 @@ class GroupName(object):
 
 
 def sacrud_settings(config):
-    config.include('pyramid_sacrud', route_prefix='admin')
     config.include('ps_alchemy')
+    config.include('pyramid_sacrud', route_prefix='admin')
     config.registry.settings['pyramid_sacrud.models'] = (
         ('Catalouge', [Group, Good]),
         (GroupName('Auth system', 'auth'), [User]),
