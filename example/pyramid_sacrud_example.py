@@ -74,15 +74,13 @@ class GroupName(object):
 
 
 def sacrud_settings(config):
-    from ps_alchemy.resources import ListResource
     config.include('pyramid_sacrud', route_prefix='admin')
     config.include('ps_alchemy')
-    # TODO: delete ListResource from settings
     config.registry.settings['pyramid_sacrud.models'] = (
-        ('Catalouge', [ListResource(Group), ListResource(Good)]),
-        (GroupName('Auth system', 'auth'), [ListResource(User)]),
+        ('Catalouge', [Group, Good]),
+        (GroupName('Auth system', 'auth'), [User]),
         ('', []),
-        ('foo', [ListResource(Parent), ListResource(Child)])
+        ('foo', [Parent, Child])
     )
 
 

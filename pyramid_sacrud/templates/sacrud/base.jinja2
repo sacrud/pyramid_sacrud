@@ -24,7 +24,9 @@
   <div>
     <nav>
       <div class="nav-wrapper blue-grey darken-1">
-        <a href="{{ request.route_url(PYRAMID_SACRUD_HOME) }}" class="brand-logo left">SACRUD</a>
+        <a {% if request.matched_route.name != PYRAMID_SACRUD_HOME %}
+            href="{{ request.route_url(PYRAMID_SACRUD_HOME) }}"
+           {% endif %} class="brand-logo left">SACRUD</a>
         {% block inner_menu %}
         {% endblock %}
       </div>

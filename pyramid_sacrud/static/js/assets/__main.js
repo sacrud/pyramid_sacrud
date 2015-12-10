@@ -11815,7 +11815,7 @@
 	   * Run only on list of rows in table view.
 	   */
 	  if ($(_settings.grid_view).length) {
-	    selectCheckboxes();
+	    selectAllHandler();
 	    deleteButtonHandler();
 	  }
 	});
@@ -11844,26 +11844,26 @@
 	  return DeleteButton;
 	})();
 	
-	function selectCheckboxes() {
+	function selectAllHandler() {
 	  /*
-	   * Select all checkboxes function.
+	   * Select all checkboxes handler.
 	   */
 	
-	  var selectAll = $(_settings.select_all_item);
-	  var items = $(_settings.table_checkboxes);
+	  var $selectAll = $(_settings.select_all_item);
+	  var $items = $(_settings.table_checkboxes);
 	
 	  // add multiple select / deselect functionality
-	  selectAll.click(function () {
-	    items.prop('checked', this.checked);
+	  $selectAll.click(function () {
+	    $items.prop('checked', this.checked);
 	  });
 	
 	  // if all checkbox are selected, check the selectall checkbox
 	  // and viceversa
-	  items.click(function () {
-	    if (items.length == $(_settings.table_checkboxes_checked).length) {
-	      selectAll.prop("checked", "checked");
+	  $items.click(function () {
+	    if ($items.length == $(_settings.table_checkboxes_checked).length) {
+	      $selectAll.prop("checked", "checked");
 	    } else {
-	      selectAll.removeAttr("checked");
+	      $selectAll.removeAttr("checked");
 	    }
 	  });
 	}
@@ -11872,8 +11872,8 @@
 	  /*
 	   * Show popup window with message.
 	   */
-	  var deleteConfirmBtn = $("#delete-confirm");
-	  deleteConfirmBtn.click(function () {
+	  var $deleteConfirmBtn = $("#delete-confirm");
+	  $deleteConfirmBtn.click(function () {
 	    $("#mass-action").val("delete");
 	    $("#sacrud-form").submit();
 	  });
@@ -11884,19 +11884,19 @@
 	  /*
 	   * Disable/enable delete button handler.
 	   */
-	  var items = $(_settings.table_checkboxes);
-	  var selectAll = $(_settings.select_all_item);
-	  var deleteButton = new DeleteButton($(_settings.delete_button));
+	  var $items = $(_settings.table_checkboxes);
+	  var $selectAll = $(_settings.select_all_item);
+	  var $deleteButton = new DeleteButton($(_settings.delete_button));
 	  var handler = function handler() {
-	    if ($(_settings.table_checkboxes_checked).length) deleteButton.disable = false;else deleteButton.disable = true;
+	    if ($(_settings.table_checkboxes_checked).length) $deleteButton.disable = false;else $deleteButton.disable = true;
 	  };
 	  handler();
-	  items.on('change', handler);
-	  selectAll.on('change', handler);
+	  $items.on('change', handler);
+	  $selectAll.on('change', handler);
 	
 	  // Show popup window after click if button enabled.
-	  deleteButton.obj.click(function () {
-	    if (!deleteButton.disable) {
+	  $deleteButton.obj.click(function () {
+	    if (!$deleteButton.disable) {
 	      popupWindow("");
 	    }
 	  });
@@ -11914,10 +11914,10 @@
 	  value: true
 	});
 	var grid_view = exports.grid_view = 'div#grid_view';
+	var delete_button = exports.delete_button = '.delete-button';
 	var select_all_item = exports.select_all_item = 'input#select_all_item';
 	var table_checkboxes = exports.table_checkboxes = 'input[name="selected_item"]';
 	var table_checkboxes_checked = exports.table_checkboxes_checked = 'input[name="selected_item"]:checked';
-	var delete_button = exports.delete_button = '.delete-button';
 
 /***/ }
 
