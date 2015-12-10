@@ -1,0 +1,54 @@
+{% extends "sacrud/redefineme.jinja2" %}
+
+{% block title %}
+- {{ request.matched_route.name.split('_')[-1] }} {{ _(context.verbose_name) }}
+{% endblock %}
+
+{% block popup_content %}
+  <h4>{{ _ps('Are you sure you want to delete an object?') }}</h4>
+{% endblock %}
+
+{% block popup_footer %}
+  {% if context.obj %}
+    <form method="POST"
+        action="/{{ request.sacrud_prefix }}/{{ request.resource_path(context.get_delete_resource(context.obj)) }}">
+      <button class="modal-action modal-close btn green">
+        {{ _ps('Confirm') }}
+      </button>
+    </form>
+  {% endif %}
+  <a href="#!" class="cancel-button modal-action modal-close red btn">{{ _ps('Cancel') }}</a>
+{% endblock %}
+
+{% block body %}
+  <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"
+    action="/{{ request.sacrud_prefix }}/{{ request.resource_path(context) }}">
+
+    <h4>{{ _(context.verbose_name) }}</h4>
+
+    {% block add_buttons %}
+      <button class="create-button btn waves-effect waves-light" type="submit" name="form.submitted">
+        <i class="material-icons left">add_circle_outline</i>
+        {{ _ps('Save') }}
+      </button>
+      {% if context.obj %}
+        <a class="delete-button waves-effect waves-light btn red modal-trigger" href="#modal1">
+          <i class="material-icons left">remove_circle_outline</i>
+          {{ _ps('Delete') }}
+        </a>
+      {% endif %}
+      <a class="cancel-button waves-effect waves-light btn grey lighten-3 black-text"
+        href="/{{ request.sacrud_prefix }}/{{ request.resource_path(context.left_sibling_breadcrumb) }}">
+        {{ _ps('Cancel') }}
+      </a>
+    {% endblock %}
+    <div class="section">
+      <div class="hoverable z-depth-1">
+        {{ form|safe }}
+      </div>
+      <div class="section">
+        {{ self.add_buttons() }}
+      </div>
+    </div>
+  </form>
+{% endblock %}

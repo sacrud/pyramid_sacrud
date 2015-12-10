@@ -23,11 +23,10 @@
                 </div>
                 <div class="collection" style="border:none;">
                   {% for resource in widget_resources %}
-                    {% set tname = resource.table.__tablename__ %}
                     <a class="collection-item black-text"
                       href="{{ request.resource_path(resource) }}"
-                      id="id_{{ tname }}">
-                      {{ _(resource.table.verbose_name or tname) }}</a>
+                      id="id_{{ resource.table_name }}">
+                      {{ _(resource.verbose_name) }}</a>
                   {% endfor %}
                 </div>
               </div>

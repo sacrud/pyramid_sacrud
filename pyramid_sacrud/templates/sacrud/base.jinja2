@@ -10,7 +10,8 @@
 <title>SACRUD{% block title %}{% endblock %}</title>
 
 {% block css %}
-  <link href="{{ request.static_url('pyramid_sacrud:static/favicon.ico') }}" rel="shortcut icon" type="image/x-icon" />
+  <link href="{{ request.static_url('pyramid_sacrud:static/favicon.ico') }}"
+  rel="shortcut icon" type="image/x-icon" />
   <link href="{{ request.static_url('pyramid_sacrud:static/css/__main.css') }}" rel="stylesheet" />
 {% endblock %}
 
