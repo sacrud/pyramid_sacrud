@@ -32,3 +32,11 @@ Exceptions
     :members:
     :undoc-members:
     :show-inheritance:
+
+Interfaces
+----------
+
+.. automodule:: pyramid_sacrud.interfaces
+    :members:
+    :undoc-members:
+    :show-inheritance:

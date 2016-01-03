@@ -9,22 +9,6 @@
 """
 Any helpers for Pyramid
 """
-import colander
-import sqlalchemy
-
-
-def preprocessing_value(key, value, form):
-    for groups in form.children:
-        for column in groups:
-            if column.name == key:
-                if not str(value).isdigit() and isinstance(
-                        column.typ,
-                        (colander.Int, colander.Integer,
-                         colander.Float, colander.Decimal)):
-                    value = sqlalchemy.sql.null()
-                elif value is colander.null:
-                    value = ""
-                return value
 
 
 def pkg_prefix(config):
@@ -50,6 +34,22 @@ def pkg_prefix(config):
 
 
 def _silent_none(value):
+    '''
+    >>> _silent_none(12)
+    12
+    >>> _silent_none(True)
+    True
+    >>> _silent_none(None)
+
+    >>> _silent_none('')
+    ''
+    >>> _silent_none(False)
+    False
+    >>> _silent_none('None')
+
+    >>> _silent_none("foooooooo")
+    'foooooooo'
+    '''
     if type(value) == int:
         return value
     if hasattr(value, '__bool__'):
@@ -58,7 +58,7 @@ def _silent_none(value):
         return ''
     try:
         if str(value) == 'None':
-            return ''
+            return
     except UnicodeEncodeError:
         pass
     return value

@@ -1,6 +1,8 @@
 import os
+import sys
 
 from setuptools import find_packages, setup
+from setuptools.command.test import test as TestCommand
 
 here = os.path.dirname(os.path.realpath(__file__))
 
@@ -8,6 +10,28 @@ here = os.path.dirname(os.path.realpath(__file__))
 def read(name):
     with open(os.path.join(here, name)) as f:
         return f.read()
+
+
+class PyTest(TestCommand):
+    user_options = [('pytest-args=', 'a', "Arguments to pass to py.test")]
+
+    def initialize_options(self):
+        TestCommand.initialize_options(self)
+        self.pytest_args = [
+            '--cov=pyramid_sacrud',
+            '-s', '-v'
+        ]
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.verbose = True
+        self.test_suite = 'tests'
+
+    def run_tests(self):
+        import pytest
+        errno = pytest.main(self.pytest_args)
+        sys.exit(errno)
+
 
 setup(
     name='pyramid_sacrud',
@@ -19,7 +43,8 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    test_suite="nose.collector",
+    cmdclass={"test": PyTest},
+    test_suite='pytest',
     license="MIT",
     description='Pyramid SQLAlchemy CRUD.',
     long_description=read('README.rst') + '\n' + read('CHANGES.rst'),
