@@ -7,4 +7,4 @@ Contribute
   architecture.rst 
   backend.rst
   frontend.rst
-  localization.rst
+  internationalization.rst

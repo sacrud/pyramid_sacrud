@@ -107,3 +107,23 @@ German locale:
     For more information about Internationalization and Localization read
     official pyramid docs
     http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/i18n.html
+
+    Also see basic settings in `setup.cfg` file
+    (hint steal from `here
+    <http://babel.edgewall.org/wiki/Documentation/setup.html>`_).
+
+Templates
+---------
+
+For translate use `_ps` function:
+
+.. literalinclude:: ../../../pyramid_sacrud/localization/__init__.py
+   :linenos:
+   :language: py
+
+Example with Jinja2 template:
+
+.. code-block:: html
+
+    <div class="dashboard-title">{{ _ps('Dashboard') }}</div>
+    {{ _ps(_(crumb.name)) }}

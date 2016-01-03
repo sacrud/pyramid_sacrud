@@ -55,7 +55,6 @@ Usage
 
   pages/install
   pages/configuration
-  pages/internationalization
   pages/permissions
   pages/examples
   pages/api
