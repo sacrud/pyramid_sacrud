@@ -1,5 +1,36 @@
-Arcitecture
-===========
+.. _architecture:
+
+New Arcitecture
+===============
+
+:ref:`old_architecture` is good, but it does not allow use tree structure of
+resources and has hard depency from :mod:`SQLAlchemy`, :mod:`sacrud`,
+:mod:`sacrud_deform` etc... This is not flexible solution. A new generation of
+:mod:`pyramid_sacrud` >= 0.3.0 represent just interface for any backends, like:
+
+* `ps_alchemy <https://github.com/sacrud/ps_alchemy>`_ - handle SQLAlchemy
+  resourse
+* ps_peewee - handle PeeweeORM resourse
+* ps_ponyorm - handle PonyORM resourse
+* ps_djangoorm - handle Django ORM resourse
+* ps_mongodb - handle MongoDB resourse
+* and unniversal interface writing your own backends for example:
+
+  * you can write filesystem backend which shown files in
+    :mod:`pyramid_sacrud` and provide to you CRUD operations.
+  * OS process backend shown process in :mod:`pyramid_sacrud` and allow to kill it
+  * and all you can come to mind.
+
+ziggform_* - it's abstract modules, this is what needs to be done. I like the
+idea of `ziggurat_form <https://github.com/ergo/ziggurat_form>`_  so I use such
+names.
+
+.. figure:: /_static/pencil/new_architecture.png
+
+.. _old_architecture:
+
+Old Arcitecture
+===============
 
 Main page
 ---------
@@ -49,29 +80,5 @@ If you send POST request it validate form and do create/update action from
 
 .. figure:: /_static/pencil/add_post_how_it_works.png
 
-Future generation
------------------
 
-Everything is good, but it does not allow use tree structure of resources and
-has hard depency from :mod:`SQLAlchemy`, :mod:`sacrud`, :mod:`sacrud_deform`
-etc... This is not good, a new generation of :mod:`pyramid_sacrud` must
-represent just interface for any backends, like:
-
-* ziggfrom_alchemy - handle SQLAlchemy resourse
-* ziggfrom_peewee - handle PeeweeORM resourse
-* ziggfrom_ponyorm - handle PonyORM resourse
-* ziggfrom_djangoorm - handle Django ORM resourse
-* ziggfrom_mongodb - handle MongoDB resourse
-* and unniversal interface writing your own backends for example:
-
-  * you can write filesystem backend which shown files in
-    :mod:`pyramid_sacrud` and provide to you CRUD operations.
-  * OS process backend shown process in :mod:`pyramid_sacrud` and allow to kill it
-  * and all you can come to mind.
-
-ziggform_* - it's abstract modules, this is what needs to be done. I like the
-idea of `ziggurat_form <https://github.com/ergo/ziggurat_form>`_  so I use such
-names.
-
-.. figure:: /_static/pencil/new_architecture.png
 

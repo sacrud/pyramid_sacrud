@@ -11,7 +11,41 @@ Overview
    :alt: SACRUD main page
    :align: right
 
-.. include:: includes/include_overview.rst
+Pyramid CRUD interface. Provides an administration web interface for Pyramid.
+Unlike classic CRUD, ``pyramid_sacrud`` allows overrides and flexibility to
+customize your interface, similar to ``django.contrib.admin`` but uses a
+different backend to provide resources. :ref:`architecture` built on the
+resources and mechanism traversal, allows to use it in various cases.
+
+The list of standard backends:
+
+* `ps_alchemy <http://github.com/sacrud/ps_alchemy>`_ - provides SQLAlchemy
+  models.
+* ps_mongo - provides MongoDB.
+* etc..
+
+.. raw:: html
+
+   <br clear="both"/>
+
+Look how easy it is to use with Pyramid and SQLAlchemy:
+
+.. code-block:: python
+
+    from .models import (Model1, Model2, Model3,)
+
+    # add SQLAlchemy backend
+    config.include('ps_alchemy')
+
+    # add sacrud and project models
+    config.include('pyramid_sacrud')
+    settings = config.registry.settings
+    settings['pyramid_sacrud.models'] = (('Group1', [Model1, Model2]),
+                                         ('Group2', [Model3]))
+
+go to http://localhost:6543/sacrud/
+
+Example can be found here https://github.com/sacrud/ps_alchemy/tree/master/example
 
 Usage
 =====
@@ -21,8 +55,9 @@ Usage
 
   pages/install
   pages/configuration
-  pages/localization
+  pages/internationalization
   pages/permissions
+  pages/examples
   pages/api
 
 Contribute
@@ -33,8 +68,21 @@ Contribute
 
   pages/contribute/index.rst
 
-.. include:: includes/include_contribute.rst
-.. include:: includes/include_license.rst
+Support and Development
+=======================
+
+To report bugs, use the `issue tracker
+<https://github.com/sacrud/pyramid_sacrud/issues>`_.
+
+We welcome any contribution: suggestions, ideas, commits with new futures,
+bug fixes, refactoring, docs, tests, translations etc
+
+If you have question, contact me sacrud@uralbash.ru or IRC channel #sacrud
+
+License
+=======
+
+The project is licensed under the MIT license.
 
 Indices and tables
 ==================

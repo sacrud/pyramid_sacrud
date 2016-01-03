@@ -61,6 +61,6 @@ htmlhelp_basename = 'pyramid_sacruddoc'
 html_theme_options = {
     'travis_button': True,
     'github_button': True,
-    'github_user': 'ITCase',
+    'github_user': 'sacrud',
     'github_repo': 'pyramid_sacrud',
 }
