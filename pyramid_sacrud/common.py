@@ -9,6 +9,10 @@
 """
 Any helpers for Pyramid
 """
+try:
+    from types import BooleanType as bool
+except ImportError:
+    pass
 
 
 def pkg_prefix(config):
@@ -40,25 +44,27 @@ def _silent_none(value):
     >>> _silent_none(True)
     True
     >>> _silent_none(None)
-
+    ''
     >>> _silent_none('')
     ''
     >>> _silent_none(False)
     False
     >>> _silent_none('None')
-
+    ''
     >>> _silent_none("foooooooo")
     'foooooooo'
     '''
+    if value is None:
+        return ''
     if type(value) == int:
         return value
-    if hasattr(value, '__bool__'):
+    if type(value) == bool:
         return value
     if not value:
         return ''
     try:
         if str(value) == 'None':
-            return
+            return ''
     except UnicodeEncodeError:
         pass
     return value

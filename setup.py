@@ -18,8 +18,7 @@ class PyTest(TestCommand):
     def initialize_options(self):
         TestCommand.initialize_options(self)
         self.pytest_args = [
-            '--cov=pyramid_sacrud',
-            '-s', '-v'
+            '--cov=pyramid_sacrud', '-v', '-s'
         ]
 
     def finalize_options(self):
@@ -69,6 +68,6 @@ setup(
         "Programming Language :: Python :: 3.5",
         "Framework :: Pyramid ",
         "Topic :: Internet",
-        "Topic :: Database",
+        "Topic :: Database"
     ],
 )

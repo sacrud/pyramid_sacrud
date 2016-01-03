@@ -40,3 +40,4 @@ class TestHomeFunc(object):
 
     def test_200(self, testapp):
         testapp.get('/sacrud/', status=200)
+        assert True

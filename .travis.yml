@@ -25,14 +25,17 @@ python:
   - "3.4"
   - "3.5"
   - "pypy"
-  - "pypy3"
 
 install:
   - pip install flake8 rstcheck
+  - pip install -r requirements.txt
+  - pip install -r requirements-test.txt
+  - pip install -r requirements-docs.txt
+  - pip install .
 
 script:
   # Pytest
-  - make test
+  - py.test --cov=pyramid_sacrud --doctest-modules  tests/ pyramid_sacrud/
 
   # Styles check
   - if [ -z "$NO_RSTLINT" ]; then ./test.sh; fi
