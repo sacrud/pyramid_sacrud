@@ -8,13 +8,8 @@ import itcase_sphinx_theme
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode'
 ]
-
-intersphinx_mapping = {
-    'http://sacrud.readthedocs.org/en/master': None,
-}
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -33,7 +28,7 @@ release = ''
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build']
+exclude_patterns = ['_build', '_static/pencil/*']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
@@ -61,6 +56,6 @@ htmlhelp_basename = 'pyramid_sacruddoc'
 html_theme_options = {
     'travis_button': True,
     'github_button': True,
-    'github_user': 'ITCase',
+    'github_user': 'sacrud',
     'github_repo': 'pyramid_sacrud',
 }

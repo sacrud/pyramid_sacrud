@@ -10,29 +10,32 @@
   </div>
 
   <div class="row">
-    {% for col in range(dashboard_row_len) %}
-      <div class="col s{{ (12/dashboard_row_len)|int }}">
-        {% if col <= tables.__len__() %}
-          {% for widget, widget_resources in (tables.items()|list)[col::dashboard_row_len] %}
-            {% if widget_resources %}
-              <div class="card hoverable">
-                <div class="blue darken-2 center-align">
-                  <span class="card-title bold">
-                    {{ _(widget or '') }}
-                  </span>
+    {% if resources %}
+      {% for col in range(dashboard_row_len) %}
+        <div class="col s{{ (12/dashboard_row_len)|int }}">
+          {% if col <= resources|length %}
+            {% for widget, widget_resources in resources[col::dashboard_row_len] %}
+              {% if widget_resources %}
+                <div class="card hoverable">
+                  <div class="blue darken-2 center-align">
+                    <span class="card-title bold white-text">
+                      {{ _(widget.label or widget or '') }}
+                    </span>
+                  </div>
+                  <div class="collection" style="border:none;">
+                    {% for resource in widget_resources %}
+                      <a class="collection-item black-text"
+                        href="{{ request.resource_path(resource) }}"
+                        id="id_{{ resource.table_name }}">
+                        {{ _(resource.verbose_name) }}</a>
+                    {% endfor %}
+                  </div>
                 </div>
-                <div class="collection" style="border:none;">
-                  {% for table in widget_resources %}
-                    {% set tname = table.__tablename__ %}
-                    <a class="collection-item black-text" href="{{ request.route_url(PYRAMID_SACRUD_LIST, table=tname) }}" id="id_{{ tname }}">
-                      {{ _(table.verbose_name or tname) }}</a>
-                  {% endfor %}
-                </div>
-              </div>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-      </div>
-    {% endfor %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% endif %}
   </div>
 {% endblock %}

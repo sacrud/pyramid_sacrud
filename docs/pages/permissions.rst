@@ -1,15 +1,9 @@
-Permissions
-===========
+Athorization
+============
 
-If you use `RootFactory` for authorization, set next permissions
-for you aссessed to pyramid_sacrud user.
-
-:py:mod:`pyramid_sacrud.security`
+If you use `RootFactory` for authorization, set ``PYRAMID_SACRUD_HOME``
+permission for you aссessed to pyramid_sacrud.
 
 .. code-block:: python
 
-    PYRAMID_SACRUD_HOME = 'pyramid_sacrud_home'
-    PYRAMID_SACRUD_LIST = 'pyramid_sacrud_list'
-    PYRAMID_SACRUD_UPDATE = 'pyramid_sacrud_update'
-    PYRAMID_SACRUD_CREATE = 'pyramid_sacrud_create'
-    PYRAMID_SACRUD_DELETE = 'pyramid_sacrud_delete'
+   from pyramid_sacrud import PYRAMID_SACRUD_HOME

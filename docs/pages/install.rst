@@ -6,7 +6,7 @@ GitHub
 
 .. code-block:: bash
 
-    pip install git+http://github.com/ITCase/pyramid_sacrud.git
+    pip install git+http://github.com/sacrud/pyramid_sacrud.git
 
 PyPi
 ----
@@ -20,13 +20,15 @@ Source
 
 .. code-block:: bash
 
-    git clone git+http://github.com/ITCase/pyramid_sacrud.git
-    python setup.py install
+    git clone git+http://github.com/sacrud/pyramid_sacrud.git
+    cd pyramid_sacrud
+    pip install .
 
-Contribute
-----------
+Develop
+-------
 
 .. code-block:: bash
 
-    git clone git+http://github.com/ITCase/pyramid_sacrud.git
-    python setup.py develop
+    git clone git+http://github.com/sacrud/pyramid_sacrud.git
+    cd pyramid_sacrud
+    pip install -e .

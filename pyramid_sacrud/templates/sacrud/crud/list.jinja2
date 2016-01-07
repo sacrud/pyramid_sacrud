@@ -1,0 +1,75 @@
+{% extends "sacrud/redefineme.jinja2" %}
+
+{% block title %} - list of {{ _(context.verbose_name) }}{% endblock %}
+
+{% block popup_content %}
+  <h4>{{ _ps('Are you sure you want to delete an object?') }}</h4>
+{% endblock %}
+{% block popup_footer %}
+  <a href="#!" id="delete-confirm" class="modal-action modal-close btn green">
+    {{ _ps('Confirm') }}
+  </a>
+  <a href="#!" class="cancel-button modal-action modal-close red btn">{{ _ps('Cancel') }}</a>
+{% endblock %}
+
+{% block body %}
+  <div id="grid_view"></div>
+  <h4>{{ _(context.verbose_name) }}</h4>
+  <a class="create-button btn waves-effect waves-light"
+    href="/{{ request.sacrud_prefix }}/{{ request.resource_path(context.get_create_resource()) }}">
+    <i class="material-icons left">add_circle_outline</i>
+    {{ _ps('Create') }}
+  </a>
+  <a class="delete-button waves-effect waves-light btn disabled">
+    <i class="material-icons left">remove_circle_outline</i>
+    {{ _ps('Delete') }}
+  </a>
+
+  <div class="container"><br/></div>
+  <form id="sacrud-form" method="post"
+    action="/{{ request.sacrud_prefix }}/{{ request.resource_path(context.get_mass_action_resource()['delete']) }}">
+    <table class="bordered highlight hoverable z-depth-1">
+      {% if paginator.items.__len__() > 0 %}
+        <thead>
+          <tr class="blue lighten-5">
+            <th>
+              <input id="select_all_item" type="checkbox" />
+              <label for="select_all_item"></label>
+            </th>
+            <th></th>
+            {% for col in context.visible_columns %}
+              <th>{{ _(col.name) }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+        {% for row in paginator %}
+          {% set pk=context.get_pk(row) %}
+          <tr id="{{ context.table_name }}_{{ pk }}">
+            <td width="1">
+              <input id="{{ pk }}" type="checkbox" name="selected_item" value="{{ pk }}" />
+              <label for="{{ pk }}"></label>
+            </td>
+            <td width="1">
+              <a href="/{{ request.sacrud_prefix }}/{{ request.resource_path(context.get_update_resource(row)) }}">
+                <i class="material-icons left">edit</i>
+              </a>
+            </td>
+            {% for col in context.visible_columns %}
+              <td>{{ col.value(row)|string|truncate(200) }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+        </tbody>
+      {% else %}
+        <tr>
+          <td>There are no objects</td>
+        </tr>
+      {% endif %}
+    </table>
+    <input id="mass-action" type="hidden" value="0" name="mass_action" />
+  </form>
+  {% if paginator.items.__len__() >= 1 and paginator.page_count > 1 %}
+    {% include "paginator.jinja2" %}
+  {% endif %}
+{% endblock %}

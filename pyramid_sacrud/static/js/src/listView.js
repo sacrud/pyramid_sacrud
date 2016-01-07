@@ -1,4 +1,5 @@
 import {
+  grid_view,
   delete_button,
   select_all_item,
   table_checkboxes,
@@ -9,11 +10,10 @@ $(() => {
   /*
    * Run only on list of rows in table view.
    */
-  if(!$(select_all_item).length) {
-    return;
+  if($(grid_view).length) {
+    selectAllHandler();
+    deleteButtonHandler();
   }
-  selectCheckboxes();
-  deleteButtonHandler();
 });
 
 class DeleteButton {
@@ -39,26 +39,26 @@ class DeleteButton {
   }
 }
 
-function selectCheckboxes() {
+function selectAllHandler() {
   /*
-   * Select all checkboxes function.
+   * Select all checkboxes handler.
    */
 
-  let selectAll = $(select_all_item);
-  let items = $(table_checkboxes);
+  let $selectAll = $(select_all_item);
+  let $items = $(table_checkboxes);
 
   // add multiple select / deselect functionality
-  selectAll.click(function() {
-    items.prop('checked', this.checked);
+  $selectAll.click(function() {
+    $items.prop('checked', this.checked);
   });
 
   // if all checkbox are selected, check the selectall checkbox
   // and viceversa
-  items.click(() => {
-    if(items.length == $(table_checkboxes_checked).length) {
-      selectAll.prop("checked", "checked");
+  $items.click(() => {
+    if($items.length == $(table_checkboxes_checked).length) {
+      $selectAll.prop("checked", "checked");
     } else {
-      selectAll.removeAttr("checked");
+      $selectAll.removeAttr("checked");
     }
   });
 }
@@ -67,8 +67,8 @@ function popupWindow(message) {
   /*
    * Show popup window with message.
    */
-  let deleteConfirmBtn = $("#delete-confirm");
-  deleteConfirmBtn.click(() => {
+  let $deleteConfirmBtn = $("#delete-confirm");
+  $deleteConfirmBtn.click(() => {
     $("#mass-action").val("delete");
     $("#sacrud-form").submit();
   });
@@ -79,22 +79,22 @@ function deleteButtonHandler() {
   /*
    * Disable/enable delete button handler.
    */
-  let items = $(table_checkboxes);
-  let selectAll = $(select_all_item);
-  let deleteButton = new DeleteButton($(delete_button));
+  let $items = $(table_checkboxes);
+  let $selectAll = $(select_all_item);
+  let $deleteButton = new DeleteButton($(delete_button));
   let handler = () => {
     if($(table_checkboxes_checked).length)
-      deleteButton.disable = false;
+      $deleteButton.disable = false;
     else
-      deleteButton.disable = true;
+      $deleteButton.disable = true;
   };
   handler();
-  items.on('change', handler);
-  selectAll.on('change', handler);
+  $items.on('change', handler);
+  $selectAll.on('change', handler);
 
   // Show popup window after click if button enabled.
-  deleteButton.obj.click(() => {
-    if(!deleteButton.disable) {
+  $deleteButton.obj.click(() => {
+    if(!$deleteButton.disable) {
       popupWindow("");
     }
   });

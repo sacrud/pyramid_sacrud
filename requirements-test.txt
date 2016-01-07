@@ -1,3 +1,4 @@
-nose
-coverage
 webtest
+pytest
+pytest-cov
+coverage

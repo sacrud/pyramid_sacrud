@@ -20,48 +20,25 @@ notifications:
     on_failure: always
 
 python:
+  - "2.7"
   - "3.3"
   - "3.4"
   - "3.5"
-
-matrix:
-  include:
-    - python: "2.7"
-      env: LINK_CHECK=1
-    - python: "pypy"
-      env: NO_BDD=1
-    - python: "pypy3"
-      env: NO_RSTLINT=1 NO_BDD=1
-
-before_install:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - "pypy"
 
 install:
-
-  # Python
-  - python setup.py develop
-  - pip install -r example/requirements.txt
-
-  - if [ -n "$LINK_CHECK" ];then pip install linkchecker; fi
   - pip install flake8 rstcheck
-  - pip install behave selenium waitress
+  - pip install -r requirements.txt
+  - pip install -r requirements-test.txt
+  - pip install -r requirements-docs.txt
+  - pip install .
 
 script:
-  # Nosetests
-  - python setup.py nosetests
+  # Pytest
+  - py.test --cov=pyramid_sacrud --doctest-modules  tests/ pyramid_sacrud/
 
   # Styles check
   - if [ -z "$NO_RSTLINT" ]; then ./test.sh; fi
-
-  # BDD
-  - cd example
-  - python pyramid_sacrud_example.py&
-  - cd ..
-  - if [ -z "$NO_BDD" ];then behave --no-capture; fi
-
-  # Link checker
-  - if [ -n "$LINK_CHECK" ];then linkchecker http://localhost:6543/admin/ --ignore-url="unquote\(%*" --no-status; fi
 
 after_success:
   - pip install coveralls

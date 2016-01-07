@@ -9,23 +9,10 @@ Main module
     :undoc-members:
     :show-inheritance:
 
-Breadcrumbs
------------
-
-.. automodule:: pyramid_sacrud.breadcrumbs
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 Common
 ------
 
 .. automodule:: pyramid_sacrud.common
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. automodule:: pyramid_sacrud.common.paginator
     :members:
     :undoc-members:
     :show-inheritance:
@@ -38,24 +25,18 @@ Views
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: pyramid_sacrud.views.CRUD
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-Security
---------
-
-.. automodule:: pyramid_sacrud.security
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 Exceptions
 ----------
 
 .. automodule:: pyramid_sacrud.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Interfaces
+----------
+
+.. automodule:: pyramid_sacrud.interfaces
     :members:
     :undoc-members:
     :show-inheritance:
