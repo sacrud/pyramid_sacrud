@@ -1,5 +1,5 @@
-Configuration 
-==============
+Configuration
+=============
 
 Initialize
 ----------
@@ -44,4 +44,48 @@ Just create template file in your project templates/sacrud directory:
               └── home.jinja2  <-- custom template for pyramid_sacrud home page
 
 You can find a list of all the templates here
-https://github.com/sacrud/pyramid_sacrud/tree/master/pyramid_sacrud/templates/sacrud 
+https://github.com/sacrud/pyramid_sacrud/tree/master/pyramid_sacrud/templates/sacrud
+
+Translate widget name
+---------------------
+
+.. seealso::
+
+    For more information see `Internationalization and Localization
+    <http://docs.pylonsproject.org/docs/pyramid/en/latest/narr/i18n.html>`_
+
+.. figure:: /_static/img/locale_en.png
+    :align: left
+
+    http://localhost:6543/sacrud/?_LOCALE_=en
+
+.. figure:: /_static/img/locale_ru.png
+
+    http://localhost:6543/sacrud/?_LOCALE_=ru
+
+.. raw:: html
+
+   <br />
+
+To translate widgets on main page,
+you can use standart translate method for Pyramid.
+
+.. code-block:: python
+
+    from pyramid.i18n import TranslationStringFactory
+
+    _ = TranslationStringFactory('myapplication')
+    settings['pyramid_sacrud.models'] = (
+        (_('Permissions'), (
+                UserPermission,
+                UserGroup,
+                Group,
+                GroupPermission,
+                Resource,
+                UserResourcePermission,
+                GroupResourcePermission,
+                ExternalIdentity,
+            )
+        ),
+        (_('Users'), (User, Staff))
+    )

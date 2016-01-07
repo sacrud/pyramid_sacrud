@@ -8,13 +8,8 @@ import itcase_sphinx_theme
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx',
     'sphinx.ext.viewcode'
 ]
-
-intersphinx_mapping = {
-    'http://sacrud.readthedocs.org/en/master': None,
-}
 
 # The suffix of source filenames.
 source_suffix = '.rst'
