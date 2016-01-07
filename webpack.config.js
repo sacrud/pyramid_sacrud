@@ -27,6 +27,9 @@ config = {
     alias: {
       'materialize-js': path.join(
         NODE_PATH, '/materialize-css/dist/js/materialize.min.js'
+      ),
+      jQuery: path.join(
+        NODE_PATH, 'jquery/src/jquery.js'
       )
     }
   },
