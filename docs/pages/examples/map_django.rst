@@ -1,8 +1,5 @@
-Examples
-========
-
 Map existing (Django) database with SQLAlchemy
-----------------------------------------------
+==============================================
 
 .. raw:: html
 

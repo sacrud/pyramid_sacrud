@@ -56,7 +56,7 @@ Usage
   pages/install
   pages/configuration
   pages/permissions
-  pages/examples
+  pages/examples/index.rst
   pages/api
 
 Contribute
