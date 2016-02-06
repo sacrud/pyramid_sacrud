@@ -47,7 +47,7 @@ config = {
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract(
-          'style', 'css!autoprefixer!sass'),
+          'style', 'css!postcss!sass'),
         exclude: /(node_modules|bower_components)/
       },
       {
