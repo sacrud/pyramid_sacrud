@@ -1,7 +1,7 @@
 # from collections import OrderedDict
 
 from pyramid import testing
-from pyramid_sacrud import CONFIG_MODELS
+from pyramid_sacrud import CONFIG_RESOURCES
 from pyramid_sacrud.views import home_view
 
 
@@ -19,19 +19,19 @@ class TestHome(object):
 
     def test_empty_of_models(self):
         request = testing.DummyRequest()
-        request.registry.settings = {CONFIG_MODELS: None}
+        request.registry.settings = {CONFIG_RESOURCES: None}
         assert home_view(request) ==\
             {'dashboard_row_len': 3, 'resources': None}
 
     def test_empty_list_of_models(self):
         request = testing.DummyRequest()
-        request.registry.settings = {CONFIG_MODELS: []}
+        request.registry.settings = {CONFIG_RESOURCES: []}
         assert home_view(request) ==\
             {'dashboard_row_len': 3, 'resources': []}
 
     def test_with_models(self):
         request = testing.DummyRequest()
-        request.registry.settings = {CONFIG_MODELS: [("foo", Foo)]}
+        request.registry.settings = {CONFIG_RESOURCES: [("foo", Foo)]}
         assert home_view(request) ==\
             {'dashboard_row_len': 3, 'resources': [("foo", Foo)]}
 

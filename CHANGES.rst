@@ -1,3 +1,10 @@
+0.3.2 (2016-02-??)
+==================
+
+- rename CONFIG_MODELS to CONFIG_RESOURCES
+- make GroupResource as default parent
+- add exampe with custom resource
+
 0.3.1 (2016-01-08)
 ==================
 

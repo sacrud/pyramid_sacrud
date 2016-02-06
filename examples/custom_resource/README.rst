@@ -1,11 +1,11 @@
 Usage
 -----
 
-Simple admin web interface without resources.
+Simple admin web interface with custom resource 'Bear'.
 
 .. code-block:: bash
 
-   $ cd examples/simple/
+   $ cd examples/custom_resource/
    $ python main.py
 
 and goto http://localhost:6543/admin/

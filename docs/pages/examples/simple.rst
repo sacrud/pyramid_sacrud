@@ -1,7 +1,7 @@
 Simple interface without resources
 ==================================
 
-.. literalinclude:: ../../../examples/simple/simple.py
+.. literalinclude:: ../../../examples/simple/main.py
 
 .. include:: ../../../examples/simple/README.rst
 

@@ -10,7 +10,7 @@
 Includeme of SACRUD
 """
 
-CONFIG_MODELS = 'pyramid_sacrud.models'
+CONFIG_RESOURCES = 'pyramid_sacrud.models'
 CONFIG_DASHBOARD_ROW_LEN = 'pyramid_sacrud.dashboard_row_len'
 PYRAMID_SACRUD_HOME = 'pyramid_sacrud_home'
 PYRAMID_SACRUD_VIEW = 'pyramid_sacrud_view'

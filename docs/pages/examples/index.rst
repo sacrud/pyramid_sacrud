@@ -6,3 +6,4 @@ Examples
 
   map_django.rst
   simple.rst
+  custom_resource.rst

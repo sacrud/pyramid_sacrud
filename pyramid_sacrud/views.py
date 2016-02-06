@@ -14,7 +14,7 @@ from pyramid.events import subscriber, BeforeRender
 from pyramid.location import lineage
 
 from . import (
-    CONFIG_MODELS,
+    CONFIG_RESOURCES,
     HOME_VIEW_TEMPLATE,
     PYRAMID_SACRUD_HOME,
     CONFIG_DASHBOARD_ROW_LEN
@@ -35,4 +35,4 @@ def home_view(request):
     settings = request.registry.settings
     dashboard_row_len = int(settings.get(CONFIG_DASHBOARD_ROW_LEN, 3))
     return {'dashboard_row_len': dashboard_row_len,
-            'resources': settings.get(CONFIG_MODELS, None)}
+            'resources': settings.get(CONFIG_RESOURCES, None)}
