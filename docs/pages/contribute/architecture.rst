@@ -1,7 +1,7 @@
 .. _architecture:
 
-New Arcitecture
-===============
+New Architecture
+================
 
 :ref:`old_architecture` is good, but it does not allow use tree structure of
 resources and has hard depency from :mod:`SQLAlchemy`, :mod:`sacrud`,
@@ -29,8 +29,8 @@ names.
 
 .. _old_architecture:
 
-Old Arcitecture
-===============
+Old Architecture
+================
 
 Main page
 ---------
