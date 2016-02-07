@@ -17,29 +17,34 @@ from pyramid.events import ApplicationCreated
 
 
 def admin_factory(request):
-    models = request.registry.settings[CONFIG_RESOURCES]
+    config = request.registry.settings[CONFIG_RESOURCES]
     return {
         str(group): GroupResource(group, resources)
-        for group, resources in models
+        for group, resources in config
     }
 
 
-def resources_preparing(app):
-    """ Wrap all resources in settings.
+def resources_preparing_factory(app, wrapper):
+    """ Factory which wrap all resources in settings.
     """
     settings = app.app.registry.settings
-    resources = settings.get(CONFIG_RESOURCES, None)
-    if not resources:
+    config = settings.get(CONFIG_RESOURCES, None)
+    if not config:
         return
+
+    resources = [(k, [wrapper(r, GroupResource(k, v)) for r in v])
+                 for k, v in config]
+    settings[CONFIG_RESOURCES] = resources
+
+
+def resources_preparing(app):
 
     def wrapper(resource, parent):
         if not getattr(resource, '__parent__', False):
             resource.__parent__ = parent
         return resource
 
-    models = [(k, [wrapper(r, GroupResource(k, v)) for r in v])
-              for k, v in resources]
-    settings[CONFIG_RESOURCES] = models
+    resources_preparing_factory(app, wrapper)
 
 
 def includeme(config):

@@ -1,4 +1,4 @@
-0.3.2 (2016-02-??)
+0.3.2 (2016-02-07)
 ==================
 
 - rename CONFIG_MODELS to CONFIG_RESOURCES

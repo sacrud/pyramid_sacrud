@@ -34,7 +34,7 @@ class PyTest(TestCommand):
 
 setup(
     name='pyramid_sacrud',
-    version="0.3.1",
+    version="0.3.2",
     url='http://github.com/sacrud/pyramid_sacrud/',
     author='Svintsov Dmitry',
     author_email='sacrud@uralbash.ru',
