@@ -15,19 +15,20 @@
 {% block body %}
   <div id="grid_view"></div>
   <h4>{{ _(context.verbose_name) }}</h4>
-  <a class="create-button btn waves-effect waves-light"
-    href="/{{ request.sacrud_prefix }}/{{ request.resource_path(context.get_create_resource()) }}">
-    <i class="material-icons left">add_circle_outline</i>
-    {{ _ps('Create') }}
-  </a>
+  {% if context.get_create_resource %}
+    <a class="create-button btn waves-effect waves-light"
+      href="/{{ request.sacrud_prefix }}/{{ request.resource_path(context.get_create_resource()) }}">
+      <i class="material-icons left">add_circle_outline</i>
+      {{ _ps('Create') }}
+    </a>
+  {% endif %}
   <a class="delete-button waves-effect waves-light btn disabled">
     <i class="material-icons left">remove_circle_outline</i>
     {{ _ps('Delete') }}
   </a>
 
   <div class="container"><br/></div>
-  <form id="sacrud-form" method="post"
-    action="/{{ request.sacrud_prefix }}/{{ request.resource_path(context.get_mass_action_resource()['delete']) }}">
+  <form id="sacrud-form" method="post">
     <table class="bordered highlight hoverable z-depth-1">
       {% if paginator.items.__len__() > 0 %}
         <thead>
@@ -44,16 +45,18 @@
         </thead>
         <tbody>
         {% for row in paginator %}
-          {% set pk=context.get_pk(row) %}
-          <tr id="{{ context.table_name }}_{{ pk }}">
+          {% set id=context.get_id(row) %}
+          <tr id="{{ context.table_name }}_{{ id }}">
             <td width="1">
-              <input id="{{ pk }}" type="checkbox" name="selected_item" value="{{ pk }}" />
-              <label for="{{ pk }}"></label>
+              <input id="{{ id }}" type="checkbox" name="selected_item" value="{{ id }}" />
+              <label for="{{ id }}"></label>
             </td>
             <td width="1">
-              <a href="/{{ request.sacrud_prefix }}/{{ request.resource_path(context.get_update_resource(row)) }}">
-                <i class="material-icons left">edit</i>
-              </a>
+              {% if context.get_update_resource %}
+                <a href="/{{ request.sacrud_prefix }}/{{ request.resource_path(context.get_update_resource(row)) }}">
+                  <i class="material-icons left">edit</i>
+                </a>
+              {% endif %}
             </td>
             {% for col in context.visible_columns %}
               <td>{{ col.value(row)|string|truncate(200) }}</td>

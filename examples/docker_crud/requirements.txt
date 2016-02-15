@@ -1,0 +1,3 @@
+docker-py
+pyramid
+pyramid_sacrud
