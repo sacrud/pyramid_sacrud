@@ -7,7 +7,7 @@ crud templates from ``pyramid_sacrud/templates/sacrud/crud/``.
 
 .. code-block:: bash
 
-   $ cd examples/docker-crud/
+   $ cd examples/docker_crud/
    $ python main.py
 
 and goto http://localhost:6543/admin/

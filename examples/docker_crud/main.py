@@ -1,11 +1,11 @@
-from zope.interface import implementer
-from docker import Client
-
 from pyramid.view import view_config
 from pyramid.config import Configurator
+from zope.interface import implementer
+
+from docker import Client
+from paginate import Page
 from pyramid_sacrud import PYRAMID_SACRUD_VIEW
 from pyramid_sacrud.interfaces import ISacrudResource
-from paginate import Page
 
 
 @implementer(ISacrudResource)
