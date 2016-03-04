@@ -23,6 +23,7 @@ from . import (
 
 @subscriber(BeforeRender)
 def add_global_params(event):
+    event['getattr'] = getattr
     event['lineage'] = lineage
     event['PYRAMID_SACRUD_HOME'] = PYRAMID_SACRUD_HOME
 

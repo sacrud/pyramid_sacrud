@@ -1,0 +1,14 @@
+{% extends "sacrud/redefineme.jinja2" %}
+
+
+{% block title %} - list of {{ _(context.verbose_name) }}{% endblock %}
+
+
+{% block body %}
+  <div id="grid_view"></div>
+  <h4>{{ _(context.verbose_name) }}</h4>
+
+  <div class="bordered highlight hoverable z-depth-1">
+    {{ data|safe }}
+  </div>
+{% endblock %}

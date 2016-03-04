@@ -27,8 +27,12 @@
       <div class="nav-wrapper blue-grey darken-1">
         <a {% if request.matched_route.name != PYRAMID_SACRUD_HOME %}
             href="{{ request.route_url(PYRAMID_SACRUD_HOME) }}"
-           {% endif %} class="brand-logo left">SACRUD</a>
-        {% block inner_menu %}
+           {% endif %} class="brand-logo left">
+           {% block menu_logo %}
+             SACRUD
+           {% endblock %}
+         </a>
+        {% block menu_inner %}
         {% endblock %}
       </div>
     </nav>
@@ -58,7 +62,7 @@
               {% set crumb_name = _ps(_(crumb.__name__)) %}
               {% if not loop.last %}
                 <li>
-                {% if crumb.breadcrumb %}
+                {% if getattr(crumb, 'breadcrumb', False) %}
                   <a href="/{{ request.sacrud_prefix }}/{{ request.resource_path(crumb) }}">
                     {{ crumb_name }}
                   </a>

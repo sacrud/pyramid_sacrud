@@ -1,8 +1,8 @@
-Athorization
+Authorization
 ============
 
 If you use `RootFactory` for authorization, set ``PYRAMID_SACRUD_HOME``
-permission for you aссessed to pyramid_sacrud.
+permission for you accessed to pyramid_sacrud.
 
 .. code-block:: python
 

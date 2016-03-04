@@ -1,3 +1,7 @@
 docker-py
+witress
 pyramid
+ps_crud
 pyramid_sacrud
+pyramid_jinja2
+pyramid-debugtoolbar

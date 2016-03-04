@@ -69,7 +69,7 @@ Translate widget name
    <br />
 
 To translate widgets on main page,
-you can use standart translate method for Pyramid.
+you can use standard translate method for Pyramid.
 
 .. code-block:: python
 

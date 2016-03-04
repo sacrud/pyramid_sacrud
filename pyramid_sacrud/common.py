@@ -10,7 +10,7 @@
 Any helpers for Pyramid
 """
 try:
-    from types import BooleanType as bool
+    from types import BooleanType as bool  # noqa
 except ImportError:
     pass
 
