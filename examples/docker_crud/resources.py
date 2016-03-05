@@ -36,11 +36,11 @@ class Docker(object):
 
 class Image(Docker):
 
-    def ps_get_id(self, row):
+    def _get_id(self, row):
         return row['Id']
 
     @property
-    def ps_columns(self):
+    def _columns(self):
         class Column:
             def __init__(self, name, value):
                 self.name = name
@@ -61,19 +61,19 @@ class Image(Docker):
     def __getitem__(self, name):
 
         if name == 'mass_action':
-            return self.pyramid_sacrud["crud"]["mass_action"]
+            return self.ps_crud["crud"]["mass_action"]
         elif name == 'update':
-            return self.pyramid_sacrud["crud"]["update"]
+            return self.ps_crud["crud"]["update"]
 
     @property
-    def pyramid_sacrud(self):
+    def ps_crud(self):
         mass_action = MassAction()
         mass_action.__parent__ = self
         update = UpdateFactory()
         update.__parent__ = self
         return {
-            "get_id": self.ps_get_id,
-            "columns": self.ps_columns,
+            "get_id": self._get_id,
+            "columns": self._columns,
             "crud": {
                 "mass_action": mass_action,
                 "update": update,
@@ -109,7 +109,7 @@ class UpdateFactory(object):
             self.__name__ = name
             self.__parent__ = parent
             self.img = self.get_image(name)
-            self.pyramid_sacrud = parent.__parent__.pyramid_sacrud
+            self.ps_crud = parent.__parent__.ps_crud
 
 
 class MassAction(Docker):

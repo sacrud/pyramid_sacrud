@@ -18,7 +18,7 @@ from pyramid_sacrud import PYRAMID_SACRUD_VIEW
 
 @view_config(
     context=Image,
-    renderer='sacrud/crud/list.jinja2',
+    renderer='ps_crud/list.jinja2',
     route_name=PYRAMID_SACRUD_VIEW
 )
 def admin_docker_list_view(context, request):

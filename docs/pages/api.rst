@@ -40,3 +40,11 @@ Interfaces
     :members:
     :undoc-members:
     :show-inheritance:
+
+Resources
+---------
+
+.. automodule:: pyramid_sacrud.resources
+    :members:
+    :undoc-members:
+    :show-inheritance:
