@@ -11,7 +11,6 @@ Routes for pyramid_sacrud
 """
 
 from . import CONFIG_RESOURCES, PYRAMID_SACRUD_HOME, PYRAMID_SACRUD_VIEW
-from .common import pkg_prefix
 from .resources import GroupResource
 from pyramid.events import ApplicationCreated
 
@@ -49,10 +48,11 @@ def resources_preparing(app):
 
 def includeme(config):
     config.add_subscriber(resources_preparing, ApplicationCreated)
-    prefix = pkg_prefix(config)
-    config.add_route(PYRAMID_SACRUD_HOME, prefix)
+    if not config.route_prefix:
+        config.route_prefix = 'sacrud'
+    config.add_route(PYRAMID_SACRUD_HOME, '/')
     config.add_route(PYRAMID_SACRUD_VIEW, '/*traverse', factory=admin_factory)
     config.add_request_method(
-        lambda x: prefix or config.route_prefix, 'sacrud_prefix',
+        lambda x: config.route_prefix, 'sacrud_prefix',
         reify=True, property=True
     )
