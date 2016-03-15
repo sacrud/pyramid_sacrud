@@ -29,6 +29,7 @@
     "postcss-loader": "^0.8.0",
     "sass-loader": "^3.1.2",
     "sizzle": "^2.3.0",
+    "string-replace-loader": "^1.0.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.13"

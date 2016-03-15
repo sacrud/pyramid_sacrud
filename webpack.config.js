@@ -34,6 +34,14 @@ config = {
     }
   },
   module: {
+    preLoaders: [{
+      test: /jquery\/src\/selector-sizzle\.js$/,
+      loader: 'string-replace',
+      query: {
+        search: '../external/sizzle/dist/sizzle',
+        replace: 'sizzle'
+      }
+    }],
     loaders: [
       {
         test: /\.jsx?$/,
