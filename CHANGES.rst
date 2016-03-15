@@ -1,4 +1,4 @@
-0.3.3 (2016-??-??)
+0.3.3 (2016-03-15)
 ==================
 
 - Moved CRUD part to `ps_crud <https://github.com/sacrud/ps_crud>`_

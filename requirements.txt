@@ -1,3 +1,2 @@
 pyramid
-paginate>=0.5.0
 pyramid_jinja2>=2.3.3
