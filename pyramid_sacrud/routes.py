@@ -13,12 +13,13 @@ Routes for pyramid_sacrud
 from . import CONFIG_RESOURCES, PYRAMID_SACRUD_HOME, PYRAMID_SACRUD_VIEW
 from .resources import GroupResource
 from pyramid.events import ApplicationCreated
+from pyramid.compat import text_type
 
 
 def admin_factory(request):
     config = request.registry.settings[CONFIG_RESOURCES]
     return {
-        str(group): GroupResource(group, resources)
+        text_type(group): GroupResource(group, resources)
         for group, resources in config
     }
 
