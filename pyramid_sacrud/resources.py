@@ -9,6 +9,7 @@
 """
 Resources of pyramid_sacrud
 """
+from pyramid.compat import text_type
 
 
 class GroupResource(object):
@@ -25,4 +26,4 @@ class GroupResource(object):
 
     @property
     def __name__(self):
-        return str(self.group)
+        return text_type(self.group)
