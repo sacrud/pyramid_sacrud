@@ -53,7 +53,7 @@ Translate widget name
 .. seealso::
 
     For more information see `Internationalization and Localization
-    <http://docs.pylonsproject.org/docs/pyramid/en/latest/narr/i18n.html>`_
+    <http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/i18n.html>`_
 
 .. figure:: /_static/img/locale_en.png
     :align: left
