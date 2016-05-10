@@ -26,7 +26,10 @@ config = {
     modulesDirectories: ['node_modules', 'bower_components'],
     alias: {
       'materialize-js': path.join(
-        NODE_PATH, '/materialize-css/dist/js/materialize.min.js'
+        NODE_PATH, '/materialize-css/bin/materialize.js'
+      ),
+      'materialize-css': path.join(
+        NODE_PATH, '/materialize-css/bin/materialize.css'
       ),
       jQuery: path.join(
         NODE_PATH, 'jquery/src/jquery.js'

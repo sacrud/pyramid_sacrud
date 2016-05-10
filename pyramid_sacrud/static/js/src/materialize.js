@@ -1,4 +1,4 @@
-import '../../css/materialize.scss'
+import 'materialize-css';
 import 'materialize-js';
 
 $(document).ready(() => {
