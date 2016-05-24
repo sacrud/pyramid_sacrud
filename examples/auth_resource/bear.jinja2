@@ -1,0 +1,7 @@
+{% extends "sacrud/redefineme.jinja2" %}
+
+
+{% block body %}
+  <h1>{{ context.verbose_name }}</h1>
+  <img src="{{ context.url }}" width=600px />
+{% endblock %}
