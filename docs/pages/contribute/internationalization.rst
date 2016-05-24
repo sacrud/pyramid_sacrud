@@ -5,8 +5,20 @@ Internationalization
 | Before you begin, setup it in your system, such as:
 
 .. code-block:: bash
+   :caption: debian
 
    apt-get install gettext
+   
+.. code-block:: bash
+   :caption: nixos
+
+   nix-env -i gettext
+   
+Also you need ``Babel`` package:
+
+.. code-block:: bash
+
+    pip install babel
 
 :mod:`pyramid_sacrud` has certain labels in templates like "Home", "Create",
 "Delete", etc. If these labels appear in English on your admin panel although
