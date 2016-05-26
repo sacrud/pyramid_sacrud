@@ -11,4 +11,4 @@ permission for you accessed to pyramid_sacrud.
 See example:
 
 .. literalinclude:: ../../examples/auth_resource/main.py
-   :caption: Rewource with __acl__
+   :caption: Resource with __acl__
