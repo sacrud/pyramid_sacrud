@@ -21,13 +21,13 @@ Installing Node.js dependencies:
 CSS
 ---
 
-СSS files are located in **pyramid_sacrud/static/css/**.
-**css** pack in **__main.css** file in `pyramid_sacrud/static/css/`.
+СSS files are located in ``pyramid_sacrud/static/css/``.
+CSS pack in ``__main.css`` file in ``pyramid_sacrud/static/css/``.
 
 JavaScript
 ----------
 
-Js pack in **__main.js** in **pyramid_sacrud/static/js/assets/**.
+Js pack in ``__main.js`` in ``pyramid_sacrud/static/js/assets/``.
 
 For update each dependency in package.json, just use `npm-check-updates
 <https://www.npmjs.org/package/npm-check-updates>`_.
