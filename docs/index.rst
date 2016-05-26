@@ -45,7 +45,10 @@ Look how easy it is to use with Pyramid and SQLAlchemy:
 
 go to http://localhost:6543/sacrud/
 
-Example can be found here https://github.com/sacrud/ps_alchemy/tree/master/example
+Example can be found here:
+
+   * https://github.com/sacrud/pyramid_sacrud/tree/master/examples
+   * https://github.com/sacrud/ps_alchemy/tree/master/example
 
 Usage
 =====
