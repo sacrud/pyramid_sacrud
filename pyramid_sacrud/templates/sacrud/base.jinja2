@@ -21,8 +21,8 @@
 </head>
 
 <body>
-  {% block menu %}
   <div>
+  {% block menu %}
     <nav>
       <div class="nav-wrapper blue-grey darken-1">
         <a {% if request.matched_route.name != PYRAMID_SACRUD_HOME %}
