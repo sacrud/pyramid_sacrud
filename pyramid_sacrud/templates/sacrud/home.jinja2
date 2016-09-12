@@ -3,7 +3,6 @@
 {% block title %} - home{% endblock %}
 
 {% block body %}
-
   <div class="divider"></div>
   <div class="section">
     <h5>{{ _ps('Dashboard') }}</h5>
@@ -26,8 +25,8 @@
                     {% for resource in widget_resources %}
                       <a class="collection-item black-text"
                         href="{{ request.resource_path(resource) }}"
-                        id="id_{{ resource.table_name }}">
-                        {{ _(resource.verbose_name) }}</a>
+                        id="id_{{ resource.__name__ }}">
+                        {{ _(resource.verbose_name or resource.__name__) }}</a>
                     {% endfor %}
                   </div>
                 </div>
