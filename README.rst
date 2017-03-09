@@ -1,4 +1,4 @@
-|Build Status| |Coverage Status| |PyPI|
+|Build Status| |Coverage Status|
 
 pyramid_sacrud
 ==============
@@ -75,5 +75,3 @@ The project is licensed under the MIT license.
    :target: https://coveralls.io/r/sacrud/pyramid_sacrud?branch=master
 .. |sacrud_index| image:: https://raw.githubusercontent.com/sacrud/pyramid_sacrud/master/docs/_static/img/index.png
    :target: https://raw.githubusercontent.com/sacrud/pyramid_sacrud/master/docs/_static/img/index.png
-.. |PyPI| image:: http://img.shields.io/pypi/dm/pyramid_sacrud.svg
-   :target: https://pypi.python.org/pypi/pyramid_sacrud/
