@@ -24,7 +24,11 @@ python:
   - "3.3"
   - "3.4"
   - "3.5"
-  - "pypy"
+
+matrix:
+  include:
+    - python: "pypy"
+      env: NO_RSTLINT="enabled"
 
 install:
   - pip install flake8 rstcheck
