@@ -1,4 +1,4 @@
-Backend contrubute
+Backend contribute
 ==================
 
 Same as `contributor's section of the documentation
