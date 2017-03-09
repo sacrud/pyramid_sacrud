@@ -35,5 +35,7 @@ def add_global_params(event):
 def home_view(request):
     settings = request.registry.settings
     dashboard_row_len = int(settings.get(CONFIG_DASHBOARD_ROW_LEN, 3))
-    return {'dashboard_row_len': dashboard_row_len,
-            'resources': settings.get(CONFIG_RESOURCES, None)}
+    return {
+        'dashboard_row_len': dashboard_row_len,
+        'resources': settings.get(CONFIG_RESOURCES, None)
+    }

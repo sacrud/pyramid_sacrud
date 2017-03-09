@@ -21,7 +21,7 @@ The list of standard backends:
 
 * `ps_alchemy <http://github.com/sacrud/ps_alchemy>`_ - provides SQLAlchemy
   models.
-* ps_mongo - provides MongoDB.
+* ps_mongo - provides MongoDB (doesn't exist yet).
 * etc..
 
 .. raw:: html

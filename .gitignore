@@ -1,4 +1,6 @@
 .eggs
+.env
+.vscode
 *~
 *.swo
 *.swp
